@@ -1,0 +1,30 @@
+{
+    "duties": [
+      {
+        "dutyID": "duty01",
+        "originalAmount": 500000,
+        "mainTrans": "5330",
+        "subTrans": "7006",
+        "interestStartDate": "2020-01-20",
+        "dateCreated": "2020-01-20",
+        "interestRequestedTo": "2020-03-18",
+        "paymentHistory": [{"amountPaid" : 100000,
+          "dateOfPayment" : "2020-02-23"}]
+      },
+      {
+        "dutyID": "duty02",
+        "originalAmount": 400000,
+        "mainTrans": "1525",
+        "subTrans": "1000",
+        "interestStartDate": "2020-02-04",
+        "dateCreated": "2020-02-04",
+        "interestRequestedTo": "2020-05-14",
+        "paymentHistory": [
+          {"amountPaid" : 100000,
+          "dateOfPayment" : "2020-02-23"},
+          {"amountPaid" : 100000,
+          "dateOfPayment" : "2020-03-20"}]
+      }
+    ],
+  "breathingSpaces": []
+}

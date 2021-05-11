@@ -1,0 +1,19 @@
+{
+    "duties": [
+      {
+        "dutyID": "duty04",
+        "originalAmount": 400000,
+        "mainTrans": "5350",
+        "subTrans": "7012",
+        "interestStartDate": "2016-02-04",
+        "dateCreated": "2016-02-04",
+        "interestRequestedTo": "2020-05-15",
+        "paymentHistory": [
+          {"amountPaid" : 100000,
+          "dateOfPayment" : "2020-02-20"},
+          {"amountPaid" : 100000,
+          "dateOfPayment" : "2020-03-20"}]
+      }
+    ],
+  "breathingSpaces": []
+}
