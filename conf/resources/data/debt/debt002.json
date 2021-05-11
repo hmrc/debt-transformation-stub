@@ -1,0 +1,44 @@
+{
+  "duties": [
+      {
+        "dutyID": "duty01",
+        "originalAmount": 300000,
+        "mainTrans": "1085",
+        "subTrans": "1000",
+        "interestStartDate": "2018-06-10",
+        "dateCreated": "2018-06-10",
+        "interestRequestedTo": "2020-02-10",
+        "paymentHistory": []
+      },
+      {
+        "dutyID": "duty02",
+        "originalAmount": 600000,
+        "mainTrans": "1545",
+        "subTrans": "1090",
+        "interestStartDate": "2020-05-01",
+        "dateCreated": "2020-06-01",
+        "interestRequestedTo": "2021-08-10",
+        "paymentHistory": []
+      },
+      {
+        "dutyID": "duty03",
+        "originalAmount": 200000,
+        "mainTrans": "1525",
+        "subTrans": "1000",
+        "interestStartDate": "2021-01-01",
+        "dateCreated": "2021-01-01",
+        "interestRequestedTo": "2021-10-31",
+        "paymentHistory": []
+      }
+    ],
+  "breathingSpaces": [
+    {
+      "debtRespiteFrom": "2021-04-04",
+      "debtRespiteTo": "2021-06-04"
+    },
+    {
+      "debtRespiteFrom": "2021-04-04",
+      "debtRespiteTo": "2021-07-04"
+    }
+  ]
+}

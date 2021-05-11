@@ -1,0 +1,15 @@
+{
+  "duties": [
+    {
+      "dutyID": "duty06",
+      "originalAmount": 4400000,
+      "mainTrans": "1525",
+      "subTrans": "1000",
+      "interestStartDate": "2019-02-04",
+      "dateCreated": "2019-02-04",
+      "interestRequestedTo": "2019-01-15",
+      "paymentHistory": []
+    }
+  ],
+  "breathingSpaces": []
+}GI

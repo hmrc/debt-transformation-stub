@@ -1,0 +1,7 @@
+# microservice specific routes
+
+GET        /hello-world                                                 uk.gov.hmrc.debttransformationstub.controllers.MicroserviceHelloWorldController.hello
+GET        /debt                                                        uk.gov.hmrc.debttransformationstub.controllers.CaseManagementSystemController.getList
+GET        /debt/:debtID                                                uk.gov.hmrc.debttransformationstub.controllers.CaseManagementSystemController.getCaseDetails(debtID: String, duties: Option[String])
+GET        /data                                                        uk.gov.hmrc.debttransformationstub.controllers.ReferenceLookupController.getList
+GET        /data/:type/mainTrans/:mainTrans/subTrans/:subTrans          uk.gov.hmrc.debttransformationstub.controllers.ReferenceLookupController.getReferenceData(type: String, mainTrans: String, subTrans: String)
