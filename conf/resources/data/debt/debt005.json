@@ -9,10 +9,10 @@
       "dateCreated": "2019-02-04",
       "interestRequestedTo": "2020-05-15",
       "paymentHistory": [
-        {"amountPaid" : 100000,
-          "dateOfPayment" : "2020-02-23"},
-        {"amountPaid" : 100000,
-          "dateOfPayment" : "2020-03-20"}]
+        {"paymentAmount" : 100000,
+          "paymentDate" : "2020-02-23"},
+        {"paymentAmount" : 100000,
+          "paymentDate" : "2020-03-20"}]
     }
   ],
   "breathingSpaces": []
