@@ -5,9 +5,11 @@
         "originalAmount": 400000,
         "mainTrans": "5350",
         "subTrans": "7012",
+        "periodEnd": "2021-01-20",
         "interestStartDate": "2016-02-04",
         "dateCreated": "2016-02-04",
-        "interestRequestedTo": "2020-05-15",
+        "addressPostcode": "BN12 4XH",
+        "postcodeDate": "2019-01-01",
         "paymentHistory": [
           {"paymentAmount" : 100000,
           "paymentDate" : "2020-02-20"},
