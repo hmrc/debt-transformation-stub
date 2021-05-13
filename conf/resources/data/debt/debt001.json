@@ -7,8 +7,10 @@
         "subTrans": "1000",
         "interestStartDate": "2020-12-20",
         "dateCreated": "2020-12-20",
-        "interestRequestedTo": "2021-04-18",
-        "paymentHistory": []
+        "paymentHistory": [],
+        "periodEnd": "2021-01-20",
+        "addressPostcode": "BN12 4XH",
+        "postcodeDate": "2019-01-01"
       },
       {
         "dutyID": "duty02",
@@ -17,8 +19,10 @@
         "subTrans": "1000",
         "interestStartDate": "2021-02-04",
         "dateCreated": "2021-02-04",
-        "interestRequestedTo": "2021-04-14",
-        "paymentHistory": []
+        "paymentHistory": [],
+        "periodEnd": "2021-01-20",
+        "addressPostcode": "BN12 4XH",
+        "postcodeDate": "2019-01-01"
       }
     ],
   "breathingSpaces": [

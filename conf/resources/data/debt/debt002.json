@@ -5,9 +5,11 @@
         "originalAmount": 300000,
         "mainTrans": "1085",
         "subTrans": "1000",
+        "periodEnd": "2021-01-20",
         "interestStartDate": "2018-06-10",
         "dateCreated": "2018-06-10",
-        "interestRequestedTo": "2020-02-10",
+        "addressPostcode": "BN12 4XH",
+        "postcodeDate": "2019-01-01",
         "paymentHistory": []
       },
       {
@@ -15,9 +17,11 @@
         "originalAmount": 600000,
         "mainTrans": "1545",
         "subTrans": "1090",
+        "periodEnd": "2021-01-20",
         "interestStartDate": "2020-05-01",
         "dateCreated": "2020-06-01",
-        "interestRequestedTo": "2021-08-10",
+        "addressPostcode": "BN12 4XH",
+        "postcodeDate": "2019-01-01",
         "paymentHistory": []
       },
       {
@@ -25,9 +29,11 @@
         "originalAmount": 200000,
         "mainTrans": "1525",
         "subTrans": "1000",
+        "periodEnd": "2021-01-20",
         "interestStartDate": "2021-01-01",
         "dateCreated": "2021-01-01",
-        "interestRequestedTo": "2021-10-31",
+        "addressPostcode": "BN12 4XH",
+        "postcodeDate": "2019-01-01",
         "paymentHistory": []
       }
     ],
