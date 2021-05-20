@@ -1,35 +1,59 @@
 {
-    "duties": [
-      {
-        "dutyID": "duty01",
-        "originalAmount": 500000,
-        "mainTrans": "5330",
-        "subTrans": "7006",
-        "periodEnd": "2021-01-20",
-        "interestStartDate": "2020-01-20",
-        "dateCreated": "2020-01-20",
-        "addressPostcode": "BN12 4XH",
-        "postcodeDate": "2019-01-01",
-        "paymentHistory": [
-          {"paymentAmount" : 100000,
-          "paymentDate" : "2020-02-23"}]
-      },
-      {
-        "dutyID": "duty02",
-        "originalAmount": 400000,
-        "mainTrans": "1525",
-        "subTrans": "1000",
-        "periodEnd": "2021-01-20",
-        "interestStartDate": "2020-02-04",
-        "dateCreated": "2020-02-04",
-        "addressPostcode": "BN12 4XH",
-        "postcodeDate": "2019-01-01",
-        "paymentHistory": [
-          {"paymentAmount" : 100000,
+  "debtItems": [
+    {
+      "dutyID": "duty01",
+      "mainTrans": "5330",
+      "subTrans": "7006",
+      "chargeDescription": "RTI-Income Tax",
+      "originalAmount": 500000,
+      "outstandingAmount": 300000,
+      "interestKey": "01",
+      "interestStartDate": "2020-01-20",
+      "dateCreated": "2020-01-20",
+      "periodEnd": "2021-01-20",
+      "payments": [
+        {
+          "paymentAmount": 100000,
+          "paymentDate": "2020-02-23"
+        }
+      ]
+    },
+    {
+      "dutyID": "duty02",
+      "mainTrans": "1525",
+      "subTrans": "1000",
+      "chargeDescription": "RTI-Income Tax",
+      "originalAmount": 400000,
+      "outstandingAmount": 400000,
+      "interestKey": "01",
+      "interestStartDate": "2020-02-04",
+      "dateCreated": "2020-02-04",
+      "periodEnd": "2021-01-20",
+      "payments": [
+        {"paymentAmount" : 100000,
           "paymentDate" : "2020-02-23"},
-          {"paymentAmount" : 100000,
+        {"paymentAmount" : 100000,
           "paymentDate" : "2020-03-20"}]
-      }
-    ],
-  "breathingSpaces": []
+    }
+  ],
+  "breathingSpaces": [
+    {
+      "debtRespiteFrom": "2021-04-04",
+      "debtRespiteTo": "2021-06-04"
+    },
+    {
+      "debtRespiteFrom": "2021-04-04",
+      "debtRespiteTo": "2021-07-04"
+    }
+  ],
+  "customerPostcodes": [
+    {
+      "addressPostcode": "BN124XH",
+      "postcodeDate": "2019-01-01"
+    },
+    {
+      "addressPostcode": "BN124XH",
+      "postcodeDate": "2019-01-01"
+    }
+  ]
 }

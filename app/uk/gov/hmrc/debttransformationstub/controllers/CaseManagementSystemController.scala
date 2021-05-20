@@ -46,6 +46,19 @@ class CaseManagementSystemController @Inject()(environment: Environment, cc: Con
     }
   }
 
+  def getDebtCaseManagement(customerUniqueRef: String, debtId: String, dutyIds: List[String]) = Action { request =>
+    val testOnlyResponseCode: Option[String] = request.headers.get("testOnlyResponseCode")
+    if(testOnlyResponseCode.isDefined) {
+      Results.Status(testOnlyResponseCode.map(_.toInt).getOrElse(500))
+    } else {
+      environment.getExistingFile(basePath + casePath + debtId + ".json") match {
+        case Some(file) => Ok(Source.fromFile(file).mkString)
+        case _ => NotFound("file not found")
+      }
+    }
+  }
+
+
   def getList() = Action {
     Ok(listHelper.getList(basePath + casePath))
   }

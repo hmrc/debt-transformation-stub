@@ -1,42 +1,45 @@
 {
-  "duties": [
-      {
-        "dutyID": "duty01",
-        "originalAmount": 300000,
-        "mainTrans": "1085",
-        "subTrans": "1000",
-        "periodEnd": "2021-01-20",
-        "interestStartDate": "2018-06-10",
-        "dateCreated": "2018-06-10",
-        "addressPostcode": "BN12 4XH",
-        "postcodeDate": "2019-01-01",
-        "paymentHistory": []
-      },
-      {
-        "dutyID": "duty02",
-        "originalAmount": 600000,
-        "mainTrans": "1545",
-        "subTrans": "1090",
-        "periodEnd": "2021-01-20",
-        "interestStartDate": "2020-05-01",
-        "dateCreated": "2020-06-01",
-        "addressPostcode": "BN12 4XH",
-        "postcodeDate": "2019-01-01",
-        "paymentHistory": []
-      },
-      {
-        "dutyID": "duty03",
-        "originalAmount": 200000,
-        "mainTrans": "1525",
-        "subTrans": "1000",
-        "periodEnd": "2021-01-20",
-        "interestStartDate": "2021-01-01",
-        "dateCreated": "2021-01-01",
-        "addressPostcode": "BN12 4XH",
-        "postcodeDate": "2019-01-01",
-        "paymentHistory": []
-      }
-    ],
+  "debtItems": [
+    {
+      "dutyID": "duty01",
+      "mainTrans": "1085",
+      "subTrans": "1000",
+      "chargeDescription": "RTI-Income Tax",
+      "originalAmount": 300000,
+      "outstandingAmount": 300000,
+      "interestKey": "01",
+      "interestStartDate": "2018-06-10",
+      "dateCreated": "2018-06-10",
+      "periodEnd": "2021-01-20",
+      "payments": []
+    },
+    {
+      "dutyID": "duty02",
+      "mainTrans": "1545",
+      "subTrans": "1090",
+      "chargeDescription": "RTI-Income Tax",
+      "originalAmount": 600000,
+      "outstandingAmount": 600000,
+      "interestKey": "01",
+      "interestStartDate": "2020-05-01",
+      "dateCreated": "2020-06-01",
+      "periodEnd": "2021-01-20",
+      "payments": []
+    },
+    {
+      "dutyID": "duty03",
+      "mainTrans": "1525",
+      "subTrans": "1000",
+      "chargeDescription": "RTI-Income Tax",
+      "originalAmount": 200000,
+      "outstandingAmount": 200000,
+      "interestKey": "01",
+      "interestStartDate": "2021-01-01",
+      "dateCreated": "2021-01-01",
+      "periodEnd": "2021-01-20",
+      "payments": []
+    }
+  ],
   "breathingSpaces": [
     {
       "debtRespiteFrom": "2021-04-04",
@@ -45,6 +48,16 @@
     {
       "debtRespiteFrom": "2021-04-04",
       "debtRespiteTo": "2021-07-04"
+    }
+  ],
+  "customerPostcodes": [
+    {
+      "addressPostcode": "BN124XH",
+      "postcodeDate": "2019-01-01"
+    },
+    {
+      "addressPostcode": "BN124XH",
+      "postcodeDate": "2019-01-01"
     }
   ]
 }

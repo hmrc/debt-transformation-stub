@@ -19,14 +19,16 @@ package uk.gov.hmrc.debttransformationstub.controllers
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import play.api.mvc._
 import play.api.Environment
-import uk.gov.hmrc.debttransformationstub.utils.ListHelper
+import uk.gov.hmrc.debttransformationstub.utils.{ListHelper, ReferenceDataLookupRequest}
 
+import java.io.File
 import javax.inject.{Inject, Singleton}
+import scala.concurrent.Future
 import scala.io.Source
 
 @Singleton()
 class ReferenceLookupController @Inject()(environment: Environment, cc: ControllerComponents)
-  extends BackendController(cc) {
+  extends BackendController(cc) with BaseController {
 
   private val basePath = "conf/resources/data"
   private val refPath = "/data/"
@@ -42,6 +44,22 @@ class ReferenceLookupController @Inject()(environment: Environment, cc: Controll
         case Some(file) => Ok(Source.fromFile(file).mkString)
         case _ => NotFound("file not found")
       }
+    }
+  }
+
+  def getReferenceDataLookup() = Action(parse.json).async { implicit request =>
+    withCustomJsonBody[ReferenceDataLookupRequest] { req =>
+      val files: Seq[File] = req.items.flatMap { item =>
+        environment.getExistingFile(basePath + refPath + req.`type` + "-" + item.mainTrans + "-" + item.subTrans + ".json")
+      }
+
+      if (files.isEmpty) {
+        Future successful NotFound("file not found")
+      } else {
+        val result = files.map(file => Source.fromFile(file).mkString).mkString("[", ",", "]")
+        Future successful Ok(result)
+      }
+
     }
   }
 

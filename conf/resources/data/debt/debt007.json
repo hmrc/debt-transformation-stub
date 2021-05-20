@@ -1,8 +1,8 @@
 {
   "debtItems": [
     {
-      "dutyID": "duty06",
-      "mainTrans": "1525",
+      "dutyID": "duty07",
+      "mainTrans": "1085",
       "subTrans": "1000",
       "chargeDescription": "RTI-Income Tax",
       "originalAmount": 4400000,
