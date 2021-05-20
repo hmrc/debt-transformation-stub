@@ -36,16 +36,7 @@
           "paymentDate" : "2020-03-20"}]
     }
   ],
-  "breathingSpaces": [
-    {
-      "debtRespiteFrom": "2021-04-04",
-      "debtRespiteTo": "2021-06-04"
-    },
-    {
-      "debtRespiteFrom": "2021-04-04",
-      "debtRespiteTo": "2021-07-04"
-    }
-  ],
+  "breathingSpaces": [],
   "customerPostcodes": [
     {
       "addressPostcode": "BN124XH",
