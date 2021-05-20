@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.debttransformationstub.controllers
+package uk.gov.hmrc.debttransformationstub.utils
 
-import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
-import play.api.mvc.{Action, AnyContent, ControllerComponents}
-import javax.inject.{Inject, Singleton}
-import scala.concurrent.Future
+import play.api.libs.json.Json
 
-@Singleton()
-class MicroserviceHelloWorldController @Inject()(cc: ControllerComponents)
-    extends BackendController(cc) {
+final case class TransType(mainTrans: String, subTrans: String)
 
-  def hello(): Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok("Hello world"))
-  }
+final case class ReferenceDataLookupRequest(`type`: String, items: Seq[TransType])
+
+object TransType {
+  implicit val format = Json.format[TransType]
+}
+
+object ReferenceDataLookupRequest {
+  implicit val format = Json.format[ReferenceDataLookupRequest]
 }
