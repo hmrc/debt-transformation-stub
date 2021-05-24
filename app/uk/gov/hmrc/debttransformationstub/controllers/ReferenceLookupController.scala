@@ -49,17 +49,19 @@ class ReferenceLookupController @Inject()(environment: Environment, cc: Controll
 
   def getReferenceDataLookup() = Action(parse.json).async { implicit request =>
     withCustomJsonBody[ReferenceDataLookupRequest] { req =>
-      val files: Seq[File] = req.items.flatMap { item =>
-        environment.getExistingFile(basePath + refPath + req.`type` + "-" + item.mainTrans + "-" + item.subTrans + ".json")
-      }
+      val maybeBearerToken: Option[String] = request.headers.get("Authorization")
+      if (maybeBearerToken.contains("some-access-token")) {
+        val files: Seq[File] = req.items.flatMap { item =>
+          environment.getExistingFile(basePath + refPath + req.`type` + "-" + item.mainTrans + "-" + item.subTrans + ".json")
+        }
 
-      if (files.isEmpty) {
-        Future successful NotFound("file not found")
-      } else {
-        val result = files.map(file => Source.fromFile(file).mkString).mkString("[", ",", "]")
-        Future successful Ok(result)
-      }
-
+        if (files.isEmpty) {
+          Future successful NotFound("file not found")
+        } else {
+          val result = files.map(file => Source.fromFile(file).mkString).mkString("[", ",", "]")
+          Future successful Ok(result)
+        }
+      } else Future successful Unauthorized("invalid token provided")
     }
   }
 
