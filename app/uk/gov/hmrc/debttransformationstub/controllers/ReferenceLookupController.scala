@@ -50,7 +50,7 @@ class ReferenceLookupController @Inject()(environment: Environment, cc: Controll
   def getReferenceDataLookup() = Action(parse.json).async { implicit request =>
     withCustomJsonBody[ReferenceDataLookupRequest] { req =>
       val maybeBearerToken: Option[String] = request.headers.get("Authorization")
-      if (maybeBearerToken.contains("some-access-token")) {
+      if (maybeBearerToken.contains("Bearer some-access-token")) {
         val files: Seq[File] = req.items.flatMap { item =>
           environment.getExistingFile(basePath + refPath + req.`type` + "-" + item.mainTrans + "-" + item.subTrans + ".json")
         }

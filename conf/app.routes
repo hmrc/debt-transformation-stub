@@ -5,7 +5,7 @@ GET        /debt/:debtID                                                uk.gov.h
 GET        /data                                                        uk.gov.hmrc.debttransformationstub.controllers.ReferenceLookupController.getList
 GET        /data/:type/mainTrans/:mainTrans/subTrans/:subTrans          uk.gov.hmrc.debttransformationstub.controllers.ReferenceLookupController.getReferenceData(type: String, mainTrans: String, subTrans: String)
 
-GET        /prweb/PRRestService/MDTP/01/ChargeData/customer/:customerUniqueRef/debt/:debtId/duties/:dutyIds     uk.gov.hmrc.debttransformationstub.controllers.CaseManagementSystemController.getDebtCaseManagement(customerUniqueRef: String, debtId: String, dutyIds: String)
+GET        /prweb/PRRestService/MDTP/01/ChargeData/customer/:customerUniqueRef/debts/:debtId/:dutyIds           uk.gov.hmrc.debttransformationstub.controllers.CaseManagementSystemController.getDebtCaseManagement(customerUniqueRef: String, debtId: String, dutyIds: String)
 POST       /prweb/PRRestService/MDTP/01/RefData                                                                 uk.gov.hmrc.debttransformationstub.controllers.ReferenceLookupController.getReferenceDataLookup
 
 POST       /prweb/PRRestService/oauth2/v1/token                         uk.gov.hmrc.debttransformationstub.controllers.AuthController.getAccessToken()

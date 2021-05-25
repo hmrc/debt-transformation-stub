@@ -18,7 +18,7 @@ package uk.gov.hmrc.debttransformationstub.utils
 
 import play.api.libs.json.Json
 
-final case class AuthCredential(clientId: String, clientSecret: String)
+final case class AuthCredential(client_id: String, client_secret: String, grant_type: String)
 
 object AuthCredential {
   implicit val format = Json.format[AuthCredential]

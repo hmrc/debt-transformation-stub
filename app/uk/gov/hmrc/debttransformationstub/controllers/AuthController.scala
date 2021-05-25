@@ -30,7 +30,7 @@ class AuthController @Inject()(environment: Environment, cc: ControllerComponent
 
   def getAccessToken() = Action(parse.json).async { implicit request =>
     withCustomJsonBody[AuthCredential] {
-      case AuthCredential("stub-client-id", "stub-secret-id") =>
+      case AuthCredential("stub-client-id", "stub-secret-id", "client_credentials") =>
         Future successful Accepted(Source.fromFile(environment.getFile("conf/resources/data/auth/bearer-token.json")).mkString)
       case _ => Future successful NotFound("invalid credentials")
     }

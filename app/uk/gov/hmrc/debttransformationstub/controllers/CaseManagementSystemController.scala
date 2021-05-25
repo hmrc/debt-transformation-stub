@@ -48,7 +48,7 @@ class CaseManagementSystemController @Inject()(environment: Environment, cc: Con
 
   def getDebtCaseManagement(customerUniqueRef: String, debtId: String, dutyIds: String) = Action { request =>
     val maybeBearerToken: Option[String] = request.headers.get("Authorization")
-    if (maybeBearerToken.contains("some-access-token")) {
+    if (maybeBearerToken.contains("Bearer some-access-token")) {
       environment.getExistingFile(basePath + casePath + debtId + ".json") match {
         case Some(file) => Ok(Source.fromFile(file).mkString)
         case _ => NotFound("file not found")
