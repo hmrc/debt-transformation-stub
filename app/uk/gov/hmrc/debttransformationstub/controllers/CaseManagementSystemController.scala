@@ -36,7 +36,7 @@ class CaseManagementSystemController @Inject()(environment: Environment, cc: Con
 
   def getCaseDetails(debtID: String, duties: Option[String]) = Action { request =>
     val testOnlyResponseCode: Option[String] = request.headers.get("testOnlyResponseCode")
-    if(testOnlyResponseCode.isDefined) {
+    if (testOnlyResponseCode.isDefined) {
       Results.Status(testOnlyResponseCode.map(_.toInt).getOrElse(500))
     } else {
       environment.getExistingFile(basePath + casePath + debtID + ".json") match {
@@ -46,16 +46,15 @@ class CaseManagementSystemController @Inject()(environment: Environment, cc: Con
     }
   }
 
-  def getDebtCaseManagement(customerUniqueRef: String, debtId: String, dutyIds: List[String]) = Action { request =>
-    val testOnlyResponseCode: Option[String] = request.headers.get("testOnlyResponseCode")
-    if(testOnlyResponseCode.isDefined) {
-      Results.Status(testOnlyResponseCode.map(_.toInt).getOrElse(500))
-    } else {
+  def getDebtCaseManagement(customerUniqueRef: String, debtId: String, dutyIds: String) = Action { request =>
+    val maybeBearerToken: Option[String] = request.headers.get("Authorization")
+    if (maybeBearerToken.contains("Bearer some-access-token")) {
       environment.getExistingFile(basePath + casePath + debtId + ".json") match {
         case Some(file) => Ok(Source.fromFile(file).mkString)
         case _ => NotFound("file not found")
       }
     }
+    else Unauthorized("invalid token provided")
   }
 
 
