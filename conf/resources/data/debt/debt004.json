@@ -1,7 +1,8 @@
 {
   "debtItems": [
     {
-      "dutyID": "duty04",
+      "dutyId": "duty04",
+      "debtID": "debt004",
       "mainTrans": "5350",
       "subTrans": "7012",
       "chargeDescription": "RTI-Income Tax",
@@ -10,15 +11,22 @@
       "interestKey": "01",
       "interestStartDate": "2016-02-04",
       "dateCreated": "2016-02-04",
+      "dateCalculationTo": "2021-05-24",
+      "periodFrom": "2019-01-20",
       "periodEnd": "2021-01-20",
       "payments": [
-        {"paymentAmount" : 100000,
-          "paymentDate" : "2020-02-20"},
-        {"paymentAmount" : 100000,
-          "paymentDate" : "2020-03-20"}]
+        {
+          "paymentAmount": 100000,
+          "paymentDate": "2020-02-20"
+        },
+        {
+          "paymentAmount": 100000,
+          "paymentDate": "2020-03-20"
+        }
+      ],
+      "breathingSpaces": []
     }
   ],
-  "breathingSpaces": [],
   "customerPostcodes": [
     {
       "addressPostcode": "BN124XH",

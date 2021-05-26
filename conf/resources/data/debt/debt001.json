@@ -1,7 +1,8 @@
 {
   "debtItems": [
     {
-      "dutyID": "duty01",
+      "dutyId": "duty01",
+      "debtID": "debt001",
       "mainTrans": "1525",
       "subTrans": "1000",
       "chargeDescription": "RTI-Income Tax",
@@ -10,11 +11,24 @@
       "interestKey": "01",
       "interestStartDate": "2020-12-20",
       "dateCreated": "2020-12-20",
+      "dateCalculationTo": "2021-05-24",
+      "periodFrom": "2019-12-20",
       "periodEnd": "2021-01-20",
-      "payments": []
+      "payments": [],
+      "breathingSpaces": [
+        {
+          "debtRespiteFrom": "2021-02-04",
+          "debtRespiteTo": "2021-03-04"
+        },
+        {
+          "debtRespiteFrom": "2021-04-04",
+          "debtRespiteTo": "2021-06-04"
+        }
+      ]
     },
     {
-      "dutyID": "duty02",
+      "dutyId": "duty02",
+      "debtID": "debt001",
       "mainTrans": "1525",
       "subTrans": "1000",
       "chargeDescription": "RTI-Income Tax",
@@ -23,18 +37,20 @@
       "interestKey": "01",
       "interestStartDate": "2021-02-04",
       "dateCreated": "2021-02-04",
+      "dateCalculationTo": "2021-05-24",
+      "periodFrom": "2019-12-20",
       "periodEnd": "2021-01-20",
-      "payments": []
-    }
-  ],
-  "breathingSpaces": [
-    {
-      "debtRespiteFrom": "2021-02-04",
-      "debtRespiteTo": "2021-03-04"
-    },
-    {
-      "debtRespiteFrom": "2021-04-04",
-      "debtRespiteTo": "2021-06-04"
+      "payments": [],
+      "breathingSpaces": [
+        {
+          "debtRespiteFrom": "2021-02-04",
+          "debtRespiteTo": "2021-03-04"
+        },
+        {
+          "debtRespiteFrom": "2021-04-04",
+          "debtRespiteTo": "2021-06-04"
+        }
+      ]
     }
   ],
   "customerPostcodes": [
