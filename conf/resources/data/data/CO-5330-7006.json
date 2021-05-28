@@ -1,10 +1,6 @@
 {
-  "ItemList": [
-    {
-      "mainTrans": "5330",
-      "subTrans": "7006",
-      "debtTypeDescription": "CO: ChB Debt",
-      "dutyTypeDescription": "CO: Child Benefit Debt"
-    }
-  ]
+  "mainTrans": "5330",
+  "subTrans": "7006",
+  "debtTypeDescription":"CO: ChB Debt",
+  "dutyTypeDescription": "CO: Child Benefit Debt"
 }
