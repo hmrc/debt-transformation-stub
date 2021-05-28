@@ -28,12 +28,8 @@ import scala.io.Source
 class AuthController @Inject()(environment: Environment, cc: ControllerComponents)
   extends BackendController(cc) with BaseController {
 
-  def getAccessToken() = Action(parse.json).async { implicit request =>
-    withCustomJsonBody[AuthCredential] {
-      case AuthCredential("stub-client-id", "stub-secret-id", "client_credentials") =>
-        Future successful Accepted(Source.fromFile(environment.getFile("conf/resources/data/auth/bearer-token.json")).mkString)
-      case _ => Future successful NotFound("invalid credentials")
-    }
+  def getAccessToken() = Action(parse.tolerantFormUrlEncoded).async { implicit request =>
+    Future successful Accepted(Source.fromFile(environment.getFile("conf/resources/data/auth/bearer-token.json")).mkString)
   }
 
 }

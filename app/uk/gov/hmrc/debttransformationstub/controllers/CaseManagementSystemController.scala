@@ -50,8 +50,14 @@ class CaseManagementSystemController @Inject()(environment: Environment, cc: Con
     val maybeBearerToken: Option[String] = request.headers.get("Authorization")
     if (maybeBearerToken.isDefined) {
       environment.getExistingFile(basePath + casePath + debtId + ".json") match {
-        case Some(file) => Ok(Source.fromFile(file).mkString)
-        case _ => NotFound("file not found")
+        case Some(file) => {
+          println("FOUND")
+          Ok(Source.fromFile(file).mkString)
+        }
+        case _ => {
+          println("NOT FOUND")
+          NotFound("file not found")
+        }
       }
     }
     else Unauthorized("invalid token provided")
