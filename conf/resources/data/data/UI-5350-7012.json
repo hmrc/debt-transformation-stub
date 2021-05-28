@@ -1,6 +1,10 @@
 {
-  "mainTrans": "5350",
-  "subTrans": "7012",
-  "debtTypeDescription":"UI: ChB Migrated Debt",
-  "dutyTypeDescription": "UI: Child Benefit Migrated Debt"
+  "ItemList": [
+    {
+      "mainTrans": "5350",
+      "subTrans": "7012",
+      "debtTypeDescription": "UI: ChB Migrated Debt",
+      "dutyTypeDescription": "UI: Child Benefit Migrated Debt"
+    }
+  ]
 }

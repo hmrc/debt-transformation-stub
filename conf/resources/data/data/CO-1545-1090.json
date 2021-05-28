@@ -1,6 +1,10 @@
 {
-  "mainTrans": "1545",
-  "subTrans": "1090",
-  "debtTypeDescription":"CO: TPSS Contract Settlement",
-  "dutyTypeDescription": "CO: TGPEN"
+  "ItemList": [
+    {
+      "mainTrans": "1545",
+      "subTrans": "1090",
+      "debtTypeDescription": "CO: TPSS Contract Settlement",
+      "dutyTypeDescription": "CO: TGPEN"
+    }
+  ]
 }

@@ -58,7 +58,7 @@ class ReferenceLookupController @Inject()(environment: Environment, cc: Controll
         if (files.isEmpty) {
           Future successful NotFound("file not found")
         } else {
-          val result = files.map(file => Source.fromFile(file).mkString).mkString("[", ",", "]")
+          val result = files.map(file => Source.fromFile(file).mkString).mkString("")
           Future successful Ok(result)
         }
       } else Future successful Unauthorized("invalid token provided")
