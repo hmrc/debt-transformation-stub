@@ -1,0 +1,28 @@
+{
+  "debtItems": [
+    {
+      "dutyId": "duty01",
+      "debtID": "debt008",
+      "mainTrans": "1545",
+      "subTrans": "1090",
+      "chargeDescription": "RTI-Income Tax",
+      "originalAmount": 500000,
+      "outstandingAmount": 500000,
+      "interestKey": "01",
+      "interestStartDate": "2021-03-01",
+      "dateCreated": "2021-03-01",
+      "dateCalculationTo": "2021-03-08",
+      "periodFrom": "2021-02-20",
+      "periodEnd": "2021-04-20",
+      "payments": [],
+      "breathingSpaces": [
+      ]
+    }
+  ],
+  "customerPostcodes": [
+    {
+      "addressPostcode": "TW334QQ",
+      "postcodeDate": "2019-01-01"
+    }
+  ]
+}
