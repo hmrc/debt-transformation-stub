@@ -9,3 +9,5 @@ GET        /prweb/PRRestService/ARC/01/ChargeData/customer/:customerUniqueRef/de
 POST       /prweb/PRRestService/ARC/01/RefData                                                                 uk.gov.hmrc.debttransformationstub.controllers.ReferenceLookupController.getReferenceDataLookup
 
 POST       /prweb/PRRestService/oauth2/v1/token                         uk.gov.hmrc.debttransformationstub.controllers.AuthController.getAccessToken()
+
+POST       /individuals/time-to-pay/quote                               uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.generateQuote
