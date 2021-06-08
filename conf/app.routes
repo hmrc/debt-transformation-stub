@@ -10,4 +10,5 @@ POST       /prweb/PRRestService/ARC/01/RefData                                  
 
 POST       /prweb/PRRestService/oauth2/v1/token                         uk.gov.hmrc.debttransformationstub.controllers.AuthController.getAccessToken()
 
-POST       /individuals/time-to-pay/quote                               uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.generateQuote
+POST       /individuals/time-to-pay/quote                                       uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.generateQuote
+GET        /individuals/time-to-pay/quote/:customerReference/:pegaId            uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.getExistingQuote(customerReference: String, pegaId: String)

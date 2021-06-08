@@ -46,6 +46,13 @@ class TimeToPayController @Inject()(environment: Environment, cc: ControllerComp
     }
   }
 
+  def getExistingQuote(customerReference: String, pegaId: String) = Action { implicit request =>
+    environment.getExistingFile(s"$basePath/ttp.existingQuote/$pegaId.json") match {
+      case Some(file) => Ok(Source.fromFile(file).mkString)
+      case _ => NotFound("file not found")
+    }
+  }
+
 }
 
 
