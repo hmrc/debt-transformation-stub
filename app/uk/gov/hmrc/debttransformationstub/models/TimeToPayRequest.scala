@@ -20,13 +20,21 @@ import java.time.LocalDate
 
 import play.api.libs.json.Json
 
+case class BreathingSpace(debtRespiteFrom: LocalDate,
+                          debtRespiteTo: LocalDate,
+                          paymentDate: LocalDate,
+                          paymentAmount: BigDecimal)
+
+object BreathingSpace {
+  implicit val format = Json.format[BreathingSpace]
+}
 
 final case class Duty(
                        dutyId: String,
                        subtrans: String,
-                       paymentDate: LocalDate,
-                       paymentAmount: Int,
-                       originalDebtAmount: Int)
+                       originalDebtAmount: BigDecimal,
+                       interestStartDate: LocalDate,
+                       breathingSpaces: List[BreathingSpace])
 
 object Duty {
   implicit val format = Json.format[Duty]
@@ -35,9 +43,6 @@ object Duty {
 final case class Debts(
                         debtId: String,
                         mainTrans: String,
-                        interestStartDate: LocalDate,
-                        debtRespiteFrom: LocalDate,
-                        debtRespiteTo: LocalDate,
                         duties: Seq[Duty])
 
 object Debts {

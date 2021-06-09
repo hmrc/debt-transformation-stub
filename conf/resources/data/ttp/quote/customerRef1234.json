@@ -1,16 +1,26 @@
 {
   "quoteReference": "quoteRef1234",
   "customerReference": "customerRef1234",
-  "quoteStatus": "xyz",
   "quoteType": "xyz",
-  "payments": [
+  "instalments": [
     {
-      "paymentDate": "2021-05-13",
-      "paymentAmount": 100
+      "dutyId": "duty01",
+      "debtId": "debt01",
+      "dueDate": "2021-05-01",
+      "amountDue": 100,
+      "interestRate": 0.26,
+      "instalmentNumber": 1
+    },
+    {
+      "dutyId": "duty01",
+      "debtId": "debt01",
+      "dueDate": "2021-06-01",
+      "amountDue": 100,
+      "interestRate": 0.26,
+      "instalmentNumber": 2
     }
   ],
-  "numberOfInstalments": "12",
-  "outstandingAmountDue": "2021-05-13",
-  "interestRate": 0.26,
-  "totalAmount": 1000
+  "numberOfInstalments": "2",
+  "totalDebtAmount": 1000,
+  "totalInterest": 0.26
 }
