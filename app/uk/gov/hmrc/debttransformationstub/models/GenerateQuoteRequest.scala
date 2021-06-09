@@ -62,13 +62,13 @@ object Customer {
   implicit val format = Json.format[Customer]
 }
 
-case class TimeToPayRequest(
+case class GenerateQuoteRequest (
                              customerReference: String,
                              debtAmount: BigDecimal,
                              customer: List[Customer],
                              debts: List[Debts])
 
 
-object TimeToPayRequest {
-  implicit val format = Json.format[TimeToPayRequest]
+object GenerateQuoteRequest {
+  implicit val format = Json.format[GenerateQuoteRequest]
 }
