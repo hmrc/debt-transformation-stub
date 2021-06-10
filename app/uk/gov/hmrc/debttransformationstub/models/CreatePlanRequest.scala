@@ -35,7 +35,7 @@ object Instalments {
 
 final case class CreatePlanRequest(
                                     customerReference: String,
-                                    pegaPlanId: String,
+                                    planId: String,
                                     paymentMethod: String,
                                     paymentReference: String,
                                     thirdPartyBank: Boolean,

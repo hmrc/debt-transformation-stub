@@ -1,5 +1,5 @@
 {
   "customerReference": "customerRef1234",
-  "pegaPlanId": "pegaPlanId1234",
+  "planId": "pegaPlanId1234",
   "planStatus": "xyz"
 }
