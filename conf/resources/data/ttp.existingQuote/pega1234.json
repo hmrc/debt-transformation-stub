@@ -1,27 +1,29 @@
 {
   "customerReference": "customerRef1234",
-  "pegaPlanId": "pagePlanId1234",
+  "pegaPlanId": "pega1234",
   "quoteType": "xyz",
   "paymentMethod": "BACS",
   "paymentReference": "paymentRef1234",
-  "contractInfo": "xyz",
-  "schedulingInfo": "xyz",
-  "payments": [
-    {
-      "paymentDate": "2021-05-13",
-      "paymentAmount": 100
-    }
-  ],
   "instalments": [
     {
+      "dutyId": "duty01",
+      "debtId": "debt01",
       "dueDate": "2021-05-01",
       "amountDue": 100,
-      "interestRate": 0.26
+      "balance": 100,
+      "interest": 10.01,
+      "interestRate": 0.26,
+      "instalmentNumber": 1
     },
     {
+      "dutyId": "duty01",
+      "debtId": "debt01",
       "dueDate": "2021-06-01",
       "amountDue": 100,
-      "interestRate": 0.26
+      "balance": 100,
+      "interest": 10.01,
+      "interestRate": 0.26,
+      "instalmentNumber": 2
     }
   ],
   "numberOfInstalments": "2",
