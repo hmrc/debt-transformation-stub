@@ -24,8 +24,7 @@ final case class Instalments(dutyId: String,
                              debtId: String,
                              dueDate: LocalDate,
                              amountDue: BigDecimal,
-                             balance: BigDecimal,
-                             interest: Double,
+                             expectedPayment: BigDecimal,
                              interestRate: Double,
                              instalmentNumber: Int)
 
