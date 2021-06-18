@@ -1,6 +1,6 @@
 {
   "customerReference": "customerRef1234",
-  "planId": "pega1234",
+  "planId": "planId1234",
   "quoteType": "xyz",
   "paymentMethod": "BACS",
   "paymentReference": "paymentRef1234",
@@ -10,8 +10,7 @@
       "debtId": "debt01",
       "dueDate": "2021-05-01",
       "amountDue": 100,
-      "balance": 100,
-      "interest": 10.01,
+      "expectedPayment": 100,
       "interestRate": 0.26,
       "instalmentNumber": 1
     },
@@ -20,8 +19,7 @@
       "debtId": "debt01",
       "dueDate": "2021-06-01",
       "amountDue": 100,
-      "balance": 100,
-      "interest": 10.01,
+      "expectedPayment": 100,
       "interestRate": 0.26,
       "instalmentNumber": 2
     }
