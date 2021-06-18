@@ -8,6 +8,7 @@
       "debtId": "debt01",
       "dueDate": "2021-05-01",
       "amountDue": 100,
+      "expectedPayment": 100,
       "interestRate": 0.26,
       "instalmentNumber": 1
     },
@@ -16,6 +17,7 @@
       "debtId": "debt01",
       "dueDate": "2021-06-01",
       "amountDue": 100,
+      "expectedPayment": 100,
       "interestRate": 0.26,
       "instalmentNumber": 2
     }

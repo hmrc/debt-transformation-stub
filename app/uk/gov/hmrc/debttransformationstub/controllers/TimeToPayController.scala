@@ -47,14 +47,14 @@ class TimeToPayController @Inject()(environment: Environment, cc: ControllerComp
   }
 
   def getExistingQuote(customerReference: String, pegaId: String) = Action { implicit request =>
-    environment.getExistingFile(s"$basePath/ttp.existingQuote/$pegaId.json") match {
+    environment.getExistingFile(s"$basePath/ttp.viewPlan/$pegaId.json") match {
       case Some(file) => Ok(Source.fromFile(file).mkString)
       case _ => NotFound("file not found")
     }
   }
 
   def updateQuote(customerReference: String, pegaId: String) = Action { implicit request =>
-    environment.getExistingFile(s"$basePath/ttp.updateQuote/$customerReference.json") match {
+    environment.getExistingFile(s"$basePath/ttp.updatePlan/$customerReference.json") match {
       case Some(file) => Ok(Source.fromFile(file).mkString)
       case _ => NotFound("file not found")
     }
