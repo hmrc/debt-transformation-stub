@@ -47,6 +47,7 @@ class CaseManagementSystemController @Inject()(environment: Environment, cc: Con
   }
 
   def getDebtCaseManagement(customerUniqueRef: String, debtId: String, dutyIds: String) = Action { request =>
+    Thread.sleep(500)
     val maybeBearerToken: Option[String] = request.headers.get("Authorization")
     if (maybeBearerToken.isDefined) {
       environment.getExistingFile(basePath + casePath + debtId + ".json") match {
