@@ -16,11 +16,10 @@
 
 package uk.gov.hmrc.debttransformationstub.controllers
 
-import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
-import uk.gov.hmrc.debttransformationstub.utils._
-import play.api.mvc._
 import play.api.Environment
+import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.utils.ListHelper
+import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.{Inject, Singleton}
 import scala.io.Source
@@ -35,6 +34,7 @@ class CaseManagementSystemController @Inject()(environment: Environment, cc: Con
   private val listHelper: ListHelper = new ListHelper()
 
   def getCaseDetails(debtID: String, duties: Option[String]) = Action { request =>
+    Thread.sleep(500)
     val testOnlyResponseCode: Option[String] = request.headers.get("testOnlyResponseCode")
     if (testOnlyResponseCode.isDefined) {
       Results.Status(testOnlyResponseCode.map(_.toInt).getOrElse(500))
