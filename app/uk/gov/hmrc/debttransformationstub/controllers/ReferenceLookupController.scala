@@ -36,7 +36,6 @@ class ReferenceLookupController @Inject()(environment: Environment, cc: Controll
   private val listHelper: ListHelper = new ListHelper()
 
   def getReferenceData(descType: String, mainTrans: String, subTrans: String) = Action { request =>
-    Thread.sleep(500)
     val testOnlyResponseCode: Option[String] = request.headers.get("testOnlyResponseCode")
     if (testOnlyResponseCode.isDefined) {
       Results.Status(testOnlyResponseCode.map(_.toInt).getOrElse(500))
@@ -49,6 +48,7 @@ class ReferenceLookupController @Inject()(environment: Environment, cc: Controll
   }
 
   def getReferenceDataLookup() = Action(parse.json).async { implicit request =>
+    Thread.sleep(500)
     withCustomJsonBody[ReferenceDataLookupRequest] { req =>
       val maybeBearerToken: Option[String] = request.headers.get("Authorization")
       if (maybeBearerToken.isDefined) {
