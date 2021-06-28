@@ -48,7 +48,6 @@ class ReferenceLookupController @Inject()(environment: Environment, cc: Controll
   }
 
   def getReferenceDataLookup() = Action(parse.json).async { implicit request =>
-    Thread.sleep(500)
     withCustomJsonBody[ReferenceDataLookupRequest] { req =>
       val maybeBearerToken: Option[String] = request.headers.get("Authorization")
       if (maybeBearerToken.isDefined) {
