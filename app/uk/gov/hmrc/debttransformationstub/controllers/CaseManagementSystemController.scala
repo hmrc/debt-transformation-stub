@@ -34,7 +34,6 @@ class CaseManagementSystemController @Inject()(environment: Environment, cc: Con
   private val listHelper: ListHelper = new ListHelper()
 
   def getCaseDetails(debtID: String, duties: Option[String]) = Action { request =>
-    Thread.sleep(500)
     val testOnlyResponseCode: Option[String] = request.headers.get("testOnlyResponseCode")
     if (testOnlyResponseCode.isDefined) {
       Results.Status(testOnlyResponseCode.map(_.toInt).getOrElse(500))
@@ -47,7 +46,6 @@ class CaseManagementSystemController @Inject()(environment: Environment, cc: Con
   }
 
   def getDebtCaseManagement(customerUniqueRef: String, debtId: String, dutyIds: String) = Action { request =>
-    Thread.sleep(500)
     val maybeBearerToken: Option[String] = request.headers.get("Authorization")
     if (maybeBearerToken.isDefined) {
       environment.getExistingFile(basePath + casePath + debtId + ".json") match {
