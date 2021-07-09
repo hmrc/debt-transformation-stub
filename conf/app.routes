@@ -14,3 +14,6 @@ POST       /individuals/time-to-pay/quote                                       
 GET        /individuals/time-to-pay/quote/:customerReference/:pegaId            uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.getExistingQuote(customerReference: String, pegaId: String)
 PUT        /individuals/time-to-pay/quote/:customerReference/:pegaId            uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.updateQuote(customerReference: String, pegaId: String)
 POST       /individuals/time-to-pay/quote/arrangement                           uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.createPlan
+
+GET        /test-only/requests                               uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.requests
+POST       /test-only/response                               uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.response
