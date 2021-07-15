@@ -20,13 +20,19 @@ import javax.inject.{Inject, Singleton}
 import play.api.Configuration
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
+//trait AppConfig {
+//
+//  def dbUrl: String
+//
+//}
+
 @Singleton
 class AppConfig @Inject()
   (
     config: Configuration
   , servicesConfig: ServicesConfig
   ) {
-
+  val dbUrl: String = config.get[String]("mongodb.uri")
   val authBaseUrl: String = servicesConfig.baseUrl("auth")
 
   val auditingEnabled: Boolean = config.get[Boolean]("auditing.enabled")

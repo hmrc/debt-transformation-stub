@@ -14,24 +14,23 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.debttransformationstub.models
+package uk.gov.hmrc.debttransformationstub.actions.responses
 
 import play.api.libs.json.{Json, OFormat}
-import uk.gov.hmrc.debttransformationstub.actions.requests.RequestDetailsRequest
+import uk.gov.hmrc.debttransformationstub.models.RequestDetail
 
-case class RequestDetails(requestId: String, content: String, uri: Option[String], isResponse: Boolean)
+case class RequestDetailsResponse(requestId: String, content: String, uri: Option[String], isResponse: Boolean)
 
-object RequestDetailss {
+object RequestDetailsResponse {
 
-    implicit val requestDetailsFormat: OFormat[RequestDetails] = Json.format[RequestDetails]
+    implicit val ttpRequestsResponseFormat: OFormat[RequestDetailsResponse] = Json.format
 
-    def apply(requestDetailsRequest: RequestDetailsRequest): RequestDetails = {
-        RequestDetails(
-            requestDetailsRequest.requestId,
-            requestDetailsRequest.content,
-            requestDetailsRequest.uri,
-            requestDetailsRequest.isResponse
+    def apply(requestDetails:  RequestDetail): RequestDetailsResponse = {
+        RequestDetailsResponse(
+            requestDetails.requestId,
+            requestDetails.content,
+            requestDetails.uri,
+            requestDetails.isResponse
         )
     }
 }
-
