@@ -42,6 +42,12 @@ class TimeToPayTestController @Inject()(cc: ControllerComponents, ttpRequestsSer
     }
   }
 
+  def getUnprocessedRequests(): Action[AnyContent] = Action.async { implicit request =>
+    ttpRequestsService.getUnprocesedTTPRequests().map { result: immutable.Seq[RequestDetailsResponse] =>
+      Results.Ok(Json.toJson(result))
+    }
+  }
+
   def getTTPRequest(requestId: String): Action[AnyContent] = Action.async { implicit request =>
     ttpRequestsService.getTTPRequest(requestId).map { result: Option[RequestDetailsResponse] =>
       Results.Ok(Json.toJson(result))

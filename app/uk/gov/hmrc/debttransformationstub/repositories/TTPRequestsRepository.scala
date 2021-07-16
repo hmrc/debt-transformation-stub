@@ -18,7 +18,7 @@ package uk.gov.hmrc.debttransformationstub.repositories
 
 import com.google.inject.{ImplementedBy, Singleton}
 import javax.inject.Inject
-import play.api.libs.json.{JsString, Json}
+import play.api.libs.json.{JsBoolean, JsString, Json}
 import play.modules.reactivemongo.ReactiveMongoComponent
 import reactivemongo.api.commands.WriteResult
 import reactivemongo.api.indexes.{Index, IndexType}
@@ -27,11 +27,11 @@ import scala.concurrent.{ExecutionContext, Future}
 import uk.gov.hmrc.debttransformationstub.models.RequestDetail
 import uk.gov.hmrc.mongo.ReactiveRepository
 import uk.gov.hmrc.mongo.json.ReactiveMongoFormats
-import reactivemongo.play.json.ImplicitBSONHandlers._
 
 @ImplementedBy(classOf[TTPRequestsRepositoryImpl])
 trait TTPRequestsRepository {
   def findRequestDetails(): Future[List[RequestDetail]]
+  def findUnprocessedRequestDetails() : Future[List[RequestDetail]]
   def getByRequestId(id: String): Future[Option[RequestDetail]]
   def insertRequestsDetails(requestDetail: RequestDetail)(implicit ec: ExecutionContext): Future[WriteResult]
 
@@ -54,8 +54,10 @@ class TTPRequestsRepositoryImpl @Inject()(implicit mongo: ReactiveMongoComponent
   }
 
   override def findRequestDetails(): Future[List[RequestDetail]] = super.findAll()
-  override def getByRequestId(id: String): Future[Option[RequestDetail]] = super.find("requestId" -> JsString(id) ).map(_.headOption)
 
+  override def findUnprocessedRequestDetails(): Future[List[RequestDetail]] = super.find("isResponse" -> JsBoolean(false))
+
+  override def getByRequestId(id: String): Future[Option[RequestDetail]] = super.find("requestId" -> JsString(id) ).map(_.headOption)
 
 
   override def insertRequestsDetails(requestDetail: RequestDetail)(implicit ec: ExecutionContext): Future[WriteResult] = insert(requestDetail)

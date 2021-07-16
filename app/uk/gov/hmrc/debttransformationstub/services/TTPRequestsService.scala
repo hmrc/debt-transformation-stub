@@ -33,6 +33,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 @ImplementedBy(classOf[DefaultTTPRequestsService])
 trait TTPRequestsService {
   def getTTPRequests(): Future[List[RequestDetailsResponse]]
+  def getUnprocesedTTPRequests(): Future[List[RequestDetailsResponse]]
   def getTTPRequest(requestId: String): Future[Option[RequestDetailsResponse]]
   def addRequestDetails(requestDetailsRequest: RequestDetailsRequest)(implicit hc: HeaderCarrier): Future[Either[TTPRequestsError, String]]
 //  def setTTPRequestToProcessed(requestId: String): Future[Either[TTPRequestsError, String]]
@@ -68,6 +69,15 @@ class DefaultTTPRequestsService @Inject()(ttpRequestsRepository: TTPRequestsRepo
     }
     ttpDetailsResponse
   }
+
+  override def getUnprocesedTTPRequests(): Future[List[RequestDetailsResponse]] = {
+    val ttpDetailsResponse = ttpRequestsRepository.findUnprocessedRequestDetails() map { requestDetails =>
+      requestDetails.map { requestDetails => RequestDetailsResponse(requestDetails) }
+    }
+    ttpDetailsResponse
+  }
+
+
 
 //  override def setTTPRequestToProcessed(requestId: String, processed:Boolean =true)
 
