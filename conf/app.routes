@@ -17,5 +17,6 @@ POST        /individuals/time-to-pay/quote/arrangement                          
 
 GET         /test-only/all-requests                                                                       uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.getTTPRequests
 GET         /test-only/requests                                                                           uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.getUnprocessedRequests
+DELETE      /test-only/request/:requestId                                                                 uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.deleteTTPRequest(requestId: String)
 GET         /test-only/request/:requestId                                                                 uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.getTTPRequest(requestId: String )
 POST        /test-only/response                                                                           uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.createTTPRequests

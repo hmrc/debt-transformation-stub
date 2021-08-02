@@ -18,7 +18,7 @@ package uk.gov.hmrc.debttransformationstub.actions.requests
 
 import play.api.libs.json.{Json, OFormat}
 
-case class RequestDetailsRequest(requestId: String, content: String, uri: Option[String], isResponse: Boolean)
+case class RequestDetailsRequest(requestId: String, content: String, uri: Option[String], isResponse: Boolean, processed: Boolean)
 
 
 object RequestDetailsRequest {

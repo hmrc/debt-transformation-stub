@@ -24,7 +24,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.hmrc.debttransformationstub.actions.requests.RequestDetailsRequest
 import uk.gov.hmrc.debttransformationstub.actions.responses.RequestDetailsResponse
-//import uk.gov.hmrc.debttransformationstub.models
+import uk.gov.hmrc.debttransformationstub.models.errors.TTPRequestsDeletionError
 import uk.gov.hmrc.debttransformationstub.models.RequestDetail
 import uk.gov.hmrc.debttransformationstub.models.errors.{TTPRequestsCreationError, TTPRequestsError}
 import uk.gov.hmrc.debttransformationstub.repositories.TTPRequestsRepository
@@ -36,7 +36,7 @@ trait TTPRequestsService {
   def getUnprocesedTTPRequests(): Future[List[RequestDetailsResponse]]
   def getTTPRequest(requestId: String): Future[Option[RequestDetailsResponse]]
   def addRequestDetails(requestDetailsRequest: RequestDetailsRequest)(implicit hc: HeaderCarrier): Future[Either[TTPRequestsError, String]]
-//  def setTTPRequestToProcessed(requestId: String): Future[Either[TTPRequestsError, String]]
+  def deleteTTPRequest(requestId: String)(implicit hc: HeaderCarrier): Future[Either[TTPRequestsDeletionError, String]]
 }
 
 @Singleton
@@ -44,7 +44,7 @@ class DefaultTTPRequestsService @Inject()(ttpRequestsRepository: TTPRequestsRepo
         extends TTPRequestsService {
 
   override def addRequestDetails(requestDetailsRequest: RequestDetailsRequest)(implicit hc: HeaderCarrier): Future[Either[TTPRequestsError, String]] = {
-    val requestDetails = RequestDetail(requestDetailsRequest.requestId, requestDetailsRequest.content, requestDetailsRequest.uri, requestDetailsRequest.isResponse)
+    val requestDetails = RequestDetail(requestDetailsRequest.requestId, requestDetailsRequest.content, requestDetailsRequest.uri, requestDetailsRequest.isResponse, requestDetailsRequest.processed)
     println(s"REQUEST DETAILS --> $requestDetails")
 
       val writeResultF = ttpRequestsRepository.insertRequestsDetails(requestDetails)
@@ -78,10 +78,14 @@ class DefaultTTPRequestsService @Inject()(ttpRequestsRepository: TTPRequestsRepo
   }
 
 
+  override def deleteTTPRequest(requestId: String)(implicit hc: HeaderCarrier): Future[Either[TTPRequestsDeletionError, String]]
 
-//  override def setTTPRequestToProcessed(requestId: String, processed:Boolean =true)
-
-  private def setTTPRequestToProcessed(requestId: String, processed: Boolean) = {
-//todo updated processed flag
+  = {
+    ttpRequestsRepository.deleteTTPRequest(requestId) map { x: WriteResult =>
+      if (x.ok)
+        Right("Successfully deleted the TTP request with request Id: " + requestId)
+      else
+        Left(TTPRequestsDeletionError(x.code.fold(404)((e: Int) => e), None))
+    }
   }
 }

@@ -62,6 +62,14 @@ class TimeToPayTestController @Inject()(cc: ControllerComponents, ttpRequestsSer
     }
   }
 
+  def deleteTTPRequest(requestId: String): Action[AnyContent] = Action.async { implicit request =>
+    ttpRequestsService.deleteTTPRequest(requestId).map {
+      case Right(result) => Results.Ok(Json.toJson(result)).withHeaders(XCorrelationId -> result)
+      case Left(error)   => errorToResult(error)
+    }
+  }
+
+
   private def errorToResult(error: TTPRequestsError): Result = {
     error match {
       case e@TTPRequestsCreationError(statusCode, _, _) => {

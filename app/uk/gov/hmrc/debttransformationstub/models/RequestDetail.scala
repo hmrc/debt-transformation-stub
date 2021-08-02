@@ -19,7 +19,7 @@ package uk.gov.hmrc.debttransformationstub.models
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.debttransformationstub.actions.requests.RequestDetailsRequest
 
-case class RequestDetail(requestId: String, content: String, uri: Option[String], isResponse: Boolean)
+case class RequestDetail(requestId: String, content: String, uri: Option[String], isResponse: Boolean, processed: Boolean)
 
 object RequestDetail {
   implicit val requestDetailFormat: OFormat[RequestDetail] = Json.format[RequestDetail]
@@ -29,7 +29,8 @@ object RequestDetail {
       requestDetailsRequest.requestId,
       requestDetailsRequest.content,
       requestDetailsRequest.uri,
-      requestDetailsRequest.isResponse
+      requestDetailsRequest.isResponse,
+      requestDetailsRequest.processed
   )
   }
 }

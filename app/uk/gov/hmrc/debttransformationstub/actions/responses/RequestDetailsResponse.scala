@@ -19,7 +19,7 @@ package uk.gov.hmrc.debttransformationstub.actions.responses
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.debttransformationstub.models.RequestDetail
 
-case class RequestDetailsResponse(requestId: String, content: String, uri: Option[String], isResponse: Boolean)
+case class RequestDetailsResponse(requestId: String, content: String, uri: Option[String], isResponse: Boolean, processed: Boolean)
 
 object RequestDetailsResponse {
 
@@ -30,7 +30,8 @@ object RequestDetailsResponse {
             requestDetails.requestId,
             requestDetails.content,
             requestDetails.uri,
-            requestDetails.isResponse
+            requestDetails.isResponse,
+            requestDetails.processed
         )
     }
 }

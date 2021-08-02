@@ -30,6 +30,7 @@ import uk.gov.hmrc.mongo.json.ReactiveMongoFormats
 
 @ImplementedBy(classOf[TTPRequestsRepositoryImpl])
 trait TTPRequestsRepository {
+  def deleteTTPRequest(requestId: String): Future[WriteResult]
   def findRequestDetails(): Future[List[RequestDetail]]
   def findUnprocessedRequestDetails() : Future[List[RequestDetail]]
   def getByRequestId(id: String): Future[Option[RequestDetail]]
@@ -55,12 +56,12 @@ class TTPRequestsRepositoryImpl @Inject()(implicit mongo: ReactiveMongoComponent
 
   override def findRequestDetails(): Future[List[RequestDetail]] = super.findAll()
 
-  override def findUnprocessedRequestDetails(): Future[List[RequestDetail]] = super.find("isResponse" -> JsBoolean(false))
+  override def findUnprocessedRequestDetails(): Future[List[RequestDetail]] = super.find("processed" -> JsBoolean(false))
 
   override def getByRequestId(id: String): Future[Option[RequestDetail]] = super.find("requestId" -> JsString(id) ).map(_.headOption)
 
-
   override def insertRequestsDetails(requestDetail: RequestDetail)(implicit ec: ExecutionContext): Future[WriteResult] = insert(requestDetail)
 
+  override def deleteTTPRequest(requestId: String): Future[WriteResult] = super.remove("requestId" -> JsString(requestId), "isResponse" -> JsBoolean(false))
 
 }

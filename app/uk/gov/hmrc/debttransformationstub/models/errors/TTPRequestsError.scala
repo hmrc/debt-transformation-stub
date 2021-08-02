@@ -29,3 +29,5 @@ sealed trait ConnectorError extends TTPRequestsError {
 }
 
 final case class TTPRequestsCreationError(statusCode: Int, override val reason: Option[String] = None,  override val identifier: Option[String] = None) extends ConnectorError
+
+final case class TTPRequestsDeletionError(statusCode: Int, override val reason: Option[String] = None,  override val identifier: Option[String] = None) extends ConnectorError
