@@ -18,15 +18,15 @@ package uk.gov.hmrc.debttransformationstub.services
 
 import akka.http.scaladsl.model.StatusCodes
 import com.google.inject.ImplementedBy
+import java.time.LocalDateTime
 import javax.inject.{Inject, Singleton}
 import reactivemongo.api.commands.WriteResult
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.hmrc.debttransformationstub.actions.requests.RequestDetailsRequest
 import uk.gov.hmrc.debttransformationstub.actions.responses.RequestDetailsResponse
-import uk.gov.hmrc.debttransformationstub.models.errors.TTPRequestsDeletionError
 import uk.gov.hmrc.debttransformationstub.models.RequestDetail
-import uk.gov.hmrc.debttransformationstub.models.errors.{TTPRequestsCreationError, TTPRequestsError}
+import uk.gov.hmrc.debttransformationstub.models.errors.{TTPRequestsCreationError, TTPRequestsDeletionError, TTPRequestsError}
 import uk.gov.hmrc.debttransformationstub.repositories.TTPRequestsRepository
 import uk.gov.hmrc.http.HeaderCarrier
 
@@ -44,7 +44,9 @@ class DefaultTTPRequestsService @Inject()(ttpRequestsRepository: TTPRequestsRepo
         extends TTPRequestsService {
 
   override def addRequestDetails(requestDetailsRequest: RequestDetailsRequest)(implicit hc: HeaderCarrier): Future[Either[TTPRequestsError, String]] = {
-    val requestDetails = RequestDetail(requestDetailsRequest.requestId, requestDetailsRequest.content, requestDetailsRequest.uri, requestDetailsRequest.isResponse, requestDetailsRequest.processed)
+
+    val currentDate = LocalDateTime.now()
+    val requestDetails = RequestDetail(requestDetailsRequest.requestId, requestDetailsRequest.content, requestDetailsRequest.uri, requestDetailsRequest.isResponse, requestDetailsRequest.processed, Some(currentDate))
     println(s"REQUEST DETAILS --> $requestDetails")
 
       val writeResultF = ttpRequestsRepository.insertRequestsDetails(requestDetails)

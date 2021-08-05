@@ -16,10 +16,11 @@
 
 package uk.gov.hmrc.debttransformationstub.models
 
+import java.time.LocalDateTime
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.debttransformationstub.actions.requests.RequestDetailsRequest
 
-case class RequestDetails(requestId: String, content: String, uri: Option[String], isResponse: Boolean, processed: Boolean)
+case class RequestDetails(requestId: String, content: String, uri: Option[String], isResponse: Boolean, processed: Boolean, createdOn: Option[LocalDateTime])
 
 object RequestDetailss {
 
@@ -31,7 +32,8 @@ object RequestDetailss {
             requestDetailsRequest.content,
             requestDetailsRequest.uri,
             requestDetailsRequest.isResponse,
-            requestDetailsRequest.processed
+            requestDetailsRequest.processed,
+            requestDetailsRequest.createdOn
         )
     }
 }
