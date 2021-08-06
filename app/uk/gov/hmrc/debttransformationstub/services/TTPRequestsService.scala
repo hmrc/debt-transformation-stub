@@ -46,7 +46,7 @@ class DefaultTTPRequestsService @Inject()(ttpRequestsRepository: TTPRequestsRepo
   override def addRequestDetails(requestDetailsRequest: RequestDetailsRequest)(implicit hc: HeaderCarrier): Future[Either[TTPRequestsError, String]] = {
 
     val currentDate = LocalDateTime.now()
-    val requestDetails = RequestDetail(requestDetailsRequest.requestId, requestDetailsRequest.content, requestDetailsRequest.uri, requestDetailsRequest.isResponse, requestDetailsRequest.processed, Some(currentDate))
+    val requestDetails = RequestDetail(requestDetailsRequest.requestId, requestDetailsRequest.content, requestDetailsRequest.uri, requestDetailsRequest.isResponse, Some(currentDate))
     println(s"REQUEST DETAILS --> $requestDetails")
 
       val writeResultF = ttpRequestsRepository.insertRequestsDetails(requestDetails)

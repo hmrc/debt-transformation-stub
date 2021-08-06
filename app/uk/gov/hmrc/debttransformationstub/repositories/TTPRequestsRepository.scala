@@ -56,7 +56,7 @@ class TTPRequestsRepositoryImpl @Inject()(implicit mongo: ReactiveMongoComponent
 
   override def findRequestDetails(): Future[List[RequestDetail]] = super.findAll()
 
-  override def findUnprocessedRequestDetails(): Future[List[RequestDetail]] = super.find("processed" -> JsBoolean(false))
+  override def findUnprocessedRequestDetails(): Future[List[RequestDetail]] = super.find("isResponse" -> JsBoolean(false))
 
   override def getByRequestId(id: String): Future[Option[RequestDetail]] = super.find("requestId" -> JsString(id) ).map(_.headOption)
 
