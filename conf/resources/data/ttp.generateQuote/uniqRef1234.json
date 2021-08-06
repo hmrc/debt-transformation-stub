@@ -1,0 +1,23 @@
+{
+  "quoteReference": "quoteRef1234",
+  "customerReference": "custRef1234",
+  "quoteType": "instalmentAmount",
+  "quoteDate": "2021-05-13",
+  "numberOfInstalments": 1,
+  "totalDebtincInt": 10,
+  "interestAccrued": 10,
+  "planInterest": 0.25,
+  "instalments": [
+    {
+      "debtItemChargeId": "debtItemChargeId1",
+      "debtItemId": "debtItemId1",
+      "dueDate": "2021-05-13",
+      "amountDue": 100,
+      "expectedPayment": 100,
+      "interestRate": 0.24,
+      "instalmentNumber": 1,
+      "instalmentInterest": 10,
+      "instalmentBalance": 10
+    }
+  ]
+}

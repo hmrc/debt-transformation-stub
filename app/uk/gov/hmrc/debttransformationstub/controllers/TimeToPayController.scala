@@ -34,7 +34,7 @@ class TimeToPayController @Inject()(environment: Environment, cc: ControllerComp
 
   def generateQuote: Action[JsValue] = Action.async(parse.json) { implicit request => {
     withCustomJsonBody[GenerateQuoteRequest] { req =>
-      val fileMaybe: Option[File] = environment.getExistingFile(s"$basePath/ttp.generateQuote/${req.customerReference}.json")
+      val fileMaybe: Option[File] = environment.getExistingFile(s"$basePath/ttp.generateQuote/${req.customerReference.value}.json")
 
       fileMaybe match {
         case None => Future successful NotFound("file not found")
