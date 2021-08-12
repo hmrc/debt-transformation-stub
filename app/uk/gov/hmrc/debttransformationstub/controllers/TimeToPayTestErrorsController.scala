@@ -24,51 +24,30 @@ import scala.collection.immutable
 import scala.concurrent.ExecutionContext
 import uk.gov.hmrc.debttransformationstub.actions.requests.RequestDetailsRequest
 import uk.gov.hmrc.debttransformationstub.actions.responses.RequestDetailsResponse
-import uk.gov.hmrc.debttransformationstub.models.RequestDetail
 import uk.gov.hmrc.debttransformationstub.models.errors.{TTPRequestsCreationError, TTPRequestsError}
-import uk.gov.hmrc.debttransformationstub.services.TTPRequestsService
+import uk.gov.hmrc.debttransformationstub.services.{TTPRequestErrorsService, TTPRequestsService}
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 @Singleton()
-class TimeToPayTestController @Inject()(cc: ControllerComponents, ttpRequestsService: TTPRequestsService)(implicit val executionContext: ExecutionContext)
+class TimeToPayTestErrorsController @Inject()(cc: ControllerComponents, ttpRequestErrorsService: TTPRequestErrorsService)(implicit val executionContext: ExecutionContext)
   extends BackendController(cc) with BaseController {
 
-  private val logger = LogFactory.getLog(classOf[TimeToPayTestController])
+  private val logger = LogFactory.getLog(classOf[TimeToPayTestErrorsController])
   val XCorrelationId = "X-Correlation-Id"
 
-  def getTTPRequests(): Action[AnyContent] = Action.async { implicit request =>
-    ttpRequestsService.getTTPRequests().map { result: immutable.Seq[RequestDetailsResponse] =>
+  def getTTPRequestErrors(): Action[AnyContent] = Action.async { implicit request =>
+    ttpRequestErrorsService.getTTPRequestErrors().map { result: immutable.Seq[RequestDetailsResponse] =>
       Results.Ok(Json.toJson(result))
     }
   }
 
-  def getUnprocessedRequests(): Action[AnyContent] = Action.async { implicit request =>
-    ttpRequestsService.getUnprocesedTTPRequests().map { result: immutable.Seq[RequestDetailsResponse] =>
-      Results.Ok(Json.toJson(result))
-    }
-  }
-
-  def getTTPRequest(requestId: String): Action[AnyContent] = Action.async { implicit request =>
-    ttpRequestsService.getTTPRequest(requestId).map { result: Option[RequestDetailsResponse] =>
-      Results.Ok(Json.toJson(result))
-    }
-  }
-
-  def createTTPRequests: Action[JsValue] = Action.async(parse.json) { implicit request =>
+  def logTTPRequestError: Action[JsValue] = Action.async(parse.json) { implicit request =>
     withCustomJsonBody[RequestDetailsRequest] { requestDetailsRequest: RequestDetailsRequest =>
 
-      logger.info("Persist the TTP requests")
-      ttpRequestsService.addRequestDetails(requestDetailsRequest = requestDetailsRequest).map(toResult)
+      logger.info("Persist the TTP request error")
+      ttpRequestErrorsService.logTTPRequestError(requestDetailsRequest = requestDetailsRequest).map(toResult)
     }
   }
-
-  def deleteTTPRequest(requestId: String): Action[AnyContent] = Action.async { implicit request =>
-    ttpRequestsService.deleteTTPRequest(requestId).map {
-      case Right(result) => Results.Ok(Json.toJson(result)).withHeaders(XCorrelationId -> result)
-      case Left(error)   => errorToResult(error)
-    }
-  }
-
 
   private def errorToResult(error: TTPRequestsError): Result = {
     error match {
