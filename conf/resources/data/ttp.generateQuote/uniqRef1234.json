@@ -7,6 +7,7 @@
   "totalDebtincInt": 10,
   "interestAccrued": 10,
   "planInterest": 0.25,
+  "totalInterest": 12.25,
   "instalments": [
     {
       "debtItemChargeId": "debtItemChargeId1",
@@ -16,7 +17,7 @@
       "expectedPayment": 100,
       "interestRate": 0.24,
       "instalmentNumber": 1,
-      "instalmentInterest": 10,
+      "instalmentInterestAccrued": 10,
       "instalmentBalance": 10
     }
   ]
