@@ -4,7 +4,6 @@ import sbt._
 object AppDependencies {
 
   private val mongoLock = "7.0.0-play-28"
-
   val compile = Seq(
     "uk.gov.hmrc"             %% "bootstrap-backend-play-28"  % "4.2.0",
     "uk.gov.hmrc"             %% "simple-reactivemongo"       % "8.0.0-play-28"
