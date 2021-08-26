@@ -1,19 +1,24 @@
 # microservice specific routes
 
-GET        /debt                                                        uk.gov.hmrc.debttransformationstub.controllers.CaseManagementSystemController.getList
-GET        /debt/:debtID                                                uk.gov.hmrc.debttransformationstub.controllers.CaseManagementSystemController.getCaseDetails(debtID: String, duties: Option[String])
-GET        /data                                                        uk.gov.hmrc.debttransformationstub.controllers.ReferenceLookupController.getList
-GET        /data/:type/mainTrans/:mainTrans/subTrans/:subTrans          uk.gov.hmrc.debttransformationstub.controllers.ReferenceLookupController.getReferenceData(type: String, mainTrans: String, subTrans: String)
+GET           /debt                                                                                         uk.gov.hmrc.debttransformationstub.controllers.CaseManagementSystemController.getList
+GET           /debt/:debtID                                                                                 uk.gov.hmrc.debttransformationstub.controllers.CaseManagementSystemController.getCaseDetails(debtID: String, duties: Option[String])
+GET           /data                                                                                         uk.gov.hmrc.debttransformationstub.controllers.ReferenceLookupController.getList
+GET           /data/:type/mainTrans/:mainTrans/subTrans/:subTrans                                           uk.gov.hmrc.debttransformationstub.controllers.ReferenceLookupController.getReferenceData(type: String, mainTrans: String, subTrans: String)
 
-GET        /prweb/api/ARC/01/ChargeData/customer/:customerUniqueRef/debts/debtId/:debtId/:dutyIds                    uk.gov.hmrc.debttransformationstub.controllers.CaseManagementSystemController.getDebtCaseManagement(customerUniqueRef: String, debtId: String, dutyIds: String)
-POST       /prweb/api/ARC/01/RefData                                                                                  uk.gov.hmrc.debttransformationstub.controllers.ReferenceLookupController.getReferenceDataLookup
+GET           /prweb/api/ARC/01/ChargeData/customer/:customerUniqueRef/debts/debtId/:debtId/:dutyIds        uk.gov.hmrc.debttransformationstub.controllers.CaseManagementSystemController.getDebtCaseManagement(customerUniqueRef: String, debtId: String, dutyIds: String)
+POST          /prweb/api/ARC/01/RefData                                                                     uk.gov.hmrc.debttransformationstub.controllers.ReferenceLookupController.getReferenceDataLookup
 
-POST       /prweb/PRRestService/oauth2/v1/token                         uk.gov.hmrc.debttransformationstub.controllers.AuthController.getAccessToken()
+POST          /prweb/PRRestService/oauth2/v1/token                                                          uk.gov.hmrc.debttransformationstub.controllers.AuthController.getAccessToken()
 
-POST       /individuals/time-to-pay/quote                                       uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.generateQuote
-GET        /individuals/time-to-pay/quote/:customerReference/:pegaId            uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.getExistingQuote(customerReference: String, pegaId: String)
-PUT        /individuals/time-to-pay/quote/:customerReference/:pegaId            uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.updateQuote(customerReference: String, pegaId: String)
-POST       /individuals/time-to-pay/quote/arrangement                           uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.createPlan
+POST          /individuals/time-to-pay/quote                                                                uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.generateQuote
+GET           /individuals/time-to-pay/quote/:customerReference/:pegaId                                     uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.getExistingQuote(customerReference: String, pegaId: String)
+PUT           /individuals/time-to-pay/quote/:customerReference/:pegaId                                     uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.updateQuote(customerReference: String, pegaId: String)
+POST          /individuals/time-to-pay/quote/arrangement                                                    uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.createPlan
 
-GET        /test-only/requests                               uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.requests
-POST       /test-only/response                               uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.response
+GET           /test-only/all-requests                                                                       uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.getTTPRequests
+GET           /test-only/requests                                                                           uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.getUnprocessedRequests
+DELETE        /test-only/request/:requestId                                                                 uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.deleteTTPRequest(requestId: String)
+GET           /test-only/request/:requestId                                                                 uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.getTTPRequest(requestId: String )
+POST          /test-only/response                                                                           uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.createTTPRequests
+POST          /test-only/errors                                                                             uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestErrorsController.logTTPRequestError
+GET           /test-only/errors                                                                             uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestErrorsController.getTTPRequestErrors()

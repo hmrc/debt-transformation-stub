@@ -20,20 +20,18 @@ import java.time.LocalDateTime
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.debttransformationstub.actions.requests.RequestDetailsRequest
 
-case class RequestDetails(requestId: String, content: String, uri: Option[String], isResponse: Boolean, createdOn: Option[LocalDateTime])
+case class RequestDetail(requestId: String, content: String, uri: Option[String], isResponse: Boolean, createdOn: Option[LocalDateTime])
 
-object RequestDetailss {
+object RequestDetail {
+  implicit val requestDetailFormat: OFormat[RequestDetail] = Json.format[RequestDetail]
 
-    implicit val requestDetailsFormat: OFormat[RequestDetails] = Json.format[RequestDetails]
-
-    def apply(requestDetailsRequest: RequestDetailsRequest): RequestDetails = {
-        RequestDetails(
-            requestDetailsRequest.requestId,
-            requestDetailsRequest.content,
-            requestDetailsRequest.uri,
-            requestDetailsRequest.isResponse,
-            requestDetailsRequest.createdOn
-        )
-    }
+  def apply(requestDetailsRequest: RequestDetailsRequest): RequestDetail = {
+    RequestDetail(
+      requestDetailsRequest.requestId,
+      requestDetailsRequest.content,
+      requestDetailsRequest.uri,
+      requestDetailsRequest.isResponse,
+      requestDetailsRequest.createdOn
+  )
+  }
 }
-
