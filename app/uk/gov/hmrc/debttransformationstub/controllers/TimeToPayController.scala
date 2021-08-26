@@ -40,7 +40,14 @@ class TimeToPayController @Inject()(environment: Environment, cc: ControllerComp
         case None => Future successful NotFound("file not found")
         case Some(file) =>
           val result = Source.fromFile(file).mkString.stripMargin
-          Future successful Ok(result)
+          req.customerReference.value match {
+            case "uniqueRef1235" => Future successful BadRequest(result)
+            case "uniqueRef1236" => Future successful BadRequest(result)
+            case "uniqueRef1237" => Future successful BadRequest(result)
+            case "uniqueRef1238" => Future successful BadRequest(result)
+            case _ => Future successful Ok(result)
+          }
+
       }
     }
   }
