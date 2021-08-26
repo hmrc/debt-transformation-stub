@@ -19,59 +19,38 @@ package uk.gov.hmrc.debttransformationstub.models
 import java.time.LocalDate
 
 import play.api.libs.json.Json
+import uk.gov.hmrc.debttransformationstub.controllers.PaymentPlanType
 
-case class Payment(paymentDate: LocalDate,
-                   paymentAmount: BigDecimal)
+final case class ChannelIdentifier(channelIdentifier: String) extends AnyVal
 
-object Payment {
-  implicit val format = Json.format[Payment]
+object ChannelIdentifier extends ValueTypeFormatter {
+  implicit val format =
+    valueTypeFormatter(ChannelIdentifier.apply, ChannelIdentifier.unapply)
 }
 
-case class BreathingSpace(debtRespiteFrom: LocalDate,
-                          debtRespiteTo: LocalDate)
+final case class Plan(
+                       quoteType: QuoteType,
+                       quoteDate: LocalDate,
+                       instalmentStartDate: LocalDate,
+                       instalmentAmount: BigDecimal,
+                       frequency: Frequency,
+                       duration: Duration,
+                       initialPaymentAmount: Option[BigDecimal],
+                       initialPaymentDate: Option[LocalDate],
+                       paymentPlanType: PaymentPlanType
+                     )
 
-object BreathingSpace {
-  implicit val format = Json.format[BreathingSpace]
+object Plan {
+  implicit val format = Json.format[Plan]
 }
 
-final case class Duty(
-                       dutyId: String,
-                       subtrans: String,
-                       originalDebtAmount: BigDecimal,
-                       interestStartDate: LocalDate,
-                       breathingSpaces: List[BreathingSpace],
-                       payments: List[Payment])
 
-object Duty {
-  implicit val format = Json.format[Duty]
-}
-
-final case class Debts(
-                        debtId: String,
-                        mainTrans: String,
-                        duties: Seq[Duty])
-
-object Debts {
-  implicit val format = Json.format[Debts]
-}
-
-case class Customer(quoteType: String,
-                    instalmentStartDate: String,
-                    instalmentAmount: Int,
-                    frequency: String,
-                    duration: String,
-                    initialPaymentAmount: Int,
-                    initialPaymentDate: LocalDate,
-                    paymentPlanType: String)
-
-object Customer {
-  implicit val format = Json.format[Customer]
-}
-
-case class GenerateQuoteRequest (
-                             customerReference: String,
-                             customer: List[Customer],
-                             debts: List[Debts])
+final case class GenerateQuoteRequest(
+                                       customerReference: CustomerReference,
+                                       channelIdentifier: ChannelIdentifier,
+                                       plan: Plan,
+                                       customerPostCodes: List[CustomerPostCode],
+                                       debtItems: List[DebtItem])
 
 
 object GenerateQuoteRequest {

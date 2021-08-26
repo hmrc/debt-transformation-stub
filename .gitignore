@@ -8,6 +8,7 @@ tmp
 .history
 dist
 /.idea
+
 /*.iml
 /*.ipr
 /out
