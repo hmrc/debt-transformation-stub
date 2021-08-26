@@ -1,0 +1,27 @@
+{
+  "title": "A JSON Schema for debt transformation stub API.",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "description": "request id"
+    },
+    "content": {
+      "type": "string",
+      "description": "content"
+    },
+    "uri": {
+      "type": "string",
+      "description": "uri"
+    },
+    "isResponse": {
+      "type": "boolean",
+      "description": "isResponse"
+    },
+    "createdOn": {
+      "type": "string",
+      "description": "createdOn"
+    }
+  }
+}

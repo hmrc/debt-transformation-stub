@@ -1,0 +1,54 @@
+#%RAML 1.0
+---
+title: Time To Pay Proxy
+description: This is a draft spec for the Time To Debt Calculation API.
+version: 1.0
+protocols: [ HTTPS ]
+baseUri: https://api.service.hmrc.gov.uk/
+mediaType: application/json
+
+documentation:
+ - title: Overview
+   content: !include docs/overview.md
+ - title: Versioning
+   content: !include https://developer.service.hmrc.gov.uk/api-documentation/assets/common/docs/versioning.md
+ - title: Errors
+   content: !include https://developer.service.hmrc.gov.uk/api-documentation/assets/common/docs/errors.md
+ - title: Testing
+   content: !include https://developer.service.hmrc.gov.uk/api-documentation/assets/common/docs/testing.md
+ - title: Send fraud prevention data
+   content: !include https://developer.service.hmrc.gov.uk/api-documentation/assets/common/docs/fraud-prevention.md
+
+uses:
+  sec: https://developer.service.hmrc.gov.uk/api-documentation/assets/common/modules/securitySchemes.raml
+  headers: https://developer.service.hmrc.gov.uk/api-documentation/assets/common/modules/headers.raml
+  annotations: https://developer.service.hmrc.gov.uk/api-documentation/assets/common/modules/annotations.raml
+  types: https://developer.service.hmrc.gov.uk/api-documentation/assets/common/modules/types.raml
+
+  /test-only/all-requests:
+        (annotations.group):
+           name: TTP Test only request
+           description: TTP all requests for Debt Transformation Stub to be used for polling script
+        get: !include endpoints/allRequests/get.raml
+  /test-only/requests:
+        (annotations.group):
+           name: TTP Test only request
+           description: Requests for Debt Transformation Stub to be used for polling script
+        get: !include endpoints/requests/get.raml
+  /test-only/request/{requestId}:
+        (annotations.group):
+           name: TTP Test only request
+           description: Requeste for Debt Transformation Stub to be used for polling script
+        get: !include endpoints/request/get.raml
+        delete: !include endpoints/testOnly/delete.raml
+  /test-only/response:
+        (annotations.group):
+           name: TTP Test only response
+           description: TTP response for Debt Transformation Stub to be used for polling script
+        post: !include endpoints/testOnly/post.raml
+  /test-only/errors:
+        (annotations.group):
+           name: ebt Transformation Stub errors
+           description: TTP errors for Debt Transformation Stub to be used for polling script
+        get: !include endpoints/testOnly/get.raml
+        post: !include endpoints/testOnly/post.raml

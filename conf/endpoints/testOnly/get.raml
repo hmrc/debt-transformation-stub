@@ -1,0 +1,18 @@
+displayName: Debt Transformation TTP Requests
+description: "This is an endpoint for testing the ttp service in different env - not to be used apart from debt transformation"
+(annotations.sandboxData): !include ../../scenarios/getResponse.md
+(annotations.scope): "read:debt-transformation-stub"
+securedBy: [ sec.x-application: { scopes: [ "read:debt-transformation-stub" ] } ]
+body:
+  application/json:
+    type: !include ../../schemas/test/requests.json
+responses:
+  200:
+    body:
+      text/plain:
+        type: !include ../../schemas/test/requests.json
+  400:
+      body:
+        text/plain:
+          type: !include ../../schemas/errorRequestSchema.json
+          example: !include ../../schemas/badRequest.json
