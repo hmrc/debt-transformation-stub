@@ -23,7 +23,6 @@ sealed abstract class Frequency(override val entryName: String) extends EnumEntr
 
 object Frequency extends Enum[Frequency] with PlayJsonEnum[Frequency] {
   val values: immutable.IndexedSeq[Frequency] = findValues
-
   case object Single extends Frequency("single")
   case object Weekly extends Frequency("weekly")
   case object TwoWeekly extends Frequency("2Weekly")
