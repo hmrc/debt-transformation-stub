@@ -62,7 +62,7 @@ class TimeToPayController @Inject()(environment: Environment, cc: ControllerComp
 
   def createPlan = Action.async(parse.json) { implicit request => {
     withCustomJsonBody[CreatePlanRequest] { req =>
-      val fileMaybe: Option[File] = environment.getExistingFile(s"$basePath/ttp.createPlan/${req.planId}.json")
+      val fileMaybe: Option[File] = environment.getExistingFile(s"$basePath/ttp.createPlan/${req.plan.quoteId.value}.json")
 
       fileMaybe match {
         case None => Future successful NotFound("file not found")
