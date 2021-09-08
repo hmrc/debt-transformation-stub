@@ -16,20 +16,18 @@
 
 package uk.gov.hmrc.debttransformationstub.controllers
 
-import javax.inject.{Inject, Singleton}
 import org.apache.commons.logging.LogFactory
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
-
-import scala.collection.immutable
-import scala.concurrent.ExecutionContext
-import uk.gov.hmrc.debttransformationstub.actions.requests.RequestDetailsRequest
-import uk.gov.hmrc.debttransformationstub.actions.responses.RequestDetailsResponse
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
-import uk.gov.hmrc.debttransformationstub.models.{GenerateQuoteRequest, RequestDetail}
+import uk.gov.hmrc.debttransformationstub.models.RequestDetail
 import uk.gov.hmrc.debttransformationstub.models.errors.{TTPRequestsCreationError, TTPRequestsError}
 import uk.gov.hmrc.debttransformationstub.services.{TTPPollingService, TTPRequestsService}
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
+
+import javax.inject.{Inject, Singleton}
+import scala.collection.immutable
+import scala.concurrent.ExecutionContext
 
 @Singleton()
 class TimeToPayTestController @Inject()(cc: ControllerComponents, appConfig: AppConfig, ttpRequestsService: TTPRequestsService, ttpPollingService: TTPPollingService)(implicit val executionContext: ExecutionContext)
@@ -39,25 +37,25 @@ class TimeToPayTestController @Inject()(cc: ControllerComponents, appConfig: App
   val XCorrelationId = "X-Correlation-Id"
 
   def getTTPRequests(): Action[AnyContent] = Action.async { implicit request =>
-    ttpRequestsService.getTTPRequests().map { result: immutable.Seq[RequestDetailsResponse] =>
+    ttpRequestsService.getTTPRequests().map { result: immutable.Seq[RequestDetail] =>
       Results.Ok(Json.toJson(result))
     }
   }
 
   def getUnprocessedRequests(): Action[AnyContent] = Action.async { implicit request =>
-    ttpRequestsService.getUnprocesedTTPRequests().map { result: immutable.Seq[RequestDetailsResponse] =>
+    ttpRequestsService.getUnprocesedTTPRequests().map { result: immutable.Seq[RequestDetail] =>
       Results.Ok(Json.toJson(result))
     }
   }
 
   def getTTPRequest(requestId: String): Action[AnyContent] = Action.async { implicit request =>
-    ttpRequestsService.getTTPRequest(requestId).map { result: Option[RequestDetailsResponse] =>
+    ttpRequestsService.getTTPRequest(requestId).map { result: Option[RequestDetail] =>
       Results.Ok(Json.toJson(result))
     }
   }
 
   def createTTPRequests: Action[JsValue] = Action.async(parse.json) { implicit request =>
-    withCustomJsonBody[RequestDetailsRequest] { requestDetailsRequest: RequestDetailsRequest =>
+    withCustomJsonBody[RequestDetail] { requestDetailsRequest: RequestDetail =>
 
       logger.info("Persist the TTP requests")
       ttpRequestsService.addRequestDetails(requestDetailsRequest = requestDetailsRequest).map(toResult)

@@ -41,7 +41,7 @@ class TimeToPayController @Inject()(environment: Environment, cc: ControllerComp
 
         if (appConfig.isPollingEnv) {
           ttpPollingService.insertRequestAndServeResponse(Json.toJson(req), Some(request.uri)).map {
-            case Some(v) => Ok(v.content)
+            case Some(v) => Status(v.status.getOrElse(200))(v.content)
             case None => ServiceUnavailable
           }
         } else {
@@ -62,7 +62,7 @@ class TimeToPayController @Inject()(environment: Environment, cc: ControllerComp
     implicit request =>
       if (appConfig.isPollingEnv) {
         ttpPollingService.insertRequestAndServeResponse(Json.toJson(""), Some(request.uri)).map {
-          case Some(v) => Ok(v.content)
+          case Some(v) => Status(v.status.getOrElse(200))(v.content)
           case None => ServiceUnavailable
         }
       } else {
@@ -77,7 +77,7 @@ class TimeToPayController @Inject()(environment: Environment, cc: ControllerComp
     implicit request =>
       if (appConfig.isPollingEnv) {
         ttpPollingService.insertRequestAndServeResponse(Json.toJson(""), Some(request.uri)).map {
-          case Some(v) => Ok(v.content)
+          case Some(v) => Status(v.status.getOrElse(200))(v.content)
           case None => ServiceUnavailable
         }
       } else {
@@ -93,7 +93,7 @@ class TimeToPayController @Inject()(environment: Environment, cc: ControllerComp
       withCustomJsonBody[CreatePlanRequest] { req =>
         if (appConfig.isPollingEnv) {
           ttpPollingService.insertRequestAndServeResponse(Json.toJson(req), Some(request.uri)).map {
-            case Some(v) => Ok(v.content)
+            case Some(v) => Status(v.status.getOrElse(200))(v.content)
             case None => ServiceUnavailable
           }
         } else {

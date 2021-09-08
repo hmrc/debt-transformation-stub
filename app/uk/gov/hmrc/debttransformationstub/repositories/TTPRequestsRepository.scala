@@ -63,7 +63,9 @@ class TTPRequestsRepositoryImpl @Inject()(implicit mongo: ReactiveMongoComponent
 
   override def getResponseByRequestId(id: String): Future[Option[RequestDetail]] = super.find("requestId" -> JsString(id), "isResponse" -> JsBoolean(true) ).map(_.headOption)
 
-  override def insertRequestsDetails(requestDetail: RequestDetail)(implicit ec: ExecutionContext): Future[WriteResult] = insert(requestDetail)
+  override def insertRequestsDetails(requestDetail: RequestDetail)(implicit ec: ExecutionContext): Future[WriteResult] = {
+    deleteTTPRequest(requestDetail.requestId).flatMap(_ => insert(requestDetail))
+  }
 
   override def deleteTTPRequest(requestId: String): Future[WriteResult] = super.remove("requestId" -> JsString(requestId), "isResponse" -> JsBoolean(false))
 

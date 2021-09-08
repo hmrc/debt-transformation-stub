@@ -20,6 +20,7 @@ import akka.stream.ActorMaterializer
 import akka.stream.scaladsl.JavaFlowSupport.Source
 import com.google.inject.ImplementedBy
 import play.api.libs.json.{JsValue, Json}
+import uk.gov.hmrc.debttransformationstub.config.AppConfig
 import uk.gov.hmrc.debttransformationstub.models.{GenerateQuoteRequest, RequestDetail}
 import uk.gov.hmrc.debttransformationstub.repositories.TTPRequestsRepository
 
@@ -34,18 +35,18 @@ trait TTPPollingService {
 }
 
 @Singleton
-class DefaultTTPPollingService @Inject()(ttpRequestsRepository: TTPRequestsRepository)
+class DefaultTTPPollingService @Inject()(ttpRequestsRepository: TTPRequestsRepository, appConfig: AppConfig)
   extends TTPPollingService {
 
   override def insertRequestAndServeResponse(request: JsValue, uri: Option[String]): Future[Option[RequestDetail]] = {
     val requestId = java.util.UUID.randomUUID.toString
     ttpRequestsRepository.insertRequestsDetails(RequestDetail(requestId, request.toString(), uri, false, Some(LocalDateTime.now()))).flatMap {
-      result =>
+      _ =>
         pollForResponse(requestId)
     }
   }
 
-  private def pollForResponse(requestId: String, tries: Int = 50, timeoutMs: Int = 200): Future[Option[RequestDetail]] = {
+  private def pollForResponse(requestId: String, tries: Int = appConfig.pollingIntervals, timeoutMs: Int = appConfig.pollingSleep): Future[Option[RequestDetail]] = {
 
     ttpRequestsRepository.getResponseByRequestId(requestId).flatMap {
       case None =>

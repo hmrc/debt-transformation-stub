@@ -37,5 +37,7 @@ class AppConfig @Inject()
 
   val auditingEnabled: Boolean = config.get[Boolean]("auditing.enabled")
   val graphiteHost: String     = config.get[String]("microservice.metrics.graphite.host")
-  val isPollingEnv: Boolean     = config.get[Boolean]("isPollingEnv")
+  val isPollingEnv: Boolean    = config.get[Boolean]("isPollingEnv")
+  val pollingIntervals: Int    = config.get[Int]("pollingIntervals")
+  val pollingSleep: Int        = config.get[Int]("pollingSleep")
 }
