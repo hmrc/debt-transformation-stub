@@ -1,27 +1,31 @@
 {
   "customerReference": "customerRef1234",
   "planId": "planId1234",
-  "quoteType": "xyz",
+  "quoteType": "duration",
   "paymentMethod": "BACS",
   "paymentReference": "paymentRef1234",
   "instalments": [
     {
-      "dutyId": "duty01",
-      "debtId": "debt01",
-      "dueDate": "2021-05-01",
+      "debtItemChargeId": "debtItemChargeId1",
+      "debtItemId": "debtItemId1",
+      "dueDate": "2021-05-13",
       "amountDue": 100,
-      "expectedPayment": 100,
-      "interestRate": 0.26,
-      "instalmentNumber": 1
+      "expectedPayment": 10,
+      "interestRate": 0.25,
+      "instalmentNumber": 1,
+      "instalmentInterestAccrued": 0.25,
+      "instalmentBalance": 100
     },
     {
-      "dutyId": "duty01",
-      "debtId": "debt01",
-      "dueDate": "2021-06-01",
+      "debtItemChargeId": "debtItemChargeId2",
+      "debtItemId": "debtItemId2",
+      "dueDate": "2021-05-13",
       "amountDue": 100,
-      "expectedPayment": 100,
+      "expectedPayment": 10,
       "interestRate": 0.26,
-      "instalmentNumber": 2
+      "instalmentNumber": 2,
+      "instalmentInterestAccrued": 0.26,
+      "instalmentBalance": 100
     }
   ],
   "numberOfInstalments": "2",
