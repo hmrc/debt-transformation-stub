@@ -16,22 +16,17 @@
 
 package uk.gov.hmrc.debttransformationstub.services
 
-import akka.http.scaladsl.model.StatusCodes
+import akka.stream.ActorMaterializer
+import akka.stream.scaladsl.JavaFlowSupport.Source
 import com.google.inject.ImplementedBy
 import play.api.libs.json.Json
+import uk.gov.hmrc.debttransformationstub.models.{GenerateQuoteRequest, RequestDetail}
+import uk.gov.hmrc.debttransformationstub.repositories.TTPRequestsRepository
 
 import java.time.LocalDateTime
 import javax.inject.{Inject, Singleton}
-import reactivemongo.api.commands.WriteResult
-
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import uk.gov.hmrc.debttransformationstub.actions.requests.RequestDetailsRequest
-import uk.gov.hmrc.debttransformationstub.actions.responses.RequestDetailsResponse
-import uk.gov.hmrc.debttransformationstub.models.{GenerateQuoteRequest, RequestDetail}
-import uk.gov.hmrc.debttransformationstub.models.errors.{TTPRequestsCreationError, TTPRequestsDeletionError, TTPRequestsError}
-import uk.gov.hmrc.debttransformationstub.repositories.TTPRequestsRepository
-import uk.gov.hmrc.http.HeaderCarrier
 
 @ImplementedBy(classOf[DefaultTTPRequestsService])
 trait TTPRequestsService {
@@ -52,9 +47,14 @@ class DefaultTTPRequestsService @Inject()(ttpRequestsRepository: TTPRequestsRepo
     }
   }
 
-  private def pollForResponse(requestId: String): Future[Option[RequestDetail]] = {
+  private def pollForResponse(requestId: String, tries: Int = 50, timeoutMs: Int = 200): Future[Option[RequestDetail]] = {
+
     ttpRequestsRepository.getResponseByRequestId(requestId).flatMap {
-      case None => pollForResponse(requestId)
+      case None =>
+        if(tries > 0) {
+          Thread.sleep(timeoutMs)
+          pollForResponse(requestId, tries - 1)
+        } else Future.successful(None)
       case Some(response) => Future.successful(Some(response))
     }
   }
