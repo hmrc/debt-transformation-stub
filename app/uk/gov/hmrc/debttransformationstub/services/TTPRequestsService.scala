@@ -36,29 +36,32 @@ import uk.gov.hmrc.http.HeaderCarrier
 @ImplementedBy(classOf[DefaultTTPRequestsService])
 trait TTPRequestsService {
   def getTTPRequests(): Future[List[RequestDetailsResponse]]
+
   def getUnprocesedTTPRequests(): Future[List[RequestDetailsResponse]]
+
   def getTTPRequest(requestId: String): Future[Option[RequestDetailsResponse]]
+
   def addRequestDetails(requestDetailsRequest: RequestDetailsRequest)(implicit hc: HeaderCarrier): Future[Either[TTPRequestsError, String]]
+
   def deleteTTPRequest(requestId: String)(implicit hc: HeaderCarrier): Future[Either[TTPRequestsDeletionError, String]]
 }
 
 @Singleton
 class DefaultTTPRequestsService @Inject()(ttpRequestsRepository: TTPRequestsRepository)
-        extends TTPRequestsService {
+  extends TTPRequestsService {
 
   override def addRequestDetails(requestDetailsRequest: RequestDetailsRequest)(implicit hc: HeaderCarrier): Future[Either[TTPRequestsError, String]] = {
 
     val currentDate = LocalDateTime.now()
     val requestDetails = RequestDetail(requestDetailsRequest.requestId, requestDetailsRequest.content, requestDetailsRequest.uri, requestDetailsRequest.isResponse, Some(currentDate))
-    println(s"REQUEST DETAILS --> $requestDetails")
 
-      val writeResultF = ttpRequestsRepository.insertRequestsDetails(requestDetails)
-      writeResultF.flatMap { wr: WriteResult =>
-        wr.writeErrors.headOption match {
-          case Some(err) => Future(Left(TTPRequestsCreationError(StatusCodes.InternalServerError.intValue, Some(s"Failed to insert the document: ${err.errmsg}"))))
-          case None      => Future(Right(s"Successfully inserted the ttp request"))
-        }
+    val writeResultF = ttpRequestsRepository.insertRequestsDetails(requestDetails)
+    writeResultF.flatMap { wr: WriteResult =>
+      wr.writeErrors.headOption match {
+        case Some(err) => Future(Left(TTPRequestsCreationError(StatusCodes.InternalServerError.intValue, Some(s"Failed to insert the document: ${err.errmsg}"))))
+        case None => Future(Right(s"Successfully inserted the ttp request"))
       }
+    }
   }
 
   override def getTTPRequests(): Future[List[RequestDetailsResponse]] = {
