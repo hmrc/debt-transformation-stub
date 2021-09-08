@@ -20,17 +20,19 @@ import javax.inject.{Inject, Singleton}
 import org.apache.commons.logging.LogFactory
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
+
 import scala.collection.immutable
 import scala.concurrent.ExecutionContext
 import uk.gov.hmrc.debttransformationstub.actions.requests.RequestDetailsRequest
 import uk.gov.hmrc.debttransformationstub.actions.responses.RequestDetailsResponse
-import uk.gov.hmrc.debttransformationstub.models.RequestDetail
+import uk.gov.hmrc.debttransformationstub.config.AppConfig
+import uk.gov.hmrc.debttransformationstub.models.{GenerateQuoteRequest, RequestDetail}
 import uk.gov.hmrc.debttransformationstub.models.errors.{TTPRequestsCreationError, TTPRequestsError}
-import uk.gov.hmrc.debttransformationstub.services.TTPRequestsService
+import uk.gov.hmrc.debttransformationstub.services.{TTPPollingService, TTPRequestsService}
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 @Singleton()
-class TimeToPayTestController @Inject()(cc: ControllerComponents, ttpRequestsService: TTPRequestsService)(implicit val executionContext: ExecutionContext)
+class TimeToPayTestController @Inject()(cc: ControllerComponents, appConfig: AppConfig, ttpRequestsService: TTPRequestsService, ttpPollingService: TTPPollingService)(implicit val executionContext: ExecutionContext)
   extends BackendController(cc) with BaseController {
 
   private val logger = LogFactory.getLog(classOf[TimeToPayTestController])

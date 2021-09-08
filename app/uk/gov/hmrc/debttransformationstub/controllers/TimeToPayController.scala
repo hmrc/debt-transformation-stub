@@ -19,21 +19,32 @@ package uk.gov.hmrc.debttransformationstub.controllers
 import java.io.File
 import javax.inject.Inject
 import play.api.Environment
-import play.api.libs.json.JsValue
+import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.ControllerComponents
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import play.api.mvc._
+import uk.gov.hmrc.debttransformationstub.config.AppConfig
 import uk.gov.hmrc.debttransformationstub.models.{CreatePlanRequest, GenerateQuoteRequest}
+import uk.gov.hmrc.debttransformationstub.services.TTPPollingService
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.io.Source
 
-class TimeToPayController @Inject()(environment: Environment, cc: ControllerComponents)
+class TimeToPayController @Inject()(environment: Environment, cc: ControllerComponents, appConfig: AppConfig, ttpPollingService: TTPPollingService)
   extends BackendController(cc) with BaseController {
   private val basePath = "conf/resources/data"
 
-  def generateQuote: Action[JsValue] = Action.async(parse.json) { implicit request => {
+  def generateQuote: Action[JsValue] = Action.async(parse.json) { implicit request: Request[JsValue] => {
     withCustomJsonBody[GenerateQuoteRequest] { req =>
+
+      if(appConfig.isPollingEnv) {
+        ttpPollingService.insertRequestAndServeResponse(Json.toJson(req), Some(request.uri)).map {
+          case Some(v) =>  Ok(v.content)
+          case None => ServiceUnavailable
+        }
+      } else {
+
       val fileMaybe: Option[File] = environment.getExistingFile(s"$basePath/ttp.generateQuote/${req.customerReference.value}.json")
 
       fileMaybe match {

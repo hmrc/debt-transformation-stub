@@ -19,7 +19,7 @@ package uk.gov.hmrc.debttransformationstub.services
 import akka.stream.ActorMaterializer
 import akka.stream.scaladsl.JavaFlowSupport.Source
 import com.google.inject.ImplementedBy
-import play.api.libs.json.Json
+import play.api.libs.json.{JsValue, Json}
 import uk.gov.hmrc.debttransformationstub.models.{GenerateQuoteRequest, RequestDetail}
 import uk.gov.hmrc.debttransformationstub.repositories.TTPRequestsRepository
 
@@ -29,19 +29,17 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 @ImplementedBy(classOf[DefaultTTPRequestsService])
-trait TTPRequestsService {
-
-  def generateQuote(request: GenerateQuoteRequest, uri: Option[String]): Future[Option[RequestDetail]]
+trait TTPPollingService {
+  def insertRequestAndServeResponse(request: JsValue, uri: Option[String]): Future[Option[RequestDetail]]
 }
 
 @Singleton
-class DefaultTTPRequestsService @Inject()(ttpRequestsRepository: TTPRequestsRepository)
-  extends TTPRequestsService {
+class DefaultTTPPollingService @Inject()(ttpRequestsRepository: TTPRequestsRepository)
+  extends TTPPollingService {
 
-
-  override def generateQuote(request: GenerateQuoteRequest, uri: Option[String]): Future[Option[RequestDetail]] = {
+  override def insertRequestAndServeResponse(request: JsValue, uri: Option[String]): Future[Option[RequestDetail]] = {
     val requestId = "someGeneratedRequestId"
-    ttpRequestsRepository.insertRequestsDetails(RequestDetail(requestId, Json.toJson(request).toString(), uri, false, Some(LocalDateTime.now()))).flatMap {
+    ttpRequestsRepository.insertRequestsDetails(RequestDetail(requestId, request.toString(), uri, false, Some(LocalDateTime.now()))).flatMap {
       result =>
         pollForResponse(requestId)
     }

@@ -18,13 +18,16 @@ package uk.gov.hmrc.debttransformationstub.services
 
 import akka.http.scaladsl.model.StatusCodes
 import com.google.inject.ImplementedBy
+
 import java.time.LocalDateTime
 import javax.inject.{Inject, Singleton}
 import reactivemongo.api.commands.WriteResult
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import uk.gov.hmrc.debttransformationstub.actions.requests.RequestDetailsRequest
 import uk.gov.hmrc.debttransformationstub.actions.responses.RequestDetailsResponse
+import uk.gov.hmrc.debttransformationstub.config.AppConfig
 import uk.gov.hmrc.debttransformationstub.models.RequestDetail
 import uk.gov.hmrc.debttransformationstub.models.errors.{TTPRequestsCreationError, TTPRequestsDeletionError, TTPRequestsError}
 import uk.gov.hmrc.debttransformationstub.repositories.TTPRequestsRepository
@@ -40,7 +43,7 @@ trait TTPRequestsService {
 }
 
 @Singleton
-class DefaultTTPRequestsService @Inject()(ttpRequestsRepository: TTPRequestsRepository )
+class DefaultTTPRequestsService @Inject()(ttpRequestsRepository: TTPRequestsRepository)
         extends TTPRequestsService {
 
   override def addRequestDetails(requestDetailsRequest: RequestDetailsRequest)(implicit hc: HeaderCarrier): Future[Either[TTPRequestsError, String]] = {
