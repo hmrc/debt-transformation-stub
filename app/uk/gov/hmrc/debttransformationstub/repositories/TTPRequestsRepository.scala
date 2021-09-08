@@ -34,6 +34,7 @@ trait TTPRequestsRepository {
   def findRequestDetails(): Future[List[RequestDetail]]
   def findUnprocessedRequestDetails() : Future[List[RequestDetail]]
   def getByRequestId(id: String): Future[Option[RequestDetail]]
+  def getResponseByRequestId(id: String): Future[Option[RequestDetail]]
   def insertRequestsDetails(requestDetail: RequestDetail)(implicit ec: ExecutionContext): Future[WriteResult]
 
 }
@@ -59,6 +60,8 @@ class TTPRequestsRepositoryImpl @Inject()(implicit mongo: ReactiveMongoComponent
   override def findUnprocessedRequestDetails(): Future[List[RequestDetail]] = super.find("isResponse" -> JsBoolean(false))
 
   override def getByRequestId(id: String): Future[Option[RequestDetail]] = super.find("requestId" -> JsString(id) ).map(_.headOption)
+
+  override def getResponseByRequestId(id: String): Future[Option[RequestDetail]] = super.find("requestId" -> JsString(id), "isResponse" -> JsBoolean(true) ).map(_.headOption)
 
   override def insertRequestsDetails(requestDetail: RequestDetail)(implicit ec: ExecutionContext): Future[WriteResult] = insert(requestDetail)
 
