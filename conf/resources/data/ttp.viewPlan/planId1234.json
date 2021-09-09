@@ -11,7 +11,7 @@
       "dueDate": "2021-05-13",
       "amountDue": 100,
       "expectedPayment": 10,
-      "interestRate": 0.25,
+      "interestRate": 2.5,
       "instalmentNumber": 1,
       "instalmentInterestAccrued": 0.25,
       "instalmentBalance": 100
@@ -19,16 +19,16 @@
     {
       "debtItemChargeId": "debtItemChargeId2",
       "debtItemId": "debtItemId2",
-      "dueDate": "2021-05-13",
-      "amountDue": 100,
-      "expectedPayment": 10,
-      "interestRate": 0.26,
+      "dueDate": "2021-08-30",
+      "amountDue": 400,
+      "expectedPayment": 200,
+      "interestRate": 2.4,
       "instalmentNumber": 2,
-      "instalmentInterestAccrued": 0.26,
-      "instalmentBalance": 100
+      "instalmentInterestAccrued": 2.5,
+      "instalmentBalance": 200
     }
   ],
   "numberOfInstalments": "2",
-  "totalDebtAmount": 1000,
-  "totalInterest": 0.26
+  "totalDebtAmount": 500,
+  "totalInterest": 4.9
 }
