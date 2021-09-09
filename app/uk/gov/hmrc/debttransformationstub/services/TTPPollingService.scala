@@ -29,7 +29,7 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-@ImplementedBy(classOf[DefaultTTPRequestsService])
+@ImplementedBy(classOf[DefaultTTPPollingService])
 trait TTPPollingService {
   def insertRequestAndServeResponse(request: JsValue, uri: Option[String]): Future[Option[RequestDetail]]
 }
