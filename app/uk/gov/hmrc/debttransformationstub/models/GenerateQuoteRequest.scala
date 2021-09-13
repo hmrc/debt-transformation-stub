@@ -18,14 +18,19 @@ package uk.gov.hmrc.debttransformationstub.models
 
 import java.time.LocalDate
 
+import enumeratum.{Enum, EnumEntry, PlayJsonEnum}
 import play.api.libs.json.Json
 import uk.gov.hmrc.debttransformationstub.controllers.PaymentPlanType
 
-final case class ChannelIdentifier(channelIdentifier: String) extends AnyVal
+import scala.collection.immutable
 
-object ChannelIdentifier extends ValueTypeFormatter {
-  implicit val format =
-    valueTypeFormatter(ChannelIdentifier.apply, ChannelIdentifier.unapply)
+sealed abstract class ChannelIdentifier(override val entryName: String) extends EnumEntry
+
+object ChannelIdentifier extends Enum[ChannelIdentifier] with PlayJsonEnum[ChannelIdentifier] {
+  val values: immutable.IndexedSeq[ChannelIdentifier] = findValues
+
+  case object Advisor extends ChannelIdentifier("advisor")
+  case object SelfService extends ChannelIdentifier("selfService")
 }
 
 final case class Plan(
