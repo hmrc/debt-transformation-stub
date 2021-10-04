@@ -23,7 +23,6 @@ import enumeratum.{Enum, EnumEntry, PlayJsonEnum}
 import uk.gov.hmrc.debttransformationstub.controllers.PaymentPlanType
 
 final case class Instalment(debtItemChargeId: DebtItemChargeId,
-                            debtItemId: DebtItemId,
                             dueDate: LocalDate,
                             amountDue: BigDecimal,
                             expectedPayment: BigDecimal,
@@ -92,7 +91,7 @@ final case class CreatePlanRequest(customerReference: CustomerReference,
                                    quoteReference: QuoteReference,
                                    channelIdentifier: ChannelIdentifier,
                                    plan: PlanToCreatePlan,
-                                   debtItems: Seq[DebtItem],
+                                   debtItemCharges: Seq[DebtItemForCreatePlan],
                                    payments: Seq[PaymentInformation],
                                    customerPostCodes: Seq[CustomerPostCode],
                                    instalments: Seq[Instalment]
