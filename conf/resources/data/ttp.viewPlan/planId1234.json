@@ -47,7 +47,6 @@
   ],
   "instalments":[
     {
-      "debtItemId":"debtItemId1",
       "debtItemChargeId":"debtItemChargeId1",
       "dueDate":"2021-06-01",
       "amountDue":100,
@@ -59,7 +58,6 @@
     },
     {
       "debtItemChargeId":"debtItemChargeId1",
-      "debtItemId":"debtItemId1",
       "dueDate":"2021-07-01",
       "amountDue":100,
       "expectedPayment":100,
