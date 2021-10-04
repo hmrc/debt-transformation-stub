@@ -55,7 +55,7 @@ final case class GenerateQuoteRequest(
                                        channelIdentifier: ChannelIdentifier,
                                        plan: Plan,
                                        customerPostCodes: List[CustomerPostCode],
-                                       debtItems: List[DebtItem])
+                                       debtItemCharges: List[DebtItem])
 
 
 object GenerateQuoteRequest {
