@@ -34,8 +34,7 @@ object DebtItemChargeId extends ValueTypeFormatter {
     valueTypeFormatter(DebtItemChargeId.apply, DebtItemChargeId.unapply)
 }
 
-final case class DebtItem(debtItemId: DebtItemId,
-                          debtItemChargeId: DebtItemChargeId,
+final case class DebtItem(debtItemChargeId: DebtItemChargeId,
                           mainTrans: MainTransType,
                           subTrans: SubTransType,
                           originalDebtAmount: BigDecimal,

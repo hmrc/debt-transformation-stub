@@ -1,34 +1,72 @@
 {
-  "customerReference": "customerRef1234",
-  "planId": "planId1234",
-  "quoteType": "duration",
-  "paymentMethod": "BACS",
-  "paymentReference": "paymentRef1234",
-  "instalments": [
+  "customerReference":"customerRef1234",
+  "channelIdentifier":"selfService",
+  "plan":{
+    "planId":"planId1234",
+    "quoteId":"quoteId",
+    "quoteDate":"2021-09-28",
+    "quoteType":"instalmentAmount",
+    "paymentPlanType":"timeToPay",
+    "thirdPartyBank":true,
+    "numberOfInstalments":11,
+    "totalDebtIncInt":1248.29,
+    "totalInterest":48.29,
+    "interestAccrued":36.71,
+    "planInterest":11.58
+  },
+  "debtItemCharges":[
     {
-      "debtItemChargeId": "debtItemChargeId1",
-      "debtItemId": "debtItemId1",
-      "dueDate": "2021-05-13",
-      "amountDue": 100,
-      "expectedPayment": 10,
-      "interestRate": 2.5,
-      "instalmentNumber": 1,
-      "instalmentInterestAccrued": 0.25,
-      "instalmentBalance": 100
-    },
-    {
-      "debtItemChargeId": "debtItemChargeId2",
-      "debtItemId": "debtItemId2",
-      "dueDate": "2021-08-30",
-      "amountDue": 400,
-      "expectedPayment": 200,
-      "interestRate": 2.4,
-      "instalmentNumber": 2,
-      "instalmentInterestAccrued": 2.5,
-      "instalmentBalance": 200
+      "debtItemChargeId":"debtItemChargeId1",
+      "mainTrans":"1546",
+      "subTrans":"1090",
+      "originalDebtAmount":100,
+      "interestStartDate":"2021-05-13",
+      "paymentHistory":[
+        {
+          "paymentDate":"2021-05-13",
+          "paymentAmount":100
+        }
+      ]
     }
   ],
-  "numberOfInstalments": "2",
-  "totalDebtAmount": 500,
-  "totalInterest": 4.9
+  "payments":[
+    {
+      "paymentMethod":"BACS",
+      "paymentReference":"1"
+    },
+    {
+      "paymentMethod":"cardPayment",
+      "paymentReference":"2"
+    }
+  ],
+  "customerPostcodes":[
+    {
+      "addressPostcode":"NW9 5XW",
+      "postcodeDate":"2021-05-13"
+    }
+  ],
+  "instalments":[
+    {
+      "debtItemId":"debtItemId1",
+      "debtItemChargeId":"debtItemChargeId1",
+      "dueDate":"2021-06-01",
+      "amountDue":100,
+      "expectedPayment":100,
+      "interestRate":2.6,
+      "instalmentNumber":1,
+      "instalmentInterestAccrued":1.85,
+      "instalmentBalance":1000
+    },
+    {
+      "debtItemChargeId":"debtItemChargeId1",
+      "debtItemId":"debtItemId1",
+      "dueDate":"2021-07-01",
+      "amountDue":100,
+      "expectedPayment":100,
+      "interestRate":2.6,
+      "instalmentNumber":2,
+      "instalmentInterestAccrued":1.92,
+      "instalmentBalance":900
+    }
+  ]
 }
