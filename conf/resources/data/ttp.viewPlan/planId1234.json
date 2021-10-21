@@ -3,6 +3,7 @@
   "channelIdentifier":"selfService",
   "plan":{
     "planId":"planId1234",
+    "caseId": "caseId123",
     "quoteId":"quoteId",
     "quoteDate":"2021-09-28",
     "quoteType":"instalmentAmount",
