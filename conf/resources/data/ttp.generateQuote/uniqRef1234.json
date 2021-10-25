@@ -4,7 +4,7 @@
   "quoteType": "instalmentAmount",
   "quoteDate": "2021-05-13",
   "numberOfInstalments": 1,
-  "totalDebtincInt": 10,
+  "totalDebtIncInt": 10,
   "interestAccrued": 10,
   "planInterest": 0.25,
   "totalInterest": 12.25,

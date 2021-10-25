@@ -37,9 +37,9 @@ final case class Plan(
                        quoteType: QuoteType,
                        quoteDate: LocalDate,
                        instalmentStartDate: LocalDate,
-                       instalmentAmount: BigDecimal,
-                       frequency: Frequency,
-                       duration: Duration,
+                       instalmentAmount: Option[BigDecimal],
+                       frequency: Option[Frequency],
+                       duration: Option[Duration],
                        initialPaymentAmount: Option[BigDecimal],
                        initialPaymentDate: Option[LocalDate],
                        paymentPlanType: PaymentPlanType

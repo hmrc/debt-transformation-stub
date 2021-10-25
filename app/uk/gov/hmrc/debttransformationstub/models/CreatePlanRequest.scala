@@ -18,7 +18,6 @@ package uk.gov.hmrc.debttransformationstub.models
 
 import play.api.libs.json.Json
 import java.time.LocalDate
-
 import enumeratum.{Enum, EnumEntry, PlayJsonEnum}
 import uk.gov.hmrc.debttransformationstub.controllers.PaymentPlanType
 
@@ -56,18 +55,19 @@ final case class PlanToCreatePlan(quoteId: QuoteId,
                                   quoteType: QuoteType,
                                   quoteDate: LocalDate,
                                   instalmentStartDate: LocalDate,
-                                  instalmentAmount: BigDecimal,
+                                  instalmentAmount: Option[BigDecimal],
                                   paymentPlanType: PaymentPlanType,
                                   thirdPartyBank: Boolean,
                                   numberOfInstalments: Int,
-                                  frequency: Frequency,
-                                  duration: Duration,
-                                  initialPaymentDate: LocalDate,
-                                  initialPaymentAmount: BigDecimal,
-                                  totalDebtincInt: BigDecimal,
+                                  frequency: Option[Frequency],
+                                  duration: Option[Duration],
+                                  initialPaymentDate: Option[LocalDate],
+                                  initialPaymentAmount: Option[BigDecimal],
+                                  totalDebtIncInt: BigDecimal,
                                   totalInterest: BigDecimal,
                                   interestAccrued: BigDecimal,
-                                  planInterest: BigDecimal)
+                                  planInterest: BigDecimal
+                                 )
 
 object PlanToCreatePlan {
   implicit val format = Json.format[PlanToCreatePlan]
