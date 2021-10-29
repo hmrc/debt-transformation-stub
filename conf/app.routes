@@ -10,10 +10,10 @@ POST          /prweb/api/ARC/01/RefData                                         
 
 POST          /prweb/PRRestService/oauth2/v1/token                                                          uk.gov.hmrc.debttransformationstub.controllers.AuthController.getAccessToken()
 
-POST          /individuals/time-to-pay/quote                                                                uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.generateQuote
+POST          /individuals/debts/time-to-pay/quote                                                                uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.generateQuote
 GET           /individuals/time-to-pay/quote/:customerReference/:pegaId                                     uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.getExistingQuote(customerReference: String, pegaId: String)
 PUT           /individuals/time-to-pay/quote/:customerReference/:pegaId                                     uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.updateQuote(customerReference: String, pegaId: String)
-POST          /individuals/time-to-pay/quote/arrangement                                                    uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.createPlan
+POST          /individuals/debts/time-to-pay/quote/arrangement                                                    uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.createPlan
 
 GET           /test-only/all-requests                                                                       uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.getTTPRequests
 GET           /test-only/requests                                                                           uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.getUnprocessedRequests
