@@ -40,7 +40,7 @@ class DefaultTTPPollingService @Inject()(ttpRequestsRepository: TTPRequestsRepos
 
   override def insertRequestAndServeResponse(request: JsValue, uri: Option[String]): Future[Option[RequestDetail]] = {
     val requestId = java.util.UUID.randomUUID.toString
-    ttpRequestsRepository.insertRequestsDetails(RequestDetail(requestId, request.toString(), uri.map(_.replaceFirst("time-to-pay", "time-to-pay-proxy")), false, Some(LocalDateTime.now()))).flatMap {
+    ttpRequestsRepository.insertRequestsDetails(RequestDetail(requestId, request.toString(), uri.map(_.replaceFirst("/debts", "").replaceFirst("time-to-pay", "time-to-pay-proxy")), false, Some(LocalDateTime.now()))).flatMap {
       _ =>
         pollForResponse(requestId)
     }
