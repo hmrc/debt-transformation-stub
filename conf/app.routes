@@ -15,6 +15,8 @@ GET           /individuals/time-to-pay/quote/:customerReference/:pegaId         
 PUT           /individuals/time-to-pay/quote/:customerReference/:pegaId                                     uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.updateQuote(customerReference: String, pegaId: String)
 POST          /individuals/debts/time-to-pay/quote/arrangement                                                    uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.createPlan
 
+POST          /prweb/PRRestService/TTP/01/CreateTTP                                                         uk.gov.hmrc.debttransformationstub.controllers.CaseManagementController.createCase
+
 GET           /test-only/all-requests                                                                       uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.getTTPRequests
 GET           /test-only/requests                                                                           uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.getUnprocessedRequests
 DELETE        /test-only/request/:requestId                                                                 uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.deleteTTPRequest(requestId: String)
