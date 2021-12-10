@@ -38,7 +38,7 @@ class CaseManagementController @Inject()(environment: Environment,
   def createCase: Action[JsValue] = Action.async(parse.json) {
     implicit request: Request[JsValue] =>
       {
-        withCustomJsonBody[CreateCaseRequest] { req =>
+        withCustomJsonBody[CreateCaseRequest] { createCaseRequest =>
           val fileMaybe: Option[File] = environment.getExistingFile(
             s"$basePath/casemanagement.createcase/create-case-response.json"
           )
@@ -46,7 +46,7 @@ class CaseManagementController @Inject()(environment: Environment,
           fileMaybe match {
             case None => Future successful NotFound("file not found")
             case Some(file) =>
-              val result = Source.fromFile(file).mkString.stripMargin
+              val result = Source.fromFile(file).mkString.replaceAll("#PLAN-ID", createCaseRequest.planId.value).stripMargin
               Future successful Ok(result)
           }
 
