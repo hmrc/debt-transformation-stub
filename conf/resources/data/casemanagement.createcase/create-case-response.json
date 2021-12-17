@@ -1,6 +1,6 @@
 {
   "customerReference": "customerRef1234",
-  "planId": "planId1234",
+  "planId": "#PLAN-ID",
   "caseId": "caseId",
   "Status": "success"
 }
