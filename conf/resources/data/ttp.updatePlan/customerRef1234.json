@@ -1,6 +1,6 @@
 {
   "customerReference": "custRef1234",
   "planId": "planId1234",
-  "quoteStatus": "complete",
-  "quoteUpdatedDate": "2021-05-13"
+  "planStatus": "complete",
+  "planUpdatedDate": "2021-05-13"
 }
