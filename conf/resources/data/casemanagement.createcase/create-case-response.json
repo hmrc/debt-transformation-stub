@@ -2,5 +2,5 @@
   "customerReference": "customerRef1234",
   "planId": "#PLAN-ID",
   "caseId": "caseId",
-  "caseStatus": "success"
+  "Status": "success"
 }
