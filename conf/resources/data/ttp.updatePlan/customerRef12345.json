@@ -1,6 +1,6 @@
 {
   "customerReference": "custRef12345",
   "planId": "planId12345",
-  "planStatus": "cancelled",
+  "planStatus": "Resolved - Cancelled",
   "planUpdatedDate": "2021-05-13"
 }
