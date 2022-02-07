@@ -19,11 +19,12 @@ package uk.gov.hmrc.debttransformationstub.controllers
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext
-import play.api.libs.json.JsValue
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import play.api.mvc.{Action, ControllerComponents}
 import play.api.Environment
 import scala.io.Source
+
+import uk.gov.hmrc.debttransformationstub.models.debtmanagment.RaiseAmendFeeRequest
 
 @Singleton()
 class DebtManagementAPITestController @Inject() (
@@ -33,14 +34,14 @@ class DebtManagementAPITestController @Inject() (
 
   private val basePath = "conf/resources/data"
 
-  def postFieldCollectionsCharge(idType: String, idValue: String): Action[JsValue] = Action.async(parse.tolerantJson) { implicit request =>
-    environment.getExistingFile(s"$basePath/dm.raiseAmendFee/charge-${idType}-${idValue}") match {
-      case None => Future.successful(NotFound("file not found"))
-      case Some(file) =>
-        val result = Source.fromFile(file).mkString.stripMargin
-        Future.successful(Ok(result))
-    }
-
+  def postFieldCollectionsCharge(idType: String, idValue: String): Action[RaiseAmendFeeRequest] =
+    Action.async(parse.tolerantJson[RaiseAmendFeeRequest]) { _ =>
+      environment.getExistingFile(s"$basePath/dm.raiseAmendFee/charge-${idType}-${idValue}") match {
+        case None => Future.successful(NotFound("file not found"))
+        case Some(file) =>
+          val result = Source.fromFile(file).mkString.stripMargin
+          Future.successful(Ok(result))
+      }
   }
 
 }
