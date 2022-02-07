@@ -25,6 +25,7 @@ import play.api.Environment
 import scala.io.Source
 
 import uk.gov.hmrc.debttransformationstub.models.debtmanagment.RaiseAmendFeeRequest
+import play.api.mvc.AnyContent
 
 @Singleton()
 class DebtManagementAPITestController @Inject() (
@@ -36,7 +37,7 @@ class DebtManagementAPITestController @Inject() (
 
   def postFieldCollectionsCharge(idType: String, idValue: String): Action[RaiseAmendFeeRequest] =
     Action.async(parse.tolerantJson[RaiseAmendFeeRequest]) { _ =>
-      environment.getExistingFile(s"$basePath/dm.raiseAmendFee/charge-${idType}-${idValue}") match {
+      environment.getExistingFile(s"$basePath/dm.raiseAmendFee/charge-${idType}-${idValue}.json") match {
         case None => Future.successful(NotFound("file not found"))
         case Some(file) =>
           val result = Source.fromFile(file).mkString.stripMargin
