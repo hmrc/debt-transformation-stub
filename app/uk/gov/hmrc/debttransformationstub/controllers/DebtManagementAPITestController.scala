@@ -35,7 +35,7 @@ class DebtManagementAPITestController @Inject() (
 
   private val basePath = "conf/resources/data"
 
-  def postFieldCollectionsCharge(idType: String, idValue: String): Action[RaiseAmendFeeRequest] =
+  def fieldCollectionsCharge(idType: String, idValue: String): Action[RaiseAmendFeeRequest] =
     Action.async(parse.tolerantJson[RaiseAmendFeeRequest]) { _ =>
       environment.getExistingFile(s"$basePath/dm.raiseAmendFee/charge-${idType}-${idValue}.json") match {
         case None => Future.successful(NotFound("file not found"))
