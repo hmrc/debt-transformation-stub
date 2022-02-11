@@ -17,32 +17,44 @@
 package uk.gov.hmrc.debttransformationstub.controllers
 
 import javax.inject.{Inject, Singleton}
-import scala.concurrent.Future
-import scala.concurrent.ExecutionContext
-import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
-import play.api.mvc.{Action, ControllerComponents}
-import play.api.Environment
+
+import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Source
 
+import play.api.Environment
+import play.api.libs.json.Json
+import play.api.mvc.{Action, ControllerComponents}
+
+import uk.gov.hmrc.debttransformationstub.config.AppConfig
 import uk.gov.hmrc.debttransformationstub.models.debtmanagment.RaiseAmendFeeRequest
-import play.api.mvc.AnyContent
+import uk.gov.hmrc.debttransformationstub.services.DebtManagementAPIPollingService
+import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 @Singleton()
 class DebtManagementAPITestController @Inject() (
+  appConfig: AppConfig,
   cc: ControllerComponents,
+  pollingService: DebtManagementAPIPollingService,
   environment: Environment
 )(implicit val executionContext: ExecutionContext) extends BackendController(cc) {
+  import RaiseAmendFeeRequest._
 
   private val basePath = "conf/resources/data"
 
   def fieldCollectionsCharge(idType: String, idValue: String): Action[RaiseAmendFeeRequest] =
-    Action.async(parse.tolerantJson[RaiseAmendFeeRequest]) { _ =>
-      environment.getExistingFile(s"$basePath/dm.raiseAmendFee/charge-${idType}-${idValue}.json") match {
-        case None => Future.successful(NotFound("file not found"))
-        case Some(file) =>
-          val result = Source.fromFile(file).mkString.stripMargin
-          Future.successful(Ok(result))
-      }
+    Action.async(parse.tolerantJson[RaiseAmendFeeRequest]) { request =>
+      if (appConfig.isPollingEnv)
+        pollingService.insertRequestAndServeResponse(Json.toJson(request.body), request.uri).map {
+          case Some(response) => Status(response.status.getOrElse(200))(response.content)
+          case None => ServiceUnavailable
+        }
+      else
+        environment.getExistingFile(s"$basePath/dm.raiseAmendFee/charge-${idType}-${idValue}.json") match {
+          case None => Future.successful(NotFound("file not found"))
+          case Some(file) =>
+            val result = Source.fromFile(file).mkString.stripMargin
+            Future.successful(Ok(result))
+        }
   }
 
 }
