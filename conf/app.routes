@@ -25,3 +25,5 @@ GET           /test-only/requests                                               
 DELETE        /test-only/request/:requestId                                                                 uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.deleteTTPRequest(requestId: String)
 GET           /test-only/request/:requestId                                                                 uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.getTTPRequest(requestId: String )
 POST          /test-only/response                                                                           uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.createTTPRequests
+
+POST          /individuals/debts/field-collections/templates                                                uk.gov.hmrc.debttransformationstub.controllers.DebtManagementAPITemplatesTestController.fieldCollectionsTemplates()
