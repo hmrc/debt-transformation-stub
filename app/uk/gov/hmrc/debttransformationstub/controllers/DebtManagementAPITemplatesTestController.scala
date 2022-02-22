@@ -46,7 +46,7 @@ class DebtManagementAPITemplatesTestController @Inject()(
           case None => ServiceUnavailable
         }
       else
-        environment.getExistingFile(s"$basePath/dm.template/template.json") match {
+        environment.getExistingFile(s"$basePath/dm.template/fc_template.json") match {
           case None => Future.successful(NotFound("file not found"))
           case Some(file) =>
             val result = Source.fromFile(file).mkString.stripMargin
