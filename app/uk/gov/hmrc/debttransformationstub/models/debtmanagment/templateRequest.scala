@@ -20,10 +20,13 @@ import play.api.libs.json.{Json, OFormat}
 
 final case class templateRequest(
                                   source: String,
+                                  requestType: Option[String],
                                   outputType: String,
                                   letterId: String,
-                                  sourceData: String
-                                )
+                                  sourceData: String,
+                                  localPrintID: Option[String]
+
+)
 
 object templateRequest {
   implicit val ChargeDetailsFormat: OFormat[templateRequest] = Json.format[templateRequest]
