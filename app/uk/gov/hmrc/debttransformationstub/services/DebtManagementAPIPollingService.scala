@@ -28,6 +28,7 @@ import play.api.libs.json.JsValue
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
 import uk.gov.hmrc.debttransformationstub.models.RequestDetail
 import uk.gov.hmrc.debttransformationstub.repositories.TTPRequestsRepository
+import java.net.URL
 
 @Singleton
 class DebtManagementAPIPollingService @Inject() (
@@ -43,7 +44,7 @@ class DebtManagementAPIPollingService @Inject() (
     val requestDetails = RequestDetail(
       requestId = requestId,
       content = request.toString,
-      uri = Some(uri),
+      uri = Some(rewriteURL(uri)),
       isResponse = false,
       createdOn = Some(LocalDateTime.now())
     )
@@ -65,5 +66,11 @@ class DebtManagementAPIPollingService @Inject() (
         } else Future.successful(None)
       case Some(response) => Future.successful(Some(response))
     }
+
+  private def rewriteURL(url: String): String = {
+    val oldURL = new URL(url)
+    val queryString = if (oldURL.getQuery.isEmpty) "" else s"?${oldURL.getQuery}"
+    s"/individuals/debt-management-api/debts/field-collections/charge${queryString}"
+  }
 
 }
