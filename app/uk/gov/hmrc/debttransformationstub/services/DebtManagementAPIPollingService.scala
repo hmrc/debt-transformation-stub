@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.debttransformationstub.services
 
+import java.net.URL
 import java.time.LocalDateTime
 import java.util.UUID
 import javax.inject.{Inject, Singleton}
@@ -43,7 +44,7 @@ class DebtManagementAPIPollingService @Inject() (
     val requestDetails = RequestDetail(
       requestId = requestId,
       content = request.toString,
-      uri = Some(uri),
+      uri = Some(rewriteURL(uri)),
       isResponse = false,
       createdOn = Some(LocalDateTime.now())
     )
@@ -51,6 +52,9 @@ class DebtManagementAPIPollingService @Inject() (
       pollForResponse(requestId)
     }
   }
+
+  def rewriteURL(url: String): String =
+    "/individuals/debt-management-api/debts/field-collections/charge"
 
   private def pollForResponse(
     requestId: String,
