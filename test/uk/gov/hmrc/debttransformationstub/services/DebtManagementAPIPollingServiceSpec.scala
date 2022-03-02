@@ -35,11 +35,11 @@ class DebtManagementAPIPollingServiceSpec extends WordSpec with Matchers with Mo
 
   "the DebtManagementAPIPollingService" should {
     "rewrite a URL to api platform for non local requests" in {
-      insertRequestFor("qa","/individuals/debt-management-api/debts/field-collections/charge")
+      insertRequestFor(env = "qa",expectedUri = "/individuals/debt-management-api/debts/field-collections/charge")
     }
 
     "not rewrite a URL to api platform for local requests" in {
-      insertRequestFor("localhost","/individuals/debts/field-collections/charge")
+      insertRequestFor(env = "localhost",expectedUri = "/individuals/debts/field-collections/charge")
     }
   }
 
