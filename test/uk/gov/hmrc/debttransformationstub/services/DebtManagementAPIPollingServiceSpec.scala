@@ -16,20 +16,56 @@
 
 package uk.gov.hmrc.debttransformationstub.services
 
+import org.mockito.ArgumentCaptor
+import org.mockito.scalatest.MockitoSugar
+import org.scalatest.WordSpec
 import org.scalatest.matchers.should.Matchers
-import org.scalatest.wordspec.AnyWordSpec
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import org.scalatest.wordspec.AsyncWordSpec
+import play.api.libs.json.Json
+import reactivemongo.api.commands.WriteResult
+import uk.gov.hmrc.debttransformationstub.config.AppConfig
+import uk.gov.hmrc.debttransformationstub.models.RequestDetail
+import uk.gov.hmrc.debttransformationstub.repositories.TTPRequestsRepository
 
-class DebtManagementAPIPollingServiceSpec extends AnyWordSpec with Matchers with GuiceOneAppPerSuite {
+import java.time.LocalDateTime
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, Future}
 
-  val pollingService = app.injector.instanceOf[DebtManagementAPIPollingService]
+class DebtManagementAPIPollingServiceSpec extends WordSpec with Matchers with MockitoSugar {
 
   "the DebtManagementAPIPollingService" should {
-    "rewrite a URL" in {
-      val result = pollingService.rewriteURL("/debts/field-collections/charge")
-      result shouldBe "/individuals/debt-management-api/debts/field-collections/charge"
+    "rewrite a URL to api platform for non local requests" in {
+      insertRequestFor("qa","/individuals/debt-management-api/debts/field-collections/charge")
+    }
+
+    "not rewrite a URL to api platform for local requests" in {
+      insertRequestFor("localhost","/individuals/debts/field-collections/charge")
     }
   }
 
+  private def insertRequestFor(env:String, expectedUri:String) = {
+    val mockTTPRequestsRepository = mock[TTPRequestsRepository]
+    val mockAppConfig = mock[AppConfig]
+    val pollingService = new DebtManagementAPIPollingService(mockTTPRequestsRepository,mockAppConfig)
+
+    val stubbedRequestDetail = RequestDetail("89446eb1-e961-49d5-a426-3ffb1a76a6f8","{}",Some("/debts/field-collections/charge"),false,Some(LocalDateTime.now()),None)
+
+    val captor = ArgumentCaptor.forClass(classOf[RequestDetail])
+    val mockWriteResult = mock[WriteResult]
+
+    when(mockAppConfig.dbUrl).thenReturn(s"mongodb://${env}:27017/ttp-testonly")
+    when(mockAppConfig.pollingIntervals).thenReturn(1)
+    when(mockAppConfig.pollingSleep).thenReturn(1)
+
+    when(mockTTPRequestsRepository.insertRequestsDetails(captor.capture())).thenReturn(Future.successful(mockWriteResult))
+    when(mockTTPRequestsRepository.getResponseByRequestId(any[String])).thenReturn(Future.successful(Some(stubbedRequestDetail)))
+    val result = pollingService.insertRequestAndServeResponse(Json.obj(), "/individuals/debts/field-collections/charge")
+
+    val requestDetail = captor.getValue.asInstanceOf[RequestDetail]
+
+    Await.result(result, Duration.Inf)
+
+    requestDetail.uri should contain(expectedUri)
+  }
 }
 
