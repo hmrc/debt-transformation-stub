@@ -40,7 +40,7 @@ class DebtManagementAPIPollingService @Inject() (
     val requestDetails = RequestDetail(
       requestId = requestId,
       content = request.toString,
-      uri = Some(uri),
+      uri = Some(prefixUrlForApiPlatform(uri)),
       isResponse = false,
       createdOn = Some(LocalDateTime.now())
     )
@@ -48,6 +48,12 @@ class DebtManagementAPIPollingService @Inject() (
       pollForResponse(requestId)
     }
   }
+
+  private def prefixUrlForApiPlatform(uri:String) =
+    if(appConfig.dbUrl.contains("localhost"))
+      uri
+    else
+      uri.replaceAll("/individuals/","/individuals/debt-management-api/")
 
   private def pollForResponse(
     requestId: String,
