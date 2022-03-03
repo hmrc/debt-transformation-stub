@@ -72,10 +72,8 @@ class DebtManagementAPITestController @Inject() (
   def fieldCollectionsTemplates(): Action[FCTemplateRequest] =
     Action.async(parse.tolerantJson[FCTemplateRequest]) { request =>
       if (appConfig.isPollingEnv) {
-        println(s"INSERTING Template request ${Json.prettyPrint(Json.toJson(request.body))}")
         pollingService.insertRequestAndServeResponse(Json.toJson(request.body), request.uri).map {
           case Some(response) =>
-            println(s"Erronous response $response")
             Status(response.status.getOrElse(200))(response.content)
           case None => ServiceUnavailable
         }
