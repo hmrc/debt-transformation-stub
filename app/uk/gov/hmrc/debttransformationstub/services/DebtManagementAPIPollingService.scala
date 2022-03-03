@@ -32,15 +32,22 @@ class DebtManagementAPIPollingService @Inject() (
   appConfig: AppConfig
 ) {
 
+  def insertFCChargeRequestAndServeResponse(
+                                     request: JsValue
+                                   ): Future[Option[RequestDetail]] =
+    process(request, uri = None, uriOverride = Some("/individuals/debt-management-api/debts/field-collections/charge"))
+
   def insertRequestAndServeResponse(
     request: JsValue,
     uri: String
-  ): Future[Option[RequestDetail]] = {
+  ): Future[Option[RequestDetail]] = process(request, uri = Some(uri), uriOverride = None)
+
+  private def process(request: JsValue,uri: Option[String], uriOverride:Option[String]): Future[Option[RequestDetail]] = {
     val requestId = UUID.randomUUID().toString
     val requestDetails = RequestDetail(
       requestId = requestId,
       content = request.toString,
-      uri = Some(prefixUrlForApiPlatform(uri)),
+      uri = uriOverride.orElse(uri.map(prefixUrlForApiPlatform(_))),
       isResponse = false,
       createdOn = Some(LocalDateTime.now())
     )
@@ -68,5 +75,4 @@ class DebtManagementAPIPollingService @Inject() (
         } else Future.successful(None)
       case Some(response) => Future.successful(Some(response))
     }
-
 }
