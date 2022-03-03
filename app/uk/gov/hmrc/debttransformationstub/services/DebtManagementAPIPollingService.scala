@@ -22,6 +22,7 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import play.api.libs.json.JsValue
+import reactivemongo.api.commands.WriteResult
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
 import uk.gov.hmrc.debttransformationstub.models.RequestDetail
 import uk.gov.hmrc.debttransformationstub.repositories.TTPRequestsRepository
@@ -32,10 +33,17 @@ class DebtManagementAPIPollingService @Inject() (
   appConfig: AppConfig
 ) {
 
+  def insertFCChargeRequestAndServeResponse(
+                                     request: JsValue
+                                   ): Future[Option[RequestDetail]] =
+    process(request, "/individuals/debt-management-api/debts/field-collections/charge")
+
   def insertRequestAndServeResponse(
     request: JsValue,
     uri: String
-  ): Future[Option[RequestDetail]] = {
+  ): Future[Option[RequestDetail]] = process(request, uri)
+
+  private def process(request: JsValue,uri: String): Future[Option[RequestDetail]] = {
     val requestId = UUID.randomUUID().toString
     val requestDetails = RequestDetail(
       requestId = requestId,
@@ -68,5 +76,4 @@ class DebtManagementAPIPollingService @Inject() (
         } else Future.successful(None)
       case Some(response) => Future.successful(Some(response))
     }
-
 }
