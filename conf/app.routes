@@ -12,7 +12,8 @@ POST          /prweb/PRRestService/oauth2/v1/token                              
 
 POST          /individuals/debts/field-collections/charge/:idType/:idValue                                  uk.gov.hmrc.debttransformationstub.controllers.DebtManagementAPITestController.fieldCollectionsCharge(idType: String, idValue: String)
 PUT           /individuals/debts/field-collections/charge/:idType/:idValue                                  uk.gov.hmrc.debttransformationstub.controllers.DebtManagementAPITestController.fieldCollectionsCharge(idType: String, idValue: String)
-POST          /individuals/debts/field-collections/templates                                                uk.gov.hmrc.debttransformationstub.controllers.DebtManagementAPITemplatesTestController.fieldCollectionsTemplates()
+POST          /individuals/debts/field-collections/templates                                                uk.gov.hmrc.debttransformationstub.controllers.DebtManagementAPITestController.fieldCollectionsTemplates()
+GET           /individuals/subcontractor/idms/wmfid/:wmfId                                                  uk.gov.hmrc.debttransformationstub.controllers.DebtManagementAPITestController.getDebtDataAndDWISignals(wmfId: String)
 
 POST          /individuals/debts/time-to-pay/quote                                                          uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.generateQuote
 GET           /individuals/time-to-pay/quote/:customerReference/:pegaId                                     uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.getExistingQuote(customerReference: String, pegaId: String)

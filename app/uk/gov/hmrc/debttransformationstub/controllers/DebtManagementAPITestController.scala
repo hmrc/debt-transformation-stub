@@ -17,16 +17,13 @@
 package uk.gov.hmrc.debttransformationstub.controllers
 
 import javax.inject.{Inject, Singleton}
-
 import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Source
-
 import play.api.Environment
 import play.api.libs.json.Json
-import play.api.mvc.{Action, ControllerComponents}
-
+import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
-import uk.gov.hmrc.debttransformationstub.models.debtmanagment.RaiseAmendFeeRequest
+import uk.gov.hmrc.debttransformationstub.models.debtmanagment.{FCTemplateRequest, RaiseAmendFeeRequest}
 import uk.gov.hmrc.debttransformationstub.services.DebtManagementAPIPollingService
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
@@ -57,4 +54,35 @@ class DebtManagementAPITestController @Inject() (
         }
   }
 
+  def getDebtDataAndDWISignals(wmfId: String): Action[AnyContent] = Action.async { request =>
+    if (appConfig.isPollingEnv)
+      pollingService.insertRequestAndServeResponse(Json.obj(), request.uri).map {
+        case Some(response) => Status(response.status.getOrElse(200))(response.content)
+        case None => ServiceUnavailable
+      }
+    else
+      environment.getExistingFile(s"$basePath/dm/subcontractor/wmfId.json") match {
+        case None => Future.successful(NotFound("file not found"))
+        case Some(file) =>
+          val result = Source.fromFile(file).mkString.stripMargin
+          Future.successful(Ok(result))
+      }
+  }
+
+  def fieldCollectionsTemplates(): Action[FCTemplateRequest] =
+    Action.async(parse.tolerantJson[FCTemplateRequest]) { request =>
+      if (appConfig.isPollingEnv) {
+        pollingService.insertRequestAndServeResponse(Json.toJson(request.body), request.uri).map {
+          case Some(response) =>
+            Status(response.status.getOrElse(200))(response.content)
+          case None => ServiceUnavailable
+        }
+      } else
+        environment.getExistingFile(s"$basePath/dm.template/fc_template.json") match {
+          case None => Future.successful(NotFound("file not found"))
+          case Some(file) =>
+            val result = Source.fromFile(file).mkString.stripMargin
+            Future.successful(Ok(result))
+        }
+    }
 }

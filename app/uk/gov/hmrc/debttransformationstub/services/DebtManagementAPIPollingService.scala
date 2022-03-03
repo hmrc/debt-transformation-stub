@@ -16,16 +16,12 @@
 
 package uk.gov.hmrc.debttransformationstub.services
 
-import java.net.URL
 import java.time.LocalDateTime
 import java.util.UUID
 import javax.inject.{Inject, Singleton}
-
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-
 import play.api.libs.json.JsValue
-
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
 import uk.gov.hmrc.debttransformationstub.models.RequestDetail
 import uk.gov.hmrc.debttransformationstub.repositories.TTPRequestsRepository
@@ -44,7 +40,7 @@ class DebtManagementAPIPollingService @Inject() (
     val requestDetails = RequestDetail(
       requestId = requestId,
       content = request.toString,
-      uri = Some(rewriteURL(uri)),
+      uri = Some(prefixUrlForApiPlatform(uri)),
       isResponse = false,
       createdOn = Some(LocalDateTime.now())
     )
@@ -53,8 +49,11 @@ class DebtManagementAPIPollingService @Inject() (
     }
   }
 
-  def rewriteURL(url: String): String =
-    "/individuals/debt-management-api/debts/field-collections/charge"
+  private def prefixUrlForApiPlatform(uri:String) =
+    if(appConfig.dbUrl.contains("localhost"))
+      uri
+    else
+      uri.replaceAll("/individuals/","/individuals/debt-management-api/")
 
   private def pollForResponse(
     requestId: String,
