@@ -48,7 +48,14 @@ class DebtManagementAPIPollingServiceSpec extends WordSpec with Matchers with Mo
     val mockAppConfig = mock[AppConfig]
     val pollingService = new DebtManagementAPIPollingService(mockTTPRequestsRepository,mockAppConfig)
 
-    val stubbedRequestDetail = RequestDetail("89446eb1-e961-49d5-a426-3ffb1a76a6f8","{}",Some("/debts/field-collections/charge"),false,Some(LocalDateTime.now()),None)
+    val stubbedRequestDetail =
+      RequestDetail(
+        requestId = "89446eb1-e961-49d5-a426-3ffb1a76a6f8",
+        content = "{}",
+        uri = Some("/debts/field-collections/charge"),
+        isResponse = false,
+        createdOn = Some(LocalDateTime.now()),
+        status = None)
 
     val captor = ArgumentCaptor.forClass(classOf[RequestDetail])
     val mockWriteResult = mock[WriteResult]
