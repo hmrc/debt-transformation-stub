@@ -34,16 +34,30 @@ import scala.concurrent.{Await, Future}
 class DebtManagementAPIPollingServiceSpec extends WordSpec with Matchers with MockitoSugar {
 
   "the DebtManagementAPIPollingService" should {
+    "rewrite a URL for field collections charge, stripping path params" in {
+      insertRequestFor(
+        env = "qa",
+        inputUri = "/individuals/debts/field-collections/charge/param1/param2",
+        expectedUri = "/individuals/debt-management-api/debts/field-collections/charge",
+        isCharge = true)
+    }
+
     "rewrite a URL to api platform for non local requests" in {
-      insertRequestFor(env = "qa",expectedUri = "/individuals/debt-management-api/debts/field-collections/charge")
+      insertRequestFor(env = "qa",
+        inputUri = "/individuals/subcontractor/idms/wmfid/SomewmfId",
+        expectedUri = "/individuals/debt-management-api/subcontractor/idms/wmfid/SomewmfId",
+        isCharge = false)
     }
 
     "not rewrite a URL to api platform for local requests" in {
-      insertRequestFor(env = "localhost",expectedUri = "/individuals/debts/field-collections/charge")
+      insertRequestFor(env = "localhost",
+        inputUri="/individuals/subcontractor/idms/wmfid/SomewmfId",
+        expectedUri = "/individuals/subcontractor/idms/wmfid/SomewmfId",
+        isCharge = false)
     }
   }
 
-  private def insertRequestFor(env:String, expectedUri:String) = {
+  private def insertRequestFor(env:String, inputUri:String, expectedUri:String, isCharge:Boolean) = {
     val mockTTPRequestsRepository = mock[TTPRequestsRepository]
     val mockAppConfig = mock[AppConfig]
     val pollingService = new DebtManagementAPIPollingService(mockTTPRequestsRepository,mockAppConfig)
@@ -52,7 +66,7 @@ class DebtManagementAPIPollingServiceSpec extends WordSpec with Matchers with Mo
       RequestDetail(
         requestId = "89446eb1-e961-49d5-a426-3ffb1a76a6f8",
         content = "{}",
-        uri = Some("/debts/field-collections/charge"),
+        uri = Some(inputUri),
         isResponse = false,
         createdOn = Some(LocalDateTime.now()),
         status = None)
@@ -60,13 +74,19 @@ class DebtManagementAPIPollingServiceSpec extends WordSpec with Matchers with Mo
     val captor = ArgumentCaptor.forClass(classOf[RequestDetail])
     val mockWriteResult = mock[WriteResult]
 
-    when(mockAppConfig.dbUrl).thenReturn(s"mongodb://${env}:27017/ttp-testonly")
     when(mockAppConfig.pollingIntervals).thenReturn(1)
     when(mockAppConfig.pollingSleep).thenReturn(1)
 
     when(mockTTPRequestsRepository.insertRequestsDetails(captor.capture())).thenReturn(Future.successful(mockWriteResult))
     when(mockTTPRequestsRepository.getResponseByRequestId(any[String])).thenReturn(Future.successful(Some(stubbedRequestDetail)))
-    val result = pollingService.insertRequestAndServeResponse(Json.obj(), "/individuals/debts/field-collections/charge")
+    val result = {
+      if(isCharge){
+        pollingService.insertFCChargeRequestAndServeResponse(Json.obj())
+      }else{
+        when(mockAppConfig.dbUrl).thenReturn(s"mongodb://${env}:27017/ttp-testonly")
+        pollingService.insertRequestAndServeResponse(Json.obj(), inputUri)
+      }
+    }
 
     val requestDetail = captor.getValue.asInstanceOf[RequestDetail]
 

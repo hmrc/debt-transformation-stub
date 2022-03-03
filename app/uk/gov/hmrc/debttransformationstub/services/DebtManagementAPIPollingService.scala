@@ -22,7 +22,6 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import play.api.libs.json.JsValue
-import reactivemongo.api.commands.WriteResult
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
 import uk.gov.hmrc.debttransformationstub.models.RequestDetail
 import uk.gov.hmrc.debttransformationstub.repositories.TTPRequestsRepository
@@ -36,19 +35,19 @@ class DebtManagementAPIPollingService @Inject() (
   def insertFCChargeRequestAndServeResponse(
                                      request: JsValue
                                    ): Future[Option[RequestDetail]] =
-    process(request, "/individuals/debt-management-api/debts/field-collections/charge")
+    process(request, uri = None, uriOverride = Some("/individuals/debt-management-api/debts/field-collections/charge"))
 
   def insertRequestAndServeResponse(
     request: JsValue,
     uri: String
-  ): Future[Option[RequestDetail]] = process(request, uri)
+  ): Future[Option[RequestDetail]] = process(request, uri = Some(uri), uriOverride = None)
 
-  private def process(request: JsValue,uri: String): Future[Option[RequestDetail]] = {
+  private def process(request: JsValue,uri: Option[String], uriOverride:Option[String]): Future[Option[RequestDetail]] = {
     val requestId = UUID.randomUUID().toString
     val requestDetails = RequestDetail(
       requestId = requestId,
       content = request.toString,
-      uri = Some(prefixUrlForApiPlatform(uri)),
+      uri = uriOverride.orElse(uri.map(prefixUrlForApiPlatform(_))),
       isResponse = false,
       createdOn = Some(LocalDateTime.now())
     )
