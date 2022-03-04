@@ -9,7 +9,7 @@
     "safeChargeRef": "XA188698553712",
     "customerRefType": "A",
     "outputRefType": "B",
-    "AdditionalInfo": [
+    "additionalInfo": [
       {
         "infoType": "RCQ",
         "infoValue": "Reinstated Charge"
@@ -63,7 +63,7 @@
     "safeChargeRef": "XA188698553712",
     "customerRefType": "A",
     "outputRefType": "B",
-    "AdditionalInfo": [
+    "additionalInfo": [
       {
         "infoType": "RCQ",
         "infoValue": "Reinstated Charge"
