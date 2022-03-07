@@ -69,6 +69,21 @@ class DebtManagementAPITestController @Inject() (
       }
   }
 
+  def getTaxpayerData(idKey: String): Action[AnyContent] = Action.async { request =>
+    if (appConfig.isPollingEnv)
+      pollingService.insertRequestAndServeResponse(Json.obj(), request.uri).map {
+        case Some(response) => Status(response.status.getOrElse(200))(response.content)
+        case None => ServiceUnavailable
+      }
+    else
+      environment.getExistingFile(s"$basePath/dm/subcontractor/idKey.json") match {
+        case None => Future.successful(NotFound("file not found"))
+        case Some(file) =>
+          val result = Source.fromFile(file).mkString.stripMargin
+          Future.successful(Ok(result))
+      }
+  }
+
   def fieldCollectionsTemplates(): Action[FCTemplateRequest] =
     Action.async(parse.tolerantJson[FCTemplateRequest]) { request =>
       if (appConfig.isPollingEnv) {
