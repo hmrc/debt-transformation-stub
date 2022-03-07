@@ -38,14 +38,14 @@ class DebtManagementAPIPollingServiceSpec extends WordSpec with Matchers with Mo
       insertRequestFor(
         env = "qa",
         inputUri = "/individuals/debts/field-collections/charge/param1/param2",
-        expectedUri = "/individuals/debt-management-api/debts/field-collections/charge",
+        expectedUri = "/individuals/field-collections/charges",
         isCharge = true)
     }
 
     "rewrite a URL to api platform for non local requests" in {
       insertRequestFor(env = "qa",
         inputUri = "/individuals/subcontractor/idms/wmfid/SomewmfId",
-        expectedUri = "/individuals/debt-management-api/subcontractor/idms/wmfid/SomewmfId",
+        expectedUri = "/individuals/subcontractor/idms/wmfid/SomewmfId",
         isCharge = false)
     }
 
@@ -83,7 +83,6 @@ class DebtManagementAPIPollingServiceSpec extends WordSpec with Matchers with Mo
       if(isCharge){
         pollingService.insertFCChargeRequestAndServeResponse(Json.obj())
       }else{
-        when(mockAppConfig.dbUrl).thenReturn(s"mongodb://${env}:27017/ttp-testonly")
         pollingService.insertRequestAndServeResponse(Json.obj(), inputUri)
       }
     }
