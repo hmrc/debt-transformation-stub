@@ -1,35 +1,35 @@
 {
-  "districtNumber": "945",
-  "hodType": "D",
-  "hodCheckChar": "A",
-  "hodRegisterNo": "XA123456789B",
-  "nameOne": "Mr Jacob Smith",
-  "nameTwo": "Farley",
-  "customerType": "I",
-  "dateOfBirth": "2021-09-15",
-  "incorporationNo": "SC12356123",
-  "customerContactDetails": {
-    "contactName": "K SMITH",
-    "status": "son",
-    "telNo": "9999999999",
-    "bestDay": "7",
-    "bestTime": "2021-09-15",
-    "capacity1": "G R S RETAIL",
-    "capacity2": "STORE",
-    "capacityRole": "BF",
-    "capacityRoleText": "Personal Representative"
-  },
-  "taxAccountProfile": {
-    "paymentFrequency": "A",
-    "tpNote": "16/03/21 - Payment overdue by 21 days",
-    "taxAccountRepresentative": {
-      "addressName1": "Jonathan",
-      "addressName2": "Smith",
-      "clientReference": "908234923EXTN1752"
-    }
-  },
-  "address": [
-    {
+  "debtCustomer": {
+    "districtNumber": "945",
+    "hodType": "D",
+    "hodCheckChar": "A",
+    "hodRegisterNo": "XA123456789B",
+    "nameOne": "Mr Jacob Smith",
+    "nameTwo": "Farley",
+    "customerType": "I",
+    "dateOfBirth": "2021-09-15",
+    "incorporationNo": "SC12356123",
+    "customerContactDetails": {
+      "contactName": "K SMITH",
+      "status": "son",
+      "telNo": "9999999999",
+      "bestDay": "7",
+      "bestTime": "2021-09-15",
+      "capacity1": "G R S RETAIL",
+      "capacity2": "STORE",
+      "capacityRole": "BF",
+      "capacityRoleText": "Personal Representative"
+    },
+    "taxAccountProfile": {
+      "paymentFrequency": "A",
+      "tpNote": "16/03/21 - Payment overdue by 21 days",
+      "taxAccountRepresentative": {
+        "addressName1": "Jonathan",
+        "addressName2": "Smith",
+        "clientReference": "908234923EXTN1752"
+      }
+    },
+    "address": [{
       "addressType": "T",
       "addressLine1": "12 Potts Lane",
       "addressLine2": "Stone Road",
@@ -42,51 +42,46 @@
       "telNo1": "07624662959",
       "telNo2": "07896578569",
       "telNo3": "07923584768",
-      "addressSignal": [
-        {
-          "custAddressSignalType": "##TBD##",
-          "custAddressSignalValue": "Y"
-        }
-      ]
-    }
-  ],
-  "customerSignal": [
-    {
+      "addressSignal": [{
+        "custAddressSignalType": "##TBD##",
+        "custAddressSignalValue": "Y"
+      }]
+    }],
+    "customerSignal": [{
       "signalType": "##TBD##",
       "signalValue": "Y",
       "signalAdditionalInfo": "ABC"
     },
-    {
-      "signalType": "##TBD##",
-      "signalValue": "Y",
-      "signalAdditionalInfo": "ABCD"
-    }
-  ],
-  "customerIdentification": [
-    {
+      {
+        "signalType": "##TBD##",
+        "signalValue": "Y",
+        "signalAdditionalInfo": "ABCD"
+      }
+    ],
+    "customerIdentification": [{
       "idType": "hod_eg_no",
       "idValue": "AB1234567"
     },
-    {
-      "idType": "hod_reg_no",
-      "idValue": "AB123456789"
-    }
-  ],
-  "bsPeriod": [
-    {
+      {
+        "idType": "hod_reg_no",
+        "idValue": "AB123456789"
+      }
+    ],
+    "bsPeriod": [{
       "irIntAreaRef": "H978hyuiY5gCui6W7tggGL",
       "bsStartDate": "2020-09-15",
       "bsEndDate": "2021-09-15"
     },
-    {
-      "irIntAreaRef": "H978hyuiY5gCui6W7tggGG",
-      "bsStartDate": "2020-10-15",
-      "bsEndDate": "2020-09-15"
-    },
-    {
-      "irIntAreaRef": "H978hyuiY5gCui6W7tggGH",
-      "bsStartDate": "2020-10-15",
-      "bsEndDate": "2020-09-15"
-    }
-  ]
+      {
+        "irIntAreaRef": "H978hyuiY5gCui6W7tggGG",
+        "bsStartDate": "2020-10-15",
+        "bsEndDate": "2020-09-15"
+      },
+      {
+        "irIntAreaRef": "H978hyuiY5gCui6W7tggGH",
+        "bsStartDate": "2020-10-15",
+        "bsEndDate": "2020-09-15"
+      }
+    ]
+  }
 }
