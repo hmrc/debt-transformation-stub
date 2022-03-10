@@ -1,5 +1,4 @@
 {
-  "debtCustomer": {
     "districtNumber": "945",
     "hodType": "D",
     "hodCheckChar": "A",
@@ -84,4 +83,3 @@
       }
     ]
   }
-}
