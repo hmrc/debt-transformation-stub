@@ -40,7 +40,7 @@ class DebtManagementAPIPollingService @Inject() (
   def insertTaxpayerRequestAndServeResponse(
                                              request: JsValue
                                            ): Future[Option[RequestDetail]] =
-    process(request, uri = None, uriOverride = Some("/subcontractor/idms/taxpayer/789"))
+    process(request, uri = None, uriOverride = Some("/individuals/subcontractor/idms/taxpayer/789"))
 
   def insertRequestAndServeResponse(
     request: JsValue,
