@@ -25,6 +25,7 @@ import play.api.libs.json.JsValue
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
 import uk.gov.hmrc.debttransformationstub.models.RequestDetail
 import uk.gov.hmrc.debttransformationstub.repositories.TTPRequestsRepository
+import play.api.libs.json.Json
 
 @Singleton
 class DebtManagementAPIPollingService @Inject() (
@@ -33,26 +34,30 @@ class DebtManagementAPIPollingService @Inject() (
 ) {
 
   def insertFCChargeRequestAndServeResponse(
-                                     request: JsValue
-                                   ): Future[Option[RequestDetail]] =
+    request: JsValue
+  ): Future[Option[RequestDetail]] =
     process(request, uri = None, uriOverride = Some("/individuals/field-collections/charges"))
 
-  def insertTaxpayerRequestAndServeResponse(
-                                             request: JsValue
-                                           ): Future[Option[RequestDetail]] =
-    process(request, uri = None, uriOverride = Some("/individuals/subcontractor/idms/taxpayer/789"))
+  def insertTaxpayerRequestAndServeResponse(): Future[Option[RequestDetail]] =
+    process(Json.obj(), uri = None, uriOverride = Some("/individuals/subcontractor/idms/taxpayer/789"), method = Some("GET"))
 
   def insertRequestAndServeResponse(
     request: JsValue,
-    uri: String
+    uri: String,
   ): Future[Option[RequestDetail]] = process(request, uri = Some(uri), uriOverride = None)
 
-  private def process(request: JsValue,uri: Option[String], uriOverride:Option[String]): Future[Option[RequestDetail]] = {
+  private def process(
+    request: JsValue,
+    uri: Option[String],
+    uriOverride: Option[String],
+    method: Option[String] = Some("POST")
+  ): Future[Option[RequestDetail]] = {
     val requestId = UUID.randomUUID().toString
     val requestDetails = RequestDetail(
       requestId = requestId,
       content = request.toString,
       uri = uriOverride.orElse(uri),
+      method = method,
       isResponse = false,
       createdOn = Some(LocalDateTime.now())
     )

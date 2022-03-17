@@ -71,7 +71,7 @@ class DebtManagementAPITestController @Inject() (
 
   def getTaxpayerData(idKey: String): Action[AnyContent] = Action.async { request =>
     if (appConfig.isPollingEnv)
-      pollingService.insertTaxpayerRequestAndServeResponse(Json.obj()).map {
+      pollingService.insertTaxpayerRequestAndServeResponse().map {
         case Some(response) => Status(response.status.getOrElse(200))(response.content)
         case None => ServiceUnavailable
       }
