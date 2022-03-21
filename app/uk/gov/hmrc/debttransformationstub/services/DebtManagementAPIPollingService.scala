@@ -55,7 +55,7 @@ class DebtManagementAPIPollingService @Inject() (
     val requestId = UUID.randomUUID().toString
     val requestDetails = RequestDetail(
       requestId = requestId,
-      content = request.toString,
+      content = Json.parse(request.toString),
       uri = uriOverride.orElse(uri),
       method = method,
       isResponse = false,

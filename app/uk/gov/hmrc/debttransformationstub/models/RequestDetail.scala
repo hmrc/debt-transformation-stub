@@ -19,10 +19,11 @@ package uk.gov.hmrc.debttransformationstub.models
 import play.api.libs.json.{Json, OFormat}
 
 import java.time.LocalDateTime
+import play.api.libs.json.JsValue
 
 case class RequestDetail(
   requestId: String,
-  content: String,
+  content: JsValue,
   uri: Option[String],
   isResponse: Boolean,
   createdOn: Option[LocalDateTime],

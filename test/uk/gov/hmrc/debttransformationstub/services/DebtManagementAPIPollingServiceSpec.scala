@@ -65,7 +65,7 @@ class DebtManagementAPIPollingServiceSpec extends WordSpec with Matchers with Mo
     val stubbedRequestDetail =
       RequestDetail(
         requestId = "89446eb1-e961-49d5-a426-3ffb1a76a6f8",
-        content = "{}",
+        content = Json.parse("{}"),
         uri = Some(inputUri),
         isResponse = false,
         createdOn = Some(LocalDateTime.now()),
