@@ -37,7 +37,7 @@ class DebtManagementAPIPollingServiceSpec extends WordSpec with Matchers with Mo
     "rewrite a URL for field collections charge, stripping path params" in {
       insertRequestFor(
         env = "qa",
-        inputUri = "/individuals/debts/field-collections/charge/param1/param2",
+        inputUri = "/individuals/debts/field-collections/param1/param2/charge",
         expectedUri = "/individuals/field-collections/charges",
         isCharge = true)
     }
