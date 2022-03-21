@@ -19,8 +19,17 @@ package uk.gov.hmrc.debttransformationstub.models
 import play.api.libs.json.{Json, OFormat}
 
 import java.time.LocalDateTime
+import play.api.libs.json.JsValue
 
-case class RequestDetail(requestId: String, content: String, uri: Option[String], isResponse: Boolean, createdOn: Option[LocalDateTime], status: Option[Int] = None)
+case class RequestDetail(
+  requestId: String,
+  content: JsValue,
+  uri: Option[String],
+  isResponse: Boolean,
+  createdOn: Option[LocalDateTime],
+  method: Option[String] = None,
+  status: Option[Int] = None
+)
 
 object RequestDetail {
   implicit val requestDetailFormat: OFormat[RequestDetail] = Json.format[RequestDetail]
