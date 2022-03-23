@@ -34,9 +34,10 @@ class DebtManagementAPIPollingService @Inject() (
 ) {
 
   def insertFCChargeRequestAndServeResponse(
-    request: JsValue
+    request: JsValue,
+    method: String
   ): Future[Option[RequestDetail]] =
-    process(request, uri = None, uriOverride = Some("/individuals/field-collections/charges"))
+    process(request, uri = None, uriOverride = Some("/individuals/field-collections/charges"), method = Some(method.toUpperCase()))
 
   def insertTaxpayerRequestAndServeResponse(): Future[Option[RequestDetail]] =
     process(Json.obj(), uri = None, uriOverride = Some("/individuals/subcontractor/idms/taxpayer/789"), method = Some("GET"))

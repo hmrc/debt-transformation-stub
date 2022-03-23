@@ -41,7 +41,7 @@ class DebtManagementAPITestController @Inject() (
   def fieldCollectionsCharge(idType: String, idValue: String): Action[RaiseAmendFeeRequest] =
     Action.async(parse.tolerantJson[RaiseAmendFeeRequest]) { request =>
       if (appConfig.isPollingEnv)
-        pollingService.insertFCChargeRequestAndServeResponse(Json.toJson(request.body)).map {
+        pollingService.insertFCChargeRequestAndServeResponse(Json.toJson(request.body), request.method).map {
           case Some(response) => Status(response.status.getOrElse(200))(response.content)
           case None => ServiceUnavailable
         }
