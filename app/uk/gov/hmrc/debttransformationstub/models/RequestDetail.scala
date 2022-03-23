@@ -28,7 +28,8 @@ case class RequestDetail(
   isResponse: Boolean,
   createdOn: Option[LocalDateTime],
   method: Option[String] = None,
-  status: Option[Int] = None
+  status: Option[Int] = None,
+  headers: Option[Map[String, String]] = None
 )
 
 object RequestDetail {
