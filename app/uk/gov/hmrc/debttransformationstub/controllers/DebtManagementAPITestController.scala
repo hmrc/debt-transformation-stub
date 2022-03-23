@@ -43,7 +43,7 @@ class DebtManagementAPITestController @Inject() (
       if (appConfig.isPollingEnv)
         request.headers.get("CorrelationId") match {
           case Some(correlationId) => 
-            pollingService.insertFCChargeRequestAndServeResponse(Json.toJson(request.body), correlationId).map {
+            pollingService.insertFCChargeRequestAndServeResponse(Json.toJson(request.body), correlationId, request.method).map {
               case Some(response) =>
                 Status(response.status.getOrElse(200))(response.content)
               case None =>

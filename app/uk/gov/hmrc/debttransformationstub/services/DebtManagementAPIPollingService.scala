@@ -35,13 +35,15 @@ class DebtManagementAPIPollingService @Inject() (
 
   def insertFCChargeRequestAndServeResponse(
     request: JsValue,
-    correlationId: String
+    correlationId: String,
+    method: String
   ): Future[Option[RequestDetail]] =
     process(
       request,
       uri = None,
       uriOverride = Some("/individuals/field-collections/charges"),
       headers = Map("CorrelationId" -> correlationId),
+      method = Some(method.toUpperCase)
     )
 
   def insertTaxpayerRequestAndServeResponse(): Future[Option[RequestDetail]] =

@@ -81,7 +81,7 @@ class DebtManagementAPIPollingServiceSpec extends WordSpec with Matchers with Mo
     when(mockTTPRequestsRepository.getResponseByRequestId(any[String])).thenReturn(Future.successful(Some(stubbedRequestDetail)))
     val result = {
       if(isCharge){
-        pollingService.insertFCChargeRequestAndServeResponse(Json.obj(), "mock correlationId")
+        pollingService.insertFCChargeRequestAndServeResponse(Json.obj(), "mock correlationId", "POST")
       }else{
         pollingService.insertRequestAndServeResponse(Json.obj(), inputUri)
       }
