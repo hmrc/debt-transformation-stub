@@ -35,23 +35,40 @@ class DebtManagementAPIPollingService @Inject() (
 
   def insertFCChargeRequestAndServeResponse(
     request: JsValue,
+    correlationId: String,
     method: String
   ): Future[Option[RequestDetail]] =
-    process(request, uri = None, uriOverride = Some("/individuals/field-collections/charges"), method = Some(method.toUpperCase()))
+    process(
+      request,
+      uri = None,
+      uriOverride = Some("/individuals/field-collections/charges"),
+      headers = Map("CorrelationId" -> correlationId),
+      method = Some(method.toUpperCase)
+    )
 
   def insertTaxpayerRequestAndServeResponse(): Future[Option[RequestDetail]] =
-    process(Json.obj(), uri = None, uriOverride = Some("/individuals/subcontractor/idms/taxpayer/789"), method = Some("GET"))
+    process(
+      Json.obj(),
+      uri = None,
+      uriOverride = Some("/individuals/subcontractor/idms/taxpayer/789"),
+      method = Some("GET")
+    )
 
   def insertRequestAndServeResponse(
     request: JsValue,
     uri: String,
-  ): Future[Option[RequestDetail]] = process(request, uri = Some(uri), uriOverride = None)
+  ): Future[Option[RequestDetail]] = process(
+    request,
+    uri = Some(uri),
+    uriOverride = None
+  )
 
   private def process(
     request: JsValue,
     uri: Option[String],
     uriOverride: Option[String],
-    method: Option[String] = Some("POST")
+    method: Option[String] = Some("POST"),
+    headers: Map[String, String] = Map.empty
   ): Future[Option[RequestDetail]] = {
     val requestId = UUID.randomUUID().toString
     val requestDetails = RequestDetail(
@@ -60,7 +77,8 @@ class DebtManagementAPIPollingService @Inject() (
       uri = uriOverride.orElse(uri),
       method = method,
       isResponse = false,
-      createdOn = Some(LocalDateTime.now())
+      createdOn = Some(LocalDateTime.now()),
+      headers = if (headers.isEmpty) None else Some(headers),
     )
     ttpRequestsRepository.insertRequestsDetails(requestDetails).flatMap { _ =>
       pollForResponse(requestId)
