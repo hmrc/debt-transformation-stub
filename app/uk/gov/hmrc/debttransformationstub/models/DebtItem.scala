@@ -38,7 +38,7 @@ final case class DebtItem(debtItemChargeId: DebtItemChargeId,
                           mainTrans: MainTransType,
                           subTrans: SubTransType,
                           originalDebtAmount: BigDecimal,
-                          interestStartDate: LocalDate,
+                          interestStartDate: Option[LocalDate],
                           paymentHistory: Seq[Payment])
 
 object DebtItem {
@@ -49,7 +49,7 @@ final case class DebtItemForCreatePlan(debtItemChargeId: DebtItemChargeId,
                           mainTrans: MainTransType,
                           subTrans: SubTransType,
                           originalDebtAmount: BigDecimal,
-                          interestStartDate: LocalDate,
+                          interestStartDate: Option[LocalDate],
                           paymentHistory: Seq[Payment])
 object DebtItemForCreatePlan {
   implicit val format = Json.format[DebtItemForCreatePlan]

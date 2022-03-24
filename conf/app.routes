@@ -17,6 +17,8 @@ POST          /individuals/debts/time-to-pay/quote/arrangement                  
 
 POST          /prweb/api/TTP/v1/create                                                                      uk.gov.hmrc.debttransformationstub.controllers.CaseManagementController.createCase
 
+GET           /enterprise/financial-data/:idType/:idNumber/:regimeType                                      uk.gov.hmrc.debttransformationstub.controllers.ETMPController.getFinancials(idType: String, idNumber: String, regimeType: String, dateFrom, dateTo, onlyOpenItems, includeLocks, calculateAccruedInterest, customerPaymentInformation)
+
 GET           /test-only/all-requests                                                                       uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.getTTPRequests
 GET           /test-only/requests                                                                           uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.getUnprocessedRequests
 DELETE        /test-only/request/:requestId                                                                 uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.deleteTTPRequest(requestId: String)
