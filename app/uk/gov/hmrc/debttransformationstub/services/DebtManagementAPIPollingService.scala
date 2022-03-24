@@ -46,6 +46,15 @@ class DebtManagementAPIPollingService @Inject() (
       method = Some(method.toUpperCase)
     )
 
+  def insertTemplateRequestAndServeResponse(
+    request: JsValue,
+  ): Future[Option[RequestDetail]] =
+    process(
+      request,
+      uri = None,
+      uriOverride = Some("/individuals/field-collections/template"),
+    )
+
   def insertTaxpayerRequestAndServeResponse(): Future[Option[RequestDetail]] =
     process(
       Json.obj(),
