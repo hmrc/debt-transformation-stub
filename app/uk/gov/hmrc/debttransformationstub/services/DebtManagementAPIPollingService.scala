@@ -48,11 +48,13 @@ class DebtManagementAPIPollingService @Inject() (
 
   def insertTemplateRequestAndServeResponse(
     request: JsValue,
+    correlationId: String
   ): Future[Option[RequestDetail]] =
     process(
       request,
       uri = None,
       uriOverride = Some("/individuals/field-collections/template"),
+      headers = Map("CorrelationId" -> correlationId)
     )
 
   def insertTaxpayerRequestAndServeResponse(): Future[Option[RequestDetail]] =
