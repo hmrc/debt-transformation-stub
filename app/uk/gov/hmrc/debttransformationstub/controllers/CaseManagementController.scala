@@ -32,8 +32,6 @@ import scala.io.Source
 class CaseManagementController @Inject() (
   environment: Environment,
   cc: ControllerComponents
-)(implicit
-  headerCarrier: HeaderCarrier
 ) extends BackendController(cc) with BaseController {
   private lazy val logger = new RequestAwareLogger(this.getClass)
 

@@ -35,7 +35,7 @@ class DebtManagementAPITestController @Inject() (
   cc: ControllerComponents,
   pollingService: DebtManagementAPIPollingService,
   environment: Environment
-)(implicit executionContext: ExecutionContext, hc: HeaderCarrier)
+)(implicit executionContext: ExecutionContext)
     extends BackendController(cc) {
   import RaiseAmendFeeRequest._
 
@@ -43,7 +43,7 @@ class DebtManagementAPITestController @Inject() (
   private val basePath = "conf/resources/data"
 
   def fieldCollectionsCharge(idType: String, idValue: String): Action[RaiseAmendFeeRequest] =
-    Action.async(parse.tolerantJson[RaiseAmendFeeRequest]) { request =>
+    Action.async(parse.tolerantJson[RaiseAmendFeeRequest]) { implicit request =>
       if (appConfig.isPollingEnv)
         request.headers.get("CorrelationId") match {
           case Some(correlationId) =>
@@ -69,7 +69,7 @@ class DebtManagementAPITestController @Inject() (
         }
     }
 
-  def getDebtDataAndDWISignals(wmfId: String): Action[AnyContent] = Action.async { request =>
+  def getDebtDataAndDWISignals(wmfId: String): Action[AnyContent] = Action.async { implicit  request =>
     if (appConfig.isPollingEnv)
       pollingService.insertRequestAndServeResponse(Json.obj(), request.uri).map {
         case Some(response) => Status(response.status.getOrElse(200))(response.content)
@@ -86,7 +86,7 @@ class DebtManagementAPITestController @Inject() (
       }
   }
 
-  def getTaxpayerData(idKey: String): Action[AnyContent] = Action.async { request =>
+  def getTaxpayerData(idKey: String): Action[AnyContent] = Action.async { implicit request =>
     if (appConfig.isPollingEnv)
       pollingService.insertTaxpayerRequestAndServeResponse().map {
         case Some(response) => Status(response.status.getOrElse(200))(response.content)
@@ -104,7 +104,7 @@ class DebtManagementAPITestController @Inject() (
   }
 
   def fieldCollectionsTemplates(): Action[FCTemplateRequest] =
-    Action.async(parse.tolerantJson[FCTemplateRequest]) { request =>
+    Action.async(parse.tolerantJson[FCTemplateRequest]) { implicit request =>
       if (appConfig.isPollingEnv) {
         pollingService.insertTemplateRequestAndServeResponse(Json.toJson(request.body)).map {
           case Some(response) =>

@@ -29,8 +29,7 @@ import scala.io.Source
 class CaseManagementSystemController @Inject() (
   environment: Environment,
   cc: ControllerComponents
-)(implicit hc: HeaderCarrier)
-    extends BackendController(cc) {
+) extends BackendController(cc) with BaseController {
 
   private val basePath = "conf/resources/data"
   private val casePath = "/debt/"
@@ -38,7 +37,7 @@ class CaseManagementSystemController @Inject() (
   private val listHelper: ListHelper = new ListHelper()
   private lazy val logger = new RequestAwareLogger(this.getClass)
 
-  def getCaseDetails(debtID: String, duties: Option[String]) = Action { request =>
+  def getCaseDetails(debtID: String, duties: Option[String]) = Action { implicit request =>
     val testOnlyResponseCode: Option[String] = request.headers.get("testOnlyResponseCode")
     if (testOnlyResponseCode.isDefined) {
       Results.Status(testOnlyResponseCode.map(_.toInt).getOrElse(500))
@@ -52,7 +51,7 @@ class CaseManagementSystemController @Inject() (
     }
   }
 
-  def getDebtCaseManagement(customerUniqueRef: String, debtId: String, dutyIds: String) = Action { request =>
+  def getDebtCaseManagement(customerUniqueRef: String, debtId: String, dutyIds: String) = Action { implicit request =>
     val maybeBearerToken: Option[String] = request.headers.get("Authorization")
     if (maybeBearerToken.isDefined) {
       environment.getExistingFile(basePath + casePath + debtId + ".json") match {

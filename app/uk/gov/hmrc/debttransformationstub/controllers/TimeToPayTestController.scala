@@ -37,7 +37,7 @@ class TimeToPayTestController @Inject() (
   appConfig: AppConfig,
   ttpRequestsService: TTPRequestsService,
   ttpPollingService: TTPPollingService
-)(implicit val executionContext: ExecutionContext, hc: HeaderCarrier)
+)(implicit val executionContext: ExecutionContext)
     extends BackendController(cc) with BaseController {
 
   private val logger = new RequestAwareLogger(this.getClass)
@@ -80,14 +80,12 @@ class TimeToPayTestController @Inject() (
   private def errorToResult(error: TTPRequestsError): Result =
     error match {
       case e @ TTPRequestsCreationError(statusCode, _, _) =>
-        logger.error(s"Error in storing the ttpRequest; ${e.cause}")
         Results.Status(statusCode)(Json.toJson(e.jsonErrorCause))
     }
 
   private def toResult(eitherResult: Either[TTPRequestsError, String]) = eitherResult match {
     case Right(result) => Results.Ok(Json.toJson(result)).withHeaders(XCorrelationId -> result)
     case Left(error) =>
-      logger.error(s"TTPRequestError: $error")
       errorToResult(error)
   }
 }

@@ -28,8 +28,9 @@ import scala.concurrent.Future
 import scala.io.Source
 
 @Singleton()
-class ReferenceLookupController @Inject() (environment: Environment, cc: ControllerComponents)(implicit
-  hc: HeaderCarrier
+class ReferenceLookupController @Inject() (
+  environment: Environment,
+  cc: ControllerComponents
 ) extends BackendController(cc) with BaseController {
 
   private val basePath = "conf/resources/data"
@@ -38,7 +39,7 @@ class ReferenceLookupController @Inject() (environment: Environment, cc: Control
   private lazy val logger = new RequestAwareLogger(this.getClass)
   private val listHelper: ListHelper = new ListHelper()
 
-  def getReferenceData(descType: String, mainTrans: String, subTrans: String) = Action { request =>
+  def getReferenceData(descType: String, mainTrans: String, subTrans: String) = Action { implicit request =>
     val testOnlyResponseCode: Option[String] = request.headers.get("testOnlyResponseCode")
     if (testOnlyResponseCode.isDefined) {
       Results.Status(testOnlyResponseCode.map(_.toInt).getOrElse(500))
