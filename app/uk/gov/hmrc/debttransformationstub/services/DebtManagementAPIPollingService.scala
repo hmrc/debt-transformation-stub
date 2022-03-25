@@ -53,7 +53,7 @@ class DebtManagementAPIPollingService @Inject() (
     process(
       request,
       uri = None,
-      uriOverride = Some("/individuals/field-collections/template"),
+      uriOverride = Some("/individuals/field-collections/templates"),
       headers = Map("CorrelationId" -> correlationId)
     )
 
