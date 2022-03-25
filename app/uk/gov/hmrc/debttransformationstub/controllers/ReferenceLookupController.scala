@@ -19,20 +19,23 @@ package uk.gov.hmrc.debttransformationstub.controllers
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import play.api.mvc._
 import play.api.Environment
-import uk.gov.hmrc.debttransformationstub.utils.{ListHelper, ReferenceDataLookupRequest}
+import uk.gov.hmrc.debttransformationstub.utils.{ ListHelper, ReferenceDataLookupRequest, RequestAwareLogger }
+import uk.gov.hmrc.http.HeaderCarrier
 
 import java.io.File
-import javax.inject.{Inject, Singleton}
+import javax.inject.{ Inject, Singleton }
 import scala.concurrent.Future
 import scala.io.Source
 
 @Singleton()
-class ReferenceLookupController @Inject()(environment: Environment, cc: ControllerComponents)
-  extends BackendController(cc) with BaseController {
+class ReferenceLookupController @Inject() (environment: Environment, cc: ControllerComponents)(implicit
+  hc: HeaderCarrier
+) extends BackendController(cc) with BaseController {
 
   private val basePath = "conf/resources/data"
   private val refPath = "/data/"
 
+  private lazy val logger = new RequestAwareLogger(this.getClass)
   private val listHelper: ListHelper = new ListHelper()
 
   def getReferenceData(descType: String, mainTrans: String, subTrans: String) = Action { request =>
@@ -42,7 +45,9 @@ class ReferenceLookupController @Inject()(environment: Environment, cc: Controll
     } else {
       environment.getExistingFile(basePath + refPath + descType + "-" + mainTrans + "-" + subTrans + ".json") match {
         case Some(file) => Ok(Source.fromFile(file).mkString)
-        case _ => NotFound("file not found")
+        case _ =>
+          logger.error(s"Status $NOT_FOUND, message: file not found")
+          NotFound("file not found")
       }
     }
   }
@@ -52,14 +57,18 @@ class ReferenceLookupController @Inject()(environment: Environment, cc: Controll
       val maybeBearerToken: Option[String] = request.headers.get("Authorization")
       if (maybeBearerToken.isDefined) {
         val files: Seq[File] = req.items.flatMap { item =>
-          environment.getExistingFile(basePath + refPath + req.`type` + "-" + item.mainTrans + "-" + item.subTrans + ".json")
+          environment.getExistingFile(
+            basePath + refPath + req.`type` + "-" + item.mainTrans + "-" + item.subTrans + ".json"
+          )
         }
 
         if (files.isEmpty) {
+          logger.error(s"Status $NOT_FOUND, message: file not found")
           Future successful NotFound("file not found")
         } else {
-          val result = files.map(file =>
-            Source.fromFile(file).mkString).mkString("""{ "ItemList": [ """.stripMargin, ",", """]}""".stripMargin)
+          val result = files
+            .map(file => Source.fromFile(file).mkString)
+            .mkString("""{ "ItemList": [ """.stripMargin, ",", """]}""".stripMargin)
           Future successful Ok(result)
         }
       } else Future successful Unauthorized("invalid token provided")

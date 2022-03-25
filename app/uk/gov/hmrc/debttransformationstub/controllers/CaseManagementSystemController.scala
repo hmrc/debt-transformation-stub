@@ -18,20 +18,25 @@ package uk.gov.hmrc.debttransformationstub.controllers
 
 import play.api.Environment
 import play.api.mvc._
-import uk.gov.hmrc.debttransformationstub.utils.ListHelper
+import uk.gov.hmrc.debttransformationstub.utils.{ ListHelper, RequestAwareLogger }
+import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{ Inject, Singleton }
 import scala.io.Source
 
 @Singleton()
-class CaseManagementSystemController @Inject()(environment: Environment, cc: ControllerComponents)
-  extends BackendController(cc) {
+class CaseManagementSystemController @Inject() (
+  environment: Environment,
+  cc: ControllerComponents
+)(implicit hc: HeaderCarrier)
+    extends BackendController(cc) {
 
   private val basePath = "conf/resources/data"
   private val casePath = "/debt/"
 
   private val listHelper: ListHelper = new ListHelper()
+  private lazy val logger = new RequestAwareLogger(this.getClass)
 
   def getCaseDetails(debtID: String, duties: Option[String]) = Action { request =>
     val testOnlyResponseCode: Option[String] = request.headers.get("testOnlyResponseCode")
@@ -40,7 +45,9 @@ class CaseManagementSystemController @Inject()(environment: Environment, cc: Con
     } else {
       environment.getExistingFile(basePath + casePath + debtID + ".json") match {
         case Some(file) => Ok(Source.fromFile(file).mkString)
-        case _ => NotFound("file not found")
+        case _ =>
+          logger.error(s"Status $NOT_FOUND, message: file not found")
+          NotFound("file not found")
       }
     }
   }
@@ -52,12 +59,11 @@ class CaseManagementSystemController @Inject()(environment: Environment, cc: Con
         case Some(file) =>
           Ok(Source.fromFile(file).mkString)
         case _ =>
+          logger.error(s"Status $NOT_FOUND, message: file not found")
           NotFound("file not found")
       }
-    }
-    else Unauthorized("invalid token provided")
+    } else Unauthorized("invalid token provided")
   }
-
 
   def getList() = Action {
     Ok(listHelper.getList(basePath + casePath))

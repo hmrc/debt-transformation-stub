@@ -19,93 +19,104 @@ package uk.gov.hmrc.debttransformationstub.controllers
 import java.io.File
 import javax.inject.Inject
 import play.api.Environment
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.{ JsValue, Json }
 import play.api.mvc.ControllerComponents
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
-import uk.gov.hmrc.debttransformationstub.models.{CreatePlanRequest, GenerateQuoteRequest}
+import uk.gov.hmrc.debttransformationstub.models.{ CreatePlanRequest, GenerateQuoteRequest }
 import uk.gov.hmrc.debttransformationstub.services.TTPPollingService
+import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
+import uk.gov.hmrc.http.HeaderCarrier
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.io.Source
 
-class TimeToPayController @Inject()(environment: Environment, cc: ControllerComponents, appConfig: AppConfig, ttpPollingService: TTPPollingService)
-  extends BackendController(cc) with BaseController {
+class TimeToPayController @Inject() (
+  environment: Environment,
+  cc: ControllerComponents,
+  appConfig: AppConfig,
+  ttpPollingService: TTPPollingService
+)(implicit hc: HeaderCarrier)
+    extends BackendController(cc) with BaseController {
+
+  private lazy val logger = new RequestAwareLogger(this.getClass)
   private val basePath = "conf/resources/data"
 
-  def generateQuote: Action[JsValue] = Action.async(parse.json) {
-    implicit request: Request[JsValue] => {
-      withCustomJsonBody[GenerateQuoteRequest] { req =>
+  def generateQuote: Action[JsValue] = Action.async(parse.json) { implicit request: Request[JsValue] =>
+    withCustomJsonBody[GenerateQuoteRequest] { req =>
+      if (appConfig.isPollingEnv) {
+        ttpPollingService.insertRequestAndServeResponse(Json.toJson(req), Some(request.uri)).map {
+          case Some(v) => Status(v.status.getOrElse(200))(v.content)
+          case None    => ServiceUnavailable
+        }
+      } else {
+        val fileMaybe: Option[File] =
+          environment.getExistingFile(s"$basePath/ttp.generateQuote/${req.customerReference.value}.json")
 
-        if (appConfig.isPollingEnv) {
-          ttpPollingService.insertRequestAndServeResponse(Json.toJson(req), Some(request.uri)).map {
-            case Some(v) => Status(v.status.getOrElse(200))(v.content)
-            case None => ServiceUnavailable
-          }
-        } else {
-          val fileMaybe: Option[File] = environment.getExistingFile(s"$basePath/ttp.generateQuote/${req.customerReference.value}.json")
-
-          fileMaybe match {
-            case None => Future successful NotFound("file not found")
-            case Some(file) =>
-              val result = Source.fromFile(file).mkString.stripMargin
-              Future successful Ok(result)
-          }
+        fileMaybe match {
+          case None =>
+            logger.error(s"Status $NOT_FOUND, message: file not found")
+            Future successful NotFound("file not found")
+          case Some(file) =>
+            val result = Source.fromFile(file).mkString.stripMargin
+            Future successful Ok(result)
         }
       }
     }
   }
 
-  def getExistingQuote(customerReference: String, pegaId: String) = Action.async {
-    implicit request =>
-      if (appConfig.isPollingEnv) {
-        ttpPollingService.insertRequestAndServeResponse(Json.toJson(""), Some(request.uri)).map {
-          case Some(v) => Status(v.status.getOrElse(200))(v.content)
-          case None => ServiceUnavailable
-        }
-      } else {
-        environment.getExistingFile(s"$basePath/ttp.viewPlan/$pegaId.json") match {
-          case Some(file) => Future.successful(Ok(Source.fromFile(file).mkString))
-          case _ => Future.successful(NotFound("file not found"))
-        }
+  def getExistingQuote(customerReference: String, pegaId: String) = Action.async { implicit request =>
+    if (appConfig.isPollingEnv) {
+      ttpPollingService.insertRequestAndServeResponse(Json.toJson(""), Some(request.uri)).map {
+        case Some(v) => Status(v.status.getOrElse(200))(v.content)
+        case None    => ServiceUnavailable
       }
+    } else {
+      environment.getExistingFile(s"$basePath/ttp.viewPlan/$pegaId.json") match {
+        case Some(file) => Future.successful(Ok(Source.fromFile(file).mkString))
+        case _ =>
+          logger.error(s"Status $NOT_FOUND, message: file not found")
+          Future.successful(NotFound("file not found"))
+      }
+    }
   }
 
-  def updateQuote(customerReference: String, pegaId: String) = Action.async {
-    implicit request =>
-      if (appConfig.isPollingEnv) {
-        ttpPollingService.insertRequestAndServeResponse(Json.toJson(""), Some(request.uri)).map {
-          case Some(v) => Status(v.status.getOrElse(200))(v.content)
-          case None => ServiceUnavailable
-        }
-      } else {
-        environment.getExistingFile(s"$basePath/ttp.updatePlan/$customerReference.json") match {
-          case Some(file) => Future.successful(Ok(Source.fromFile(file).mkString))
-          case _ => Future.successful(NotFound("file not found"))
-        }
+  def updateQuote(customerReference: String, pegaId: String) = Action.async { implicit request =>
+    if (appConfig.isPollingEnv) {
+      ttpPollingService.insertRequestAndServeResponse(Json.toJson(""), Some(request.uri)).map {
+        case Some(v) => Status(v.status.getOrElse(200))(v.content)
+        case None    => ServiceUnavailable
       }
+    } else {
+      environment.getExistingFile(s"$basePath/ttp.updatePlan/$customerReference.json") match {
+        case Some(file) => Future.successful(Ok(Source.fromFile(file).mkString))
+        case _ =>
+          logger.error(s"Status $NOT_FOUND, message: file not found")
+          Future.successful(NotFound("file not found"))
+      }
+    }
   }
 
+  def createPlan = Action.async(parse.json) { implicit request =>
+    withCustomJsonBody[CreatePlanRequest] { req =>
+      if (appConfig.isPollingEnv) {
+        ttpPollingService.insertRequestAndServeResponse(Json.toJson(req), Some(request.uri)).map {
+          case Some(v) => Status(v.status.getOrElse(200))(v.content)
+          case None    => ServiceUnavailable
+        }
+      } else {
+        val fileMaybe: Option[File] =
+          environment.getExistingFile(s"$basePath/ttp.createPlan/${req.plan.quoteId.value}.json")
 
-  def createPlan = Action.async(parse.json) {
-    implicit request => {
-      withCustomJsonBody[CreatePlanRequest] { req =>
-        if (appConfig.isPollingEnv) {
-          ttpPollingService.insertRequestAndServeResponse(Json.toJson(req), Some(request.uri)).map {
-            case Some(v) => Status(v.status.getOrElse(200))(v.content)
-            case None => ServiceUnavailable
-          }
-        } else {
-          val fileMaybe: Option[File] = environment.getExistingFile(s"$basePath/ttp.createPlan/${req.plan.quoteId.value}.json")
-
-          fileMaybe match {
-            case None => Future successful NotFound("file not found")
-            case Some(file) =>
-              val result = Source.fromFile(file).mkString.stripMargin
-              Future successful Ok(result)
-          }
+        fileMaybe match {
+          case None =>
+            logger.error(s"Status $NOT_FOUND, message: file not found")
+            Future successful NotFound("file not found")
+          case Some(file) =>
+            val result = Source.fromFile(file).mkString.stripMargin
+            Future successful Ok(result)
         }
       }
     }

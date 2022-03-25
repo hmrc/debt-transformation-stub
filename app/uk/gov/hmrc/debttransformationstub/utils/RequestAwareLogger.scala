@@ -7,7 +7,7 @@ package uk.gov.hmrc.debttransformationstub.utils
 
 import org.slf4j.MDC
 import play.api.Logger
-import uk.gov.hmrc.http.{HeaderCarrier, RequestId}
+import uk.gov.hmrc.http.{ HeaderCarrier, RequestId }
 
 class RequestAwareLogger(clazz: Class[_]) {
   private val underlying = Logger(clazz)
