@@ -20,12 +20,12 @@ import akka.http.scaladsl.model.StatusCodes
 import com.google.inject.ImplementedBy
 import reactivemongo.api.commands.WriteResult
 import uk.gov.hmrc.debttransformationstub.models.RequestDetail
-import uk.gov.hmrc.debttransformationstub.models.errors.{TTPRequestsCreationError, TTPRequestsDeletionError, TTPRequestsError}
+import uk.gov.hmrc.debttransformationstub.models.errors.{ TTPRequestsCreationError, TTPRequestsDeletionError, TTPRequestsError }
 import uk.gov.hmrc.debttransformationstub.repositories.TTPRequestsRepository
 import uk.gov.hmrc.http.HeaderCarrier
 
 import java.time.LocalDateTime
-import javax.inject.{Inject, Singleton}
+import javax.inject.{ Inject, Singleton }
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
@@ -37,24 +37,41 @@ trait TTPRequestsService {
 
   def getTTPRequest(requestId: String): Future[Option[RequestDetail]]
 
-  def addRequestDetails(requestDetailsRequest: RequestDetail)(implicit hc: HeaderCarrier): Future[Either[TTPRequestsError, String]]
+  def addRequestDetails(requestDetailsRequest: RequestDetail)(implicit
+    hc: HeaderCarrier
+  ): Future[Either[TTPRequestsError, String]]
 
   def deleteTTPRequest(requestId: String)(implicit hc: HeaderCarrier): Future[Either[TTPRequestsDeletionError, String]]
 }
 
 @Singleton
-class DefaultTTPRequestsService @Inject()(ttpRequestsRepository: TTPRequestsRepository)
-  extends TTPRequestsService {
+class DefaultTTPRequestsService @Inject() (ttpRequestsRepository: TTPRequestsRepository) extends TTPRequestsService {
 
-  override def addRequestDetails(requestDetailsRequest: RequestDetail)(implicit hc: HeaderCarrier): Future[Either[TTPRequestsError, String]] = {
+  override def addRequestDetails(
+    requestDetailsRequest: RequestDetail
+  )(implicit hc: HeaderCarrier): Future[Either[TTPRequestsError, String]] = {
 
     val currentDate = LocalDateTime.now()
-    val requestDetails = RequestDetail(requestDetailsRequest.requestId, requestDetailsRequest.content, requestDetailsRequest.uri, requestDetailsRequest.isResponse, Some(currentDate))
+    val requestDetails = RequestDetail(
+      requestDetailsRequest.requestId,
+      requestDetailsRequest.content,
+      requestDetailsRequest.uri,
+      requestDetailsRequest.isResponse,
+      Some(currentDate)
+    )
 
     val writeResultF = ttpRequestsRepository.insertRequestsDetails(requestDetails)
     writeResultF.flatMap { wr: WriteResult =>
       wr.writeErrors.headOption match {
-        case Some(err) => Future(Left(TTPRequestsCreationError(StatusCodes.InternalServerError.intValue, Some(s"Failed to insert the document: ${err.errmsg}"))))
+        case Some(err) =>
+          Future(
+            Left(
+              TTPRequestsCreationError(
+                StatusCodes.InternalServerError.intValue,
+                Some(s"Failed to insert the document: ${err.errmsg}")
+              )
+            )
+          )
         case None => Future(Right(s"Successfully inserted the ttp request"))
       }
     }
@@ -62,18 +79,19 @@ class DefaultTTPRequestsService @Inject()(ttpRequestsRepository: TTPRequestsRepo
 
   override def getTTPRequests(): Future[List[RequestDetail]] = ttpRequestsRepository.findRequestDetails()
 
-  override def getTTPRequest(requestId: String): Future[Option[RequestDetail]] = ttpRequestsRepository.getByRequestId(requestId)
+  override def getTTPRequest(requestId: String): Future[Option[RequestDetail]] =
+    ttpRequestsRepository.getByRequestId(requestId)
 
+  override def getUnprocesedTTPRequests(): Future[List[RequestDetail]] =
+    ttpRequestsRepository.findUnprocessedRequestDetails()
 
-  override def getUnprocesedTTPRequests(): Future[List[RequestDetail]] = ttpRequestsRepository.findUnprocessedRequestDetails()
-
-
-  override def deleteTTPRequest(requestId: String)(implicit hc: HeaderCarrier): Future[Either[TTPRequestsDeletionError, String]] = {
+  override def deleteTTPRequest(
+    requestId: String
+  )(implicit hc: HeaderCarrier): Future[Either[TTPRequestsDeletionError, String]] =
     ttpRequestsRepository.deleteTTPRequest(requestId) map { x: WriteResult =>
       if (x.ok)
         Right("Successfully deleted the TTP request with request Id: " + requestId)
       else
         Left(TTPRequestsDeletionError(x.code.fold(404)((e: Int) => e), None))
     }
-  }
 }

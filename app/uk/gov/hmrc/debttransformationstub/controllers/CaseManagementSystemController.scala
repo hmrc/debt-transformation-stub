@@ -21,12 +21,12 @@ import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.utils.ListHelper
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{ Inject, Singleton }
 import scala.io.Source
 
 @Singleton()
-class CaseManagementSystemController @Inject()(environment: Environment, cc: ControllerComponents)
-  extends BackendController(cc) {
+class CaseManagementSystemController @Inject() (environment: Environment, cc: ControllerComponents)
+    extends BackendController(cc) {
 
   private val basePath = "conf/resources/data"
   private val casePath = "/debt/"
@@ -40,7 +40,7 @@ class CaseManagementSystemController @Inject()(environment: Environment, cc: Con
     } else {
       environment.getExistingFile(basePath + casePath + debtID + ".json") match {
         case Some(file) => Ok(Source.fromFile(file).mkString)
-        case _ => NotFound("file not found")
+        case _          => NotFound("file not found")
       }
     }
   }
@@ -54,10 +54,8 @@ class CaseManagementSystemController @Inject()(environment: Environment, cc: Con
         case _ =>
           NotFound("file not found")
       }
-    }
-    else Unauthorized("invalid token provided")
+    } else Unauthorized("invalid token provided")
   }
-
 
   def getList() = Action {
     Ok(listHelper.getList(basePath + casePath))

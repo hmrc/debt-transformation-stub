@@ -18,17 +18,18 @@ package uk.gov.hmrc.debttransformationstub.controllers
 
 import play.api.libs.json._
 import play.api.mvc.Results.BadRequest
-import play.api.mvc.{Request, Result}
+import play.api.mvc.{ Request, Result }
 
 import scala.concurrent.Future
-import scala.util.{Failure, Success, Try}
+import scala.util.{ Failure, Success, Try }
 
 trait BaseController {
-  def withCustomJsonBody[T](f: (T) => Future[Result])(implicit request: Request[JsValue], m: Manifest[T],
-                                                      reads: Reads[T]): Future[Result] =
+  def withCustomJsonBody[T](
+    f: (T) => Future[Result]
+  )(implicit request: Request[JsValue], m: Manifest[T], reads: Reads[T]): Future[Result] =
     Try(request.body.validate[T]) match {
       case Success(JsSuccess(payload, _)) => f(payload)
-      case Success(JsError(errs)) => {
+      case Success(JsError(errs)) =>
         val reason = errs.map { case (path, _) => invalidJsonMessage(path) }.mkString("\n")
         val jsonResponse =
           s"""
@@ -38,7 +39,6 @@ trait BaseController {
              |}
              |""".stripMargin
         Future.successful(BadRequest(Json.toJson(jsonResponse)))
-      }
       case Failure(e) => Future.successful(BadRequest(s"Could not parse body due to ${e.getMessage}"))
     }
 

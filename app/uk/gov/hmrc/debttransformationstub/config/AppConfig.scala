@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.debttransformationstub.config
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{ Inject, Singleton }
 import play.api.Configuration
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
@@ -27,16 +27,15 @@ import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 //}
 
 @Singleton
-class AppConfig @Inject()
-  (
-    config: Configuration
-  , servicesConfig: ServicesConfig
-  ) {
+class AppConfig @Inject() (
+  config: Configuration,
+  servicesConfig: ServicesConfig
+) {
   val dbUrl: String = config.get[String]("mongodb.uri")
 
   val auditingEnabled: Boolean = config.get[Boolean]("auditing.enabled")
-  val graphiteHost: String     = config.get[String]("microservice.metrics.graphite.host")
-  val isPollingEnv: Boolean    = config.get[Boolean]("isPollingEnv")
-  val pollingIntervals: Int    = config.get[Int]("pollingIntervals")
-  val pollingSleep: Int        = config.get[Int]("pollingSleep")
+  val graphiteHost: String = config.get[String]("microservice.metrics.graphite.host")
+  val isPollingEnv: Boolean = config.get[Boolean]("isPollingEnv")
+  val pollingIntervals: Int = config.get[Int]("pollingIntervals")
+  val pollingSleep: Int = config.get[Int]("pollingSleep")
 }

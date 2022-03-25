@@ -18,15 +18,16 @@ package uk.gov.hmrc.debttransformationstub.models.casemanagement
 import java.time.LocalDate
 
 import play.api.libs.json.Json
-import uk.gov.hmrc.debttransformationstub.models.{DebtItemChargeId, MainTransType, Payment, SubTransType}
+import uk.gov.hmrc.debttransformationstub.models.{ DebtItemChargeId, MainTransType, Payment, SubTransType }
 
 final case class CaseManagementDebtItemCharge(
-                                               debtItemsChargeId: DebtItemChargeId,
-                                               mainTrans: MainTransType,
-                                               subtrans: SubTransType,
-                                               originalDebtAmount: BigDecimal,
-                                               interestStartDate: LocalDate,
-                                               paymentHistory: Seq[Payment]) {
+  debtItemsChargeId: DebtItemChargeId,
+  mainTrans: MainTransType,
+  subtrans: SubTransType,
+  originalDebtAmount: BigDecimal,
+  interestStartDate: LocalDate,
+  paymentHistory: Seq[Payment]
+) {
   require(!debtItemsChargeId.value.trim().isEmpty, "debtItemChargeId should not be empty")
 }
 

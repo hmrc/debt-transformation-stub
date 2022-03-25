@@ -18,17 +18,19 @@ package uk.gov.hmrc.debttransformationstub.models
 
 import play.api.libs.json.Json
 import java.time.LocalDate
-import enumeratum.{Enum, EnumEntry, PlayJsonEnum}
+import enumeratum.{ Enum, EnumEntry, PlayJsonEnum }
 import uk.gov.hmrc.debttransformationstub.controllers.PaymentPlanType
 
-final case class Instalment(debtItemChargeId: DebtItemChargeId,
-                            dueDate: LocalDate,
-                            amountDue: BigDecimal,
-                            expectedPayment: BigDecimal,
-                            interestRate: Double,
-                            instalmentNumber: Int,
-                            instalmentInterestAccrued: BigDecimal,
-                            instalmentBalance: BigDecimal)
+final case class Instalment(
+  debtItemChargeId: DebtItemChargeId,
+  dueDate: LocalDate,
+  amountDue: BigDecimal,
+  expectedPayment: BigDecimal,
+  interestRate: Double,
+  instalmentNumber: Int,
+  instalmentInterestAccrued: BigDecimal,
+  instalmentBalance: BigDecimal
+)
 
 object Instalment {
   implicit val format = Json.format[Instalment]
@@ -51,28 +53,28 @@ object PaymentMethod extends Enum[PaymentMethod] with PlayJsonEnum[PaymentMethod
   case object CardPayment extends PaymentMethod("cardPayment")
 }
 
-final case class PlanToCreatePlan(quoteId: QuoteId,
-                                  quoteType: QuoteType,
-                                  quoteDate: LocalDate,
-                                  instalmentStartDate: LocalDate,
-                                  instalmentAmount: Option[BigDecimal],
-                                  paymentPlanType: PaymentPlanType,
-                                  thirdPartyBank: Boolean,
-                                  numberOfInstalments: Int,
-                                  frequency: Option[Frequency],
-                                  duration: Option[Duration],
-                                  initialPaymentDate: Option[LocalDate],
-                                  initialPaymentAmount: Option[BigDecimal],
-                                  totalDebtIncInt: BigDecimal,
-                                  totalInterest: BigDecimal,
-                                  interestAccrued: BigDecimal,
-                                  planInterest: BigDecimal
-                                 )
+final case class PlanToCreatePlan(
+  quoteId: QuoteId,
+  quoteType: QuoteType,
+  quoteDate: LocalDate,
+  instalmentStartDate: LocalDate,
+  instalmentAmount: Option[BigDecimal],
+  paymentPlanType: PaymentPlanType,
+  thirdPartyBank: Boolean,
+  numberOfInstalments: Int,
+  frequency: Option[Frequency],
+  duration: Option[Duration],
+  initialPaymentDate: Option[LocalDate],
+  initialPaymentAmount: Option[BigDecimal],
+  totalDebtIncInt: BigDecimal,
+  totalInterest: BigDecimal,
+  interestAccrued: BigDecimal,
+  planInterest: BigDecimal
+)
 
 object PlanToCreatePlan {
   implicit val format = Json.format[PlanToCreatePlan]
 }
-
 
 final case class PaymentReference(value: String) extends AnyVal
 
@@ -87,15 +89,16 @@ object PaymentInformation {
   implicit val format = Json.format[PaymentInformation]
 }
 
-final case class CreatePlanRequest(customerReference: CustomerReference,
-                                   quoteReference: QuoteReference,
-                                   channelIdentifier: ChannelIdentifier,
-                                   plan: PlanToCreatePlan,
-                                   debtItemCharges: Seq[DebtItemForCreatePlan],
-                                   payments: Seq[PaymentInformation],
-                                   customerPostCodes: Seq[CustomerPostCode],
-                                   instalments: Seq[Instalment]
-                                  )
+final case class CreatePlanRequest(
+  customerReference: CustomerReference,
+  quoteReference: QuoteReference,
+  channelIdentifier: ChannelIdentifier,
+  plan: PlanToCreatePlan,
+  debtItemCharges: Seq[DebtItemForCreatePlan],
+  payments: Seq[PaymentInformation],
+  customerPostCodes: Seq[CustomerPostCode],
+  instalments: Seq[Instalment]
+)
 
 object CreatePlanRequest {
   implicit val format = Json.format[CreatePlanRequest]

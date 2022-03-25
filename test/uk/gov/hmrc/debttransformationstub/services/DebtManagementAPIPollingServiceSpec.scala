@@ -29,7 +29,7 @@ import uk.gov.hmrc.debttransformationstub.repositories.TTPRequestsRepository
 
 import java.time.LocalDateTime
 import scala.concurrent.duration.Duration
-import scala.concurrent.{Await, Future}
+import scala.concurrent.{ Await, Future }
 
 class DebtManagementAPIPollingServiceSpec extends WordSpec with Matchers with MockitoSugar {
 
@@ -39,28 +39,33 @@ class DebtManagementAPIPollingServiceSpec extends WordSpec with Matchers with Mo
         env = "qa",
         inputUri = "/individuals/debts/field-collections/param1/param2/charge",
         expectedUri = "/individuals/field-collections/charges",
-        isCharge = true)
+        isCharge = true
+      )
     }
 
     "rewrite a URL to api platform for non local requests" in {
-      insertRequestFor(env = "qa",
+      insertRequestFor(
+        env = "qa",
         inputUri = "/individuals/subcontractor/idms/wmfid/SomewmfId",
         expectedUri = "/individuals/subcontractor/idms/wmfid/SomewmfId",
-        isCharge = false)
+        isCharge = false
+      )
     }
 
     "not rewrite a URL to api platform for local requests" in {
-      insertRequestFor(env = "localhost",
-        inputUri="/individuals/subcontractor/idms/wmfid/SomewmfId",
+      insertRequestFor(
+        env = "localhost",
+        inputUri = "/individuals/subcontractor/idms/wmfid/SomewmfId",
         expectedUri = "/individuals/subcontractor/idms/wmfid/SomewmfId",
-        isCharge = false)
+        isCharge = false
+      )
     }
   }
 
-  private def insertRequestFor(env:String, inputUri:String, expectedUri:String, isCharge:Boolean) = {
+  private def insertRequestFor(env: String, inputUri: String, expectedUri: String, isCharge: Boolean) = {
     val mockTTPRequestsRepository = mock[TTPRequestsRepository]
     val mockAppConfig = mock[AppConfig]
-    val pollingService = new DebtManagementAPIPollingService(mockTTPRequestsRepository,mockAppConfig)
+    val pollingService = new DebtManagementAPIPollingService(mockTTPRequestsRepository, mockAppConfig)
 
     val stubbedRequestDetail =
       RequestDetail(
@@ -69,7 +74,8 @@ class DebtManagementAPIPollingServiceSpec extends WordSpec with Matchers with Mo
         uri = Some(inputUri),
         isResponse = false,
         createdOn = Some(LocalDateTime.now()),
-        status = None)
+        status = None
+      )
 
     val captor = ArgumentCaptor.forClass(classOf[RequestDetail])
     val mockWriteResult = mock[WriteResult]
@@ -77,12 +83,14 @@ class DebtManagementAPIPollingServiceSpec extends WordSpec with Matchers with Mo
     when(mockAppConfig.pollingIntervals).thenReturn(1)
     when(mockAppConfig.pollingSleep).thenReturn(1)
 
-    when(mockTTPRequestsRepository.insertRequestsDetails(captor.capture())).thenReturn(Future.successful(mockWriteResult))
-    when(mockTTPRequestsRepository.getResponseByRequestId(any[String])).thenReturn(Future.successful(Some(stubbedRequestDetail)))
+    when(mockTTPRequestsRepository.insertRequestsDetails(captor.capture()))
+      .thenReturn(Future.successful(mockWriteResult))
+    when(mockTTPRequestsRepository.getResponseByRequestId(any[String]))
+      .thenReturn(Future.successful(Some(stubbedRequestDetail)))
     val result = {
-      if(isCharge){
+      if (isCharge) {
         pollingService.insertFCChargeRequestAndServeResponse(Json.obj(), "mock correlationId", "POST")
-      }else{
+      } else {
         pollingService.insertRequestAndServeResponse(Json.obj(), inputUri)
       }
     }
@@ -94,4 +102,3 @@ class DebtManagementAPIPollingServiceSpec extends WordSpec with Matchers with Mo
     requestDetail.uri should contain(expectedUri)
   }
 }
-

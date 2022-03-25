@@ -16,11 +16,10 @@
 
 package uk.gov.hmrc.debttransformationstub.models
 
-import enumeratum.{Enum, EnumEntry, PlayJsonEnum}
+import enumeratum.{ Enum, EnumEntry, PlayJsonEnum }
 import scala.collection.immutable
 
 sealed abstract class MainTransType(override val entryName: String) extends EnumEntry
-
 
 object MainTransType extends Enum[MainTransType] with PlayJsonEnum[MainTransType] {
   val values: immutable.IndexedSeq[MainTransType] = findValues
