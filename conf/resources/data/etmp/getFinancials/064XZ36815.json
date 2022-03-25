@@ -1,7 +1,7 @@
 {
-  "idType": "MTDBSA",
-  "idNumber": "XQIT001",
-  "regimeType": "ITSA",
+  "idType": "EMPREF",
+  "idNumber": "064XZ36815",
+  "regimeType": "PAYE",
   "processingDate": "2017-03-07T09:30:00.000Z",
   "financialTransactions": [
     {
@@ -28,9 +28,9 @@
       "items": [
         {
           "subItem": "001",
-          "dueDate": "1967-08-13",
+          "dueDate": "2022-03-20",
           "amount": 10000,
-          "clearingDate": "1967-08-13",
+          "clearingDate": "2022-03-20",
           "clearingReason": "01",
           "outgoingPaymentMethod": "A",
           "paymentLock": "a",
