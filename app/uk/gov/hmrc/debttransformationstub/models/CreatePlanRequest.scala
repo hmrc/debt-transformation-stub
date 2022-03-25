@@ -17,9 +17,9 @@
 package uk.gov.hmrc.debttransformationstub.models
 
 import play.api.libs.json.Json
+
 import java.time.LocalDate
 import enumeratum.{Enum, EnumEntry, PlayJsonEnum}
-import uk.gov.hmrc.debttransformationstub.controllers.PaymentPlanType
 
 final case class Instalment(debtItemChargeId: DebtItemChargeId,
                             dueDate: LocalDate,
