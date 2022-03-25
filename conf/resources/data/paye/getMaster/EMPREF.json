@@ -1,0 +1,77 @@
+{
+  "idType": "EMPREF",
+  "idNumber": "064XZ36815",
+  "regimeType": "PAYE",
+  "businessPartner": "xyz",
+  "businessPartnerInfo": {
+    "type": "Organization"
+  },
+  "accountsOfficeReference": "abcdefghijklmnopqrs",
+  "rti": {
+    "paymentFrequency": "MONTHLY",
+    "annualPaymentMonth": "April",
+    "schemaStatus": "LIVE",
+    "startDateOfRegistration": "2001-01-01",
+    "cessationDate": "2001-01-01",
+    "potentialCessationDate": "2001-01-01"
+  },
+  "cis": {
+    "paymentFrequency": "MONTHLY",
+    "schemaStatus": "LIVE",
+    "startDateOfRegistration": "2001-01-01",
+    "cessationDate": "2001-01-01",
+    "potentialCessationDate": "2001-01-01"
+  },
+  "class1ANICReturnDue": false,
+  "vppStartDate": "2001-01-01",
+  "insolvencySignal": true,
+  "nonStandardSchemaTypes": "BARRISTER SENIOR CLERK",
+  "schemaType": "DO NOT USE",
+  "schemaStatus": "LIVE",
+  "scheduleCode": "Do not use",
+  "employmentAllowance": [{
+    "startDate": "2001-01-01",
+    "endDate": "2001-01-01",
+    "limit": 437559973,
+    "used": 13812116053,
+    "hmrcDecision": "YES"
+  }],
+  "disputes": [{
+    "period": "2017",
+    "periodStartFrom": "2001-01-01",
+    "periodEndBy": "2001-01-01",
+    "status": "OPEN",
+    "date": "2001-01-01",
+    "amendDate": "2001-01-01"
+  }],
+  "periodOfInactivity": [{
+    "typeOfICR": "ZR01",
+    "dateStartFrom": "2001-01-01",
+    "dateEndTo": "2001-01-01",
+    "periodStart": "2016",
+    "periodEnd": "2017"
+  }],
+  "apprenticeshipLevy": [{
+    "annualAllowance": 681773003,
+    "validFrom": "2001-01-01",
+    "validTo": "2001-01-01"
+  }],
+  "address": [{
+    "type": "Business",
+    "addressLine1": "abcdefghijklmno",
+    "addressLine2": "abcde",
+    "addressLine3": "abcdefghijklmnopqr",
+    "addressLine4": "abcdefghijklmnopq",
+    "country": "AD",
+    "postCode": "B5 7LN",
+    "rls": "Receiver is not known"
+  }],
+  "contacts": [{
+    "contactType": "Business",
+    "phoneCountryCode": "AD",
+    "phoneNumber": "08344414523",
+    "mobileCountryCode": "AD",
+    "mobileNumber": "08344414523",
+    "email": "abc@aol.com"
+  }]
+}
