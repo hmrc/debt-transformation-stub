@@ -2,15 +2,15 @@
   "idType": "EMPREF",
   "idNumber": "064XZ36815",
   "regimeType": "PAYE",
-  "processingDate": "2017-03-07T09:30:00.000Z",
+  "processingDate": "2022-03-22T09:30:00",
   "financialTransactions": [
     {
       "chargeType": "PAYE",
       "mainType": "2100",
       "periodKey": "13RL",
       "periodKeyDescription": "abcde",
-      "taxPeriodFrom": "1967-08-13",
-      "taxPeriodTo": "1967-08-14",
+      "taxPeriodFrom": "2021-08-13",
+      "taxPeriodTo": "2021-08-14",
       "businessPartner": "6622334455",
       "contractAccountCategory": "02",
       "contractAccount": "X",
