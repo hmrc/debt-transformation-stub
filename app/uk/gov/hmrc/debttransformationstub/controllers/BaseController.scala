@@ -16,31 +16,29 @@
 
 package uk.gov.hmrc.debttransformationstub.controllers
 
-
 import play.api.http.Status.BAD_REQUEST
 import play.api.libs.json._
 import play.api.mvc.Results.BadRequest
-import play.api.mvc.{Request, Result}
+import play.api.mvc.{ Request, Result }
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.http.HeaderCarrier
 
 import scala.concurrent.Future
-import scala.util.{Failure, Success, Try}
+import scala.util.{ Failure, Success, Try }
 
 trait BaseController {
   private lazy val logger = new RequestAwareLogger(this.getClass)
 
   def withCustomJsonBody[T](
     f: T => Future[Result]
-  )(implicit
+  )(
+    implicit
     request: Request[JsValue],
     m: Manifest[T],
     reads: Reads[T],
-    hc: HeaderCarrier
-  ): Future[Result] =
+    hc: HeaderCarrier): Future[Result] =
     Try(request.body.validate[T]) match {
       case Success(JsSuccess(payload, _)) => f(payload)
-
       case Success(JsError(errs)) =>
         val reason = errs.map { case (path, _) => invalidJsonMessage(path) }.mkString("\n")
         logger.error(s"Invalid Json: $reason")

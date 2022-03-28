@@ -23,4 +23,3 @@ final case class AuthCredential(client_id: String, client_secret: String, grant_
 object AuthCredential {
   implicit val format = Json.format[AuthCredential]
 }
-

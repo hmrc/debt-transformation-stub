@@ -30,7 +30,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 @Singleton()
-class DebtManagementAPITestController @Inject() (
+class DebtManagementAPITestController @Inject()(
   appConfig: AppConfig,
   cc: ControllerComponents,
   pollingService: DebtManagementAPIPollingService,
@@ -57,8 +57,7 @@ class DebtManagementAPITestController @Inject() (
               }
           case None =>
             Future.successful(BadRequest(Json.obj("message" -> "missing CorrelationId header")))
-        }
-      else
+        } else
         environment.getExistingFile(s"$basePath/dm.raiseAmendFee/charge-$idType-$idValue.json") match {
           case None =>
             logger.error(s"Status $NOT_FOUND, message: file not found")
@@ -69,13 +68,12 @@ class DebtManagementAPITestController @Inject() (
         }
     }
 
-  def getDebtDataAndDWISignals(wmfId: String): Action[AnyContent] = Action.async { implicit  request =>
+  def getDebtDataAndDWISignals(wmfId: String): Action[AnyContent] = Action.async { implicit request =>
     if (appConfig.isPollingEnv)
       pollingService.insertRequestAndServeResponse(Json.obj(), request.uri).map {
         case Some(response) => Status(response.status.getOrElse(200))(response.content)
         case None           => ServiceUnavailable
-      }
-    else
+      } else
       environment.getExistingFile(s"$basePath/dm/subcontractor/wmfId.json") match {
         case None =>
           logger.error(s"Status $NOT_FOUND, message: file not found")
@@ -91,8 +89,7 @@ class DebtManagementAPITestController @Inject() (
       pollingService.insertTaxpayerRequestAndServeResponse().map {
         case Some(response) => Status(response.status.getOrElse(200))(response.content)
         case None           => ServiceUnavailable
-      }
-    else
+      } else
       environment.getExistingFile(s"$basePath/dm/subcontractor/idKey.json") match {
         case None =>
           logger.error(s"Status $NOT_FOUND, message: file not found")

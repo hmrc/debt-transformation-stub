@@ -18,7 +18,7 @@ package uk.gov.hmrc.debttransformationstub.services
 
 import java.time.LocalDateTime
 import java.util.UUID
-import javax.inject.{Inject, Singleton}
+import javax.inject.{ Inject, Singleton }
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import play.api.libs.json.JsValue
@@ -67,7 +67,7 @@ class DebtManagementAPIPollingService @Inject() (
 
   def insertRequestAndServeResponse(
     request: JsValue,
-    uri: String,
+    uri: String
   ): Future[Option[RequestDetail]] = process(
     request,
     uri = Some(uri),
@@ -89,7 +89,7 @@ class DebtManagementAPIPollingService @Inject() (
       method = method,
       isResponse = false,
       createdOn = Some(LocalDateTime.now()),
-      headers = if (headers.isEmpty) None else Some(headers),
+      headers = if (headers.isEmpty) None else Some(headers)
     )
     ttpRequestsRepository.insertRequestsDetails(requestDetails).flatMap { _ =>
       pollForResponse(requestId)

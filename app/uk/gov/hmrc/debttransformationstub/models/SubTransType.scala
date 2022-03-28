@@ -16,8 +16,7 @@
 
 package uk.gov.hmrc.debttransformationstub.models
 
-
-import enumeratum.{Enum, EnumEntry, PlayJsonEnum}
+import enumeratum.{ Enum, EnumEntry, PlayJsonEnum }
 import scala.collection.immutable
 
 sealed abstract class SubTransType(override val entryName: String) extends EnumEntry

@@ -17,26 +17,27 @@
 package uk.gov.hmrc.debttransformationstub.models.casemanagement
 import java.time.LocalDate
 import play.api.libs.json.Json
-import uk.gov.hmrc.debttransformationstub.models.{Duration, Frequency, PaymentPlanType, QuoteId, QuoteType}
+import uk.gov.hmrc.debttransformationstub.models.{ Duration, Frequency, QuoteId, QuoteType }
+import uk.gov.hmrc.debttransformationstub.models.{ Duration, Frequency, PaymentPlanType, QuoteId, QuoteType }
 
 final case class CaseManagementPlan(
-                                     quoteId: QuoteId,
-                                     quoteType: QuoteType,
-                                     quoteDate: LocalDate,
-                                     instalmentStartDate: LocalDate,
-                                     instalmentAmount: Option[BigDecimal],
-                                     paymentPlanType: PaymentPlanType,
-                                     thirdPartyBank: Boolean,
-                                     numberOfInstalments: Int,
-                                     frequency: Option[Frequency],
-                                     duration: Option[Duration],
-                                     initialPaymentDate: Option[LocalDate],
-                                     initialPaymentAmount: Option[BigDecimal],
-                                     totalDebtincInt: BigInt,
-                                     totalInterest: BigDecimal,
-                                     interestAccrued: BigInt,
-                                     planInterest: BigDecimal
-                                   ) {
+  quoteId: QuoteId,
+  quoteType: QuoteType,
+  quoteDate: LocalDate,
+  instalmentStartDate: LocalDate,
+  instalmentAmount: Option[BigDecimal],
+  paymentPlanType: PaymentPlanType,
+  thirdPartyBank: Boolean,
+  numberOfInstalments: Int,
+  frequency: Option[Frequency],
+  duration: Option[Duration],
+  initialPaymentDate: Option[LocalDate],
+  initialPaymentAmount: Option[BigDecimal],
+  totalDebtincInt: BigInt,
+  totalInterest: BigDecimal,
+  interestAccrued: BigInt,
+  planInterest: BigDecimal
+) {
   require(!quoteId.value.trim().isEmpty(), "quoteId should not be empty")
 }
 

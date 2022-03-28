@@ -26,7 +26,7 @@ import javax.inject.{ Inject, Singleton }
 import scala.io.Source
 
 @Singleton()
-class CaseManagementSystemController @Inject() (
+class CaseManagementSystemController @Inject()(
   environment: Environment,
   cc: ControllerComponents
 ) extends BackendController(cc) with BaseController {
