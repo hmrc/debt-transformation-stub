@@ -19,7 +19,8 @@ package uk.gov.hmrc.debttransformationstub.controllers
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import play.api.mvc._
 import play.api.Environment
-import uk.gov.hmrc.debttransformationstub.utils.{ ListHelper, ReferenceDataLookupRequest }
+import uk.gov.hmrc.debttransformationstub.utils.{ ListHelper, ReferenceDataLookupRequest, RequestAwareLogger }
+import uk.gov.hmrc.http.HeaderCarrier
 
 import java.io.File
 import javax.inject.{ Inject, Singleton }
@@ -27,22 +28,27 @@ import scala.concurrent.Future
 import scala.io.Source
 
 @Singleton()
-class ReferenceLookupController @Inject() (environment: Environment, cc: ControllerComponents)
-    extends BackendController(cc) with BaseController {
+class ReferenceLookupController @Inject() (
+  environment: Environment,
+  cc: ControllerComponents
+) extends BackendController(cc) with BaseController {
 
   private val basePath = "conf/resources/data"
   private val refPath = "/data/"
 
+  private lazy val logger = new RequestAwareLogger(this.getClass)
   private val listHelper: ListHelper = new ListHelper()
 
-  def getReferenceData(descType: String, mainTrans: String, subTrans: String) = Action { request =>
+  def getReferenceData(descType: String, mainTrans: String, subTrans: String) = Action { implicit request =>
     val testOnlyResponseCode: Option[String] = request.headers.get("testOnlyResponseCode")
     if (testOnlyResponseCode.isDefined) {
       Results.Status(testOnlyResponseCode.map(_.toInt).getOrElse(500))
     } else {
       environment.getExistingFile(basePath + refPath + descType + "-" + mainTrans + "-" + subTrans + ".json") match {
         case Some(file) => Ok(Source.fromFile(file).mkString)
-        case _          => NotFound("file not found")
+        case _ =>
+          logger.error(s"Status $NOT_FOUND, message: file not found")
+          NotFound("file not found")
       }
     }
   }
@@ -58,6 +64,7 @@ class ReferenceLookupController @Inject() (environment: Environment, cc: Control
         }
 
         if (files.isEmpty) {
+          logger.error(s"Status $NOT_FOUND, message: file not found")
           Future successful NotFound("file not found")
         } else {
           val result = files

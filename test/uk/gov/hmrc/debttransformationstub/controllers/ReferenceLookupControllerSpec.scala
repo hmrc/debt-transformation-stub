@@ -23,14 +23,16 @@ import play.api.Environment
 import play.api.http.Status
 import play.api.test.Helpers.status
 import play.api.test.{ DefaultAwaitTimeout, FakeRequest, Helpers }
+import uk.gov.hmrc.http.HeaderCarrier
 
 class ReferenceLookupControllerSpec
     extends AnyWordSpec with Matchers with GuiceOneServerPerSuite with DefaultAwaitTimeout {
 
   val cc = Helpers.stubControllerComponents()
   val env = app.injector.instanceOf[Environment]
+  implicit lazy val hc = HeaderCarrier()
 
-  private val fakeRequest = FakeRequest("GET", "/")
+  private val fakeRequest = FakeRequest("GET", "/").withHeaders()
   private val controller = new ReferenceLookupController(env, cc)
 
   "GET /" should {

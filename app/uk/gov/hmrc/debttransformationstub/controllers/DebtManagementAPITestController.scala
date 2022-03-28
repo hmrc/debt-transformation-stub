@@ -25,6 +25,8 @@ import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
 import uk.gov.hmrc.debttransformationstub.models.debtmanagment.{ FCTemplateRequest, RaiseAmendFeeRequest }
 import uk.gov.hmrc.debttransformationstub.services.DebtManagementAPIPollingService
+import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
+import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 @Singleton()
@@ -33,14 +35,15 @@ class DebtManagementAPITestController @Inject() (
   cc: ControllerComponents,
   pollingService: DebtManagementAPIPollingService,
   environment: Environment
-)(implicit val executionContext: ExecutionContext)
+)(implicit executionContext: ExecutionContext)
     extends BackendController(cc) {
   import RaiseAmendFeeRequest._
 
+  private lazy val logger = new RequestAwareLogger(this.getClass)
   private val basePath = "conf/resources/data"
 
   def fieldCollectionsCharge(idType: String, idValue: String): Action[RaiseAmendFeeRequest] =
-    Action.async(parse.tolerantJson[RaiseAmendFeeRequest]) { request =>
+    Action.async(parse.tolerantJson[RaiseAmendFeeRequest]) { implicit request =>
       if (appConfig.isPollingEnv)
         request.headers.get("CorrelationId") match {
           case Some(correlationId) =>
@@ -57,14 +60,16 @@ class DebtManagementAPITestController @Inject() (
         }
       else
         environment.getExistingFile(s"$basePath/dm.raiseAmendFee/charge-$idType-$idValue.json") match {
-          case None => Future.successful(NotFound("file not found"))
+          case None =>
+            logger.error(s"Status $NOT_FOUND, message: file not found")
+            Future.successful(NotFound("file not found"))
           case Some(file) =>
             val result = Source.fromFile(file).mkString.stripMargin
             Future.successful(Ok(result))
         }
     }
 
-  def getDebtDataAndDWISignals(wmfId: String): Action[AnyContent] = Action.async { request =>
+  def getDebtDataAndDWISignals(wmfId: String): Action[AnyContent] = Action.async { implicit request =>
     if (appConfig.isPollingEnv)
       pollingService.insertRequestAndServeResponse(Json.obj(), request.uri).map {
         case Some(response) => Status(response.status.getOrElse(200))(response.content)
@@ -72,14 +77,16 @@ class DebtManagementAPITestController @Inject() (
       }
     else
       environment.getExistingFile(s"$basePath/dm/subcontractor/wmfId.json") match {
-        case None => Future.successful(NotFound("file not found"))
+        case None =>
+          logger.error(s"Status $NOT_FOUND, message: file not found")
+          Future.successful(NotFound("file not found"))
         case Some(file) =>
           val result = Source.fromFile(file).mkString.stripMargin
           Future.successful(Ok(result))
       }
   }
 
-  def getTaxpayerData(idKey: String): Action[AnyContent] = Action.async { request =>
+  def getTaxpayerData(idKey: String): Action[AnyContent] = Action.async { implicit request =>
     if (appConfig.isPollingEnv)
       pollingService.insertTaxpayerRequestAndServeResponse().map {
         case Some(response) => Status(response.status.getOrElse(200))(response.content)
@@ -87,7 +94,9 @@ class DebtManagementAPITestController @Inject() (
       }
     else
       environment.getExistingFile(s"$basePath/dm/subcontractor/idKey.json") match {
-        case None => Future.successful(NotFound("file not found"))
+        case None =>
+          logger.error(s"Status $NOT_FOUND, message: file not found")
+          Future.successful(NotFound("file not found"))
         case Some(file) =>
           val result = Source.fromFile(file).mkString.stripMargin
           Future.successful(Ok(result))
@@ -95,7 +104,7 @@ class DebtManagementAPITestController @Inject() (
   }
 
   def fieldCollectionsTemplates(): Action[FCTemplateRequest] =
-    Action.async(parse.tolerantJson[FCTemplateRequest]) { request =>
+    Action.async(parse.tolerantJson[FCTemplateRequest]) { implicit request =>
       if (appConfig.isPollingEnv) {
         request.headers.get("CorrelationId") match {
           case Some(correlationId) =>
@@ -110,7 +119,9 @@ class DebtManagementAPITestController @Inject() (
 
       } else
         environment.getExistingFile(s"$basePath/dm.template/fc_template.json") match {
-          case None => Future.successful(NotFound("file not found"))
+          case None =>
+            logger.error(s"Status $NOT_FOUND, message: file not found")
+            Future.successful(NotFound("file not found"))
           case Some(file) =>
             val result = Source.fromFile(file).mkString.stripMargin
             Future.successful(Ok(result))

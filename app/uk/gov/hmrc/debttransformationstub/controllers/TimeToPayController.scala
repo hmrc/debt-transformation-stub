@@ -26,6 +26,8 @@ import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
 import uk.gov.hmrc.debttransformationstub.models.{ CreatePlanRequest, GenerateQuoteRequest }
 import uk.gov.hmrc.debttransformationstub.services.TTPPollingService
+import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
+import uk.gov.hmrc.http.HeaderCarrier
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -37,6 +39,8 @@ class TimeToPayController @Inject() (
   appConfig: AppConfig,
   ttpPollingService: TTPPollingService
 ) extends BackendController(cc) with BaseController {
+
+  private lazy val logger = new RequestAwareLogger(this.getClass)
   private val basePath = "conf/resources/data"
 
   def generateQuote: Action[JsValue] = Action.async(parse.json) { implicit request: Request[JsValue] =>
@@ -51,7 +55,9 @@ class TimeToPayController @Inject() (
           environment.getExistingFile(s"$basePath/ttp.generateQuote/${req.customerReference.value}.json")
 
         fileMaybe match {
-          case None => Future successful NotFound("file not found")
+          case None =>
+            logger.error(s"Status $NOT_FOUND, message: file not found")
+            Future successful NotFound("file not found")
           case Some(file) =>
             val result = Source.fromFile(file).mkString.stripMargin
             Future successful Ok(result)
@@ -69,7 +75,9 @@ class TimeToPayController @Inject() (
     } else {
       environment.getExistingFile(s"$basePath/ttp.viewPlan/$pegaId.json") match {
         case Some(file) => Future.successful(Ok(Source.fromFile(file).mkString))
-        case _          => Future.successful(NotFound("file not found"))
+        case _ =>
+          logger.error(s"Status $NOT_FOUND, message: file not found")
+          Future.successful(NotFound("file not found"))
       }
     }
   }
@@ -83,7 +91,9 @@ class TimeToPayController @Inject() (
     } else {
       environment.getExistingFile(s"$basePath/ttp.updatePlan/$customerReference.json") match {
         case Some(file) => Future.successful(Ok(Source.fromFile(file).mkString))
-        case _          => Future.successful(NotFound("file not found"))
+        case _ =>
+          logger.error(s"Status $NOT_FOUND, message: file not found")
+          Future.successful(NotFound("file not found"))
       }
     }
   }
@@ -100,7 +110,9 @@ class TimeToPayController @Inject() (
           environment.getExistingFile(s"$basePath/ttp.createPlan/${req.plan.quoteId.value}.json")
 
         fileMaybe match {
-          case None => Future successful NotFound("file not found")
+          case None =>
+            logger.error(s"Status $NOT_FOUND, message: file not found")
+            Future successful NotFound("file not found")
           case Some(file) =>
             val result = Source.fromFile(file).mkString.stripMargin
             Future successful Ok(result)
