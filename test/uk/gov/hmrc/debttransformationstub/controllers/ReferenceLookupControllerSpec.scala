@@ -22,10 +22,11 @@ import org.scalatestplus.play.guice.GuiceOneServerPerSuite
 import play.api.Environment
 import play.api.http.Status
 import play.api.test.Helpers.status
-import play.api.test.{DefaultAwaitTimeout, FakeRequest, Helpers}
+import play.api.test.{ DefaultAwaitTimeout, FakeRequest, Helpers }
 import uk.gov.hmrc.http.HeaderCarrier
 
-class ReferenceLookupControllerSpec extends AnyWordSpec with Matchers with GuiceOneServerPerSuite with DefaultAwaitTimeout {
+class ReferenceLookupControllerSpec
+    extends AnyWordSpec with Matchers with GuiceOneServerPerSuite with DefaultAwaitTimeout {
 
   val cc = Helpers.stubControllerComponents()
   val env = app.injector.instanceOf[Environment]

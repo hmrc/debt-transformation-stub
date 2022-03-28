@@ -29,7 +29,7 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import scala.concurrent.Future
 import scala.io.Source
 
-class CaseManagementController @Inject()(
+class CaseManagementController @Inject() (
   environment: Environment,
   cc: ControllerComponents
 ) extends BackendController(cc) with BaseController {

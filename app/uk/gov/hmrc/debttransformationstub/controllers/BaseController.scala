@@ -31,12 +31,7 @@ trait BaseController {
 
   def withCustomJsonBody[T](
     f: T => Future[Result]
-  )(
-    implicit
-    request: Request[JsValue],
-    m: Manifest[T],
-    reads: Reads[T],
-    hc: HeaderCarrier): Future[Result] =
+  )(implicit request: Request[JsValue], m: Manifest[T], reads: Reads[T], hc: HeaderCarrier): Future[Result] =
     Try(request.body.validate[T]) match {
       case Success(JsSuccess(payload, _)) => f(payload)
       case Success(JsError(errs)) =>
