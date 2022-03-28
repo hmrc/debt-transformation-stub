@@ -17,10 +17,8 @@
 package uk.gov.hmrc.debttransformationstub.models
 
 import java.time.LocalDate
-
 import enumeratum.{Enum, EnumEntry, PlayJsonEnum}
 import play.api.libs.json.Json
-import uk.gov.hmrc.debttransformationstub.controllers.PaymentPlanType
 
 import scala.collection.immutable
 
