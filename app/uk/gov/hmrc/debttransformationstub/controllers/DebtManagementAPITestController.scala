@@ -97,11 +97,17 @@ class DebtManagementAPITestController @Inject() (
   def fieldCollectionsTemplates(): Action[FCTemplateRequest] =
     Action.async(parse.tolerantJson[FCTemplateRequest]) { request =>
       if (appConfig.isPollingEnv) {
-        pollingService.insertTemplateRequestAndServeResponse(Json.toJson(request.body)).map {
-          case Some(response) =>
-            Status(response.status.getOrElse(200))(response.content)
-          case None => ServiceUnavailable
+        request.headers.get("CorrelationId") match {
+          case Some(correlationId) =>
+            pollingService.insertTemplateRequestAndServeResponse(Json.toJson(request.body), correlationId).map {
+              case Some(response) =>
+                Status(response.status.getOrElse(200))(response.content)
+              case None => ServiceUnavailable
+            }
+          case None =>
+            Future.successful(BadRequest(Json.obj("message" -> "missing CorrelationId header")))
         }
+
       } else
         environment.getExistingFile(s"$basePath/dm.template/fc_template.json") match {
           case None => Future.successful(NotFound("file not found"))

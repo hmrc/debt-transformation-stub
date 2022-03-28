@@ -16,10 +16,9 @@
 
 package uk.gov.hmrc.debttransformationstub.models.casemanagement
 import java.time.LocalDate
-
 import play.api.libs.json.Json
-import uk.gov.hmrc.debttransformationstub.controllers.PaymentPlanType
 import uk.gov.hmrc.debttransformationstub.models.{ Duration, Frequency, QuoteId, QuoteType }
+import uk.gov.hmrc.debttransformationstub.models.{ Duration, Frequency, PaymentPlanType, QuoteId, QuoteType }
 
 final case class CaseManagementPlan(
   quoteId: QuoteId,

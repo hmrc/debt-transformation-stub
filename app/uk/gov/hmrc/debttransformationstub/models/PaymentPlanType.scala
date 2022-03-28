@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.debttransformationstub.controllers
-
-import uk.gov.hmrc.debttransformationstub.models.ValueTypeFormatter
+package uk.gov.hmrc.debttransformationstub.models
 
 final case class PaymentPlanType(value: String) extends AnyVal
 
