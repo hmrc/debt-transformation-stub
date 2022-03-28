@@ -19,7 +19,7 @@ package uk.gov.hmrc.debttransformationstub.utils
 import java.io.File
 
 class FileHelper {
-  def getListOfFiles(dir: String):List[File] = {
+  def getListOfFiles(dir: String): List[File] = {
     val d = new File(dir)
     if (d.exists && d.isDirectory) {
       d.listFiles.filter(_.isFile).toList

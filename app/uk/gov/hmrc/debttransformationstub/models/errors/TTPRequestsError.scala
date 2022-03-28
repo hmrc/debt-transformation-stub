@@ -25,9 +25,18 @@ sealed trait ConnectorError extends TTPRequestsError {
   val identifier: Option[String] = None
   val reason: Option[String] = None
   val cause = s"$name: statusCode:{$statusCode}, reason:{${reason.mkString}}, uniqueReference:{${identifier.mkString}}"
-  val jsonErrorCause = s"""{name: $name, statusCode: $statusCode, reason:{${reason.mkString}}, uniqueReference: ${identifier.mkString}}"""
+  val jsonErrorCause =
+    s"""{name: $name, statusCode: $statusCode, reason:{${reason.mkString}}, uniqueReference: ${identifier.mkString}}"""
 }
 
-final case class TTPRequestsCreationError(statusCode: Int, override val reason: Option[String] = None,  override val identifier: Option[String] = None) extends ConnectorError
+final case class TTPRequestsCreationError(
+  statusCode: Int,
+  override val reason: Option[String] = None,
+  override val identifier: Option[String] = None
+) extends ConnectorError
 
-final case class TTPRequestsDeletionError(statusCode: Int, override val reason: Option[String] = None,  override val identifier: Option[String] = None) extends ConnectorError
+final case class TTPRequestsDeletionError(
+  statusCode: Int,
+  override val reason: Option[String] = None,
+  override val identifier: Option[String] = None
+) extends ConnectorError

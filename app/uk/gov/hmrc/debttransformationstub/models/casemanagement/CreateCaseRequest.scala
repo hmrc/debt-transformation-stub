@@ -20,16 +20,16 @@ import play.api.libs.json.Json
 import uk.gov.hmrc.debttransformationstub.models._
 
 final case class CreateCaseRequest(
-                                    customerReference: CustomerReference,
-                                    quoteReference: QuoteReference,
-                                    channelIdentifier: ChannelIdentifier,
-                                    planId: PlanId,
-                                    plan: CaseManagementPlan,
-                                    debtItemCharges: Seq[CaseManagementDebtItemCharge],
-                                    payments: Seq[PaymentInformation],
-                                    customerPostCodes: Seq[CustomerPostCode],
-                                    instalments: Seq[Instalment]
-                                  )
+  customerReference: CustomerReference,
+  quoteReference: QuoteReference,
+  channelIdentifier: ChannelIdentifier,
+  planId: PlanId,
+  plan: CaseManagementPlan,
+  debtItemCharges: Seq[CaseManagementDebtItemCharge],
+  payments: Seq[PaymentInformation],
+  customerPostCodes: Seq[CustomerPostCode],
+  instalments: Seq[Instalment]
+)
 
 object CreateCaseRequest {
   implicit val format = Json.format[CreateCaseRequest]

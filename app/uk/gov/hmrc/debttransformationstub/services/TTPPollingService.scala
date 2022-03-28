@@ -19,13 +19,13 @@ package uk.gov.hmrc.debttransformationstub.services
 import akka.stream.ActorMaterializer
 import akka.stream.scaladsl.JavaFlowSupport.Source
 import com.google.inject.ImplementedBy
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.{ JsValue, Json }
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
-import uk.gov.hmrc.debttransformationstub.models.{GenerateQuoteRequest, RequestDetail}
+import uk.gov.hmrc.debttransformationstub.models.{ GenerateQuoteRequest, RequestDetail }
 import uk.gov.hmrc.debttransformationstub.repositories.TTPRequestsRepository
 
 import java.time.LocalDateTime
-import javax.inject.{Inject, Singleton}
+import javax.inject.{ Inject, Singleton }
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
@@ -35,27 +35,38 @@ trait TTPPollingService {
 }
 
 @Singleton
-class DefaultTTPPollingService @Inject()(ttpRequestsRepository: TTPRequestsRepository, appConfig: AppConfig)
-  extends TTPPollingService {
+class DefaultTTPPollingService @Inject() (ttpRequestsRepository: TTPRequestsRepository, appConfig: AppConfig)
+    extends TTPPollingService {
 
   override def insertRequestAndServeResponse(request: JsValue, uri: Option[String]): Future[Option[RequestDetail]] = {
     val requestId = java.util.UUID.randomUUID.toString
-    ttpRequestsRepository.insertRequestsDetails(RequestDetail(requestId, Json.parse(request.toString), uri.map(_.replaceFirst("/debts", "").replaceFirst("time-to-pay", "time-to-pay-proxy")), false, Some(LocalDateTime.now()))).flatMap {
-      _ =>
+    ttpRequestsRepository
+      .insertRequestsDetails(
+        RequestDetail(
+          requestId,
+          Json.parse(request.toString),
+          uri.map(_.replaceFirst("/debts", "").replaceFirst("time-to-pay", "time-to-pay-proxy")),
+          false,
+          Some(LocalDateTime.now())
+        )
+      )
+      .flatMap { _ =>
         pollForResponse(requestId)
-    }
+      }
   }
 
-  private def pollForResponse(requestId: String, tries: Int = appConfig.pollingIntervals, timeoutMs: Int = appConfig.pollingSleep): Future[Option[RequestDetail]] = {
-
+  private def pollForResponse(
+    requestId: String,
+    tries: Int = appConfig.pollingIntervals,
+    timeoutMs: Int = appConfig.pollingSleep
+  ): Future[Option[RequestDetail]] =
     ttpRequestsRepository.getResponseByRequestId(requestId).flatMap {
       case None =>
-        if(tries > 0) {
+        if (tries > 0) {
           Thread.sleep(timeoutMs)
           pollForResponse(requestId, tries - 1)
         } else Future.successful(None)
       case Some(response) => Future.successful(Some(response))
     }
-  }
 
 }

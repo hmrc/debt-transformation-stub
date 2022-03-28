@@ -17,7 +17,7 @@
 package uk.gov.hmrc.debttransformationstub.models
 
 import java.time.LocalDate
-import enumeratum.{Enum, EnumEntry, PlayJsonEnum}
+import enumeratum.{ Enum, EnumEntry, PlayJsonEnum }
 import play.api.libs.json.Json
 
 import scala.collection.immutable
@@ -32,29 +32,28 @@ object ChannelIdentifier extends Enum[ChannelIdentifier] with PlayJsonEnum[Chann
 }
 
 final case class Plan(
-                       quoteType: QuoteType,
-                       quoteDate: LocalDate,
-                       instalmentStartDate: LocalDate,
-                       instalmentAmount: Option[BigDecimal],
-                       frequency: Option[Frequency],
-                       duration: Option[Duration],
-                       initialPaymentAmount: Option[BigDecimal],
-                       initialPaymentDate: Option[LocalDate],
-                       paymentPlanType: PaymentPlanType
-                     )
+  quoteType: QuoteType,
+  quoteDate: LocalDate,
+  instalmentStartDate: LocalDate,
+  instalmentAmount: Option[BigDecimal],
+  frequency: Option[Frequency],
+  duration: Option[Duration],
+  initialPaymentAmount: Option[BigDecimal],
+  initialPaymentDate: Option[LocalDate],
+  paymentPlanType: PaymentPlanType
+)
 
 object Plan {
   implicit val format = Json.format[Plan]
 }
 
-
 final case class GenerateQuoteRequest(
-                                       customerReference: CustomerReference,
-                                       channelIdentifier: ChannelIdentifier,
-                                       plan: Plan,
-                                       customerPostCodes: List[CustomerPostCode],
-                                       debtItemCharges: List[DebtItem])
-
+  customerReference: CustomerReference,
+  channelIdentifier: ChannelIdentifier,
+  plan: Plan,
+  customerPostCodes: List[CustomerPostCode],
+  debtItemCharges: List[DebtItem]
+)
 
 object GenerateQuoteRequest {
   implicit val format = Json.format[GenerateQuoteRequest]

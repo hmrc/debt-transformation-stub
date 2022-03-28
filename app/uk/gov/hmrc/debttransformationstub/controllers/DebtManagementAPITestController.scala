@@ -16,14 +16,14 @@
 
 package uk.gov.hmrc.debttransformationstub.controllers
 
-import javax.inject.{Inject, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import javax.inject.{ Inject, Singleton }
+import scala.concurrent.{ ExecutionContext, Future }
 import scala.io.Source
 import play.api.Environment
 import play.api.libs.json.Json
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
-import uk.gov.hmrc.debttransformationstub.models.debtmanagment.{FCTemplateRequest, RaiseAmendFeeRequest}
+import uk.gov.hmrc.debttransformationstub.models.debtmanagment.{ FCTemplateRequest, RaiseAmendFeeRequest }
 import uk.gov.hmrc.debttransformationstub.services.DebtManagementAPIPollingService
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
@@ -33,7 +33,8 @@ class DebtManagementAPITestController @Inject() (
   cc: ControllerComponents,
   pollingService: DebtManagementAPIPollingService,
   environment: Environment
-)(implicit val executionContext: ExecutionContext) extends BackendController(cc) {
+)(implicit val executionContext: ExecutionContext)
+    extends BackendController(cc) {
   import RaiseAmendFeeRequest._
 
   private val basePath = "conf/resources/data"
@@ -42,30 +43,32 @@ class DebtManagementAPITestController @Inject() (
     Action.async(parse.tolerantJson[RaiseAmendFeeRequest]) { request =>
       if (appConfig.isPollingEnv)
         request.headers.get("CorrelationId") match {
-          case Some(correlationId) => 
-            pollingService.insertFCChargeRequestAndServeResponse(Json.toJson(request.body), correlationId, request.method).map {
-              case Some(response) =>
-                Status(response.status.getOrElse(200))(response.content)
-              case None =>
-                ServiceUnavailable
-            }
+          case Some(correlationId) =>
+            pollingService
+              .insertFCChargeRequestAndServeResponse(Json.toJson(request.body), correlationId, request.method)
+              .map {
+                case Some(response) =>
+                  Status(response.status.getOrElse(200))(response.content)
+                case None =>
+                  ServiceUnavailable
+              }
           case None =>
             Future.successful(BadRequest(Json.obj("message" -> "missing CorrelationId header")))
-        } 
+        }
       else
-        environment.getExistingFile(s"$basePath/dm.raiseAmendFee/charge-${idType}-${idValue}.json") match {
+        environment.getExistingFile(s"$basePath/dm.raiseAmendFee/charge-$idType-$idValue.json") match {
           case None => Future.successful(NotFound("file not found"))
           case Some(file) =>
             val result = Source.fromFile(file).mkString.stripMargin
             Future.successful(Ok(result))
         }
-  }
+    }
 
   def getDebtDataAndDWISignals(wmfId: String): Action[AnyContent] = Action.async { request =>
     if (appConfig.isPollingEnv)
       pollingService.insertRequestAndServeResponse(Json.obj(), request.uri).map {
         case Some(response) => Status(response.status.getOrElse(200))(response.content)
-        case None => ServiceUnavailable
+        case None           => ServiceUnavailable
       }
     else
       environment.getExistingFile(s"$basePath/dm/subcontractor/wmfId.json") match {
@@ -80,7 +83,7 @@ class DebtManagementAPITestController @Inject() (
     if (appConfig.isPollingEnv)
       pollingService.insertTaxpayerRequestAndServeResponse().map {
         case Some(response) => Status(response.status.getOrElse(200))(response.content)
-        case None => ServiceUnavailable
+        case None           => ServiceUnavailable
       }
     else
       environment.getExistingFile(s"$basePath/dm/subcontractor/idKey.json") match {

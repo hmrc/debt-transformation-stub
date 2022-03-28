@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.debttransformationstub.models
 
-import enumeratum.{Enum, EnumEntry, PlayJsonEnum}
+import enumeratum.{ Enum, EnumEntry, PlayJsonEnum }
 import play.api.libs.json.Json
 
 final case class CaseId(value: String) extends AnyVal
@@ -38,7 +38,12 @@ object PlanStatus extends Enum[PlanStatus] with PlayJsonEnum[PlanStatus] {
 
 }
 
-final case class CreatePlanResponse(customerReference: CustomerReference, planId: PlanId, caseId: CaseId, planStatus: PlanStatus)
+final case class CreatePlanResponse(
+  customerReference: CustomerReference,
+  planId: PlanId,
+  caseId: CaseId,
+  planStatus: PlanStatus
+)
 
 object CreatePlanResponse {
   implicit val format = Json.format[CreatePlanResponse]

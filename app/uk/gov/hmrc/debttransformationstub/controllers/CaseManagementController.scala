@@ -19,8 +19,8 @@ import java.io.File
 
 import javax.inject.Inject
 import play.api.Environment
-import play.api.libs.json.{JsValue, Json}
-import play.api.mvc.{Action, ControllerComponents, Request}
+import play.api.libs.json.{ JsValue, Json }
+import play.api.mvc.{ Action, ControllerComponents, Request }
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
 import uk.gov.hmrc.debttransformationstub.models.casemanagement.CreateCaseRequest
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
@@ -28,29 +28,23 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import scala.concurrent.Future
 import scala.io.Source
 
-class CaseManagementController @Inject()(environment: Environment,
-                                         cc: ControllerComponents,
-                                         appConfig: AppConfig)
-    extends BackendController(cc)
-    with BaseController {
+class CaseManagementController @Inject() (environment: Environment, cc: ControllerComponents, appConfig: AppConfig)
+    extends BackendController(cc) with BaseController {
   private val basePath = "conf/resources/data"
 
-  def createCase: Action[JsValue] = Action.async(parse.json) {
-    implicit request: Request[JsValue] =>
-      {
-        withCustomJsonBody[CreateCaseRequest] { createCaseRequest =>
-          val fileMaybe: Option[File] = environment.getExistingFile(
-            s"$basePath/casemanagement.createcase/create-case-response.json"
-          )
+  def createCase: Action[JsValue] = Action.async(parse.json) { implicit request: Request[JsValue] =>
+    withCustomJsonBody[CreateCaseRequest] { createCaseRequest =>
+      val fileMaybe: Option[File] = environment.getExistingFile(
+        s"$basePath/casemanagement.createcase/create-case-response.json"
+      )
 
-          fileMaybe match {
-            case None => Future successful NotFound("file not found")
-            case Some(file) =>
-              val result = Source.fromFile(file).mkString.replaceAll("#PLAN-ID", createCaseRequest.planId.value).stripMargin
-              Future successful Ok(result)
-          }
-
-        }
+      fileMaybe match {
+        case None => Future successful NotFound("file not found")
+        case Some(file) =>
+          val result = Source.fromFile(file).mkString.replaceAll("#PLAN-ID", createCaseRequest.planId.value).stripMargin
+          Future successful Ok(result)
       }
+
+    }
   }
 }

@@ -16,17 +16,16 @@
 
 package uk.gov.hmrc.debttransformationstub.models.debtmanagment
 
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.json.{ Json, OFormat }
 
 final case class FCTemplateRequest(
-                                  source: String,
-                                  requestType: Option[String],
-                                  outputType: String,
-                                  letterId: String,
-                                  sourceData: String
+  source: String,
+  requestType: Option[String],
+  outputType: String,
+  letterId: String,
+  sourceData: String
 )
 
 object FCTemplateRequest {
   implicit val fcTemplateFormat: OFormat[FCTemplateRequest] = Json.format[FCTemplateRequest]
 }
-

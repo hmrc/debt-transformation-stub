@@ -25,10 +25,9 @@ class ListHelper {
     val files = fileHelper.getListOfFiles(folderPath)
 
     var result = "["
-    for (file <- files) {
+    for (file <- files)
       result = result + Source.fromFile(file).mkString + ","
-    }
-    result = result.substring(0, result.length()-1)
+    result = result.substring(0, result.length() - 1)
     result = result + "]"
     result.toString()
   }

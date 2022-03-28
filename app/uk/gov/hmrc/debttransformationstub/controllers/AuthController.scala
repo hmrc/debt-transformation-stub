@@ -25,11 +25,13 @@ import javax.inject.Inject
 import scala.concurrent.Future
 import scala.io.Source
 
-class AuthController @Inject()(environment: Environment, cc: ControllerComponents)
-  extends BackendController(cc) with BaseController {
+class AuthController @Inject() (environment: Environment, cc: ControllerComponents)
+    extends BackendController(cc) with BaseController {
 
   def getAccessToken() = Action(parse.tolerantFormUrlEncoded).async { implicit request =>
-    Future successful Accepted(Source.fromFile(environment.getFile("conf/resources/data/auth/bearer-token.json")).mkString)
+    Future successful Accepted(
+      Source.fromFile(environment.getFile("conf/resources/data/auth/bearer-token.json")).mkString
+    )
   }
 
 }
