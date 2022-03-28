@@ -52,7 +52,7 @@ class DefaultTTPRequestsService @Inject() (ttpRequestsRepository: TTPRequestsRep
   )(implicit hc: HeaderCarrier): Future[Either[TTPRequestsError, String]] = {
 
     val currentDate = LocalDateTime.now()
-    val requestDetails =requestDetailsRequest.copy(createdOn = Some(currentDate))
+    val requestDetails = requestDetailsRequest.copy(createdOn = Some(currentDate))
 
     val writeResultF = ttpRequestsRepository.insertRequestsDetails(requestDetails)
     writeResultF.flatMap { wr: WriteResult =>
