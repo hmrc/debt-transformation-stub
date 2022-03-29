@@ -37,7 +37,6 @@ class ETMPController @Inject()(environment: Environment,
       case _ =>
         NotFound("file not found") // TODO - use error message from Get financials spec
     }
-
   }
 
   def getPAYEMaster(idType: String, latest:String): Action[AnyContent] = Action { request =>
