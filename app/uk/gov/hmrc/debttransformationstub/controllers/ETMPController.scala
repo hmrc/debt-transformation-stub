@@ -17,37 +17,42 @@
 package uk.gov.hmrc.debttransformationstub.controllers
 
 import play.api.Environment
-import play.api.mvc.{Action, AnyContent, ControllerComponents}
+import play.api.mvc.{ Action, AnyContent, ControllerComponents }
+import uk.gov.hmrc.debttransformationstub.controllers.ETMPController.getFinancialsErrorList
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.Inject
 import scala.io.Source
 
-class ETMPController @Inject()(environment: Environment,
-                               cc: ControllerComponents)
-  extends BackendController(cc) {
+class ETMPController @Inject()(environment: Environment, cc: ControllerComponents) extends BackendController(cc) {
   private val getFinancialsCasePath = "conf/resources/data/etmp/getFinancials/"
   private val getPAYEMasterCasePath = "conf/resources/data/paye/getMaster/"
 
-  def getFinancials(idType: String, idNumber: String,
-                    regimeType: String): Action[AnyContent] = Action { request =>
+  def getFinancials(idType: String, idNumber: String, regimeType: String): Action[AnyContent] = Action { request =>
     environment.getExistingFile(s"$getFinancialsCasePath$idNumber.json") match {
+      case Some(file) if getFinancialsErrorList.exists(_.equals(idNumber)) =>
+        BadRequest(Source.fromFile(file).mkString)
       case Some(file) =>
         Ok(Source.fromFile(file).mkString)
       case _ =>
-        NotFound("file not found") // TODO - use error message from Get financials spec
+        NotFound("The remote endpoint has indicated that no data can be found")
     }
 
   }
 
-  def getPAYEMaster(idType: String, latest:String): Action[AnyContent] = Action { request =>
+  def getPAYEMaster(idType: String, latest: String): Action[AnyContent] = Action { request =>
     environment.getExistingFile(s"$getPAYEMasterCasePath$idType.json") match {
       case Some(file) =>
         Ok(Source.fromFile(file).mkString)
       case _ =>
-        NotFound("file not found " + getPAYEMasterCasePath + "$idType.json") // TODO - use error message from Get PAYE master
+        NotFound("The remote endpoint has indicated that Employer cannot be found")
     }
-
   }
+}
 
+object ETMPController {
+  val SingleErrorIdNumber = "012X012345"
+  val MultipleErrorsIdNumber = "023X023456"
+
+  val getFinancialsErrorList = List(SingleErrorIdNumber, MultipleErrorsIdNumber)
 }
