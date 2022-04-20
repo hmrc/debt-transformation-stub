@@ -1,4 +1,8 @@
 {
-  "code": "INVALID_IDTYPE",
-  "reason": "Submission has not passed validation. Invalid parameter idType."
+  "failures": [
+    {
+      "code": "INVALID_IDNUMBER",
+      "reason": "Submission has not passed validation. Invalid parameter idNumber."
+    }
+  ]
 }

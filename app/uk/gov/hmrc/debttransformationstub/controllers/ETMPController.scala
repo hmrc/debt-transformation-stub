@@ -28,14 +28,19 @@ class ETMPController @Inject()(environment: Environment, cc: ControllerComponent
   private val getFinancialsCasePath = "conf/resources/data/etmp/getFinancials/"
   private val getPAYEMasterCasePath = "conf/resources/data/paye/getMaster/"
 
-  def getFinancials(idType: String, idNumber: String, regimeType: String): Action[AnyContent] = Action { request =>
+  def getFinancials(idType: String, idNumber: String, regimeType: String) = Action { request =>
     environment.getExistingFile(s"$getFinancialsCasePath$idNumber.json") match {
       case Some(file) if getFinancialsErrorList.exists(_.equals(idNumber)) =>
         BadRequest(Source.fromFile(file).mkString)
       case Some(file) =>
         Ok(Source.fromFile(file).mkString)
       case _ =>
-        NotFound("The remote endpoint has indicated that no data can be found")
+        NotFound(s"""
+                    |{
+                    |  "code": "NOT_FOUND",
+                    |  "reason": "The remote endpoint has indicated that no data can be found."
+                    |}
+                    |""".stripMargin)
     }
 
   }
