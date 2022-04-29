@@ -17,7 +17,8 @@
 package uk.gov.hmrc.debttransformationstub.controllers
 
 import play.api.Environment
-import play.api.mvc.{ Action, AnyContent, ControllerComponents }
+import play.api.mvc.Results.{BadRequest, NotFound}
+import play.api.mvc.{Action, AnyContent, ControllerComponents}
 import uk.gov.hmrc.debttransformationstub.controllers.ETMPController.getFinancialsErrorList
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
@@ -46,7 +47,11 @@ class ETMPController @Inject()(environment: Environment, cc: ControllerComponent
   }
 
   def getPAYEMaster(idType: String, latest: String): Action[AnyContent] = Action { request =>
-    environment.getExistingFile(s"$getPAYEMasterCasePath$idType.json") match {
+    val filePath = if (idType.trim.toUpperCase == "EMPREF") {
+      getPAYEMasterCasePath+"EMPREF.json"
+    } else
+      getPAYEMasterCasePath+"NINO.json"
+    environment.getExistingFile(filePath) match {
       case Some(file) =>
         Ok(Source.fromFile(file).mkString)
       case _ =>

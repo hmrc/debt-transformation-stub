@@ -1,0 +1,51 @@
+{
+  "idType": "NINO",
+  "idNumber": "XQIT00000000001",
+  "regimeType": "SIMP",
+  "businessPartner": "r1Nssgvyf",
+  "businessPartnerInfo": {
+    "type": "Person",
+    "detail": "Some detail"
+  },
+  "accountsOfficeReference": "KxXSUstZRH6eh",
+  "rti": {
+    "paymentFrequency": "MONTHLY",
+    "annualPaymentMonth": "August",
+    "schemaStatus": "CANCELLED",
+    "startDateOfRegistration": "2075-10-30",
+    "cessationDate": "2024-02-29",
+    "potentialCessationDate": "2024-02-29"
+  },
+  "cis": {
+    "paymentFrequency": "MONTHLY",
+    "schemaStatus": "CANCELLED",
+    "startDateOfRegistration": "2075-10-30",
+    "cessationDate": "2024-02-29",
+    "potentialCessationDate": "2024-02-29"
+  },
+  "class1ANICReturnDue": true,
+  "vppStartDate": "2021-11-30",
+  "insolvencySignal": false,
+  "schemaType": "PAYE",
+  "schemaStatus": "LIVE",
+  "scheduleCode": "XP",
+  "employmentAllowance": [],
+  "disputes": [],
+  "periodOfInactivity": [],
+  "apprenticeshipLevy": [],
+  "address": [{
+    "type": "Business",
+    "addressLine1": "123 Happy Road",
+    "addressLine2": "Happy Drive",
+    "country": "TR",
+    "postCode": "RC2 9MN"
+  }],
+  "contacts": [{
+    "contactType": "Business",
+    "phoneCountryCode": "AF",
+    "phoneNumber": "0209 9239 898",
+    "mobileCountryCode": "AF",
+    "mobileNumber": "09302832893",
+    "email": "test@test.com"
+  }]
+}
