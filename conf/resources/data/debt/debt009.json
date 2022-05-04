@@ -1,0 +1,22 @@
+{
+  "debtItems": [{
+    "dutyId": "duty01",
+    "debtID": "debt009",
+    "mainTrans": "1525",
+    "subTrans": "1000",
+    "chargeDescription": "RTI-Income Tax",
+    "originalAmount": 9999999999,
+    "outstandingAmount": 9999999999,
+    "interestKey": "01",
+    "interestStartDate": "2020-12-20",
+    "dateCreated": "2020-12-20",
+    "dateCalculationTo": "2021-05-24",
+    "periodFrom": "2019-12-20",
+    "periodEnd": "2021-01-20",
+    "payments": [],
+    "breathingSpaces": [],
+    "customerPostcodes": [
+      { "addressPostcode": "BN12 4XH", "postcodeDate": "2019-01-01" }
+    ]
+  }]
+}
