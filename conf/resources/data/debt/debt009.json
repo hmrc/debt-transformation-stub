@@ -8,6 +8,7 @@
     "originalAmount": 9999999999,
     "outstandingAmount": 9999999999,
     "interestKey": "01",
+    "interestStartDate": "2020-12-20",
     "dateCreated": "2020-12-20",
     "dateCalculationTo": "2021-05-24",
     "periodFrom": "2019-12-20",
