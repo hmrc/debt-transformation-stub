@@ -34,11 +34,11 @@ import scala.concurrent.{ Await, Future }
 class DebtManagementAPIPollingServiceSpec extends WordSpec with Matchers with MockitoSugar {
 
   "the DebtManagementAPIPollingService" should {
-    "rewrite a URL for field collections charge, stripping path params" in {
+    "not rewrite a URL for field collections charge, stripping path params" in {
       insertRequestFor(
         env = "qa",
         inputUri = "/individuals/debts/field-collections/param1/param2/charge",
-        expectedUri = "/individuals/field-collections/charges",
+        expectedUri = "/individuals/debts/field-collections/param1/param2/charge",
         isCharge = true
       )
     }
@@ -89,7 +89,11 @@ class DebtManagementAPIPollingServiceSpec extends WordSpec with Matchers with Mo
       .thenReturn(Future.successful(Some(stubbedRequestDetail)))
     val result = {
       if (isCharge) {
-        pollingService.insertFCChargeRequestAndServeResponse(Json.obj(), "mock correlationId", "POST")
+        pollingService.insertFCChargeRequestAndServeResponse(
+          Json.obj(),
+          "mock correlationId",
+          "POST",
+          "/individuals/debts/field-collections/param1/param2/charge")
       } else {
         pollingService.insertRequestAndServeResponse(Json.obj(), inputUri)
       }
