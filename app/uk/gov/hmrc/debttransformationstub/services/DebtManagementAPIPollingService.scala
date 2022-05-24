@@ -63,7 +63,7 @@ class DebtManagementAPIPollingService @Inject()(
     process(
       Json.obj(),
       uri = None,
-      uriOverride = Some("/individuals/subcontractor/idms/taxpayer/789"),
+      uriOverride = Some("/individuals/subcontractor/idms/taxpayer/789"), //TODO: Remove override when https://admin.qa.tax.service.gov.uk/ifs/individuals/subcontractor/idms/wmfid/789 is used
       method = Some("GET")
     )
 
