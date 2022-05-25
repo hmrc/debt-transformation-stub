@@ -35,7 +35,7 @@ trait TTPPollingService {
 }
 
 @Singleton
-class DefaultTTPPollingService @Inject() (ttpRequestsRepository: TTPRequestsRepository, appConfig: AppConfig)
+class DefaultTTPPollingService @Inject()(ttpRequestsRepository: TTPRequestsRepository, appConfig: AppConfig)
     extends TTPPollingService {
 
   override def insertRequestAndServeResponse(request: JsValue, uri: Option[String]): Future[Option[RequestDetail]] = {

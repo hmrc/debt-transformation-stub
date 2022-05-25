@@ -28,7 +28,7 @@ import uk.gov.hmrc.debttransformationstub.repositories.TTPRequestsRepository
 import play.api.libs.json.Json
 
 @Singleton
-class DebtManagementAPIPollingService @Inject() (
+class DebtManagementAPIPollingService @Inject()(
   ttpRequestsRepository: TTPRequestsRepository,
   appConfig: AppConfig
 ) {
@@ -36,24 +36,26 @@ class DebtManagementAPIPollingService @Inject() (
   def insertFCChargeRequestAndServeResponse(
     request: JsValue,
     correlationId: String,
-    method: String
+    method: String,
+    uri: String
   ): Future[Option[RequestDetail]] =
     process(
       request,
-      uri = None,
-      uriOverride = Some("/individuals/field-collections/charges"),
+      uri = Some(uri),
+      uriOverride = None,
       headers = Map("CorrelationId" -> correlationId),
       method = Some(method.toUpperCase)
     )
 
   def insertTemplateRequestAndServeResponse(
     request: JsValue,
-    correlationId: String
+    correlationId: String,
+    uri: String
   ): Future[Option[RequestDetail]] =
     process(
       request,
-      uri = None,
-      uriOverride = Some("/individuals/field-collections/templates"),
+      uri = Some(uri),
+      uriOverride = None,
       headers = Map("CorrelationId" -> correlationId)
     )
 
@@ -61,7 +63,7 @@ class DebtManagementAPIPollingService @Inject() (
     process(
       Json.obj(),
       uri = None,
-      uriOverride = Some("/individuals/subcontractor/idms/taxpayer/789"),
+      uriOverride = Some("/individuals/subcontractor/idms/taxpayer/789"), //TODO: Remove override when https://admin.qa.tax.service.gov.uk/ifs/individuals/subcontractor/idms/wmfid/789 is used
       method = Some("GET")
     )
 
