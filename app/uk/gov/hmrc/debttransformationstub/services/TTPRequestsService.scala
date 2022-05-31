@@ -18,7 +18,7 @@ package uk.gov.hmrc.debttransformationstub.services
 
 import akka.http.scaladsl.model.StatusCodes
 import com.google.inject.ImplementedBy
-import reactivemongo.api.commands.WriteResult
+import org.mongodb.scala.result.{ DeleteResult, InsertOneResult }
 import uk.gov.hmrc.debttransformationstub.models.RequestDetail
 import uk.gov.hmrc.debttransformationstub.models.errors.{ TTPRequestsCreationError, TTPRequestsDeletionError, TTPRequestsError }
 import uk.gov.hmrc.debttransformationstub.repositories.TTPRequestsRepository
@@ -37,15 +37,15 @@ trait TTPRequestsService {
 
   def getTTPRequest(requestId: String): Future[Option[RequestDetail]]
 
-  def addRequestDetails(requestDetailsRequest: RequestDetail)(implicit
-    hc: HeaderCarrier
-  ): Future[Either[TTPRequestsError, String]]
+  def addRequestDetails(requestDetailsRequest: RequestDetail)(
+    implicit
+    hc: HeaderCarrier): Future[Either[TTPRequestsError, String]]
 
   def deleteTTPRequest(requestId: String)(implicit hc: HeaderCarrier): Future[Either[TTPRequestsDeletionError, String]]
 }
 
 @Singleton
-class DefaultTTPRequestsService @Inject() (ttpRequestsRepository: TTPRequestsRepository) extends TTPRequestsService {
+class DefaultTTPRequestsService @Inject()(ttpRequestsRepository: TTPRequestsRepository) extends TTPRequestsService {
 
   override def addRequestDetails(
     requestDetailsRequest: RequestDetail
@@ -55,18 +55,18 @@ class DefaultTTPRequestsService @Inject() (ttpRequestsRepository: TTPRequestsRep
     val requestDetails = requestDetailsRequest.copy(createdOn = Some(currentDate))
 
     val writeResultF = ttpRequestsRepository.insertRequestsDetails(requestDetails)
-    writeResultF.flatMap { wr: WriteResult =>
-      wr.writeErrors.headOption match {
-        case Some(err) =>
+    writeResultF.flatMap { wr: InsertOneResult =>
+      wr.wasAcknowledged() match {
+        case false =>
           Future(
             Left(
               TTPRequestsCreationError(
                 StatusCodes.InternalServerError.intValue,
-                Some(s"Failed to insert the document: ${err.errmsg}")
+                Some(s"Failed to insert the document")
               )
             )
           )
-        case None => Future(Right(s"Successfully inserted the ttp request"))
+        case true => Future(Right(s"Successfully inserted the ttp request"))
       }
     }
   }
@@ -82,10 +82,10 @@ class DefaultTTPRequestsService @Inject() (ttpRequestsRepository: TTPRequestsRep
   override def deleteTTPRequest(
     requestId: String
   )(implicit hc: HeaderCarrier): Future[Either[TTPRequestsDeletionError, String]] =
-    ttpRequestsRepository.deleteTTPRequest(requestId) map { x: WriteResult =>
-      if (x.ok)
+    ttpRequestsRepository.deleteTTPRequest(requestId) map { x: DeleteResult =>
+      if (x.wasAcknowledged())
         Right("Successfully deleted the TTP request with request Id: " + requestId)
       else
-        Left(TTPRequestsDeletionError(x.code.fold(404)((e: Int) => e), None))
+        Left(TTPRequestsDeletionError(404, None))
     }
 }

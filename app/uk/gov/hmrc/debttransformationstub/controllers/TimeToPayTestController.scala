@@ -16,15 +16,12 @@
 
 package uk.gov.hmrc.debttransformationstub.controllers
 
-import org.apache.commons.logging.LogFactory
 import play.api.libs.json.{ JsValue, Json }
 import play.api.mvc._
-import uk.gov.hmrc.debttransformationstub.config.AppConfig
 import uk.gov.hmrc.debttransformationstub.models.RequestDetail
 import uk.gov.hmrc.debttransformationstub.models.errors.{ TTPRequestsCreationError, TTPRequestsError }
-import uk.gov.hmrc.debttransformationstub.services.{ TTPPollingService, TTPRequestsService }
+import uk.gov.hmrc.debttransformationstub.services.TTPRequestsService
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
-import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.{ Inject, Singleton }
@@ -32,11 +29,9 @@ import scala.collection.immutable
 import scala.concurrent.ExecutionContext
 
 @Singleton()
-class TimeToPayTestController @Inject() (
+class TimeToPayTestController @Inject()(
   cc: ControllerComponents,
-  appConfig: AppConfig,
-  ttpRequestsService: TTPRequestsService,
-  ttpPollingService: TTPPollingService
+  ttpRequestsService: TTPRequestsService
 )(implicit val executionContext: ExecutionContext)
     extends BackendController(cc) with BaseController {
 

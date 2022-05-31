@@ -18,11 +18,10 @@ package uk.gov.hmrc.debttransformationstub.services
 
 import org.mockito.ArgumentCaptor
 import org.mockito.scalatest.MockitoSugar
+import org.mongodb.scala.result.InsertOneResult
 import org.scalatest.WordSpec
 import org.scalatest.matchers.should.Matchers
-import org.scalatest.wordspec.AsyncWordSpec
 import play.api.libs.json.Json
-import reactivemongo.api.commands.WriteResult
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
 import uk.gov.hmrc.debttransformationstub.models.RequestDetail
 import uk.gov.hmrc.debttransformationstub.repositories.TTPRequestsRepository
@@ -78,7 +77,7 @@ class DebtManagementAPIPollingServiceSpec extends WordSpec with Matchers with Mo
       )
 
     val captor = ArgumentCaptor.forClass(classOf[RequestDetail])
-    val mockWriteResult = mock[WriteResult]
+    val mockWriteResult = mock[InsertOneResult]
 
     when(mockAppConfig.pollingIntervals).thenReturn(1)
     when(mockAppConfig.pollingSleep).thenReturn(1)

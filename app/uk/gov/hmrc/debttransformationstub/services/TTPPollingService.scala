@@ -16,12 +16,10 @@
 
 package uk.gov.hmrc.debttransformationstub.services
 
-import akka.stream.ActorMaterializer
-import akka.stream.scaladsl.JavaFlowSupport.Source
 import com.google.inject.ImplementedBy
 import play.api.libs.json.{ JsValue, Json }
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
-import uk.gov.hmrc.debttransformationstub.models.{ GenerateQuoteRequest, RequestDetail }
+import uk.gov.hmrc.debttransformationstub.models.RequestDetail
 import uk.gov.hmrc.debttransformationstub.repositories.TTPRequestsRepository
 
 import java.time.LocalDateTime
