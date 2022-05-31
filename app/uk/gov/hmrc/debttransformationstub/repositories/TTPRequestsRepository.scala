@@ -17,66 +17,56 @@
 package uk.gov.hmrc.debttransformationstub.repositories
 
 import com.google.inject.{ ImplementedBy, Singleton }
-import play.api.libs.json.{ JsBoolean, JsString }
-import play.modules.reactivemongo.ReactiveMongoComponent
-import reactivemongo.api.commands.WriteResult
-import reactivemongo.api.indexes.{ Index, IndexType }
-import reactivemongo.bson.BSONObjectID
+import org.mongodb.scala.model.Indexes.ascending
+import org.mongodb.scala.model.{ Filters, IndexModel, IndexOptions }
+import org.mongodb.scala.result.{ DeleteResult, InsertOneResult }
 import uk.gov.hmrc.debttransformationstub.models.RequestDetail
-import uk.gov.hmrc.mongo.ReactiveRepository
-import uk.gov.hmrc.mongo.json.ReactiveMongoFormats
+import uk.gov.hmrc.mongo.MongoComponent
+import uk.gov.hmrc.mongo.play.json.PlayMongoRepository
 
 import javax.inject.Inject
 import scala.concurrent.{ ExecutionContext, Future }
 
 @ImplementedBy(classOf[TTPRequestsRepositoryImpl])
 trait TTPRequestsRepository {
-  def deleteTTPRequest(requestId: String): Future[WriteResult]
+  def deleteTTPRequest(requestId: String): Future[DeleteResult]
   def findRequestDetails(): Future[List[RequestDetail]]
   def findUnprocessedRequestDetails(): Future[List[RequestDetail]]
   def getByRequestId(id: String): Future[Option[RequestDetail]]
   def getResponseByRequestId(id: String): Future[Option[RequestDetail]]
-  def insertRequestsDetails(requestDetail: RequestDetail): Future[WriteResult]
+  def insertRequestsDetails(requestDetail: RequestDetail): Future[InsertOneResult]
 
 }
 
 @Singleton
-class TTPRequestsRepositoryImpl @Inject() (implicit mongo: ReactiveMongoComponent, ec: ExecutionContext)
-    extends ReactiveRepository[RequestDetail, BSONObjectID](
+class TTPRequestsRepositoryImpl @Inject()(mongo: MongoComponent)(implicit ec: ExecutionContext)
+    extends PlayMongoRepository[RequestDetail](
+      mongo,
       "ttp-requests",
-      mongo.mongoConnector.db,
       RequestDetail.requestDetailFormat,
-      ReactiveMongoFormats.objectIdFormats
+      indexes =
+        Seq(IndexModel(ascending("referenceId"), IndexOptions().name("referenceIdUnique").unique(true).sparse(true)))
     ) with TTPRequestsRepository {
 
-  private lazy val IdField = "referenceId"
-
-  override def ensureIndexes(implicit ec: ExecutionContext): Future[Seq[Boolean]] =
-    Future.sequence(
-      Seq(
-        collection
-          .indexesManager(ec)
-          .ensure(
-            Index(Seq(IdField -> IndexType.Ascending), name = Some(IdField + "Unique"), unique = true, sparse = true)
-          )
-      )
-    )(implicitly, ec)
-
-  override def findRequestDetails(): Future[List[RequestDetail]] = super.findAll()
+  override def findRequestDetails(): Future[List[RequestDetail]] = collection.find().toFuture().map(_.toList)
 
   override def findUnprocessedRequestDetails(): Future[List[RequestDetail]] =
-    super.find("isResponse" -> JsBoolean(false))
+    collection.find(Filters.equal("isResponse", false)).toFuture().map(_.toList)
 
   override def getByRequestId(id: String): Future[Option[RequestDetail]] =
-    super.find("requestId" -> JsString(id)).map(_.headOption)
+    collection.find(Filters.equal("requestId", id)).toFuture().map(_.headOption)
 
   override def getResponseByRequestId(id: String): Future[Option[RequestDetail]] =
-    super.find("requestId" -> JsString(id), "isResponse" -> JsBoolean(true)).map(_.headOption)
+    collection
+      .find(Filters.and(Filters.equal("requestId", id), Filters.equal("isResponse", true)))
+      .toFuture()
+      .map(_.headOption)
 
-  override def insertRequestsDetails(requestDetail: RequestDetail): Future[WriteResult] =
-    deleteTTPRequest(requestDetail.requestId).flatMap(_ => insert(requestDetail))
+  override def insertRequestsDetails(requestDetail: RequestDetail): Future[InsertOneResult] =
+    deleteTTPRequest(requestDetail.requestId).flatMap(_ => collection.insertOne(requestDetail).toFuture())
 
-  override def deleteTTPRequest(requestId: String): Future[WriteResult] =
-    super.remove("requestId" -> JsString(requestId), "isResponse" -> JsBoolean(false))
-
+  override def deleteTTPRequest(requestId: String): Future[DeleteResult] =
+    collection
+      .deleteOne(Filters.and(Filters.equal("requestId", requestId), Filters.equal("isResponse", false)))
+      .toFuture()
 }
