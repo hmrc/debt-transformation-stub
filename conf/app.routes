@@ -29,5 +29,6 @@ DELETE        /test-only/request/:requestId                                     
 GET           /test-only/request/:requestId                                                                 uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.getTTPRequest(requestId: String )
 POST          /test-only/response                                                                           uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.createTTPRequests
 
+POST          /RESTAdapter/eSSTTP/PaymentPlanEligibility                                                    uk.gov.hmrc.debttransformationstub.controllers.ETMPController.getEligibilityRequest
 GET           /enterprise/financial-data/:idType/:idNumber/:regimeType                                      uk.gov.hmrc.debttransformationstub.controllers.ETMPController.getFinancials(idType: String, idNumber: String, regimeType: String)
 GET           /pay-as-you-earn/employers/:idType/master/:latest                                             uk.gov.hmrc.debttransformationstub.controllers.ETMPController.getPAYEMaster(idType: String, latest:String)
