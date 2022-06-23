@@ -16,18 +16,18 @@
 
 package uk.gov.hmrc.debttransformationstub.controllers
 
+import javax.inject.Inject
 import play.api.Environment
-import play.api.mvc.Results.{BadRequest, NotFound}
-import play.api.mvc.{Action, AnyContent, ControllerComponents}
+import play.api.mvc.{ Action, AnyContent, ControllerComponents }
 import uk.gov.hmrc.debttransformationstub.controllers.ETMPController.getFinancialsErrorList
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
-import javax.inject.Inject
 import scala.io.Source
 
 class ETMPController @Inject()(environment: Environment, cc: ControllerComponents) extends BackendController(cc) {
   private val getFinancialsCasePath = "conf/resources/data/etmp/getFinancials/"
   private val getPAYEMasterCasePath = "conf/resources/data/paye/getMaster/"
+  private val getETMPResponse = "conf/resources/data/etmp.eligibility/864FZ00049"
 
   def getFinancials(idType: String, idNumber: String, regimeType: String) = Action { request =>
     environment.getExistingFile(s"$getFinancialsCasePath$idNumber.json") match {
@@ -48,9 +48,9 @@ class ETMPController @Inject()(environment: Environment, cc: ControllerComponent
 
   def getPAYEMaster(idType: String, latest: String): Action[AnyContent] = Action { request =>
     val filePath = if (idType.trim.toUpperCase == "EMPREF") {
-      getPAYEMasterCasePath+"EMPREF.json"
+      getPAYEMasterCasePath + "EMPREF.json"
     } else
-      getPAYEMasterCasePath+"NINO.json"
+      getPAYEMasterCasePath + "NINO.json"
     environment.getExistingFile(filePath) match {
       case Some(file) =>
         Ok(Source.fromFile(file).mkString)
@@ -58,6 +58,17 @@ class ETMPController @Inject()(environment: Environment, cc: ControllerComponent
         NotFound("The remote endpoint has indicated that Employer cannot be found")
     }
   }
+
+  def getEligibilityRequest(): Action[AnyContent] = Action { request =>
+    environment.getExistingFile(s"$getETMPResponse.json") match {
+      case Some(file) =>
+        Ok(Source.fromFile(file).mkString)
+      case _ =>
+        NotFound("file not found")
+    }
+
+  }
+
 }
 
 object ETMPController {
