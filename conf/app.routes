@@ -16,6 +16,7 @@ POST          /individuals/debts/field-collections/templates                    
 GET           /individuals/subcontractor/idms/wmfid/:wmfId                                                  uk.gov.hmrc.debttransformationstub.controllers.DebtManagementAPITestController.getDebtDataAndDWISignals(wmfId: String)
 GET           /individuals/subcontractor/idms/taxpayer/:idKey                                               uk.gov.hmrc.debttransformationstub.controllers.DebtManagementAPITestController.getTaxpayerData(idKey: String)
 
+
 POST          /individuals/debts/time-to-pay/quote                                                          uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.generateQuote
 GET           /individuals/time-to-pay/quote/:customerReference/:pegaId                                     uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.getExistingQuote(customerReference: String, pegaId: String)
 PUT           /individuals/time-to-pay/quote/:customerReference/:pegaId                                     uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.updateQuote(customerReference: String, pegaId: String)
@@ -29,6 +30,6 @@ DELETE        /test-only/request/:requestId                                     
 GET           /test-only/request/:requestId                                                                 uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.getTTPRequest(requestId: String )
 POST          /test-only/response                                                                           uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.createTTPRequests
 
-POST          /RESTAdapter/eSSTTP/PaymentPlanEligibility                                                    uk.gov.hmrc.debttransformationstub.controllers.ETMPController.getEligibilityRequest
+GET           /individuals/debts/essttp/:regimeType/:idType/:idValue/payment-plan-eligibility               uk.gov.hmrc.debttransformationstub.controllers.ETMPController.paymentPlanEligibility(regimeType: String, idType: String, idValue: String)
 GET           /enterprise/financial-data/:idType/:idNumber/:regimeType                                      uk.gov.hmrc.debttransformationstub.controllers.ETMPController.getFinancials(idType: String, idNumber: String, regimeType: String)
 GET           /pay-as-you-earn/employers/:idType/master/:latest                                             uk.gov.hmrc.debttransformationstub.controllers.ETMPController.getPAYEMaster(idType: String, latest:String)
