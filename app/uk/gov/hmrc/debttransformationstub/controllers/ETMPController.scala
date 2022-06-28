@@ -69,6 +69,24 @@ class ETMPController @Inject()(environment: Environment, cc: ControllerComponent
 
   }
 
+  def paymentPlanEligibility(
+    regimeType: String,
+    idType: String,
+    idValue: String,
+  ): Action[AnyContent] = Action { request =>
+// TODO For future testing
+    val queryKeys: List[String] =
+      List("showIds", "showAddresses", "showSignals", "showFiling", "showCharges", "addressFromDate")
+    val queries: Map[String, Option[String]] = queryKeys.map(key => (key, request.getQueryString(key))).toMap
+    queries("showIds")
+    environment.getExistingFile(s"$getETMPResponse.json") match {
+      case Some(file) =>
+        Ok(Source.fromFile(file).mkString)
+      case _ =>
+        NotFound("file not found")
+    }
+  }
+
 }
 
 object ETMPController {
