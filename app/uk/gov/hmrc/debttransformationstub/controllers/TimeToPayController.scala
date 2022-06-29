@@ -16,24 +16,22 @@
 
 package uk.gov.hmrc.debttransformationstub.controllers
 
-import java.io.File
-import javax.inject.Inject
 import play.api.Environment
 import play.api.libs.json.{ JsValue, Json }
-import play.api.mvc.ControllerComponents
-import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
 import uk.gov.hmrc.debttransformationstub.models.{ CreatePlanRequest, GenerateQuoteRequest }
 import uk.gov.hmrc.debttransformationstub.services.TTPPollingService
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
-import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
+import java.io.File
+import javax.inject.Inject
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.io.Source
 
-class TimeToPayController @Inject() (
+class TimeToPayController @Inject()(
   environment: Environment,
   cc: ControllerComponents,
   appConfig: AppConfig,
