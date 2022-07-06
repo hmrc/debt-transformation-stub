@@ -36,5 +36,5 @@ object SubTransType extends Enum[SubTransType] with PlayJsonEnum[SubTransType] {
   case object HIPG extends SubTransType("1180")
   case object INTIT extends SubTransType("2000")
   case object TGPEN extends SubTransType("1090")
-
+  case object TakingControlFee extends SubTransType("1150")
 }
