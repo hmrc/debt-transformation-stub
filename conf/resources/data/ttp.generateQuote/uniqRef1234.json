@@ -1,23 +1,73 @@
 {
-  "quoteReference": "quoteRef1234",
-  "customerReference": "custRef1234",
+  "customerReference": "uniqRef1234",
   "quoteType": "instalmentAmount",
-  "quoteDate": "2021-05-13",
-  "numberOfInstalments": 1,
-  "totalDebtIncInt": 10,
-  "interestAccrued": 10,
-  "planInterest": 0.25,
-  "totalInterest": 12.25,
+  "quoteDate": "2021-02-01",
+  "quoteReference": "someRef",
+  "numberOfInstalments": 4,
+  "totalDebtIncInt": 200,
+  "interestAccrued": 0,
+  "planInterest": 0,
+  "totalInterest": 0,
   "instalments": [
     {
       "debtItemChargeId": "debtItemChargeId1",
-      "dueDate": "2021-05-13",
-      "amountDue": 100,
-      "expectedPayment": 100,
-      "interestRate": 0.24,
+      "dueDate": "2021-02-03",
+      "amountDue": 50,
+      "expectedPayment": 50,
+      "interestRate": 2.6,
       "instalmentNumber": 1,
-      "instalmentInterestAccrued": 10,
-      "instalmentBalance": 10
+      "instalmentInterestAccrued": 0,
+      "instalmentBalance": 200
+    },
+    {
+      "debtItemChargeId": "debtItemChargeId1",
+      "dueDate": "2021-03-03",
+      "amountDue": 50,
+      "expectedPayment": 100,
+      "interestRate": 2.6,
+      "instalmentNumber": 2,
+      "instalmentInterestAccrued": 0,
+      "instalmentBalance": 150
+    },
+    {
+      "debtItemChargeId": "debtItemChargeId1",
+      "dueDate": "2021-04-03",
+      "amountDue": 50,
+      "expectedPayment": 150,
+      "interestRate": 2.6,
+      "instalmentNumber": 3,
+      "instalmentInterestAccrued": 0,
+      "instalmentBalance": 100
+    },
+    {
+      "debtItemChargeId": "debtItemChargeId1",
+      "dueDate": "2021-05-03",
+      "amountDue": 50,
+      "expectedPayment": 200,
+      "interestRate": 2.6,
+      "instalmentNumber": 4,
+      "instalmentInterestAccrued": 0,
+      "instalmentBalance": 50
     }
-  ]
+  ],
+  "collections": {
+    "regularCollections": [
+      {
+        "dueDate": "2021-02-03",
+        "amountDue": 50
+      },
+      {
+        "dueDate": "2021-03-03",
+        "amountDue": 50
+      },
+      {
+        "dueDate": "2021-04-03",
+        "amountDue": 50
+      },
+      {
+        "dueDate": "2021-05-03",
+        "amountDue": 50
+      }
+    ]
+  }
 }
