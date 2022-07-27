@@ -53,5 +53,13 @@
       "instalmentInterestAccrued": 0,
       "instalmentBalance": 900
     }
-  ]
+  ],
+  "collections": {
+    "regularCollections": [
+      {
+        "dueDate": "2022-03-18",
+        "amountDue": 1628.21
+      }
+    ]
+  }
 }
