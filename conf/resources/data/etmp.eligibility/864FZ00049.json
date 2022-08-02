@@ -83,7 +83,7 @@
       "outstandingAmount": 1234.56,
       "dueDate": "2022-07-22",
       "interestStartDate": "2022-03-19",
-      "accruedInterest": 200,
+      "accruedInterest": 2.09,
       "locks": [
         {
           "lockType": "Dunning",
