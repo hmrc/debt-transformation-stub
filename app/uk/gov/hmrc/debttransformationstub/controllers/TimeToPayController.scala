@@ -20,9 +20,10 @@ import play.api.Environment
 import play.api.libs.json.{ JsValue, Json }
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
-import uk.gov.hmrc.debttransformationstub.models.{ CreatePlanRequest, GenerateQuoteRequest }
+import uk.gov.hmrc.debttransformationstub.models.{ CreateMonitoringCaseRequest, CreatePlanRequest, GenerateQuoteRequest, NDDSRequest, PaymentLockRequest }
 import uk.gov.hmrc.debttransformationstub.services.TTPPollingService
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
+import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import java.io.File
@@ -118,4 +119,37 @@ class TimeToPayController @Inject()(
       }
     }
   }
+
+  def nddsEnactArrangement: Action[JsValue] = Action.async(parse.json) { implicit request =>
+    withCustomJsonBody[NDDSRequest] { req =>
+      findFile("/ndds.enactArrangement/${req.channelIdentifier}.json")
+    }
+  }
+
+  def etmpExecutePaymentLock: Action[JsValue] = Action.async(parse.json) { implicit request =>
+    withCustomJsonBody[PaymentLockRequest] { req =>
+      findFile("/etmp.executePaymentLock/${req.idValue}.json")
+    }
+  }
+
+  def idmsCreateTTPMonitoringCase: Action[JsValue] = Action.async(parse.json) { implicit request =>
+    withCustomJsonBody[CreateMonitoringCaseRequest] { req =>
+      findFile("/idms.createTTPMonitoringCase/${req.channelIdentifier}.json")
+    }
+  }
+
+  private def findFile(path: String)(implicit hc: HeaderCarrier): Future[Result] = {
+    val fileMaybe: Option[File] =
+      environment.getExistingFile(s"$basePath$path")
+
+    fileMaybe match {
+      case None =>
+        logger.error(s"Status $NOT_FOUND, message: file not found")
+        Future successful NotFound("file not found")
+      case Some(file) =>
+        val result = Source.fromFile(file).mkString.stripMargin
+        Future successful Ok(result)
+    }
+  }
+
 }
