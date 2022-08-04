@@ -122,19 +122,19 @@ class TimeToPayController @Inject()(
 
   def nddsEnactArrangement: Action[JsValue] = Action.async(parse.json) { implicit request =>
     withCustomJsonBody[NDDSRequest] { req =>
-      findFile("/ndds.enactArrangement/${req.channelIdentifier}.json")
+      findFile(s"/ndds.enactArrangement/${req.channelIdentifier}.json")
     }
   }
 
   def etmpExecutePaymentLock: Action[JsValue] = Action.async(parse.json) { implicit request =>
     withCustomJsonBody[PaymentLockRequest] { req =>
-      findFile("/etmp.executePaymentLock/${req.idValue}.json")
+      findFile(s"/etmp.executePaymentLock/${req.idValue}.json")
     }
   }
 
   def idmsCreateTTPMonitoringCase: Action[JsValue] = Action.async(parse.json) { implicit request =>
     withCustomJsonBody[CreateMonitoringCaseRequest] { req =>
-      findFile("/idms.createTTPMonitoringCase/${req.channelIdentifier}.json")
+      findFile(s"/idms.createTTPMonitoringCase/${req.channelIdentifier}.json")
     }
   }
 
