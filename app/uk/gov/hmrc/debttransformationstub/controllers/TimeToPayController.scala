@@ -23,6 +23,7 @@ import uk.gov.hmrc.debttransformationstub.config.AppConfig
 import uk.gov.hmrc.debttransformationstub.models.{ CreateMonitoringCaseRequest, CreatePlanRequest, GenerateQuoteRequest, NDDSRequest, PaymentLockRequest }
 import uk.gov.hmrc.debttransformationstub.services.TTPPollingService
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
+import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import java.io.File
@@ -121,52 +122,33 @@ class TimeToPayController @Inject()(
 
   def nddsEnactArrangement: Action[JsValue] = Action.async(parse.json) { implicit request =>
     withCustomJsonBody[NDDSRequest] { req =>
-      val fileMaybe: Option[File] =
-        environment.getExistingFile(s"$basePath/ndds.enactArrangement/${req.channelIdentifier}.json")
-
-      fileMaybe match {
-        case None =>
-          logger.error(s"Status $NOT_FOUND, message: file not found")
-          Future successful NotFound("file not found")
-        case Some(file) =>
-          val result = Source.fromFile(file).mkString.stripMargin
-          Future successful Ok(result)
-      }
-
+      findFile("/ndds.enactArrangement/${req.channelIdentifier}.json")
     }
   }
 
   def etmpExecutePaymentLock: Action[JsValue] = Action.async(parse.json) { implicit request =>
     withCustomJsonBody[PaymentLockRequest] { req =>
-      val fileMaybe: Option[File] =
-        environment.getExistingFile(s"$basePath/etmp.executePaymentLock/${req.idValue}.json")
-
-      fileMaybe match {
-        case None =>
-          logger.error(s"Status $NOT_FOUND, message: file not found")
-          Future successful NotFound("file not found")
-        case Some(file) =>
-          val result = Source.fromFile(file).mkString.stripMargin
-          Future successful Ok(result)
-      }
-
+      findFile("/etmp.executePaymentLock/${req.idValue}.json")
     }
   }
 
   def idmsCreateTTPMonitoringCase: Action[JsValue] = Action.async(parse.json) { implicit request =>
     withCustomJsonBody[CreateMonitoringCaseRequest] { req =>
-      val fileMaybe: Option[File] =
-        environment.getExistingFile(s"$basePath/idms.createTTPMonitoringCase/${req.channelIdentifier}.json")
+      findFile("/idms.createTTPMonitoringCase/${req.channelIdentifier}.json")
+    }
+  }
 
-      fileMaybe match {
-        case None =>
-          logger.error(s"Status $NOT_FOUND, message: file not found")
-          Future successful NotFound("file not found")
-        case Some(file) =>
-          val result = Source.fromFile(file).mkString.stripMargin
-          Future successful Ok(result)
-      }
+  private def findFile(path: String)(implicit hc: HeaderCarrier): Future[Result] = {
+    val fileMaybe: Option[File] =
+      environment.getExistingFile(s"$basePath$path")
 
+    fileMaybe match {
+      case None =>
+        logger.error(s"Status $NOT_FOUND, message: file not found")
+        Future successful NotFound("file not found")
+      case Some(file) =>
+        val result = Source.fromFile(file).mkString.stripMargin
+        Future successful Ok(result)
     }
   }
 
