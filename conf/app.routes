@@ -40,3 +40,7 @@ POST          /test-only/response                                               
 GET           /individuals/debts/essttp/:regimeType/:idType/:idValue/payment-plan-eligibility               uk.gov.hmrc.debttransformationstub.controllers.ETMPController.paymentPlanEligibility(regimeType: String, idType: String, idValue: String)
 GET           /enterprise/financial-data/:idType/:idNumber/:regimeType                                      uk.gov.hmrc.debttransformationstub.controllers.ETMPController.getFinancials(idType: String, idNumber: String, regimeType: String)
 GET           /pay-as-you-earn/employers/:idType/master/:latest                                             uk.gov.hmrc.debttransformationstub.controllers.ETMPController.getPAYEMaster(idType: String, latest:String)
+
+POST          /individuals/debts/essttp/payment-plans/ddi                                                   uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.nddsEnactArrangement
+POST          /individuals/debts/essttp/payment-lock                                                        uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.etmpExecutePaymentLock
+POST          /individuals/debts/essttp/monitoring-case                                                     uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.idmsCreateTTPMonitoringCase
