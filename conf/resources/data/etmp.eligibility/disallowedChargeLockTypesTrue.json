@@ -13,7 +13,7 @@
   "addresses": [
     {
       "addressType": "PPOB",
-      "rls": true,
+      "rls": false,
       "emailAddress": "joe@snailmail.com",
       "postcodeHistory": [
         {
@@ -44,11 +44,11 @@
   "signals": [
     {
       "signalType": "RLS",
-      "signalValue": "true"
+      "signalValue": "false"
     },
     {
       "signalType": "Insolvent",
-      "signalValue": "true"
+      "signalValue": "false"
     },
     {
       "signalType": "Payment Frequency",
@@ -75,23 +75,23 @@
     {
       "chargeType": "In Year RTI Charge - Tax",
       "mainType": "In Year RTI Charge (FPS)",
-      "mainTrans": "2006",
+      "mainTrans": "2000",
       "subTrans": "1000",
       "taxPeriodFrom": "2022-02-06",
       "taxPeriodTo": "2022-03-05",
       "chargeReference": "XM123456789812",
-      "outstandingAmount": 999999999.56,
-      "dueDate": "2021-03-02",
+      "outstandingAmount": 9003.00,
+      "dueDate": "2022-07-22",
       "interestStartDate": "2022-03-19",
-      "accruedInterest": 2.09,
+      "accruedInterest": 25.81,
       "locks": [
         {
           "lockType": "Dunning",
           "lockReason": "Under enquiry (Externally)"
         },
         {
-          "lockType": "Payment",
-          "lockReason": "TTP Payment"
+          "lockType": "Interest",
+          "lockReason": "Appeal"
         }
       ]
     }
