@@ -16,48 +16,18 @@
 
 package uk.gov.hmrc.debttransformationstub.controllers
 
-import javax.inject.Inject
 import play.api.Environment
 import play.api.mvc.{ Action, AnyContent, ControllerComponents }
-import uk.gov.hmrc.debttransformationstub.controllers.ETMPController.getFinancialsErrorList
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
+import java.time.LocalDate
+import javax.inject.Inject
 import scala.io.Source
 
 class ETMPController @Inject()(environment: Environment, cc: ControllerComponents) extends BackendController(cc) {
-  private val getFinancialsCasePath = "conf/resources/data/etmp/getFinancials/"
-  private val getPAYEMasterCasePath = "conf/resources/data/paye/getMaster/"
+
   private val getETMPResponse = "conf/resources/data/etmp.eligibility/864FZ00049"
-
-  def getFinancials(idType: String, idNumber: String, regimeType: String) = Action { request =>
-    environment.getExistingFile(s"$getFinancialsCasePath$idNumber.json") match {
-      case Some(file) if getFinancialsErrorList.exists(_.equals(idNumber)) =>
-        BadRequest(Source.fromFile(file).mkString)
-      case Some(file) =>
-        Ok(Source.fromFile(file).mkString)
-      case _ =>
-        NotFound(s"""
-                    |{
-                    |  "code": "NOT_FOUND",
-                    |  "reason": "The remote endpoint has indicated that no data can be found."
-                    |}
-                    |""".stripMargin)
-    }
-
-  }
-
-  def getPAYEMaster(idType: String, latest: String): Action[AnyContent] = Action { request =>
-    val filePath = if (idType.trim.toUpperCase == "EMPREF") {
-      getPAYEMasterCasePath + "EMPREF.json"
-    } else
-      getPAYEMasterCasePath + "NINO.json"
-    environment.getExistingFile(filePath) match {
-      case Some(file) =>
-        Ok(Source.fromFile(file).mkString)
-      case _ =>
-        NotFound("The remote endpoint has indicated that Employer cannot be found")
-    }
-  }
+  private val basePath = "conf/resources/data/etmp.eligibility/"
 
   def getEligibilityRequest(): Action[AnyContent] = Action { request =>
     environment.getExistingFile(s"$getETMPResponse.json") match {
@@ -74,12 +44,11 @@ class ETMPController @Inject()(environment: Environment, cc: ControllerComponent
     idType: String,
     idValue: String,
   ): Action[AnyContent] = Action { request =>
-// TODO For future testing
     val queryKeys: List[String] =
       List("showIds", "showAddresses", "showSignals", "showFiling", "showCharges", "addressFromDate")
     val queries: Map[String, Option[String]] = queryKeys.map(key => (key, request.getQueryString(key))).toMap
     queries("showIds")
-    environment.getExistingFile(s"$getETMPResponse.json") match {
+    environment.getExistingFile(s"$basePath" + s"$idValue.json") match {
       case Some(file) =>
         Ok(Source.fromFile(file).mkString)
       case _ =>
@@ -87,11 +56,16 @@ class ETMPController @Inject()(environment: Environment, cc: ControllerComponent
     }
   }
 
+  def paymentPlanEligibilityString(regimeType: String, idType: String, idValue: String): String = {
+
+    val dueDate = LocalDate.now().plusDays(34).toString
+    val responseTemplate = environment.getExistingFile(s"$basePath" + s"$idValue.json").toString
+    responseTemplate.replaceAll("<DUE_DATE>", dueDate)
+  }
+
 }
 
 object ETMPController {
   val SingleErrorIdNumber = "012X012345"
   val MultipleErrorsIdNumber = "023X023456"
-
-  val getFinancialsErrorList = List(SingleErrorIdNumber, MultipleErrorsIdNumber)
 }
