@@ -59,8 +59,8 @@
     {
       "icrCategory": "ZR01",
       "icrDescription": "RTI - PAYE - Monthly Returns",
-      "fromDate": "2022-03-06",
-      "toDate": "2022-04-05",
+      "fromDate": "2022-03-01",
+      "toDate": "2022-03-28",
       "dueDate": "2022-04-22"
     },
     {
@@ -73,17 +73,17 @@
   ],
   "charges": [
     {
-      "chargeType": "In Year RTI Charge - Tax",
-      "mainType": "In Year RTI Charge (FPS)",
-      "mainTrans": "2000",
-      "subTrans": "1000",
-      "taxPeriodFrom": "2022-02-06",
-      "taxPeriodTo": "2022-03-05",
+      "chargeType": "Tax Geared Penalty",
+      "mainType": "VAT Mig BNP of Reg Post 2010",
+      "mainTrans": "7760",
+      "subTrans": "1090",
+      "taxPeriodFrom": "2022-04-01",
+      "taxPeriodTo": "2022-04-28",
       "chargeReference": "XM123456789812",
-      "outstandingAmount": 14000.01,
-      "dueDate": "2022-08-04",
+      "outstandingAmount": 19999.00,
+      "dueDate": "2022-08-02",
       "interestStartDate": "2022-03-19",
-      "accruedInterest": 1000.00,
+      "accruedInterest": 2,
       "locks": [
         {
           "lockType": "Dunning",

@@ -3,7 +3,7 @@
   "identification": [
     {
       "idType": "EMPREF",
-      "idValue": "964FZ00049"
+      "idValue": "864FZ00049"
     },
     {
       "idType": "BROCS",
@@ -73,17 +73,17 @@
   ],
   "charges": [
     {
-      "chargeType": "In Year RTI Charge - Tax",
-      "mainType": "In Year RTI Charge (FPS)",
-      "mainTrans": "2000",
-      "subTrans": "1000",
+      "chargeType": "VAT Debit",
+      "mainType": "VAT Indirect Tax Revenue Rec",
+      "mainTrans": "4711",
+      "subTrans": "1174",
       "taxPeriodFrom": "2022-02-06",
       "taxPeriodTo": "2022-03-05",
       "chargeReference": "XM123456789812",
-      "outstandingAmount": 14000.01,
-      "dueDate": "2022-08-04",
+      "outstandingAmount": 9003.00,
+      "dueDate": "2021-07-22",
       "interestStartDate": "2022-03-19",
-      "accruedInterest": 1000.00,
+      "accruedInterest": 25.81,
       "locks": [
         {
           "lockType": "Dunning",
@@ -91,7 +91,8 @@
         },
         {
           "lockType": "Interest",
-          "lockReason": "Appeal"
+          "lockReason": "Appeal",
+          "LockCode": 1
         }
       ]
     }
