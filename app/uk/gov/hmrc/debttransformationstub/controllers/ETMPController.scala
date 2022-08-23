@@ -17,10 +17,12 @@
 package uk.gov.hmrc.debttransformationstub.controllers
 
 import play.api.Environment
-import play.api.mvc.{ Action, AnyContent, ControllerComponents }
+import play.api.mvc.{Action, AnyContent, ControllerComponents}
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
+import java.io.File
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 import scala.io.Source
 
@@ -50,17 +52,20 @@ class ETMPController @Inject()(environment: Environment, cc: ControllerComponent
     queries("showIds")
     environment.getExistingFile(s"$basePath" + s"$idValue.json") match {
       case Some(file) =>
-        Ok(Source.fromFile(file).mkString)
+        Ok(paymentPlanEligibilityString(file))
       case _ =>
         NotFound("file not found")
     }
   }
 
-  def paymentPlanEligibilityString(regimeType: String, idType: String, idValue: String): String = {
-
-    val dueDate = LocalDate.now().plusDays(34).toString
-    val responseTemplate = environment.getExistingFile(s"$basePath" + s"$idValue.json").toString
-    responseTemplate.replaceAll("<DUE_DATE>", dueDate)
+  def paymentPlanEligibilityString(file: File): String = {
+    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+    val dueDate = LocalDate.now().minusDays(24).toString
+    val dueDateFormatted = LocalDate.parse(dueDate, formatter).toString
+    val responseTemplate = Source.fromFile(file).mkString
+    val replaced = responseTemplate.replaceAll("<DUE_DATE>", dueDateFormatted)
+//    println(s"replace json --> $replaced")
+    replaced
   }
 
 }
