@@ -61,11 +61,9 @@ class ETMPController @Inject()(environment: Environment, cc: ControllerComponent
   def paymentPlanEligibilityString(file: File): String = {
     val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
     val dueDate = LocalDate.now().minusDays(24).toString
-    val dueDateFormatted = LocalDate.parse(dueDate, formatter).toString
     val responseTemplate = Source.fromFile(file).mkString
-    val replaced = responseTemplate.replaceAll("<DUE_DATE>", dueDateFormatted)
-//    println(s"replace json --> $replaced")
-    replaced
+    
+    responseTemplate.replaceAll("<DUE_DATE>", LocalDate.parse(dueDate, formatter).toString)
   }
 
 }
