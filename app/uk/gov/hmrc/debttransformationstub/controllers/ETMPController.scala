@@ -62,7 +62,7 @@ class ETMPController @Inject()(environment: Environment, cc: ControllerComponent
     val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
     val dueDate = LocalDate.now().minusDays(24).toString
     val responseTemplate = Source.fromFile(file).mkString
-    
+
     responseTemplate.replaceAll("<DUE_DATE>", LocalDate.parse(dueDate, formatter).toString)
   }
 
