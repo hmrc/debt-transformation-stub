@@ -29,7 +29,7 @@ import scala.io.Source
 class ETMPController @Inject()(environment: Environment, cc: ControllerComponents) extends BackendController(cc) {
 
   private val getETMPResponse = "conf/resources/data/etmp.eligibility/864FZ00049"
-  private val basePath = "conf/resources/data/etmp.eligibility/"
+  private val basePath = "conf/resources/data/etmp.eligibility"
 
   def getEligibilityRequest(): Action[AnyContent] = Action { request =>
     environment.getExistingFile(s"$getETMPResponse.json") match {
@@ -50,7 +50,7 @@ class ETMPController @Inject()(environment: Environment, cc: ControllerComponent
       List("showIds", "showAddresses", "showSignals", "showFiling", "showCharges", "addressFromDate")
     val queries: Map[String, Option[String]] = queryKeys.map(key => (key, request.getQueryString(key))).toMap
     queries("showIds")
-    environment.getExistingFile(s"$basePath" + s"$idValue.json") match {
+    environment.getExistingFile(s"$basePath" + "." + regimeType + "/" + s"$idValue.json") match {
       case Some(file) =>
         Ok(paymentPlanEligibilityString(file))
       case _ =>
