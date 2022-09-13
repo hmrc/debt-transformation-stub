@@ -44,15 +44,18 @@
   "signals": [
     {
       "signalType": "RLS",
-      "signalValue": "false"
+      "signalValue": "false",
+      "signalDescription": "false"
     },
     {
       "signalType": "Insolvent",
-      "signalValue": "false"
+      "signalValue": "false",
+      "signalDescription": "false"
     },
     {
       "signalType": "Payment Frequency",
-      "signalValue": "Monthly"
+      "signalValue": "Monthly",
+      "signalDescription": "false"
     }
   ],
   "filing": [
