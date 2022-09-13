@@ -38,30 +38,30 @@
   ],
   "signals": [{
     "signalType": "RLS",
-    "signalValue": "true",
-    "signalDescription": "thhe"
+    "signalValue": "001",
+    "signalDescription": "false"
   },
     {
       "signalType": "Insolvent",
-      "signalValue": "true",
-      "signalDescription": "gghsjsl"
+      "signalValue": "false",
+      "signalDescription": "false"
     },
     {
       "signalType": "Payment Frequency",
       "signalValue": "Monthly",
-      "signalDescription": "099988"
+      "signalDescription": "false"
     }
   ],
   "charges": [{
-    "chargeType": "VAT Return Debit Charge",
-    "mainType": "VAT Return charge",
-    "mainTrans": "4700",
-    "subTrans": "1174",
+    "chargeType": "In Year RTI Charge - Tax",
+    "mainType": "In Year RTI Charge (FPS)",
+    "mainTrans": "2000",
+    "subTrans": "1000",
     "taxPeriodFrom": "2022-02-06",
     "taxPeriodTo": "2022-03-05",
     "chargeReference": "XM123456789812",
     "outstandingAmount": 1234.56,
-    "dueDate": "2022-09-07",
+    "dueDate": "2022-08-04",
     "interestStartDate": "2022-03-19",
     "accruedInterest": 2.09,
     "locks": [{
