@@ -3,11 +3,11 @@
   "identification": [
     {
       "idType": "EMPREF",
-      "idValue": "864FZ00049"
+      "idValue": "964FZ00049"
     },
     {
       "idType": "BROCS",
-      "idValue": "6381726332"
+      "idValue": "7381726332"
     }
   ],
   "addresses": [
@@ -44,28 +44,31 @@
   "signals": [
     {
       "signalType": "RLS",
-      "signalValue": "false"
+      "signalValue": "false",
+      "signalDescription": "false"
     },
     {
       "signalType": "Insolvent",
-      "signalValue": "false"
+      "signalValue": "false",
+      "signalDescription": "false"
     },
     {
       "signalType": "Payment Frequency",
-      "signalValue": "Monthly"
+      "signalValue": "Monthly",
+      "signalDescription": "false"
     }
   ],
   "filing": [
     {
       "icrCategory": "ZR01",
-      "icrDescription": "RTI - PAYE - Monthly Returns",
+      "icrDescription": "RTI - VAT - Monthly Returns",
       "fromDate": "2022-03-06",
       "toDate": "2022-04-05",
       "dueDate": "2022-04-22"
     },
     {
       "icrCategory": "ZR01",
-      "icrDescription": "RTI - PAYE - Monthly Returns",
+      "icrDescription": "RTI - VAT - Monthly Returns",
       "fromDate": "2022-04-06",
       "toDate": "2022-05-05",
       "dueDate": "2022-05-22"
@@ -73,17 +76,17 @@
   ],
   "charges": [
     {
-      "chargeType": "In Year RTI Charge 1 - Tax",
-      "mainType": "In Year RTI Charge (FPS)",
-      "mainTrans": "2006",
-      "subTrans": "1000",
+      "chargeType": "VAT Mig Return Debit Charge - 1",
+      "mainType": "VAT Mig Return Charge",
+      "mainTrans": "2000",
+      "subTrans": "1174",
       "taxPeriodFrom": "2022-02-06",
       "taxPeriodTo": "2022-03-05",
       "chargeReference": "XM123456789812",
-      "outstandingAmount": 2003.00,
+      "outstandingAmount": 2000.00,
       "dueDate": "<DUE_DATE>",
       "interestStartDate": "2022-03-19",
-      "accruedInterest": 25.81,
+      "accruedInterest": 1.00,
       "locks": [
         {
           "lockType": "Dunning",
@@ -96,17 +99,17 @@
       ]
     },
     {
-      "chargeType": "In Year RTI Charge 2 - Tax",
-      "mainType": "In Year RTI Charge (FPS)",
-      "mainTrans": "2000",
-      "subTrans": "1000",
+      "chargeType": "VAT Mig Return Debit Charge - 2",
+      "mainType": "VAT Mig Return Charge",
+      "mainTrans": "4730",
+      "subTrans": "1174",
       "taxPeriodFrom": "2022-02-06",
       "taxPeriodTo": "2022-03-05",
       "chargeReference": "XM123456789813",
-      "outstandingAmount": 2004.00,
+      "outstandingAmount": 3000.00,
       "dueDate": "<DUE_DATE>",
       "interestStartDate": "2022-03-20",
-      "accruedInterest": 25.82,
+      "accruedInterest": 1.00,
       "locks": [
         {
           "lockType": "Dunning",
@@ -119,17 +122,17 @@
       ]
     },
     {
-      "chargeType": "In Year RTI Charge 3 - Tax",
-      "mainType": "In Year RTI Charge (FPS)",
-      "mainTrans": "2006",
-      "subTrans": "1000",
+      "chargeType": "VAT Mig Return Debit Charge - 3",
+      "mainType": "VAT Mig Return Charge",
+      "mainTrans": "2000",
+      "subTrans": "1174",
       "taxPeriodFrom": "2022-02-06",
       "taxPeriodTo": "2022-03-05",
       "chargeReference": "XM123456789814",
-      "outstandingAmount": 2005.00,
-      "dueDate": "2022-03-21",
+      "outstandingAmount": 4000.00,
+      "dueDate": "2020-03-21",
       "interestStartDate": "2022-03-21",
-      "accruedInterest": 25.83,
+      "accruedInterest": 1.00,
       "locks": [
         {
           "lockType": "Dunning",

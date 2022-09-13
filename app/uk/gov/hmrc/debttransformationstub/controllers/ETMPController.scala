@@ -17,7 +17,7 @@
 package uk.gov.hmrc.debttransformationstub.controllers
 
 import play.api.Environment
-import play.api.mvc.{Action, AnyContent, ControllerComponents}
+import play.api.mvc.{ Action, AnyContent, ControllerComponents }
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import java.io.File
@@ -28,18 +28,7 @@ import scala.io.Source
 
 class ETMPController @Inject()(environment: Environment, cc: ControllerComponents) extends BackendController(cc) {
 
-  private val getETMPResponse = "conf/resources/data/etmp.eligibility/864FZ00049"
   private val basePath = "conf/resources/data/etmp.eligibility"
-
-  def getEligibilityRequest(): Action[AnyContent] = Action { request =>
-    environment.getExistingFile(s"$getETMPResponse.json") match {
-      case Some(file) =>
-        Ok(Source.fromFile(file).mkString)
-      case _ =>
-        NotFound("file not found")
-    }
-
-  }
 
   def paymentPlanEligibility(
     regimeType: String,

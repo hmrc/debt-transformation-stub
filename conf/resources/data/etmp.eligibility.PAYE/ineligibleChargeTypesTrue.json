@@ -13,7 +13,7 @@
   "addresses": [
     {
       "addressType": "PPOB",
-      "rls": true,
+      "rls": false,
       "emailAddress": "joe@snailmail.com",
       "postcodeHistory": [
         {
@@ -32,7 +32,7 @@
     },
     {
       "addressType": "AGENT",
-      "rls": true,
+      "rls": false,
       "postcodeHistory": [
         {
           "addressPostcode": "BN164QR",
@@ -44,15 +44,18 @@
   "signals": [
     {
       "signalType": "RLS",
-      "signalValue": "false"
+      "signalValue": "false",
+      "signalDescription": "gghsjsl"
     },
     {
       "signalType": "Insolvent",
-      "signalValue": "false"
+      "signalValue": "false",
+      "signalDescription": "gghsjsl"
     },
     {
       "signalType": "Payment Frequency",
-      "signalValue": "Monthly"
+      "signalValue": "Monthly",
+      "signalDescription": "gghsjsl"
     }
   ],
   "filing": [
@@ -73,17 +76,63 @@
   ],
   "charges": [
     {
-      "chargeType": "In Year RTI Charge - Tax",
+      "chargeType": "In Year RTI Charge 1 - Tax",
+      "mainType": "In Year RTI Charge (FPS)",
+      "mainTrans": "2006",
+      "subTrans": "1000",
+      "taxPeriodFrom": "2022-02-06",
+      "taxPeriodTo": "2022-03-05",
+      "chargeReference": "XM123456789812",
+      "outstandingAmount": 2003.00,
+      "dueDate": "<DUE_DATE>",
+      "interestStartDate": "2022-03-19",
+      "accruedInterest": 25.81,
+      "locks": [
+        {
+          "lockType": "Dunning",
+          "lockReason": "Appeal"
+        },
+        {
+          "lockType": "Interest",
+          "lockReason": "Appeal"
+        }
+      ]
+    },
+    {
+      "chargeType": "In Year RTI Charge 2 - Tax",
       "mainType": "In Year RTI Charge (FPS)",
       "mainTrans": "2000",
       "subTrans": "1000",
       "taxPeriodFrom": "2022-02-06",
       "taxPeriodTo": "2022-03-05",
-      "chargeReference": "XM123456789812",
-      "outstandingAmount": 9003.00,
+      "chargeReference": "XM123456789813",
+      "outstandingAmount": 2004.00,
       "dueDate": "<DUE_DATE>",
-      "interestStartDate": "2022-03-19",
-      "accruedInterest": 25.81,
+      "interestStartDate": "2022-03-20",
+      "accruedInterest": 25.82,
+      "locks": [
+        {
+          "lockType": "Dunning",
+          "lockReason": "Appeal"
+        },
+        {
+          "lockType": "Interest",
+          "lockReason": "Appeal"
+        }
+      ]
+    },
+    {
+      "chargeType": "In Year RTI Charge 3 - Tax",
+      "mainType": "In Year RTI Charge (FPS)",
+      "mainTrans": "2006",
+      "subTrans": "1000",
+      "taxPeriodFrom": "2022-02-06",
+      "taxPeriodTo": "2022-03-05",
+      "chargeReference": "XM123456789814",
+      "outstandingAmount": 2005.00,
+      "dueDate": "2022-03-21",
+      "interestStartDate": "2022-03-21",
+      "accruedInterest": 25.83,
       "locks": [
         {
           "lockType": "Dunning",

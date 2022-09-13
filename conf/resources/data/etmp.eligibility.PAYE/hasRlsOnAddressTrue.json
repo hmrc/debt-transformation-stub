@@ -13,7 +13,7 @@
   "addresses": [
     {
       "addressType": "PPOB",
-      "rls": false,
+      "rls": true,
       "emailAddress": "joe@snailmail.com",
       "postcodeHistory": [
         {
@@ -32,7 +32,7 @@
     },
     {
       "addressType": "AGENT",
-      "rls": false,
+      "rls": true,
       "postcodeHistory": [
         {
           "addressPostcode": "BN164QR",
@@ -44,15 +44,18 @@
   "signals": [
     {
       "signalType": "RLS",
-      "signalValue": "false"
+      "signalValue": "false",
+      "signalDescription": "gghsjsl"
     },
     {
       "signalType": "Insolvent",
-      "signalValue": "false"
+      "signalValue": "false",
+      "signalDescription": "gghsjsl"
     },
     {
       "signalType": "Payment Frequency",
-      "signalValue": "Monthly"
+      "signalValue": "Monthly",
+      "signalDescription": "gghsjsl"
     }
   ],
   "filing": [
@@ -80,10 +83,10 @@
       "taxPeriodFrom": "2022-02-06",
       "taxPeriodTo": "2022-03-05",
       "chargeReference": "XM123456789812",
-      "outstandingAmount": 1.00,
+      "outstandingAmount": 9003.00,
       "dueDate": "<DUE_DATE>",
       "interestStartDate": "2022-03-19",
-      "accruedInterest": 0.00,
+      "accruedInterest": 25.81,
       "locks": [
         {
           "lockType": "Dunning",

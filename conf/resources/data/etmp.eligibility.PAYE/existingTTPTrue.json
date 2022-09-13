@@ -44,15 +44,18 @@
   "signals": [
     {
       "signalType": "RLS",
-      "signalValue": "false"
+      "signalValue": "false",
+      "signalDescription": "false"
     },
     {
       "signalType": "Insolvent",
-      "signalValue": "false"
+      "signalValue": "false",
+      "signalDescription": "false"
     },
     {
       "signalType": "Payment Frequency",
-      "signalValue": "Monthly"
+      "signalValue": "Monthly",
+      "signalDescription": "false"
     }
   ],
   "filing": [
@@ -75,24 +78,23 @@
     {
       "chargeType": "In Year RTI Charge - Tax",
       "mainType": "In Year RTI Charge (FPS)",
-      "mainTrans": "4730",
-      "subTrans": "1174",
+      "mainTrans": "2000",
+      "subTrans": "1000",
       "taxPeriodFrom": "2022-02-06",
       "taxPeriodTo": "2022-03-05",
       "chargeReference": "XM123456789812",
-      "outstandingAmount": 19999.00,
+      "outstandingAmount": 9003.00,
       "dueDate": "<DUE_DATE>",
       "interestStartDate": "2022-03-19",
-      "accruedInterest": 1,
+      "accruedInterest": 25.81,
       "locks": [
         {
-          "lockType": "Dunning",
-          "lockReason": "Appeal"
+          "lockType": "Payment",
+          "lockReason": "TTP Payment"
         },
         {
           "lockType": "Interest",
-          "lockReason": "Appeal",
-          "LockCode": 1
+          "lockReason": "Appeal"
         }
       ]
     }

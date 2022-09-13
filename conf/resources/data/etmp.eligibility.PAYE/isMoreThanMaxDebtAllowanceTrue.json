@@ -44,23 +44,26 @@
   "signals": [
     {
       "signalType": "RLS",
-      "signalValue": "false"
+      "signalValue": "false",
+      "signalDescription": "gghsjsl"
     },
     {
       "signalType": "Insolvent",
-      "signalValue": "false"
+      "signalValue": "false",
+      "signalDescription": "gghsjsl"
     },
     {
       "signalType": "Payment Frequency",
-      "signalValue": "Monthly"
+      "signalValue": "Monthly",
+      "signalDescription": "gghsjsl"
     }
   ],
   "filing": [
     {
       "icrCategory": "ZR01",
       "icrDescription": "RTI - PAYE - Monthly Returns",
-      "fromDate": "2022-03-01",
-      "toDate": "2022-03-28",
+      "fromDate": "2022-03-06",
+      "toDate": "2022-04-05",
       "dueDate": "2022-04-22"
     },
     {
@@ -75,15 +78,15 @@
     {
       "chargeType": "In Year RTI Charge - Tax",
       "mainType": "In Year RTI Charge (FPS)",
-      "mainTrans": "4730",
-      "subTrans": "1174",
-      "taxPeriodFrom": "2022-04-01",
-      "taxPeriodTo": "2022-04-28",
+      "mainTrans": "2000",
+      "subTrans": "1000",
+      "taxPeriodFrom": "2022-02-06",
+      "taxPeriodTo": "2022-03-05",
       "chargeReference": "XM123456789812",
-      "outstandingAmount": 1999.00,
+      "outstandingAmount": 14000.01,
       "dueDate": "<DUE_DATE>",
       "interestStartDate": "2022-03-19",
-      "accruedInterest": 1,
+      "accruedInterest": 1000.00,
       "locks": [
         {
           "lockType": "Dunning",

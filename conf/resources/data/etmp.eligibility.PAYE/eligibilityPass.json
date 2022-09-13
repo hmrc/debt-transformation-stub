@@ -44,15 +44,18 @@
   "signals": [
     {
       "signalType": "RLS",
-      "signalValue": "false"
+      "signalValue": "false",
+      "signalDescription": "false"
     },
     {
       "signalType": "Insolvent",
-      "signalValue": "false"
+      "signalValue": "false",
+      "signalDescription": "false"
     },
     {
       "signalType": "Payment Frequency",
-      "signalValue": "Monthly"
+      "signalValue": "Monthly",
+      "signalDescription": "false"
     }
   ],
   "filing": [
@@ -80,14 +83,14 @@
       "taxPeriodFrom": "2022-02-06",
       "taxPeriodTo": "2022-03-05",
       "chargeReference": "XM123456789812",
-      "outstandingAmount": 9003.00,
+      "outstandingAmount": 1234.56,
       "dueDate": "<DUE_DATE>",
       "interestStartDate": "2022-03-19",
-      "accruedInterest": 25.81,
+      "accruedInterest": 2.09,
       "locks": [
         {
-          "lockType": "Payment",
-          "lockReason": "TTP Payment"
+          "lockType": "Dunning",
+          "lockReason": "Appeal"
         },
         {
           "lockType": "Interest",
