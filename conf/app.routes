@@ -42,3 +42,5 @@ GET           /individuals/debts/essttp/:regimeType/:idType/:idValue/payment-pla
 POST          /individuals/debts/essttp/payment-plans/ddi                                                   uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.nddsEnactArrangement
 POST          /individuals/debts/essttp/payment-lock                                                        uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.etmpExecutePaymentLock
 POST          /individuals/debts/essttp/monitoring-case                                                     uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.idmsCreateTTPMonitoringCase
+
+POST          /individuals/debts/essttp/payment-plan-eligibility-dm                                         uk.gov.hmrc.debttransformationstub.controllers.IDMSController.paymentPlanEligibilityDm
