@@ -1,0 +1,106 @@
+{
+  "processingDateTime": "2022-03-23T13:49:51Z",
+  "identification": [
+    {
+      "idType": "EMPREF",
+      "idValue": "666FZ00066"
+    },
+    {
+      "idType": "BROCS",
+      "idValue": "6381726332"
+    }
+  ],
+  "addresses": [
+    {
+      "addressType": "PPOB",
+      "rls": false,
+      "emailAddress": "joe@snailmail.com",
+      "postcodeHistory": [
+        {
+          "addressPostcode": "BN127ER",
+          "postcodeDate": "2022-05-22"
+        },
+        {
+          "addressPostcode": "BN129ER",
+          "postcodeDate": "2022-02-28"
+        },
+        {
+          "addressPostcode": "BN119ER",
+          "postcodeDate": "2001-01-31"
+        },
+        {
+          "addressPostcode": "BN164QR",
+          "postcodeDate": "2022-03-02"
+        }
+      ]
+    },
+    {
+      "addressType": "AGENT",
+      "rls": false,
+      "postcodeHistory": [
+        {
+          "addressPostcode": "BN164QR",
+          "postcodeDate": "2022-03-02"
+        }
+      ]
+    }
+  ],
+  "signals": [
+    {
+      "signalType": "RLS",
+      "signalValue": "false",
+      "signalDescription": "false"
+    },
+    {
+      "signalType": "Insolvent",
+      "signalValue": "false",
+      "signalDescription": "false"
+    },
+    {
+      "signalType": "Payment Frequency",
+      "signalValue": "Monthly",
+      "signalDescription": "false"
+    }
+  ],
+  "filing": [
+    {
+      "icrCategory": "ZR01",
+      "icrDescription": "RTI - PAYE - Monthly Returns",
+      "fromDate": "2022-03-06",
+      "toDate": "2022-04-05",
+      "dueDate": "2022-04-22"
+    },
+    {
+      "icrCategory": "ZR01",
+      "icrDescription": "RTI - PAYE - Monthly Returns",
+      "fromDate": "2022-04-06",
+      "toDate": "2022-05-05",
+      "dueDate": "2022-05-22"
+    }
+  ],
+  "charges": [
+    {
+      "chargeType": "In Year RTI Charge - Tax",
+      "mainType": "In Year RTI Charge (FPS)",
+      "mainTrans": "2000",
+      "subTrans": "1000",
+      "taxPeriodFrom": "2022-02-06",
+      "taxPeriodTo": "2022-03-05",
+      "chargeReference": "XM123456789812",
+      "outstandingAmount": 1234.56,
+      "dueDate": "<DUE_DATE>",
+      "interestStartDate": "2022-03-19",
+      "accruedInterest": 2.09,
+      "locks": [
+        {
+          "lockType": "Payment",
+          "lockReason": "TTP Payment"
+        },
+        {
+          "lockType": "Interest",
+          "lockReason": "Appeal"
+        }
+      ]
+    }
+  ]
+}
