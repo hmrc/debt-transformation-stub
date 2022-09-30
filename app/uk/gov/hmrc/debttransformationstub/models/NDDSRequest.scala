@@ -30,7 +30,8 @@ case class DirectDebitInstruction(
   sortCode: String,
   accountNumber: String,
   accountName: String,
-  paperAuddisFlag: Boolean)
+  paperAuddisFlag: Boolean
+)
 
 object DirectDebitInstruction {
   implicit val format = Json.format[DirectDebitInstruction]
@@ -53,7 +54,8 @@ case class NDDSPaymentPlan(
   paymentPlanBalancingAmount: Double,
   paymentPlanBalancingDate: LocalDate,
   paymentPlanCharges: List[PaymentPlanCharges],
-  totalLiability: Double)
+  totalLiability: Double
+)
 
 object NDDSPaymentPlan {
   implicit val format = Json.format[NDDSPaymentPlan]
@@ -64,7 +66,8 @@ case class NDDSRequest(
   identification: List[Identification],
   directDebitInstruction: DirectDebitInstruction,
   paymentPlan: NDDSPaymentPlan,
-  printFlag: Boolean)
+  printFlag: Boolean
+)
 
 object NDDSRequest {
   implicit val format = Json.format[NDDSRequest]

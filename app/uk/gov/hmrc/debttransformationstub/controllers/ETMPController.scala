@@ -26,14 +26,14 @@ import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 import scala.io.Source
 
-class ETMPController @Inject()(environment: Environment, cc: ControllerComponents) extends BackendController(cc) {
+class ETMPController @Inject() (environment: Environment, cc: ControllerComponents) extends BackendController(cc) {
 
   private val basePath = "conf/resources/data/etmp.eligibility"
 
   def paymentPlanEligibility(
     regimeType: String,
     idType: String,
-    idValue: String,
+    idValue: String
   ): Action[AnyContent] = Action { request =>
     val queryKeys: List[String] =
       List("showIds", "showAddresses", "showSignals", "showFiling", "showCharges", "addressFromDate")

@@ -29,7 +29,7 @@ import scala.collection.immutable
 import scala.concurrent.ExecutionContext
 
 @Singleton()
-class TimeToPayTestController @Inject()(
+class TimeToPayTestController @Inject() (
   cc: ControllerComponents,
   ttpRequestsService: TTPRequestsService
 )(implicit val executionContext: ExecutionContext)

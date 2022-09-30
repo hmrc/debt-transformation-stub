@@ -26,7 +26,8 @@ final case class PaymentLockRequest(
   chargeReferences: List[String],
   createNote: Boolean,
   noteType: String,
-  noteLines: List[String])
+  noteLines: List[String]
+)
 
 object PaymentLockRequest {
   implicit val format: OFormat[PaymentLockRequest] = Json.format[PaymentLockRequest]
