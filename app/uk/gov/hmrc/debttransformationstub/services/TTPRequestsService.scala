@@ -37,15 +37,15 @@ trait TTPRequestsService {
 
   def getTTPRequest(requestId: String): Future[Option[RequestDetail]]
 
-  def addRequestDetails(requestDetailsRequest: RequestDetail)(
-    implicit
-    hc: HeaderCarrier): Future[Either[TTPRequestsError, String]]
+  def addRequestDetails(requestDetailsRequest: RequestDetail)(implicit
+    hc: HeaderCarrier
+  ): Future[Either[TTPRequestsError, String]]
 
   def deleteTTPRequest(requestId: String)(implicit hc: HeaderCarrier): Future[Either[TTPRequestsDeletionError, String]]
 }
 
 @Singleton
-class DefaultTTPRequestsService @Inject()(ttpRequestsRepository: TTPRequestsRepository) extends TTPRequestsService {
+class DefaultTTPRequestsService @Inject() (ttpRequestsRepository: TTPRequestsRepository) extends TTPRequestsService {
 
   override def addRequestDetails(
     requestDetailsRequest: RequestDetail

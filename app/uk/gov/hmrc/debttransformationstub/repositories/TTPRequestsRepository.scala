@@ -39,7 +39,7 @@ trait TTPRequestsRepository {
 }
 
 @Singleton
-class TTPRequestsRepositoryImpl @Inject()(mongo: MongoComponent)(implicit ec: ExecutionContext)
+class TTPRequestsRepositoryImpl @Inject() (mongo: MongoComponent)(implicit ec: ExecutionContext)
     extends PlayMongoRepository[RequestDetail](
       mongo,
       "ttp-requests",

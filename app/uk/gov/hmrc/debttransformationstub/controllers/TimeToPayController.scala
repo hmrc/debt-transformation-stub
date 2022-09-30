@@ -32,7 +32,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.io.Source
 
-class TimeToPayController @Inject()(
+class TimeToPayController @Inject() (
   environment: Environment,
   cc: ControllerComponents,
   appConfig: AppConfig,

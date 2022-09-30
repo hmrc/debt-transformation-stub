@@ -92,7 +92,8 @@ class DebtManagementAPIPollingServiceSpec extends WordSpec with Matchers with Mo
           Json.obj(),
           "mock correlationId",
           "POST",
-          "/individuals/debts/field-collections/param1/param2/charge")
+          "/individuals/debts/field-collections/param1/param2/charge"
+        )
       } else {
         pollingService.insertRequestAndServeResponse(Json.obj(), inputUri)
       }

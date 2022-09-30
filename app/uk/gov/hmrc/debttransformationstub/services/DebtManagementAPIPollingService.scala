@@ -28,7 +28,7 @@ import uk.gov.hmrc.debttransformationstub.repositories.TTPRequestsRepository
 import play.api.libs.json.Json
 
 @Singleton
-class DebtManagementAPIPollingService @Inject()(
+class DebtManagementAPIPollingService @Inject() (
   ttpRequestsRepository: TTPRequestsRepository,
   appConfig: AppConfig
 ) {
@@ -63,7 +63,9 @@ class DebtManagementAPIPollingService @Inject()(
     process(
       Json.obj(),
       uri = None,
-      uriOverride = Some("/individuals/subcontractor/idms/taxpayer/789"), //TODO: Remove override when https://admin.qa.tax.service.gov.uk/ifs/individuals/subcontractor/idms/wmfid/789 is used
+      uriOverride = Some(
+        "/individuals/subcontractor/idms/taxpayer/789"
+      ), //TODO: Remove override when https://admin.qa.tax.service.gov.uk/ifs/individuals/subcontractor/idms/wmfid/789 is used
       method = Some("GET")
     )
 

@@ -33,7 +33,8 @@ final case class CreateMonitoringCaseRequest(
   regimeType: String,
   etmpChargesMarked: Boolean,
   ddiReference: String,
-  chargeReferences: List[String])
+  chargeReferences: List[String]
+)
 
 object CreateMonitoringCaseRequest {
   implicit val format = Json.format[CreateMonitoringCaseRequest]
