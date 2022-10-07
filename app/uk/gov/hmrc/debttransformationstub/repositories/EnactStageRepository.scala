@@ -50,7 +50,6 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
       indexes = Seq(IndexModel(ascending("stageName")))
     ) {
 
-  // TODO: upsert here
   def addNDDSStage(correlationId: String, request: NDDSRequest): Future[InsertOneResult] = {
     val item = EnactStage(correlationId = correlationId, nddsRequest = Some(request))
     collection.insertOne(item).toFuture
@@ -72,10 +71,9 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
       )
       .toFuture
 
-  def deleteAll(): Future[DeleteResult] = collection.deleteMany(Document()).toFuture
-
-  // Get completed enact stages by correlationId
   def findByCorrelationId(correlationId: String): Future[Option[EnactStage]] =
     collection.find(equal("correlationId", correlationId)).headOption
+
+  def deleteAll(): Future[DeleteResult] = collection.deleteMany(Document()).toFuture
 
 }
