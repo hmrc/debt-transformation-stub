@@ -78,7 +78,7 @@
           "lockReason": "Under enquiry (Externally)"
         },
         {
-          "lockType": "Payment",
+          "lockType": "Payments",
           "lockReason": "TTP Payment"
         }
       ]

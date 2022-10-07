@@ -93,11 +93,11 @@
       "accruedInterest": 2.09,
       "locks": [
         {
-          "lockType": "Payment",
+          "lockType": "Payments",
           "lockReason": "TTP Payment"
         },
         {
-          "lockType": "Interest",
+          "lockType": "Calculate Interest",
           "lockReason": "Appeal"
         }
       ]

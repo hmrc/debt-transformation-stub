@@ -93,7 +93,7 @@
           "lockReason": "Appeal"
         },
         {
-          "lockType": "Interest",
+          "lockType": "Calculate Interest",
           "lockReason": "Appeal"
         }
       ]
@@ -116,7 +116,7 @@
           "lockReason": "Appeal"
         },
         {
-          "lockType": "Interest",
+          "lockType": "Calculate Interest",
           "lockReason": "Appeal"
         }
       ]
@@ -139,7 +139,7 @@
           "lockReason": "Appeal"
         },
         {
-          "lockType": "Interest",
+          "lockType": "Calculate Interest",
           "lockReason": "Appeal"
         }
       ]
