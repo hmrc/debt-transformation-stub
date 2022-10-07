@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.debttransformationstub.models
 
-import play.api.libs.json.{ Json, OFormat }
+import play.api.libs.json.{ Format, Json }
 
 final case class PaymentLockRequest(
   idType: String,
@@ -30,5 +30,5 @@ final case class PaymentLockRequest(
 )
 
 object PaymentLockRequest {
-  implicit val format: OFormat[PaymentLockRequest] = Json.format[PaymentLockRequest]
+  implicit val format: Format[PaymentLockRequest] = Json.format[PaymentLockRequest]
 }

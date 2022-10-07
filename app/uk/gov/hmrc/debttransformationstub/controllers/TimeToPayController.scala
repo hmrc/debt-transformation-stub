@@ -25,6 +25,7 @@ import uk.gov.hmrc.debttransformationstub.services.TTPPollingService
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
+import uk.gov.hmrc.debttransformationstub.repositories.{ EnactStage, EnactStageRepository }
 
 import java.io.File
 import javax.inject.Inject
@@ -36,7 +37,8 @@ class TimeToPayController @Inject() (
   environment: Environment,
   cc: ControllerComponents,
   appConfig: AppConfig,
-  ttpPollingService: TTPPollingService
+  ttpPollingService: TTPPollingService,
+  enactStageRepository: EnactStageRepository
 ) extends BackendController(cc) with BaseController {
 
   private lazy val logger = new RequestAwareLogger(this.getClass)
@@ -121,20 +123,38 @@ class TimeToPayController @Inject() (
   }
 
   def nddsEnactArrangement: Action[JsValue] = Action.async(parse.json) { implicit request =>
+    val correlationId = getCorrelationIdHeader(request.headers)
     withCustomJsonBody[NDDSRequest] { req =>
-      findFile(s"/ndds.enactArrangement/${req.channelIdentifier}.json")
+      for {
+        _            <- enactStageRepository.addNDDSStage(correlationId, req)
+        fileResponse <- findFile(s"/ndds.enactArrangement/${req.channelIdentifier}.json")
+      } yield fileResponse
     }
   }
 
   def etmpExecutePaymentLock: Action[JsValue] = Action.async(parse.json) { implicit request =>
+    val correlationId = getCorrelationIdHeader(request.headers)
     withCustomJsonBody[PaymentLockRequest] { req =>
-      findFile(s"/etmp.executePaymentLock/${req.idValue}.json")
+      for {
+        _            <- enactStageRepository.addETMPStage(correlationId, req)
+        fileResponse <- findFile(s"/etmp.executePaymentLock/${req.idValue}.json")
+      } yield fileResponse
     }
   }
 
   def idmsCreateTTPMonitoringCase: Action[JsValue] = Action.async(parse.json) { implicit request =>
+    val correlationId = getCorrelationIdHeader(request.headers)
     withCustomJsonBody[CreateMonitoringCaseRequest] { req =>
-      findFile(s"/idms.createTTPMonitoringCase/${req.channelIdentifier}.json")
+      for {
+        _            <- enactStageRepository.addIDMSStage(correlationId, req)
+        fileResponse <- findFile(s"/idms.createTTPMonitoringCase/${req.channelIdentifier}.json")
+      } yield fileResponse
+    }
+  }
+
+  def enactStage(correlationId: String) = Action.async { request =>
+    enactStageRepository.findByCorrelationId(correlationId).map { stage: Option[EnactStage] =>
+      Ok(Json.toJson(stage))
     }
   }
 
@@ -151,5 +171,8 @@ class TimeToPayController @Inject() (
         Future successful Ok(result)
     }
   }
+
+  def getCorrelationIdHeader(headers: Headers): String =
+    headers.get("correlationId").getOrElse(throw new Exception("Missing required correlationId header"))
 
 }
