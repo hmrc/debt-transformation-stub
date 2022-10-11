@@ -90,7 +90,7 @@
       "locks": [
         {
           "lockType": "Payments",
-          "lockReason": "TTP Payment"
+          "lockReason": "Collected via TTP"
         },
         {
           "lockType": "Calculate Interest",
