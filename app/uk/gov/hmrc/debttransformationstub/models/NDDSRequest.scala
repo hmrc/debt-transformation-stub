@@ -45,7 +45,7 @@ object PaymentPlanCharges {
 
 case class NDDSPaymentPlan(
   paymentPlanType: String,
-  initialPaymentAmount: Option[Int],
+  initialPaymentAmount: Option[BigDecimal],
   initialPaymentDate: Option[LocalDate],
   paymentPlanCollectionAmount: Double,
   paymentPlanStartDate: LocalDate,
