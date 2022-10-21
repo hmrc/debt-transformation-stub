@@ -75,7 +75,7 @@
       "locks": [
         {
           "lockType": "Dunning",
-          "lockReason": "Under enquiry (Externally)"
+          "lockReason": "Under enquiry  (Externally)"
         },
         {
           "lockType": "Payments",
