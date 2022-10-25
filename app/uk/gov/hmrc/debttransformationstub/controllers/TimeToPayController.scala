@@ -171,8 +171,7 @@ class TimeToPayController @Inject() (
         Future successful NotFound("file not found")
       case Some(file) =>
         val fileString = FileUtils.readFileToString(file, Charset.defaultCharset())
-        val result = Try(Json.parse(fileString))
-          .toOption
+        val result = Try(Json.parse(fileString)).toOption
           .map(Ok(_))
           .getOrElse(InternalServerError(s"stub failed to parse file $basePath$path"))
         Future successful result
