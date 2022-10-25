@@ -16,11 +16,12 @@
 
 package uk.gov.hmrc.debttransformationstub.repositories
 
+import com.mongodb.client.model.FindOneAndUpdateOptions
 import org.mongodb.scala.model.Indexes.ascending
 import org.mongodb.scala.bson.Document
 import org.mongodb.scala.model.Filters._
 import org.mongodb.scala.model.Updates._
-import org.mongodb.scala.model.IndexModel
+import org.mongodb.scala.model.{ IndexModel, ReturnDocument }
 import org.mongodb.scala.result.{ DeleteResult, InsertOneResult }
 import uk.gov.hmrc.debttransformationstub.models._
 import uk.gov.hmrc.mongo.MongoComponent
@@ -34,7 +35,10 @@ case class EnactStage(
   correlationId: String,
   nddsRequest: Option[NDDSRequest] = None,
   etmpRequest: Option[PaymentLockRequest] = None,
-  idmsRequest: Option[CreateMonitoringCaseRequest] = None
+  idmsRequest: Option[CreateMonitoringCaseRequest] = None,
+  nddsAttempts: Int = 0,
+  etmpAttempts: Int = 0,
+  idmsAttempts: Int = 0
 )
 
 object EnactStage {
@@ -51,7 +55,7 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
     ) {
 
   def addNDDSStage(correlationId: String, request: NDDSRequest): Future[InsertOneResult] = {
-    val item = EnactStage(correlationId = correlationId, nddsRequest = Some(request))
+    val item = EnactStage(correlationId = correlationId, nddsRequest = Some(request), nddsAttempts = 1)
     collection.insertOne(item).toFuture
   }
 
@@ -59,7 +63,8 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
     collection
       .findOneAndUpdate(
         equal("correlationId", correlationId),
-        set("etmpRequest", Codecs.toBson(request))
+        combine(set("etmpRequest", Codecs.toBson(request)), inc("etmpAttempts", 1)),
+        new FindOneAndUpdateOptions().returnDocument(ReturnDocument.AFTER)
       )
       .toFuture
 
@@ -67,7 +72,8 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
     collection
       .findOneAndUpdate(
         equal("correlationId", correlationId),
-        set("idmsRequest", Codecs.toBson(request))
+        combine(set("idmsRequest", Codecs.toBson(request)), inc("idmsAttempts", 1)),
+        new FindOneAndUpdateOptions().returnDocument(ReturnDocument.AFTER)
       )
       .toFuture
 
