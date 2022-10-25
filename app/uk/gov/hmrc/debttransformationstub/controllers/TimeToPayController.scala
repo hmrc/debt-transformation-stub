@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.debttransformationstub.controllers
 
+import org.apache.commons.io.FileUtils
 import play.api.Environment
 import play.api.libs.json.{ JsValue, Json }
 import play.api.mvc._
@@ -28,10 +29,12 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import uk.gov.hmrc.debttransformationstub.repositories.{ EnactStage, EnactStageRepository }
 
 import java.io.File
+import java.nio.charset.Charset
 import javax.inject.Inject
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.io.Source
+import scala.util.Try
 
 class TimeToPayController @Inject() (
   environment: Environment,
@@ -127,7 +130,7 @@ class TimeToPayController @Inject() (
     withCustomJsonBody[NDDSRequest] { req =>
       for {
         _            <- enactStageRepository.addNDDSStage(correlationId, req)
-        fileResponse <- findFile(s"/ndds.enactArrangement/${req.channelIdentifier}.json")
+        fileResponse <- findFile(s"/ndds.enactArrangement/${req.identification.head.idValue}.json")
       } yield fileResponse
     }
   }
@@ -147,7 +150,7 @@ class TimeToPayController @Inject() (
     withCustomJsonBody[CreateMonitoringCaseRequest] { req =>
       for {
         _            <- enactStageRepository.addIDMSStage(correlationId, req)
-        fileResponse <- findFile(s"/idms.createTTPMonitoringCase/${req.channelIdentifier}.json")
+        fileResponse <- findFile(s"/idms.createTTPMonitoringCase/${req.ddiReference}.json")
       } yield fileResponse
     }
   }
@@ -167,8 +170,11 @@ class TimeToPayController @Inject() (
         logger.error(s"Status $NOT_FOUND, message: file not found")
         Future successful NotFound("file not found")
       case Some(file) =>
-        val result = Source.fromFile(file).mkString.stripMargin
-        Future successful Ok(result)
+        val fileString = FileUtils.readFileToString(file, Charset.defaultCharset())
+        val result = Try(Json.parse(fileString)).toOption
+          .map(Ok(_))
+          .getOrElse(InternalServerError(s"stub failed to parse file $basePath$path"))
+        Future successful result
     }
   }
 
