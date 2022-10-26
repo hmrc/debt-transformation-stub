@@ -17,7 +17,6 @@
 package uk.gov.hmrc.debttransformationstub.repositories
 
 import com.mongodb.client.model.FindOneAndUpdateOptions
-import org.mongodb.scala.model.Indexes.ascending
 import org.mongodb.scala.bson.Document
 import org.mongodb.scala.model.Filters._
 import org.mongodb.scala.model.Updates._
@@ -52,7 +51,7 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
       mongo,
       "enact-stages",
       EnactStage.format,
-      indexes = Seq.empty,
+      indexes = Seq.empty[IndexModel],
       replaceIndexes = true
     ) {
 
