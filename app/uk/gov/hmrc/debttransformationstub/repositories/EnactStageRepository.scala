@@ -17,12 +17,12 @@
 package uk.gov.hmrc.debttransformationstub.repositories
 
 import com.mongodb.client.model.FindOneAndUpdateOptions
-import org.mongodb.scala.model.Indexes.ascending
 import org.mongodb.scala.bson.Document
 import org.mongodb.scala.model.Filters._
 import org.mongodb.scala.model.Updates._
 import org.mongodb.scala.model.{ IndexModel, ReturnDocument }
 import org.mongodb.scala.result.{ DeleteResult, InsertOneResult }
+import play.api.Logger
 import uk.gov.hmrc.debttransformationstub.models._
 import uk.gov.hmrc.mongo.MongoComponent
 import uk.gov.hmrc.mongo.play.json.{ Codecs, PlayMongoRepository }
@@ -51,15 +51,20 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
       mongo,
       "enact-stages",
       EnactStage.format,
-      indexes = Seq(IndexModel(ascending("stageName")))
+      indexes = Seq.empty[IndexModel],
+      replaceIndexes = true
     ) {
 
+  private val logger: Logger = Logger(classOf[EnactStageRepository])
+
   def addNDDSStage(correlationId: String, request: NDDSRequest): Future[InsertOneResult] = {
+    logger.warn(s"Recording NDDS stage request $correlationId")
     val item = EnactStage(correlationId = correlationId, nddsRequest = Some(request), nddsAttempts = 1)
     collection.insertOne(item).toFuture
   }
 
-  def addETMPStage(correlationId: String, request: PaymentLockRequest): Future[EnactStage] =
+  def addETMPStage(correlationId: String, request: PaymentLockRequest): Future[EnactStage] = {
+    logger.warn(s"Recording ETMP stage request $correlationId")
     collection
       .findOneAndUpdate(
         equal("correlationId", correlationId),
@@ -67,8 +72,10 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
         new FindOneAndUpdateOptions().returnDocument(ReturnDocument.AFTER)
       )
       .toFuture
+  }
 
-  def addIDMSStage(correlationId: String, request: CreateMonitoringCaseRequest): Future[EnactStage] =
+  def addIDMSStage(correlationId: String, request: CreateMonitoringCaseRequest): Future[EnactStage] = {
+    logger.warn(s"Recording IDMS stage request $correlationId")
     collection
       .findOneAndUpdate(
         equal("correlationId", correlationId),
@@ -76,6 +83,7 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
         new FindOneAndUpdateOptions().returnDocument(ReturnDocument.AFTER)
       )
       .toFuture
+  }
 
   def findByCorrelationId(correlationId: String): Future[Option[EnactStage]] =
     collection.find(equal("correlationId", correlationId)).headOption
