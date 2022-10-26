@@ -128,9 +128,13 @@ class TimeToPayController @Inject() (
   def nddsEnactArrangement: Action[JsValue] = Action.async(parse.json) { implicit request =>
     val correlationId = getCorrelationIdHeader(request.headers)
     withCustomJsonBody[NDDSRequest] { req =>
+      val brocsId = req.identification
+        .find(_.idType.equalsIgnoreCase("BROCS"))
+        .map(_.idValue)
+        .getOrElse(throw new IllegalArgumentException("BROCS id is required for NDDS enact arrangement"))
       for {
         _            <- enactStageRepository.addNDDSStage(correlationId, req)
-        fileResponse <- findFile(s"/ndds.enactArrangement/", s"${req.identification.head.idValue}.json")
+        fileResponse <- findFile(s"/ndds.enactArrangement/", s"$brocsId.json")
       } yield fileResponse
     }
   }
