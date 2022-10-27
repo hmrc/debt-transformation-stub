@@ -128,9 +128,13 @@ class TimeToPayController @Inject() (
   def nddsEnactArrangement: Action[JsValue] = Action.async(parse.json) { implicit request =>
     val correlationId = getCorrelationIdHeader(request.headers)
     withCustomJsonBody[NDDSRequest] { req =>
+      val brocsId = req.identification
+        .find(_.idType.equalsIgnoreCase("BROCS"))
+        .map(_.idValue)
+        .getOrElse(throw new IllegalArgumentException("BROCS id is required for NDDS enact arrangement"))
       for {
         _            <- enactStageRepository.addNDDSStage(correlationId, req)
-        fileResponse <- findFile(s"/ndds.enactArrangement/${req.identification.head.idValue}.json")
+        fileResponse <- findFile(s"/ndds.enactArrangement/", s"$brocsId.json")
       } yield fileResponse
     }
   }
@@ -140,7 +144,7 @@ class TimeToPayController @Inject() (
     withCustomJsonBody[PaymentLockRequest] { req =>
       for {
         _            <- enactStageRepository.addETMPStage(correlationId, req)
-        fileResponse <- findFile(s"/etmp.executePaymentLock/${req.idValue}.json")
+        fileResponse <- findFile(s"/etmp.executePaymentLock/", s"${req.idValue}.json")
       } yield fileResponse
     }
   }
@@ -150,7 +154,7 @@ class TimeToPayController @Inject() (
     withCustomJsonBody[CreateMonitoringCaseRequest] { req =>
       for {
         _            <- enactStageRepository.addIDMSStage(correlationId, req)
-        fileResponse <- findFile(s"/idms.createTTPMonitoringCase/${req.ddiReference}.json")
+        fileResponse <- findFile(s"/idms.createTTPMonitoringCase/", s"${req.ddiReference}.json")
       } yield fileResponse
     }
   }
@@ -161,11 +165,19 @@ class TimeToPayController @Inject() (
     }
   }
 
-  private def findFile(path: String)(implicit hc: HeaderCarrier): Future[Result] = {
+  private def findFile(path: String, fileName: String)(implicit hc: HeaderCarrier): Future[Result] = {
     val fileMaybe: Option[File] =
-      environment.getExistingFile(s"$basePath$path")
+      environment.getExistingFile(s"$basePath$path$fileName")
 
     fileMaybe match {
+      case None if fileName.toUpperCase().startsWith("PA400") =>
+        val msg = "intentional stubbed bad request"
+        logger.error(s"Status $BAD_REQUEST, message: $msg")
+        Future successful BadRequest(msg)
+      case None if fileName.toUpperCase().startsWith("PA422") =>
+        val msg = "intentional stubbed unprocessable entity"
+        logger.error(s"Status $UNPROCESSABLE_ENTITY, message: $msg")
+        Future successful UnprocessableEntity(msg)
       case None =>
         logger.error(s"Status $NOT_FOUND, message: file not found")
         Future successful NotFound("file not found")
