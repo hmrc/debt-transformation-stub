@@ -17,6 +17,7 @@
 package uk.gov.hmrc.debttransformationstub.controllers
 
 import play.api.Environment
+import play.api.libs.json.Json
 import play.api.mvc.{ Action, AnyContent, ControllerComponents }
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
@@ -24,7 +25,9 @@ import java.io.File
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
+import scala.concurrent.Future
 import scala.io.Source
+import scala.util.Try
 
 class ETMPController @Inject() (environment: Environment, cc: ControllerComponents) extends BackendController(cc) {
 
@@ -39,9 +42,12 @@ class ETMPController @Inject() (environment: Environment, cc: ControllerComponen
       List("showIds", "showAddresses", "showSignals", "showFiling", "showCharges", "addressFromDate")
     val queries: Map[String, Option[String]] = queryKeys.map(key => (key, request.getQueryString(key))).toMap
     queries("showIds")
-    environment.getExistingFile(s"$basePath" + "." + regimeType + "/" + s"$idValue.json") match {
+    val relativePath = s"$basePath" + "." + regimeType + "/" + s"$idValue.json"
+    environment.getExistingFile(relativePath) match {
       case Some(file) =>
-        Ok(paymentPlanEligibilityString(file))
+        Try(Json.parse(paymentPlanEligibilityString(file))).toOption
+          .map(Ok(_))
+          .getOrElse(InternalServerError(s"stub failed to parse file $relativePath"))
       case _ =>
         NotFound("file not found")
     }
