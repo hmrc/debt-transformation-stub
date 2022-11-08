@@ -21,7 +21,7 @@ import org.mongodb.scala.bson.Document
 import org.mongodb.scala.model.Filters._
 import org.mongodb.scala.model.Updates._
 import org.mongodb.scala.model.{ IndexModel, ReturnDocument }
-import org.mongodb.scala.result.{ DeleteResult, InsertOneResult }
+import org.mongodb.scala.result.DeleteResult
 import play.api.Logger
 import uk.gov.hmrc.debttransformationstub.models._
 import uk.gov.hmrc.mongo.MongoComponent
@@ -36,9 +36,9 @@ case class EnactStage(
   nddsRequest: Option[NDDSRequest] = None,
   etmpRequest: Option[PaymentLockRequest] = None,
   idmsRequest: Option[CreateMonitoringCaseRequest] = None,
-  nddsAttempts: Int = 0,
-  etmpAttempts: Int = 0,
-  idmsAttempts: Int = 0
+  nddsAttempts: Option[Int] = None,
+  etmpAttempts: Option[Int] = None,
+  idmsAttempts: Option[Int] = None
 )
 
 object EnactStage {
@@ -57,10 +57,15 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
 
   private val logger: Logger = Logger(classOf[EnactStageRepository])
 
-  def addNDDSStage(correlationId: String, request: NDDSRequest): Future[InsertOneResult] = {
+  def addNDDSStage(correlationId: String, request: NDDSRequest): Future[EnactStage] = {
     logger.warn(s"Recording NDDS stage request $correlationId")
-    val item = EnactStage(correlationId = correlationId, nddsRequest = Some(request), nddsAttempts = 1)
-    collection.insertOne(item).toFuture
+    collection
+      .findOneAndUpdate(
+        equal("correlationId", correlationId),
+        combine(set("nddsRequest", Codecs.toBson(request)), inc("nddsAttempts", 1)),
+        new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
+      )
+      .toFuture
   }
 
   def addETMPStage(correlationId: String, request: PaymentLockRequest): Future[EnactStage] = {
@@ -69,7 +74,7 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
       .findOneAndUpdate(
         equal("correlationId", correlationId),
         combine(set("etmpRequest", Codecs.toBson(request)), inc("etmpAttempts", 1)),
-        new FindOneAndUpdateOptions().returnDocument(ReturnDocument.AFTER)
+        new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
       )
       .toFuture
   }
@@ -80,7 +85,7 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
       .findOneAndUpdate(
         equal("correlationId", correlationId),
         combine(set("idmsRequest", Codecs.toBson(request)), inc("idmsAttempts", 1)),
-        new FindOneAndUpdateOptions().returnDocument(ReturnDocument.AFTER)
+        new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
       )
       .toFuture
   }
