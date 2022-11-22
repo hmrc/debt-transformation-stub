@@ -29,7 +29,7 @@ import scala.concurrent.Future
 import scala.io.Source
 import scala.util.Try
 
-class ETMPController @Inject() (environment: Environment, cc: ControllerComponents) extends BackendController(cc) {
+class ETMPController @Inject()(environment: Environment, cc: ControllerComponents) extends BackendController(cc) {
 
   private val basePath = "conf/resources/data/etmp.eligibility"
 
@@ -45,7 +45,7 @@ class ETMPController @Inject() (environment: Environment, cc: ControllerComponen
     val relativePath = s"$basePath" + "." + regimeType + "/" + s"$idValue.json"
     environment.getExistingFile(relativePath) match {
       case Some(file) =>
-        Try(Json.parse(paymentPlanEligibilityString(file))).toOption
+        Try(Json.parse(paymentPlanEligibilityString(file, idValue))).toOption
           .map(Ok(_))
           .getOrElse(InternalServerError(s"stub failed to parse file $relativePath"))
       case _ =>
@@ -53,14 +53,18 @@ class ETMPController @Inject() (environment: Environment, cc: ControllerComponen
     }
   }
 
-  def paymentPlanEligibilityString(file: File): String = {
+  def paymentPlanEligibilityString(file: File, idValue: String): String = {
+
     val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-    val dueDate = LocalDate.now().minusDays(24).toString
+    val dueDateInPast = LocalDate.now().minusDays(24).toString
+    val dueDateInFuture = LocalDate.now().plusDays(24).toString
     val responseTemplate = Source.fromFile(file).mkString
 
-    responseTemplate.replaceAll("<DUE_DATE>", LocalDate.parse(dueDate, formatter).toString)
-  }
+    responseTemplate
+      .replaceAll("<DUE_DATE>", LocalDate.parse(dueDateInPast, formatter).toString)
+      .replaceAll("<DUE_DATE_FOR_FUTURE>", LocalDate.parse(dueDateInFuture, formatter).toString)
 
+  }
 }
 
 object ETMPController {
