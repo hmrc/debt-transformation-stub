@@ -29,7 +29,7 @@
   },
     {
       "addressType": "AGENT",
-      "rls": false,
+      "rls": true,
       "postcodeHistory": [{
         "addressPostcode": "BN164QR",
         "postcodeDate": "2022-03-02"
@@ -43,7 +43,7 @@
   },
     {
       "signalType": "Insolvent",
-      "signalValue": "true",
+      "signalValue": "false",
       "signalDescription": "gghsjsl"
     },
     {
