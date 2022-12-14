@@ -16,7 +16,7 @@ isPollingEnv = true
 pollingIntervals = 5000
 ```
 
-Run the service on a specific port
+### Run the service on a specific port
 ```sbt "run 9111"```
 
 Open a new terminal (this will be a long lived request)
@@ -28,7 +28,7 @@ curl --location --request GET 'http://localhost:9111/individuals/subcontractor/i
 --header 'Content-Type: application/json' 
 ```
 
-The document looks like this.
+### The document looks like this.
 ```
 {
     "_id" : ObjectId("621f6bb9ad942e03d6cf1990"),
@@ -40,9 +40,9 @@ The document looks like this.
 }
 ```
 
-Copy the requestId from this mongoDb document in your subsequent request
-The content attribute should be minified and escaped Json
-This content is what will be sent back to the original polling request in the response
+### Copy the requestId from this mongoDb document in your subsequent request
+### The content attribute should be minified and escaped Json
+### This content is what will be sent back to the original polling request in the response
 
 ```
 curl --location --request POST 'http://localhost:9111/test-only/response' \
@@ -54,4 +54,12 @@ curl --location --request POST 'http://localhost:9111/test-only/response' \
   "isResponse" : true
 }'
 ```
+### To apply formatting to this repository using the configured rules in .scalafmt.conf execute:
 
+### To run stub locally 
+sbt "run 10003"
+
+sbt scalafmtAll scalafmtSbt
+### To check files have been formatted as expected execute:
+
+sbt scalafmtCheckAll scalafmtSbtCheck
