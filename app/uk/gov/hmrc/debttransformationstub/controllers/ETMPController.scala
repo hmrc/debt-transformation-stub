@@ -57,11 +57,13 @@ class ETMPController @Inject()(environment: Environment, cc: ControllerComponent
 
     val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
     val dueDateInPast = LocalDate.now().minusDays(24).toString
+    val dueDateToday = LocalDate.now().toString
     val dueDateInFuture = LocalDate.now().plusDays(24).toString
     val responseTemplate = Source.fromFile(file).mkString
 
     responseTemplate
       .replaceAll("<DUE_DATE>", LocalDate.parse(dueDateInPast, formatter).toString)
+      .replaceAll("<DUE_DATE_TODAY>", LocalDate.parse(dueDateToday, formatter).toString)
       .replaceAll("<DUE_DATE_FOR_FUTURE>", LocalDate.parse(dueDateInFuture, formatter).toString)
 
   }
