@@ -18,15 +18,15 @@ package uk.gov.hmrc.debttransformationstub.controllers
 
 import org.apache.commons.io.FileUtils
 import play.api.Environment
-import play.api.libs.json.{ JsValue, Json }
+import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
-import uk.gov.hmrc.debttransformationstub.models.{ CreateMonitoringCaseRequest, CreatePlanRequest, GenerateQuoteRequest, NDDSRequest, PaymentLockRequest }
+import uk.gov.hmrc.debttransformationstub.models._
+import uk.gov.hmrc.debttransformationstub.repositories.{EnactStage, EnactStageRepository}
 import uk.gov.hmrc.debttransformationstub.services.TTPPollingService
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
-import uk.gov.hmrc.debttransformationstub.repositories.{ EnactStage, EnactStageRepository }
 
 import java.io.File
 import java.nio.charset.Charset
@@ -36,7 +36,7 @@ import scala.concurrent.Future
 import scala.io.Source
 import scala.util.Try
 
-class TimeToPayController @Inject() (
+class TimeToPayController @Inject()(
   environment: Environment,
   cc: ControllerComponents,
   appConfig: AppConfig,
@@ -127,15 +127,31 @@ class TimeToPayController @Inject() (
 
   def nddsEnactArrangement: Action[JsValue] = Action.async(parse.json) { implicit request =>
     val correlationId = getCorrelationIdHeader(request.headers)
-    withCustomJsonBody[NDDSRequest] { req =>
-      val brocsId = req.identification
-        .find(_.idType.equalsIgnoreCase("BROCS"))
-        .map(_.idValue)
-        .getOrElse(throw new IllegalArgumentException("BROCS id is required for NDDS enact arrangement"))
-      for {
-        _            <- enactStageRepository.addNDDSStage(correlationId, req)
-        fileResponse <- findFile(s"/ndds.enactArrangement/", s"$brocsId.json")
-      } yield fileResponse
+    if (request.body.toString().contains("PAYE")) {
+      withCustomJsonBody[NDDSRequest] { req =>
+        val brocsId = req.identification
+          .find(_.idType.equalsIgnoreCase("BROCS"))
+          .map(_.idValue)
+          .getOrElse(throw new IllegalArgumentException("BROCS id is required for PAYE NDDS enact arrangement"))
+        for {
+          _            <- enactStageRepository.addNDDSStage(correlationId, req)
+          fileResponse <- findFile(s"/ndds.enactArrangement/", s"$brocsId.json")
+        } yield fileResponse
+      }
+    } else if (request.body.toString().contains("VATC")) {
+      withCustomJsonBody[NDDSRequest] { req =>
+        val vrnId = req.identification
+          .find(_.idType.equalsIgnoreCase("VRN"))
+          .map(_.idValue)
+          .getOrElse(throw new IllegalArgumentException("VRN id is required for VAT NDDS enact arrangement"))
+        for {
+          _            <- enactStageRepository.addNDDSStage(correlationId, req)
+          fileResponse <- findFile(s"/ndds.enactArrangement/", s"$vrnId.json")
+        } yield fileResponse
+      }
+    } else {
+      throw new IllegalArgumentException(
+        "Either BROCS or VRN id type is required for PAYE and VAT an enact arrangement")
     }
   }
 
