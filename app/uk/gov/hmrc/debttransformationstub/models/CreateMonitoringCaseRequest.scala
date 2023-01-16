@@ -22,14 +22,14 @@ import java.time.LocalDate
 
 final case class CreateMonitoringCaseRequest(
   channelIdentifier: String,
-  arrangementAgreedDate: LocalDate,
+  lockFromDate: LocalDate,
   paymentPlanStartDate: LocalDate,
   totalLiability: BigDecimal,
   initialPaymentDate: LocalDate,
   initialPaymentAmount: BigDecimal,
   paymentPlanCollectionAmount: BigDecimal,
   paymentPlanFrequency: String,
-  arrangementReviewDate: LocalDate,
+  lockToDate: LocalDate,
   regimeType: String,
   etmpChargesMarked: Boolean,
   ddiReference: String,
