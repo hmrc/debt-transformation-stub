@@ -1,48 +1,41 @@
 {
   "processingDateTime": "2022-03-23T13:49:51Z",
-  "identification": [
-    {
-      "idType": "VRN",
-      "idValue": "7381726332"
-    }
-  ],
-  "addresses": [
-    {
-      "addressType": "PPOB",
-      "rls": false,
-      "emailAddress": "joe@snailmail.com",
-      "postcodeHistory": [
-        {
-          "addressPostcode": "BN127ER",
-          "postcodeDate": "2022-05-22"
-        },
-        {
-          "addressPostcode": "BN129ER",
-          "postcodeDate": "2022-02-28"
-        },
-        {
-          "addressPostcode": "BN119ER",
-          "postcodeDate": "2001-01-31"
-        }
-      ]
+  "identification": [{
+    "idType": "VRN",
+    "idValue": "7381726332"
+  }],
+  "addresses": [{
+    "addressType": "PPOB",
+    "rls": false,
+    "emailAddress": "joe@snailmail.com",
+    "postcodeHistory": [{
+      "addressPostcode": "BN127ER",
+      "postcodeDate": "2022-05-22"
     },
+      {
+        "addressPostcode": "BN129ER",
+        "postcodeDate": "2022-02-28"
+      },
+      {
+        "addressPostcode": "BN119ER",
+        "postcodeDate": "2001-01-31"
+      }
+    ]
+  },
     {
       "addressType": "AGENT",
       "rls": false,
-      "postcodeHistory": [
-        {
-          "addressPostcode": "BN164QR",
-          "postcodeDate": "2022-03-02"
-        }
-      ]
+      "postcodeHistory": [{
+        "addressPostcode": "BN164QR",
+        "postcodeDate": "2022-03-02"
+      }]
     }
   ],
-  "signals": [
-    {
-      "signalType": "RLS",
-      "signalValue": "false",
-      "signalDescription": "gghsjsl"
-    },
+  "signals": [{
+    "signalType": "RLS",
+    "signalValue": "false",
+    "signalDescription": "gghsjsl"
+  },
     {
       "signalType": "Insolvent",
       "signalValue": "false",
@@ -55,19 +48,17 @@
     }
   ],
 
-  "charges": [
-    {
-      "chargeType": "VAT Mig Return Debit Charge",
-      "mainType": "VAT Mig Return Charge",
-      "mainTrans": "5330",
-      "subTrans": "7006",
-      "taxPeriodFrom": "2022-02-06",
-      "taxPeriodTo": "2022-03-05",
-      "chargeReference": "XM123456789812",
-      "outstandingAmount": 19999.00,
-      "dueDate": "<DUE_DATE>",
-      "interestStartDate": "2022-03-19",
-      "accruedInterest": 1.00,
-    }
-  ]
+  "charges": [{
+    "chargeType": "VAT Mig Return Debit Charge",
+    "mainType": "VAT Mig Return Charge",
+    "mainTrans": "5330",
+    "subTrans": "7006",
+    "taxPeriodFrom": "2022-02-06",
+    "taxPeriodTo": "2022-03-05",
+    "chargeReference": "XM123456789812",
+    "outstandingAmount": 19999.00,
+    "dueDate": "<DUE_DATE>",
+    "interestStartDate": "2022-03-19",
+    "accruedInterest": 1.00
+  }]
 }
