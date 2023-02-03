@@ -51,8 +51,8 @@
   "charges": [{
     "chargeType": "VAT Mig Return Debit Charge",
     "mainType": "VAT Mig Return Charge",
-    "mainTrans": "5330",
-    "subTrans": "7006",
+    "mainTrans": "4700",
+    "subTrans": "1174",
     "taxPeriodFrom": "2022-02-06",
     "taxPeriodTo": "2022-03-05",
     "chargeReference": "XM123456789812",
