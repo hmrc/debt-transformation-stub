@@ -138,7 +138,7 @@ class TimeToPayController @Inject()(
           fileResponse <- findFile(s"/ndds.enactArrangement/", s"$brocsId.json")
         } yield fileResponse
       }
-    } else if (request.body.toString().contains("VATC")) {
+    } else if (request.body.toString().contains("VAT")) {
       withCustomJsonBody[NDDSRequest] { req =>
         val vrnId = req.identification
           .find(_.idType.equalsIgnoreCase("VRN"))
