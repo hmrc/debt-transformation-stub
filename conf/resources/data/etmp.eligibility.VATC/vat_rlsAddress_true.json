@@ -11,7 +11,7 @@
   ],
   "addresses": [{
     "addressType": "PPOB",
-    "rls": false,
+    "rls": true,
     "emailAddress": "joe@snailmail.com",
     "postcodeHistory": [{
       "addressPostcode": "BN127ER",
