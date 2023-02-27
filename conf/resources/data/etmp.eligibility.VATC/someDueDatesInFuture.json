@@ -71,17 +71,7 @@
       "outstandingAmount": 19999.00,
       "dueDate": "<DUE_DATE>",
       "interestStartDate": "2022-03-19",
-      "accruedInterest": 1.00,
-      "locks": [
-        {
-          "lockType": "Dunning",
-          "lockReason": "Appeal"
-        },
-        {
-          "lockType": "Calculate Interest",
-          "lockReason": "Appeal"
-        }
-      ]
+      "accruedInterest": 1.00
     },
     {
       "chargeType": "VAT Mig Return Debit Charge",
@@ -94,17 +84,7 @@
       "outstandingAmount": 19999.00,
       "dueDate": "<DUE_DATE_FOR_FUTURE>",
       "interestStartDate": "2022-03-19",
-      "accruedInterest": 1.00,
-      "locks": [
-        {
-          "lockType": "Dunning",
-          "lockReason": "Appeal"
-        },
-        {
-          "lockType": "Calculate Interest",
-          "lockReason": "Appeal"
-        }
-      ]
+      "accruedInterest": 1.00
     }
   ]
 }
