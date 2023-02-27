@@ -38,7 +38,7 @@
   ],
   "signals": [{
     "signalType": "RLS",
-    "signalValue": "false",
+    "signalValue": "true",
     "signalDescription": "thhe"
   },
     {
@@ -64,13 +64,10 @@
     "dueDate": "<DUE_DATE>",
     "interestStartDate": "2022-03-19",
     "accruedInterest": 2.09,
-    "locks": [{
-      "lockType": "Dunning",
-      "lockReason": "Appeal"
-    },
+    "locks": [
       {
         "lockType": "Calculate Interest",
-        "lockReason": "Appeal"
+        "lockReason": "Breathing Space Moratorium Act"
       }
     ]
   }]

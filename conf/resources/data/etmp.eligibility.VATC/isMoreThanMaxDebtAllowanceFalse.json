@@ -64,14 +64,14 @@
       "icrDescription": "RTI - PAYE - Monthly Returns",
       "fromDate": "2022-03-01",
       "toDate": "2022-03-28",
-      "dueDate": "2022-04-22"
+      "dueDate": "2023-04-22"
     },
     {
       "icrCategory": "ZR01",
       "icrDescription": "RTI - PAYE - Monthly Returns",
       "fromDate": "2022-04-06",
       "toDate": "2022-05-05",
-      "dueDate": "2022-05-22"
+      "dueDate": "2023-05-22"
     }
   ],
   "charges": [
@@ -90,11 +90,11 @@
       "locks": [
         {
           "lockType": "Dunning",
-          "lockReason": "Appeal"
+          "lockReason": "TC Debt Notification to DWP"
         },
         {
           "lockType": "Calculate Interest",
-          "lockReason": "Appeal"
+          "lockReason": "Clerical Interest Signal"
         }
       ]
     }
