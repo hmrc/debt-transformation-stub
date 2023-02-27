@@ -52,23 +52,25 @@
       "signalDescription": "099988"
     }
   ],
-  "charges": [{
-    "chargeType": "VAT Return Debit Charge",
-    "mainType": "VAT Return charge",
-    "mainTrans": "4700",
-    "subTrans": "1174",
-    "taxPeriodFrom": "2022-02-06",
-    "taxPeriodTo": "2022-03-05",
-    "chargeReference": "XM123456789812",
-    "outstandingAmount": 1234.56,
-    "dueDate": "<DUE_DATE>",
-    "interestStartDate": "2022-03-19",
-    "accruedInterest": 2.09,
-    "locks": [
-      {
-        "lockType": "Calculate Interest",
-        "lockReason": "Breathing Space Moratorium Act"
-      }
-    ]
-  }]
+  "charges": [
+    {
+      "chargeType": "VAT Return Debit Charge",
+      "mainType": "VAT Return charge",
+      "mainTrans": "4700",
+      "subTrans": "1174",
+      "taxPeriodFrom": "2022-02-06",
+      "taxPeriodTo": "2022-03-05",
+      "chargeReference": "XM123456789812",
+      "outstandingAmount": 1234.56,
+      "dueDate": "<DUE_DATE>",
+      "interestStartDate": "2022-03-19",
+      "accruedInterest": 2.09,
+      "locks": [
+        {
+          "lockType": "Calculate Interest",
+          "lockReason": "Breathing Space Moratorium Act"
+        }
+      ]
+    }
+  ]
 }
