@@ -90,7 +90,8 @@
       "locks": [
         {
           "lockType": "Calculate Interest",
-          "lockReason": "manual RPI Signal"
+          "lockReason": "manual RPI Signal",
+
         }
       ]
     }
