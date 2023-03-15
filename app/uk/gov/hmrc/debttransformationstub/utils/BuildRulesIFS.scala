@@ -16,28 +16,25 @@
 
 package uk.gov.hmrc.debttransformationstub.utils
 
-import uk.gov.hmrc.http.HeaderCarrier
-
 import java.util.Base64
 
 object BuildRulesIFS extends App {
-//Uncomment the below encodedList method (PR builder does not allow for println())
 
-//  def encodeList(notEncodedRuleValues: List[String], num: Int): Unit = {
-//        if (notEncodedRuleValues.isEmpty) {
-//          Nil
-//        } else {
-//          val rule = notEncodedRuleValues.head
-//          val encoded = new String(Base64.getEncoder.encodeToString(rule.getBytes()))
-//          val rules = s"service-config.rules.$num: " + encoded + "\n" + s"# $rule"
-//          println(rules)
-//          encodeList(notEncodedRuleValues.tail, num + 1)
-//        }
-//  }
+  def encodeList(notEncodedRuleValues: List[String], num: Int): String  = {
+    if (notEncodedRuleValues.isEmpty) {
+      ""
+    } else {
+      val rule = notEncodedRuleValues.head
+      val encoded = new String(Base64.getEncoder.encodeToString(rule.getBytes()))
+      val rules = s"service-config.rules.$num: " + encoded + "\n" + s"# $rule" + "\n"
+      rules + encodeList(notEncodedRuleValues.tail, num + 1)
+    }
+
+  }
 
 //     e.g.  encodeList(
 //        List("IF mainTrans == '4794' AND subTrans == '1175' -> intRate = 0 AND interestOnlyDebt = true",
 //        "IF mainTrans == '4797' AND subTrans == '1175' -> intRate = 0 AND interestOnlyDebt = true"),
-//        174)
+//        174) // when you call this method put it in a print line
 
 }
