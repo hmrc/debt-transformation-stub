@@ -19,8 +19,7 @@ package uk.gov.hmrc.debttransformationstub.services
 import java.time.LocalDateTime
 import java.util.UUID
 import javax.inject.{ Inject, Singleton }
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{Future, ExecutionContext}
 import play.api.libs.json.JsValue
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
 import uk.gov.hmrc.debttransformationstub.models.RequestDetail
@@ -31,7 +30,7 @@ import play.api.libs.json.Json
 class DebtManagementAPIPollingService @Inject() (
   ttpRequestsRepository: TTPRequestsRepository,
   appConfig: AppConfig
-) {
+)(implicit ec: ExecutionContext) {
 
   def insertFCChargeRequestAndServeResponse(
     request: JsValue,

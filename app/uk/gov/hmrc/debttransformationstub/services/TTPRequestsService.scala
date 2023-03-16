@@ -26,8 +26,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 
 import java.time.LocalDateTime
 import javax.inject.{ Inject, Singleton }
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{Future, ExecutionContext}
 
 @ImplementedBy(classOf[DefaultTTPRequestsService])
 trait TTPRequestsService {
@@ -45,7 +44,7 @@ trait TTPRequestsService {
 }
 
 @Singleton
-class DefaultTTPRequestsService @Inject() (ttpRequestsRepository: TTPRequestsRepository) extends TTPRequestsService {
+class DefaultTTPRequestsService @Inject() (ttpRequestsRepository: TTPRequestsRepository)(implicit ec: ExecutionContext) extends TTPRequestsService {
 
   override def addRequestDetails(
     requestDetailsRequest: RequestDetail

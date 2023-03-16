@@ -31,8 +31,7 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import java.io.File
 import java.nio.charset.Charset
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{Future, ExecutionContext}
 import scala.io.Source
 import scala.util.Try
 
@@ -42,7 +41,7 @@ class TimeToPayController @Inject()(
   appConfig: AppConfig,
   ttpPollingService: TTPPollingService,
   enactStageRepository: EnactStageRepository
-) extends BackendController(cc) with CustomBaseController {
+)(implicit ec: ExecutionContext) extends BackendController(cc) with CustomBaseController {
 
   private lazy val logger = new RequestAwareLogger(this.getClass)
   private val basePath = "conf/resources/data"
