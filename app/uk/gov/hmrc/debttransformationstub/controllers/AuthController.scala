@@ -18,7 +18,6 @@ package uk.gov.hmrc.debttransformationstub.controllers
 
 import play.api.Environment
 import play.api.mvc.ControllerComponents
-import uk.gov.hmrc.debttransformationstub.utils.AuthCredential
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.Inject
@@ -26,7 +25,7 @@ import scala.concurrent.Future
 import scala.io.Source
 
 class AuthController @Inject() (environment: Environment, cc: ControllerComponents)
-    extends BackendController(cc) with BaseController {
+    extends BackendController(cc) with CustomBaseController {
 
   def getAccessToken() = Action(parse.tolerantFormUrlEncoded).async { implicit request =>
     Future successful Accepted(

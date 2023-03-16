@@ -33,7 +33,7 @@ class TimeToPayTestController @Inject() (
   cc: ControllerComponents,
   ttpRequestsService: TTPRequestsService
 )(implicit val executionContext: ExecutionContext)
-    extends BackendController(cc) with BaseController {
+    extends BackendController(cc) with CustomBaseController {
 
   private val logger = new RequestAwareLogger(this.getClass)
   val XCorrelationId = "X-Correlation-Id"

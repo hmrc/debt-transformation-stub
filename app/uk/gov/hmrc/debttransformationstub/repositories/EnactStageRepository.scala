@@ -65,7 +65,7 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
         combine(set("nddsRequest", Codecs.toBson(request)), inc("nddsAttempts", 1)),
         new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
       )
-      .toFuture
+      .toFuture()
   }
 
   def addETMPStage(correlationId: String, request: PaymentLockRequest): Future[EnactStage] = {
@@ -76,7 +76,7 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
         combine(set("etmpRequest", Codecs.toBson(request)), inc("etmpAttempts", 1)),
         new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
       )
-      .toFuture
+      .toFuture()
   }
 
   def addIDMSStage(correlationId: String, request: CreateMonitoringCaseRequest): Future[EnactStage] = {
@@ -87,12 +87,12 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
         combine(set("idmsRequest", Codecs.toBson(request)), inc("idmsAttempts", 1)),
         new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
       )
-      .toFuture
+      .toFuture()
   }
 
   def findByCorrelationId(correlationId: String): Future[Option[EnactStage]] =
-    collection.find(equal("correlationId", correlationId)).headOption
+    collection.find(equal("correlationId", correlationId)).headOption()
 
-  def deleteAll(): Future[DeleteResult] = collection.deleteMany(Document()).toFuture
+  def deleteAll(): Future[DeleteResult] = collection.deleteMany(Document()).toFuture()
 
 }

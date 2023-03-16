@@ -15,24 +15,22 @@
  */
 
 package uk.gov.hmrc.debttransformationstub.controllers
-import java.io.File
-import javax.inject.Inject
 import play.api.Environment
-import play.api.libs.json.{ JsValue, Json }
-import play.api.mvc.{ Action, ControllerComponents, Request }
-import uk.gov.hmrc.debttransformationstub.config.AppConfig
+import play.api.libs.json.JsValue
+import play.api.mvc.{Action, ControllerComponents, Request}
 import uk.gov.hmrc.debttransformationstub.models.casemanagement.CreateCaseRequest
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
-import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
+import java.io.File
+import javax.inject.Inject
 import scala.concurrent.Future
 import scala.io.Source
 
 class CaseManagementController @Inject() (
   environment: Environment,
   cc: ControllerComponents
-) extends BackendController(cc) with BaseController {
+) extends BackendController(cc) with CustomBaseController {
   private lazy val logger = new RequestAwareLogger(this.getClass)
 
   private val basePath = "conf/resources/data"

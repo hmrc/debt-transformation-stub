@@ -18,11 +18,10 @@ package uk.gov.hmrc.debttransformationstub.controllers
 
 import play.api.Environment
 import play.api.mvc._
-import uk.gov.hmrc.debttransformationstub.utils.{ ListHelper, RequestAwareLogger }
-import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.debttransformationstub.utils.{ListHelper, RequestAwareLogger}
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
-import javax.inject.{ Inject, Singleton }
+import javax.inject.{Inject, Singleton}
 import scala.io.Source
 
 @Singleton()

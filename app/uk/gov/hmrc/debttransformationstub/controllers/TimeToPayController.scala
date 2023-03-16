@@ -42,7 +42,7 @@ class TimeToPayController @Inject()(
   appConfig: AppConfig,
   ttpPollingService: TTPPollingService,
   enactStageRepository: EnactStageRepository
-) extends BackendController(cc) with BaseController {
+) extends BackendController(cc) with CustomBaseController {
 
   private lazy val logger = new RequestAwareLogger(this.getClass)
   private val basePath = "conf/resources/data"

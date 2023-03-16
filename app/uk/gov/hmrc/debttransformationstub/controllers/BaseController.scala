@@ -26,7 +26,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 import scala.concurrent.Future
 import scala.util.{ Failure, Success, Try }
 
-trait BaseController {
+trait CustomBaseController {
   private lazy val logger = new RequestAwareLogger(this.getClass)
 
   def withCustomJsonBody[T](
