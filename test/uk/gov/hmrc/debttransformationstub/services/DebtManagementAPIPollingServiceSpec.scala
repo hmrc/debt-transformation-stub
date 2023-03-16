@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import org.mockito.scalatest.MockitoSugar
 import org.mongodb.scala.result.InsertOneResult
 import org.scalatest.WordSpec
 import org.scalatest.matchers.should.Matchers
+import org.scalatestplus.play.guice.GuiceOneServerPerSuite
 import play.api.libs.json.Json
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
 import uk.gov.hmrc.debttransformationstub.models.RequestDetail
@@ -28,9 +29,10 @@ import uk.gov.hmrc.debttransformationstub.repositories.TTPRequestsRepository
 
 import java.time.LocalDateTime
 import scala.concurrent.duration.Duration
-import scala.concurrent.{ Await, Future }
+import scala.concurrent.{ Await, ExecutionContext, Future }
 
-class DebtManagementAPIPollingServiceSpec extends WordSpec with Matchers with MockitoSugar {
+class DebtManagementAPIPollingServiceSpec extends WordSpec with Matchers with MockitoSugar with GuiceOneServerPerSuite {
+  implicit lazy val ec = app.injector.instanceOf[ExecutionContext]
 
   "the DebtManagementAPIPollingService" should {
     "not rewrite a URL for field collections charge, stripping path params" in {

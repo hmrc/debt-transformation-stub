@@ -19,7 +19,7 @@ package uk.gov.hmrc.debttransformationstub.services
 import java.time.LocalDateTime
 import java.util.UUID
 import javax.inject.{ Inject, Singleton }
-import scala.concurrent.{Future, ExecutionContext}
+import scala.concurrent.{ ExecutionContext, Future }
 import play.api.libs.json.JsValue
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
 import uk.gov.hmrc.debttransformationstub.models.RequestDetail

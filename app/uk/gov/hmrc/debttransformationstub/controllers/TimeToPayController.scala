@@ -18,11 +18,11 @@ package uk.gov.hmrc.debttransformationstub.controllers
 
 import org.apache.commons.io.FileUtils
 import play.api.Environment
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.{ JsValue, Json }
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
 import uk.gov.hmrc.debttransformationstub.models._
-import uk.gov.hmrc.debttransformationstub.repositories.{EnactStage, EnactStageRepository}
+import uk.gov.hmrc.debttransformationstub.repositories.{ EnactStage, EnactStageRepository }
 import uk.gov.hmrc.debttransformationstub.services.TTPPollingService
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.http.HeaderCarrier
@@ -31,17 +31,18 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import java.io.File
 import java.nio.charset.Charset
 import javax.inject.Inject
-import scala.concurrent.{Future, ExecutionContext}
+import scala.concurrent.{ ExecutionContext, Future }
 import scala.io.Source
 import scala.util.Try
 
-class TimeToPayController @Inject()(
+class TimeToPayController @Inject() (
   environment: Environment,
   cc: ControllerComponents,
   appConfig: AppConfig,
   ttpPollingService: TTPPollingService,
   enactStageRepository: EnactStageRepository
-)(implicit ec: ExecutionContext) extends BackendController(cc) with CustomBaseController {
+)(implicit ec: ExecutionContext)
+    extends BackendController(cc) with CustomBaseController {
 
   private lazy val logger = new RequestAwareLogger(this.getClass)
   private val basePath = "conf/resources/data"
@@ -150,7 +151,8 @@ class TimeToPayController @Inject()(
       }
     } else {
       throw new IllegalArgumentException(
-        "Either BROCS or VRN id type is required for PAYE and VAT an enact arrangement")
+        "Either BROCS or VRN id type is required for PAYE and VAT an enact arrangement"
+      )
     }
   }
 

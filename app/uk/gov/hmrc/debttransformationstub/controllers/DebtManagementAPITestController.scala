@@ -20,13 +20,13 @@ import play.api.Environment
 import play.api.libs.json.Json
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
-import uk.gov.hmrc.debttransformationstub.models.debtmanagment.{FCTemplateRequest, RaiseAmendFeeRequest}
+import uk.gov.hmrc.debttransformationstub.models.debtmanagment.{ FCTemplateRequest, RaiseAmendFeeRequest }
 import uk.gov.hmrc.debttransformationstub.services.DebtManagementAPIPollingService
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
-import javax.inject.{Inject, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import javax.inject.{ Inject, Singleton }
+import scala.concurrent.{ ExecutionContext, Future }
 import scala.io.Source
 
 @Singleton()

@@ -18,7 +18,7 @@ package uk.gov.hmrc.debttransformationstub.controllers
 
 import play.api.Environment
 import play.api.libs.json.Json
-import play.api.mvc.{Action, AnyContent, ControllerComponents}
+import play.api.mvc.{ Action, AnyContent, ControllerComponents }
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import java.io.File
@@ -28,7 +28,7 @@ import javax.inject.Inject
 import scala.io.Source
 import scala.util.Try
 
-class ETMPController @Inject()(environment: Environment, cc: ControllerComponents) extends BackendController(cc) {
+class ETMPController @Inject() (environment: Environment, cc: ControllerComponents) extends BackendController(cc) {
 
   private val basePath = "conf/resources/data/etmp.eligibility"
 
