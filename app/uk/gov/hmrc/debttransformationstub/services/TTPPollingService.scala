@@ -24,8 +24,7 @@ import uk.gov.hmrc.debttransformationstub.repositories.TTPRequestsRepository
 
 import java.time.LocalDateTime
 import javax.inject.{ Inject, Singleton }
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ ExecutionContext, Future }
 
 @ImplementedBy(classOf[DefaultTTPPollingService])
 trait TTPPollingService {
@@ -33,8 +32,9 @@ trait TTPPollingService {
 }
 
 @Singleton
-class DefaultTTPPollingService @Inject() (ttpRequestsRepository: TTPRequestsRepository, appConfig: AppConfig)
-    extends TTPPollingService {
+class DefaultTTPPollingService @Inject() (ttpRequestsRepository: TTPRequestsRepository, appConfig: AppConfig)(implicit
+  ec: ExecutionContext
+) extends TTPPollingService {
 
   override def insertRequestAndServeResponse(request: JsValue, uri: Option[String]): Future[Option[RequestDetail]] = {
     val requestId = java.util.UUID.randomUUID.toString

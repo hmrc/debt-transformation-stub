@@ -25,11 +25,10 @@ import java.io.File
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
-import scala.concurrent.Future
 import scala.io.Source
 import scala.util.Try
 
-class ETMPController @Inject()(environment: Environment, cc: ControllerComponents) extends BackendController(cc) {
+class ETMPController @Inject() (environment: Environment, cc: ControllerComponents) extends BackendController(cc) {
 
   private val basePath = "conf/resources/data/etmp.eligibility"
 

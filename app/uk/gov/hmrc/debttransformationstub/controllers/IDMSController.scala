@@ -29,7 +29,7 @@ import javax.inject.Inject
 import scala.concurrent.Future
 
 class IDMSController @Inject() (environment: Environment, cc: ControllerComponents)
-    extends BackendController(cc) with BaseController {
+    extends BackendController(cc) with CustomBaseController {
 
   private lazy val logger = new RequestAwareLogger(this.getClass)
   private val basePath = "conf/resources/data/idms"

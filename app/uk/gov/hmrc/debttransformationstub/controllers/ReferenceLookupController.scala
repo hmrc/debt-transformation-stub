@@ -16,11 +16,10 @@
 
 package uk.gov.hmrc.debttransformationstub.controllers
 
-import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
-import play.api.mvc._
 import play.api.Environment
+import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.utils.{ ListHelper, ReferenceDataLookupRequest, RequestAwareLogger }
-import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import java.io.File
 import javax.inject.{ Inject, Singleton }
@@ -31,7 +30,7 @@ import scala.io.Source
 class ReferenceLookupController @Inject() (
   environment: Environment,
   cc: ControllerComponents
-) extends BackendController(cc) with BaseController {
+) extends BackendController(cc) with CustomBaseController {
 
   private val basePath = "conf/resources/data"
   private val refPath = "/data/"
