@@ -58,12 +58,16 @@ class ETMPController @Inject() (environment: Environment, cc: ControllerComponen
     val dueDateInPast = LocalDate.now().minusDays(24).toString
     val dueDateToday = LocalDate.now().toString
     val dueDateInFuture = LocalDate.now().plusDays(24).toString
+    val dueDateOverMaxDebtAge = LocalDate.now().minusDays(29).toString
+    val dueDateEqualsMaxDebtAge = LocalDate.now().minusDays(28).toString
     val responseTemplate = Source.fromFile(file).mkString
 
     responseTemplate
       .replaceAll("<DUE_DATE>", LocalDate.parse(dueDateInPast, formatter).toString)
       .replaceAll("<DUE_DATE_TODAY>", LocalDate.parse(dueDateToday, formatter).toString)
       .replaceAll("<DUE_DATE_FOR_FUTURE>", LocalDate.parse(dueDateInFuture, formatter).toString)
+      .replaceAll("<DUE_DATE_OVER_MAX_DEBT_AGE>", LocalDate.parse(dueDateOverMaxDebtAge, formatter).toString)
+      .replaceAll("<DUE_DATE_EQUALS_MAX_DEBT_AGE>", LocalDate.parse(dueDateEqualsMaxDebtAge, formatter).toString)
 
   }
 }
