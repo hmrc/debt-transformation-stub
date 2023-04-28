@@ -3,11 +3,11 @@
   "identification": [
     {
       "idType": "EMPREF",
-      "idValue": "964FZ00049"
+      "idValue": "864FZ00049"
     },
     {
-      "idType": "VRN",
-      "idValue": "7381726332"
+      "idType": "BROCS",
+      "idValue": "6381726332"
     }
   ],
   "addresses": [
@@ -45,33 +45,60 @@
     {
       "signalType": "RLS",
       "signalValue": "false",
-      "signalDescription": "gghsjsl"
+      "signalDescription": "false"
     },
     {
       "signalType": "Insolvent",
       "signalValue": "false",
-      "signalDescription": "gghsjsl"
+      "signalDescription": "false"
     },
     {
       "signalType": "Payment Frequency",
       "signalValue": "Monthly",
-      "signalDescription": "gghsjsl"
+      "signalDescription": "false"
+    }
+  ],
+  "filing": [
+    {
+      "icrCategory": "ZR01",
+      "icrDescription": "RTI - PAYE - Monthly Returns",
+      "fromDate": "2022-03-06",
+      "toDate": "2022-04-05",
+      "dueDate": "2022-04-22"
+    },
+    {
+      "icrCategory": "ZR01",
+      "icrDescription": "RTI - PAYE - Monthly Returns",
+      "fromDate": "2022-04-06",
+      "toDate": "2022-05-05",
+      "dueDate": "2022-05-22"
     }
   ],
 
   "charges": [
     {
-      "chargeType": "VAT Mig Return Debit Charge",
-      "mainType": "VAT Mig Return Charge",
-      "mainTrans": "7700",
-      "subTrans": "1174",
+      "chargeType": "In Year RTI Charge - Tax",
+      "mainType": "In Year RTI Charge (FPS)",
+      "mainTrans": "2000",
+      "subTrans": "1000",
       "taxPeriodFrom": "2022-02-06",
       "taxPeriodTo": "2022-03-05",
       "chargeReference": "XM123456789812",
-      "outstandingAmount": 19999.00,
-      "dueDate": "<DUE_DATE_EQUALS_MAX_DEBT_AGE_VATC>",
+      "outstandingAmount": 1234.56,
+      "dueDate": "<DUE_DATE_OVER_MAX_DEBT_AGE_PAYE>",
       "interestStartDate": "2022-03-19",
-      "accruedInterest": 1.00
+      "accruedInterest": 2.09,
+      "locks": [
+        {
+          "lockType": "Dunning",
+          "lockReason": "Suspension (Alleged appeal)"
+
+        },
+        {
+          "lockType": "Calculate Interest",
+          "lockReason": "Clerical Interest Signal"
+        }
+      ]
     }
   ]
 }
