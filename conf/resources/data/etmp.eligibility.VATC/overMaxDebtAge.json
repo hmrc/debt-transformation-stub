@@ -69,7 +69,7 @@
       "taxPeriodTo": "2022-03-05",
       "chargeReference": "XM123456789812",
       "outstandingAmount": 19999.00,
-      "dueDate": "<DUE_DATE_OVER_MAX_DEBT_AGE>",
+      "dueDate": "<DUE_DATE_OVER_MAX_DEBT_AGE_VATC>",
       "interestStartDate": "2022-03-19",
       "accruedInterest": 1.00
     }
