@@ -1,6 +1,6 @@
 {
-  "mainTrans": "3996",
-  "subTrans": "1091",
+  "mainTrans": "3997",
+  "subTrans": "2091",
   "debtTypeDescription":"Inland Border Facilities (IBF) and Offshore Facilitation Penalties (OFP)",
-  "dutyTypeDescription": "IBFANDOFPInterestBearing"
+  "dutyTypeDescription": "IBFANDOFPNonInterestBearing"
 }
