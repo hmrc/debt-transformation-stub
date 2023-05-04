@@ -58,12 +58,20 @@ class ETMPController @Inject() (environment: Environment, cc: ControllerComponen
     val dueDateInPast = LocalDate.now().minusDays(24).toString
     val dueDateToday = LocalDate.now().toString
     val dueDateInFuture = LocalDate.now().plusDays(24).toString
+    val dueDateOverMaxDebtAgeVATC = LocalDate.now().minusDays(29).toString
+    val dueDateEqualsMaxDebtAgeVATC = LocalDate.now().minusDays(28).toString
+    val dueDateOverMaxDebtAgePAYE = LocalDate.now().minusDays(36).toString
+    val dueDateEqualsMaxDebtAgePAYE = LocalDate.now().minusDays(35).toString
     val responseTemplate = Source.fromFile(file).mkString
 
     responseTemplate
       .replaceAll("<DUE_DATE>", LocalDate.parse(dueDateInPast, formatter).toString)
       .replaceAll("<DUE_DATE_TODAY>", LocalDate.parse(dueDateToday, formatter).toString)
       .replaceAll("<DUE_DATE_FOR_FUTURE>", LocalDate.parse(dueDateInFuture, formatter).toString)
+      .replaceAll("<DUE_DATE_OVER_MAX_DEBT_AGE_VATC>", LocalDate.parse(dueDateOverMaxDebtAgeVATC, formatter).toString)
+      .replaceAll("<DUE_DATE_EQUALS_MAX_DEBT_AGE_VATC>", LocalDate.parse(dueDateEqualsMaxDebtAgeVATC, formatter).toString)
+      .replaceAll("<DUE_DATE_OVER_MAX_DEBT_AGE_PAYE>", LocalDate.parse(dueDateOverMaxDebtAgePAYE, formatter).toString)
+      .replaceAll("<DUE_DATE_EQUALS_MAX_DEBT_AGE_PAYE>", LocalDate.parse(dueDateEqualsMaxDebtAgePAYE, formatter).toString)
 
   }
 }
