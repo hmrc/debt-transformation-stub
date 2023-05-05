@@ -76,8 +76,8 @@
   ],
   "charges": [
     {
-      "chargeType": "In Year RTI Charge - Tax",
-      "mainType": "In Year RTI Charge (FPS)",
+      "chargeType": "VAT Indirect Tax Revenue Rec",
+      "mainType": "VAT Debit",
       "mainTrans": "4711",
       "subTrans": "1174",
       "taxPeriodFrom": "2022-02-06",
