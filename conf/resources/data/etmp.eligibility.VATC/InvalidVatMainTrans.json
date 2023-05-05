@@ -99,9 +99,9 @@
       ]
     },
     {
-      "chargeType": "VAT Mig Return Debit Charge - 2",
-      "mainType": "VAT Mig Return Charge",
-      "mainTrans": "4730",
+      "chargeType": "VAT Indirect Tax Revenue Rec",
+      "mainType": "VAT Debit",
+      "mainTrans": "4711",
       "subTrans": "1174",
       "taxPeriodFrom": "2022-02-06",
       "taxPeriodTo": "2022-03-05",
