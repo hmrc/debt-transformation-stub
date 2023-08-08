@@ -18,9 +18,10 @@ package uk.gov.hmrc.debttransformationstub.controllers
 
 import org.apache.commons.io.FileUtils
 import play.api.Environment
-import play.api.libs.json.{ JsValue, Json }
-import play.api.mvc.{ Action, ControllerComponents, Request }
+import play.api.libs.json.{JsValue, Json}
+import play.api.mvc.{Action, ControllerComponents, Request}
 import uk.gov.hmrc.debttransformationstub.models.PaymentPlanEligibilityDmRequest
+import uk.gov.hmrc.debttransformationstub.models.errors.NO_RESPONSE
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
@@ -38,6 +39,8 @@ class IDMSController @Inject() (environment: Environment, cc: ControllerComponen
     withCustomJsonBody[PaymentPlanEligibilityDmRequest] { request =>
       val fileName = s"$basePath.eligibilityDm/${request.idValue}.json"
       environment.getExistingFile(fileName) match {
+        case _ if request.idValue.equals("idmsNoResultDebtAllowance") =>
+          Future.successful(GatewayTimeout(Json.parse(NO_RESPONSE.jsonErrorCause)))
         case None =>
           val message = s"file [$fileName] not found"
           logger.error(s"Status $NOT_FOUND, message: $message")
