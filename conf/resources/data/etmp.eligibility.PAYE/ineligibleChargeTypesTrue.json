@@ -90,11 +90,12 @@
       "locks": [
         {
           "lockType": "Dunning",
-          "lockReason": "Appeal"
+          "lockReason": "Suspension (Alleged appeal)"
+
         },
         {
           "lockType": "Calculate Interest",
-          "lockReason": "Appeal"
+          "lockReason": "Clerical Interest Signal"
         }
       ]
     },
@@ -113,11 +114,12 @@
       "locks": [
         {
           "lockType": "Dunning",
-          "lockReason": "Appeal"
+          "lockReason": "Suspension (Alleged appeal)"
+
         },
         {
           "lockType": "Calculate Interest",
-          "lockReason": "Appeal"
+          "lockReason": "Clerical Interest Signal"
         }
       ]
     },
@@ -130,17 +132,18 @@
       "taxPeriodTo": "2022-03-05",
       "chargeReference": "XM123456789814",
       "outstandingAmount": 2005.00,
-      "dueDate": "2022-03-21",
+      "dueDate": "<DUE_DATE>",
       "interestStartDate": "2022-03-21",
       "accruedInterest": 25.83,
       "locks": [
         {
           "lockType": "Dunning",
-          "lockReason": "Appeal"
+          "lockReason": "Suspension (Alleged appeal)"
+
         },
         {
           "lockType": "Calculate Interest",
-          "lockReason": "Appeal"
+          "lockReason": "Clerical Interest Signal"
         }
       ]
     }

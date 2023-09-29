@@ -3,7 +3,7 @@
   "identification": [
     {
       "idType": "EMPREF",
-      "idValue": "964FZ00049"
+      "idValue": "864FZ00049"
     },
     {
       "idType": "BROCS",
@@ -90,11 +90,11 @@
       "locks": [
         {
           "lockType": "Dunning",
-          "lockReason": "Appeal"
+          "lockReason": "TC Debt Notification to DWP"
         },
         {
           "lockType": "Calculate Interest",
-          "lockReason": "Appeal"
+          "lockReason": "manual RPI Signal"
         }
       ]
     }

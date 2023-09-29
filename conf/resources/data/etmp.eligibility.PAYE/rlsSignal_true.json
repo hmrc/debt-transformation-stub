@@ -90,11 +90,12 @@
       "locks": [
         {
           "lockType": "Dunning",
-          "lockReason": "Appeal"
+          "lockReason": "Suspension (Alleged appeal)"
+
         },
         {
           "lockType": "Calculate Interest",
-          "lockReason": "Appeal"
+          "lockReason": "Clerical Interest Signal"
         }
       ]
     }

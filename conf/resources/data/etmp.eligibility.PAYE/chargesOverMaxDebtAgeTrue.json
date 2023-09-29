@@ -90,11 +90,11 @@
       "locks": [
         {
           "lockType": "Dunning",
-          "lockReason": "Appeal"
+          "lockReason": "TC Debt Notification to DWP"
         },
         {
           "lockType": "Calculate Interest",
-          "lockReason": "Appeal",
+          "lockReason": "manual RPI Signal",
           "LockCode": 1
         }
       ]
