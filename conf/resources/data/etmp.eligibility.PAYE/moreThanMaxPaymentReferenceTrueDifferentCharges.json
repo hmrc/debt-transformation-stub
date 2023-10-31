@@ -1,0 +1,259 @@
+{
+  "processingDateTime": "2022-03-23T13:49:51Z",
+  "identification": [
+    {
+      "idType": "EMPREF",
+      "idValue": "864FZ00049"
+    },
+    {
+      "idType": "BROCS",
+      "idValue": "6381726332"
+    }
+  ],
+  "addresses": [
+    {
+      "addressType": "PPOB",
+      "rls": false,
+      "emailAddress": "joe@snailmail.com",
+      "postcodeHistory": [
+        {
+          "addressPostcode": "BN127ER",
+          "postcodeDate": "2022-05-22"
+        },
+        {
+          "addressPostcode": "BN129ER",
+          "postcodeDate": "2022-02-28"
+        },
+        {
+          "addressPostcode": "BN119ER",
+          "postcodeDate": "2001-01-31"
+        }
+      ]
+    },
+    {
+      "addressType": "AGENT",
+      "rls": false,
+      "postcodeHistory": [
+        {
+          "addressPostcode": "BN164QR",
+          "postcodeDate": "2022-03-02"
+        }
+      ]
+    }
+  ],
+  "signals": [
+    {
+      "signalType": "RLS",
+      "signalValue": "false",
+      "signalDescription": "gghsjsl"
+    },
+    {
+      "signalType": "Insolvent",
+      "signalValue": "false",
+      "signalDescription": "gghsjsl"
+    },
+    {
+      "signalType": "Payment Frequency",
+      "signalValue": "Monthly",
+      "signalDescription": "gghsjsl"
+    }
+  ],
+  "filing": [
+    {
+      "icrCategory": "ZR01",
+      "icrDescription": "RTI - PAYE - Monthly Returns",
+      "fromDate": "2022-03-06",
+      "toDate": "2022-04-05",
+      "dueDate": "2022-04-22"
+    },
+    {
+      "icrCategory": "ZR01",
+      "icrDescription": "RTI - PAYE - Monthly Returns",
+      "fromDate": "2022-04-06",
+      "toDate": "2022-05-05",
+      "dueDate": "2022-05-22"
+    }
+  ],
+  "charges": [
+    {
+      "chargeType": "In Year RTI Charge - Tax",
+      "mainType": "In Year RTI Charge (FPS)",
+      "mainTrans": "2000",
+      "subTrans": "1026",
+      "taxPeriodFrom": "2022-02-06",
+      "taxPeriodTo": "2022-03-05",
+      "chargeReference": "XM123456789812",
+      "outstandingAmount": 9003.00,
+      "dueDate": "2021-07-22",
+      "interestStartDate": "2022-03-19",
+      "accruedInterest": 25.81,
+      "locks": [
+        {
+          "lockType": "Dunning",
+          "lockReason": "TC Debt Notification to DWP"
+        },
+        {
+          "lockType": "Calculate Interest",
+          "lockReason": "manual RPI Signal",
+          "LockCode": 1
+        }
+      ]
+    },
+    {
+      "chargeType": "In Year RTI Charge - Tax",
+      "mainType": "In Year RTI Charge (FPS)",
+      "mainTrans": "2000",
+      "subTrans": "1030",
+      "taxPeriodFrom": "2022-02-06",
+      "taxPeriodTo": "2022-03-05",
+      "chargeReference": "XM123456789813",
+      "outstandingAmount": 123.56,
+      "dueDate": "2023-07-19",
+      "interestStartDate": "2022-03-19",
+      "accruedInterest": 2.09
+    },
+    {
+      "chargeType": "In Year RTI Charge - Tax",
+      "mainType": "In Year RTI Charge (FPS)",
+      "mainTrans": "2000",
+      "subTrans": "1100",
+      "taxPeriodFrom": "2022-02-06",
+      "taxPeriodTo": "2022-03-05",
+      "chargeReference": "XM123456789814",
+      "outstandingAmount": 234.56,
+      "dueDate": "2023-06-19",
+      "interestStartDate": "2022-03-19",
+      "accruedInterest": 2.09
+    },
+    {
+      "chargeType": "In Year RTI Charge - Tax",
+      "mainType": "In Year RTI Charge (FPS)",
+      "mainTrans": "2005",
+      "subTrans": "2000",
+      "taxPeriodFrom": "2022-02-06",
+      "taxPeriodTo": "2022-03-05",
+      "chargeReference": "XM123456789814",
+      "outstandingAmount": 134.56,
+      "dueDate": "2023-05-19",
+      "interestStartDate": "2022-03-19",
+      "accruedInterest": 2.09
+    },
+    {
+      "chargeType": "In Year RTI Charge - Tax",
+      "mainType": "In Year RTI Charge (FPS)",
+      "mainTrans": "2005",
+      "subTrans": "2020",
+      "taxPeriodFrom": "2022-02-06",
+      "taxPeriodTo": "2022-03-05",
+      "chargeReference": "XM123456789814",
+      "outstandingAmount": 124.56,
+      "dueDate": "2023-04-19",
+      "interestStartDate": "2022-03-19",
+      "accruedInterest": 2.09
+    },
+    {
+      "chargeType": "In Year RTI Charge - Tax",
+      "mainType": "In Year RTI Charge (FPS)",
+      "mainTrans": "2005",
+      "subTrans": "2023",
+      "taxPeriodFrom": "2022-02-06",
+      "taxPeriodTo": "2022-03-05",
+      "chargeReference": "XM123456789814",
+      "outstandingAmount": 34.56,
+      "dueDate": "2023-03-19",
+      "interestStartDate": "2022-03-19",
+      "accruedInterest": 2.09
+    },
+    {
+      "chargeType": "In Year RTI Charge - Tax",
+      "mainType": "In Year RTI Charge (FPS)",
+      "mainTrans": "2005",
+      "subTrans": "2026",
+      "taxPeriodFrom": "2022-02-06",
+      "taxPeriodTo": "2022-03-05",
+      "chargeReference": "XM123456789814",
+      "outstandingAmount": 12.56,
+      "dueDate": "2023-02-19",
+      "interestStartDate": "2022-03-19",
+      "accruedInterest": 2.09
+    },
+    {
+      "chargeType": "In Year RTI Charge - Tax",
+      "mainType": "In Year RTI Charge (FPS)",
+      "mainTrans": "2005",
+      "subTrans": "2030",
+      "taxPeriodFrom": "2022-02-06",
+      "taxPeriodTo": "2022-03-05",
+      "chargeReference": "XM123456789814",
+      "outstandingAmount": 1234.56,
+      "dueDate": "2023-01-19",
+      "interestStartDate": "2022-03-19",
+      "accruedInterest": 2.09
+    },
+    {
+      "chargeType": "In Year RTI Charge - Tax",
+      "mainType": "In Year RTI Charge (FPS)",
+      "mainTrans": "2000",
+      "subTrans": "1000",
+      "taxPeriodFrom": "2022-02-06",
+      "taxPeriodTo": "2022-03-05",
+      "chargeReference": "XM123456789814",
+      "outstandingAmount": 124.56,
+      "dueDate": "2022-12-19",
+      "interestStartDate": "2022-03-19",
+      "accruedInterest": 2.09
+    },
+    {
+      "chargeType": "In Year RTI Charge - Tax",
+      "mainType": "In Year RTI Charge (FPS)",
+      "mainTrans": "2000",
+      "subTrans": "1000",
+      "taxPeriodFrom": "2022-02-06",
+      "taxPeriodTo": "2022-03-05",
+      "chargeReference": "XM123456789814",
+      "outstandingAmount": 134.56,
+      "dueDate": "2022-11-19",
+      "interestStartDate": "2022-03-19",
+      "accruedInterest": 2.09
+    },
+    {
+      "chargeType": "In Year RTI Charge - Tax",
+      "mainType": "In Year RTI Charge (FPS)",
+      "mainTrans": "2000",
+      "subTrans": "1000",
+      "taxPeriodFrom": "2022-02-06",
+      "taxPeriodTo": "2022-03-05",
+      "chargeReference": "XM123456789814",
+      "outstandingAmount": 123.56,
+      "dueDate": "2022-10-19",
+      "interestStartDate": "2022-03-19",
+      "accruedInterest": 2.09
+    },
+    {
+      "chargeType": "In Year RTI Charge - Tax",
+      "mainType": "In Year RTI Charge (FPS)",
+      "mainTrans": "2000",
+      "subTrans": "1000",
+      "taxPeriodFrom": "2022-02-06",
+      "taxPeriodTo": "2022-03-05",
+      "chargeReference": "XM123456789814",
+      "outstandingAmount": 834.56,
+      "dueDate": "2022-09-19",
+      "interestStartDate": "2022-03-19",
+      "accruedInterest": 2.09
+    },
+    {
+      "chargeType": "In Year RTI Charge - Tax",
+      "mainType": "In Year RTI Charge (FPS)",
+      "mainTrans": "2000",
+      "subTrans": "1000",
+      "taxPeriodFrom": "2022-02-06",
+      "taxPeriodTo": "2022-03-05",
+      "chargeReference": "XM123456789814",
+      "outstandingAmount": 834.56,
+      "dueDate": "2022-08-19",
+      "interestStartDate": "2022-03-19",
+      "accruedInterest": 2.09
+    }
+  ]
+}
