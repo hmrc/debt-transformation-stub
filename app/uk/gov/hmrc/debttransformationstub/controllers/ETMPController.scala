@@ -60,11 +60,17 @@ class ETMPController @Inject() (environment: Environment, cc: ControllerComponen
     val dueDateInFuture = LocalDate.now().plusDays(24).toString
     val dueDateOverMaxDebtAgeVATC = LocalDate.now().minusDays(29).toString
     val dueDateEqualsMaxDebtAgeVATC = LocalDate.now().minusDays(28).toString
-    val dueDateOverMaxDebtAgePAYE = LocalDate.now().minusDays(36).toString
-    val dueDateEqualsMaxDebtAgePAYE = LocalDate.now().minusDays(35).toString
-    val responseTemplate = Source.fromFile(file).mkString
+    val dueDateOverMaxDebtAgePAYE = LocalDate.now().minusDays(1826).toString
+    val dueDateEqualsMaxDebtAgePAYE = LocalDate.now().minusDays(1825).toString
+    val responseTemplate: String = Source.fromFile(file).mkString
+    def validASNDate(monthsAgo: Int): LocalDate = ???
+    val oneToThirteen: Seq[Int] = for (num <- 1 to 13) yield num
 
-    responseTemplate
+    val initialOverride: String = oneToThirteen.foldLeft(responseTemplate: String) { case(accumulatingResponseTemplate, num) =>
+      accumulatingResponseTemplate.replaceAll(s"<VALID_DUE_DATE_$num>", LocalDate.parse(validASNDate(monthsAgo = num).toString, formatter).toString)
+    }
+
+    initialOverride
       .replaceAll("<DUE_DATE>", LocalDate.parse(dueDateInPast, formatter).toString)
       .replaceAll("<DUE_DATE_TODAY>", LocalDate.parse(dueDateToday, formatter).toString)
       .replaceAll("<DUE_DATE_FOR_FUTURE>", LocalDate.parse(dueDateInFuture, formatter).toString)
