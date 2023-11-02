@@ -1,0 +1,61 @@
+## Tests we want to keep
+- 1 CR (2 charges)
+  - ERROR: 500
+  - AC 3
+  - 
+  - proves
+    - we cannot have duplicated charge references where useChargeRef == true
+
+- 12 ASN (13-24 charges) + 0 CR
+  - eligible, moreThanMax=false
+  - AC 2
+  - 
+  - proves
+    - we can go up to 12 ASNs
+    - the number of charges doesn't matter when we count ASNs (duplicated due dates are OKAY)
+- 12 CR (12 charges) + 0 ASN
+  - eligible, moreThanMax=false
+  - AC 2
+  - 
+  - proves
+    - we can go up to 12 CR
+- 6 ASN (6 charges) + 6 CR (6 charges)
+  - eligible, moreThanMax=false
+  - AC 2
+  - 
+  - proves
+    - combinations of useChargeRef (CR) and !useChargeRef (ASN) are OKAY.
+
+- 13 ASN (13 charges) + 0 CR
+  - ineligible, moreThanMax=true
+  - AC 1
+  - moreThanMaxPaymentReferenceTrueAsnOnly.json
+  - proves
+    - ASN can cause ineligibility on its own
+- 13 CR (13 charges) + 0 ASN
+  - ineligible, moreThanMax=true
+  - AC 1
+  - moreThanMaxPaymentReferenceTrueChrgRefOnly.json
+  - proves
+    - CR can cause ineligibility on its own
+- 7 ASN (7 charges) + 7 CR (7 charges)
+  - ineligible, moreThanMax=true
+  - AC 1
+  - 
+  - proves
+    - we don't just count the ASNs and CRs separately
+    - ASN/CR may cause eligibility
+
+## Tests we don't want to keep because they're redundant
+- 12 ASN (12 charges) + 1 CR (1 charges)
+  - ineligible, moreThanMax=true
+  - AC 1
+  - proves
+    - we don't just count the ASNs and CRs separately
+    - CR can cause ineligibility
+- 1 ASN (1 charge) + 12 CR (12 charges)
+  - ineligible, moreThanMax=true
+  - AC 1
+  - proves
+    - we don't just count the ASNs and CRs separately
+    - ASN can cause ineligibility
