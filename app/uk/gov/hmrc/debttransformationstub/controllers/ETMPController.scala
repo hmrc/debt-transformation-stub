@@ -26,11 +26,14 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 import scala.io.Source
+import scala.math.Ordering.Implicits.infixOrderingOps
 import scala.util.Try
 
 class ETMPController @Inject() (environment: Environment, cc: ControllerComponents) extends BackendController(cc) {
 
   private val basePath = "conf/resources/data/etmp.eligibility"
+
+  private val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
   def paymentPlanEligibility(
     regimeType: String,
@@ -52,27 +55,50 @@ class ETMPController @Inject() (environment: Environment, cc: ControllerComponen
     }
   }
 
-  def paymentPlanEligibilityString(file: File, idValue: String): String = {
+  private def paymentPlanEligibilityString(file: File, idValue: String): String = {
+    val currentDate = LocalDate.now()
+    val responseTemplate: String = Source.fromFile(file).mkString
 
-    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-    val dueDateInPast = LocalDate.now().minusDays(24).toString
-    val dueDateToday = LocalDate.now().toString
-    val dueDateInFuture = LocalDate.now().plusDays(24).toString
-    val dueDateOverMaxDebtAgeVATC = LocalDate.now().minusDays(29).toString
-    val dueDateEqualsMaxDebtAgeVATC = LocalDate.now().minusDays(28).toString
-    val dueDateOverMaxDebtAgePAYE = LocalDate.now().minusDays(36).toString
-    val dueDateEqualsMaxDebtAgePAYE = LocalDate.now().minusDays(35).toString
-    val responseTemplate = Source.fromFile(file).mkString
+    /** Valid should mean in the past, but not too far in the past. */
+    def validAsnDate(monthsAgo: Int): LocalDate = {
+      val result = currentDate.withDayOfMonth(22).minusMonths(monthsAgo)
+      require(currentDate > result)
+      result
+    }
 
-    responseTemplate
-      .replaceAll("<DUE_DATE>", LocalDate.parse(dueDateInPast, formatter).toString)
-      .replaceAll("<DUE_DATE_TODAY>", LocalDate.parse(dueDateToday, formatter).toString)
-      .replaceAll("<DUE_DATE_FOR_FUTURE>", LocalDate.parse(dueDateInFuture, formatter).toString)
-      .replaceAll("<DUE_DATE_OVER_MAX_DEBT_AGE_VATC>", LocalDate.parse(dueDateOverMaxDebtAgeVATC, formatter).toString)
-      .replaceAll("<DUE_DATE_EQUALS_MAX_DEBT_AGE_VATC>", LocalDate.parse(dueDateEqualsMaxDebtAgeVATC, formatter).toString)
-      .replaceAll("<DUE_DATE_OVER_MAX_DEBT_AGE_PAYE>", LocalDate.parse(dueDateOverMaxDebtAgePAYE, formatter).toString)
-      .replaceAll("<DUE_DATE_EQUALS_MAX_DEBT_AGE_PAYE>", LocalDate.parse(dueDateEqualsMaxDebtAgePAYE, formatter).toString)
+    val dueDateInPast = currentDate.minusDays(24)
+    val dueDateToday = currentDate
+    val dueDateInFuture = currentDate.plusDays(24)
+    val dueDateOverMaxDebtAgeVATC = currentDate.minusDays(29)
+    val dueDateEqualsMaxDebtAgeVATC = currentDate.minusDays(28)
+    val dueDateOverMaxDebtAgePAYE = currentDate.minusDays(1826)
+    val dueDateEqualsMaxDebtAgePAYE = currentDate.minusDays(1825)
 
+    val initialOverride: String =
+      (1 to 24)
+        .foldLeft(responseTemplate) {
+          case (accumulatingResponseTemplate, monthsAgo) =>
+            val validAsnDateString = validAsnDate(monthsAgo = monthsAgo).format(dateFormatter)
+            accumulatingResponseTemplate.replaceAll(s"<VALID_DUE_DATE_$monthsAgo>", validAsnDateString)
+        }
+
+    val result =
+      initialOverride
+        .replaceAll("<DUE_DATE>", dueDateInPast.format(dateFormatter))
+        .replaceAll("<DUE_DATE_TODAY>", dueDateToday.format(dateFormatter))
+        .replaceAll("<DUE_DATE_FOR_FUTURE>", dueDateInFuture.format(dateFormatter))
+        .replaceAll("<DUE_DATE_OVER_MAX_DEBT_AGE_VATC>", dueDateOverMaxDebtAgeVATC.format(dateFormatter))
+        .replaceAll("<DUE_DATE_EQUALS_MAX_DEBT_AGE_VATC>", dueDateEqualsMaxDebtAgeVATC.format(dateFormatter))
+        .replaceAll("<DUE_DATE_OVER_MAX_DEBT_AGE_PAYE>", dueDateOverMaxDebtAgePAYE.format(dateFormatter))
+        .replaceAll("<DUE_DATE_EQUALS_MAX_DEBT_AGE_PAYE>", dueDateEqualsMaxDebtAgePAYE.format(dateFormatter))
+
+    println(
+      s"""====================
+         |$result
+         |====================
+         |""".stripMargin
+    )
+    result
   }
 }
 

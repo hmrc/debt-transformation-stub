@@ -82,22 +82,11 @@
       "subTrans": "1000",
       "taxPeriodFrom": "2022-02-06",
       "taxPeriodTo": "2022-03-05",
-      "chargeReference": "XM123456789812",
+      "chargeReference": "XM000000000001",
       "outstandingAmount": 9003.00,
-      "dueDate": "2021-07-22",
+      "dueDate": "<VALID_DUE_DATE_1>",
       "interestStartDate": "2022-03-19",
-      "accruedInterest": 25.81,
-      "locks": [
-        {
-          "lockType": "Dunning",
-          "lockReason": "TC Debt Notification to DWP"
-        },
-        {
-          "lockType": "Calculate Interest",
-          "lockReason": "manual RPI Signal",
-          "LockCode": 1
-        }
-      ]
+      "accruedInterest": 25.81
     },
     {
       "chargeType": "In Year RTI Charge - Tax",
@@ -106,9 +95,9 @@
       "subTrans": "1000",
       "taxPeriodFrom": "2022-02-06",
       "taxPeriodTo": "2022-03-05",
-      "chargeReference": "XM123456789813",
+      "chargeReference": "XM000000000002",
       "outstandingAmount": 123.56,
-      "dueDate": "2023-07-19",
+      "dueDate": "<VALID_DUE_DATE_2>",
       "interestStartDate": "2022-03-19",
       "accruedInterest": 2.09
     },
@@ -119,9 +108,9 @@
       "subTrans": "1000",
       "taxPeriodFrom": "2022-02-06",
       "taxPeriodTo": "2022-03-05",
-      "chargeReference": "XM123456789814",
+      "chargeReference": "XM000000000003",
       "outstandingAmount": 234.56,
-      "dueDate": "2023-06-19",
+      "dueDate": "<VALID_DUE_DATE_3>",
       "interestStartDate": "2022-03-19",
       "accruedInterest": 2.09
     },
@@ -132,9 +121,9 @@
       "subTrans": "1000",
       "taxPeriodFrom": "2022-02-06",
       "taxPeriodTo": "2022-03-05",
-      "chargeReference": "XM123456789814",
+      "chargeReference": "XM000000000004",
       "outstandingAmount": 134.56,
-      "dueDate": "2023-05-19",
+      "dueDate": "<VALID_DUE_DATE_4>",
       "interestStartDate": "2022-03-19",
       "accruedInterest": 2.09
     },
@@ -145,9 +134,9 @@
       "subTrans": "1000",
       "taxPeriodFrom": "2022-02-06",
       "taxPeriodTo": "2022-03-05",
-      "chargeReference": "XM123456789814",
+      "chargeReference": "XM000000000005",
       "outstandingAmount": 124.56,
-      "dueDate": "2023-04-19",
+      "dueDate": "<VALID_DUE_DATE_5>",
       "interestStartDate": "2022-03-19",
       "accruedInterest": 2.09
     },
@@ -158,9 +147,9 @@
       "subTrans": "1000",
       "taxPeriodFrom": "2022-02-06",
       "taxPeriodTo": "2022-03-05",
-      "chargeReference": "XM123456789814",
+      "chargeReference": "XM000000000006",
       "outstandingAmount": 34.56,
-      "dueDate": "2023-03-19",
+      "dueDate": "<VALID_DUE_DATE_6>",
       "interestStartDate": "2022-03-19",
       "accruedInterest": 2.09
     },
@@ -171,9 +160,9 @@
       "subTrans": "1000",
       "taxPeriodFrom": "2022-02-06",
       "taxPeriodTo": "2022-03-05",
-      "chargeReference": "XM123456789814",
+      "chargeReference": "XM000000000007",
       "outstandingAmount": 12.56,
-      "dueDate": "2023-02-19",
+      "dueDate": "<VALID_DUE_DATE_7>",
       "interestStartDate": "2022-03-19",
       "accruedInterest": 2.09
     },
@@ -184,9 +173,9 @@
       "subTrans": "1000",
       "taxPeriodFrom": "2022-02-06",
       "taxPeriodTo": "2022-03-05",
-      "chargeReference": "XM123456789814",
+      "chargeReference": "XM000000000008",
       "outstandingAmount": 1234.56,
-      "dueDate": "2023-01-19",
+      "dueDate": "<VALID_DUE_DATE_8>",
       "interestStartDate": "2022-03-19",
       "accruedInterest": 2.09
     },
@@ -197,9 +186,9 @@
       "subTrans": "1000",
       "taxPeriodFrom": "2022-02-06",
       "taxPeriodTo": "2022-03-05",
-      "chargeReference": "XM123456789814",
+      "chargeReference": "XM000000000009",
       "outstandingAmount": 124.56,
-      "dueDate": "2022-12-19",
+      "dueDate": "<VALID_DUE_DATE_9>",
       "interestStartDate": "2022-03-19",
       "accruedInterest": 2.09
     },
@@ -210,9 +199,9 @@
       "subTrans": "1000",
       "taxPeriodFrom": "2022-02-06",
       "taxPeriodTo": "2022-03-05",
-      "chargeReference": "XM123456789814",
+      "chargeReference": "XM000000000010",
       "outstandingAmount": 134.56,
-      "dueDate": "2022-11-19",
+      "dueDate": "<VALID_DUE_DATE_10>",
       "interestStartDate": "2022-03-19",
       "accruedInterest": 2.09
     },
@@ -223,9 +212,9 @@
       "subTrans": "1000",
       "taxPeriodFrom": "2022-02-06",
       "taxPeriodTo": "2022-03-05",
-      "chargeReference": "XM123456789814",
+      "chargeReference": "XM000000000011",
       "outstandingAmount": 123.56,
-      "dueDate": "2022-10-19",
+      "dueDate": "<VALID_DUE_DATE_11>",
       "interestStartDate": "2022-03-19",
       "accruedInterest": 2.09
     },
@@ -236,9 +225,22 @@
       "subTrans": "1000",
       "taxPeriodFrom": "2022-02-06",
       "taxPeriodTo": "2022-03-05",
-      "chargeReference": "XM123456789814",
+      "chargeReference": "XM000000000012",
       "outstandingAmount": 834.56,
-      "dueDate": "2022-09-19",
+      "dueDate": "<VALID_DUE_DATE_12>",
+      "interestStartDate": "2022-03-19",
+      "accruedInterest": 2.09
+    },
+    {
+      "chargeType": "In Year RTI Charge - Tax",
+      "mainType": "In Year RTI Charge (FPS)",
+      "mainTrans": "2000",
+      "subTrans": "1000",
+      "taxPeriodFrom": "2022-02-06",
+      "taxPeriodTo": "2022-03-05",
+      "chargeReference": "XM000000000013",
+      "outstandingAmount": 834.56,
+      "dueDate": "<VALID_DUE_DATE_13>",
       "interestStartDate": "2022-03-19",
       "accruedInterest": 2.09
     }

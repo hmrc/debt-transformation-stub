@@ -48,6 +48,7 @@ class IDMSController @Inject() (environment: Environment, cc: ControllerComponen
         case Some(file) =>
           val result = FileUtils.readFileToString(file, Charset.defaultCharset())
           Future successful Ok(Json.parse(result))
+
       }
     }
   }
