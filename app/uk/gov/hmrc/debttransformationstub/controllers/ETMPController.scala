@@ -75,7 +75,7 @@ class ETMPController @Inject() (environment: Environment, cc: ControllerComponen
     val dueDateEqualsMaxDebtAgePAYE = currentDate.minusDays(1825)
 
     val initialOverride: String =
-      (1 to 13)
+      (1 to 24)
         .foldLeft(responseTemplate) {
           case (accumulatingResponseTemplate, monthsAgo) =>
             val validAsnDateString = validAsnDate(monthsAgo = monthsAgo).format(dateFormatter)

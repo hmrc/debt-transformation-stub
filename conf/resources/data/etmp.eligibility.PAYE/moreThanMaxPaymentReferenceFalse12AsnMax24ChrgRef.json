@@ -1,0 +1,343 @@
+{
+  "processingDateTime": "2022-03-23T13:49:51Z",
+  "identification": [
+    {
+      "idType": "EMPREF",
+      "idValue": "864FZ00049"
+    },
+    {
+      "idType": "BROCS",
+      "idValue": "6381726332"
+    }
+  ],
+  "addresses": [
+    {
+      "addressType": "PPOB",
+      "rls": false,
+      "emailAddress": "joe@snailmail.com",
+      "postcodeHistory": [
+        {
+          "addressPostcode": "BN127ER",
+          "postcodeDate": "2022-05-22"
+        },
+        {
+          "addressPostcode": "BN129ER",
+          "postcodeDate": "2022-02-28"
+        },
+        {
+          "addressPostcode": "BN119ER",
+          "postcodeDate": "2001-01-31"
+        }
+      ]
+    },
+    {
+      "addressType": "AGENT",
+      "rls": false,
+      "postcodeHistory": [
+        {
+          "addressPostcode": "BN164QR",
+          "postcodeDate": "2022-03-02"
+        }
+      ]
+    }
+  ],
+  "signals": [
+    {
+      "signalType": "RLS",
+      "signalValue": "false",
+      "signalDescription": "false"
+    },
+    {
+      "signalType": "Insolvent",
+      "signalValue": "false",
+      "signalDescription": "false"
+    },
+    {
+      "signalType": "Payment Frequency",
+      "signalValue": "Monthly",
+      "signalDescription": "false"
+    }
+  ],
+  "filing": [
+    {
+      "icrCategory": "ZR01",
+      "icrDescription": "RTI - PAYE - Monthly Returns",
+      "fromDate": "2022-03-06",
+      "toDate": "2022-04-05",
+      "dueDate": "2022-04-22"
+    },
+    {
+      "icrCategory": "ZR01",
+      "icrDescription": "RTI - PAYE - Monthly Returns",
+      "fromDate": "2022-04-06",
+      "toDate": "2022-05-05",
+      "dueDate": "2022-05-22"
+    }
+  ],
+  "charges": [
+    {
+      "chargeType": "charge-type",
+      "mainType": "main-type",
+      "mainTrans": "2000",
+      "subTrans": "1020",
+      "taxPeriodFrom": "2023-04-06",
+      "taxPeriodTo": "2024-04-05",
+      "chargeReference": "XM000000000001",
+      "outstandingAmount": 100,
+      "dueDate": "<VALID_DUE_DATE_1>"
+    },
+    {
+      "chargeType": "charge-type",
+      "mainType": "main-type",
+      "mainTrans": "2000",
+      "subTrans": "1020",
+      "taxPeriodFrom": "2023-04-06",
+      "taxPeriodTo": "2024-04-05",
+      "chargeReference": "XM000000000001",
+      "outstandingAmount": 100,
+      "dueDate": "<VALID_DUE_DATE_2>"
+    },
+    {
+      "chargeType": "charge-type",
+      "mainType": "main-type",
+      "mainTrans": "2000",
+      "subTrans": "1020",
+      "taxPeriodFrom": "2023-04-06",
+      "taxPeriodTo": "2024-04-05",
+      "chargeReference": "XM000000000001",
+      "outstandingAmount": 100,
+      "dueDate": "<VALID_DUE_DATE_3>"
+    },
+    {
+      "chargeType": "charge-type",
+      "mainType": "main-type",
+      "mainTrans": "2000",
+      "subTrans": "1020",
+      "taxPeriodFrom": "2023-04-06",
+      "taxPeriodTo": "2024-04-05",
+      "chargeReference": "XM000000000001",
+      "outstandingAmount": 100,
+      "dueDate": "<VALID_DUE_DATE_4>"
+    },
+    {
+      "chargeType": "charge-type",
+      "mainType": "main-type",
+      "mainTrans": "2000",
+      "subTrans": "1020",
+      "taxPeriodFrom": "2023-04-06",
+      "taxPeriodTo": "2024-04-05",
+      "chargeReference": "XM000000000001",
+      "outstandingAmount": 100,
+      "dueDate": "<VALID_DUE_DATE_5>"
+    },
+    {
+      "chargeType": "charge-type",
+      "mainType": "main-type",
+      "mainTrans": "2000",
+      "subTrans": "1020",
+      "taxPeriodFrom": "2023-04-06",
+      "taxPeriodTo": "2024-04-05",
+      "chargeReference": "XM000000000001",
+      "outstandingAmount": 100,
+      "dueDate": "<VALID_DUE_DATE_6>"
+    },
+    {
+      "chargeType": "charge-type",
+      "mainType": "main-type",
+      "mainTrans": "2000",
+      "subTrans": "1020",
+      "taxPeriodFrom": "2023-04-06",
+      "taxPeriodTo": "2024-04-05",
+      "chargeReference": "XM000000000001",
+      "outstandingAmount": 100,
+      "dueDate": "<VALID_DUE_DATE_7>"
+    },
+    {
+      "chargeType": "charge-type",
+      "mainType": "main-type",
+      "mainTrans": "2000",
+      "subTrans": "1020",
+      "taxPeriodFrom": "2023-04-06",
+      "taxPeriodTo": "2024-04-05",
+      "chargeReference": "XM000000000001",
+      "outstandingAmount": 100,
+      "dueDate": "<VALID_DUE_DATE_8>"
+    },
+    {
+      "chargeType": "charge-type",
+      "mainType": "main-type",
+      "mainTrans": "2000",
+      "subTrans": "1020",
+      "taxPeriodFrom": "2023-04-06",
+      "taxPeriodTo": "2024-04-05",
+      "chargeReference": "XM000000000001",
+      "outstandingAmount": 100,
+      "dueDate": "<VALID_DUE_DATE_9>"
+    },
+    {
+      "chargeType": "charge-type",
+      "mainType": "main-type",
+      "mainTrans": "2000",
+      "subTrans": "1020",
+      "taxPeriodFrom": "2023-04-06",
+      "taxPeriodTo": "2024-04-05",
+      "chargeReference": "XM000000000001",
+      "outstandingAmount": 100,
+      "dueDate": "<VALID_DUE_DATE_10>"
+    },
+    {
+      "chargeType": "charge-type",
+      "mainType": "main-type",
+      "mainTrans": "2000",
+      "subTrans": "1020",
+      "taxPeriodFrom": "2023-04-06",
+      "taxPeriodTo": "2024-04-05",
+      "chargeReference": "XM000000000001",
+      "outstandingAmount": 100,
+      "dueDate": "<VALID_DUE_DATE_11>"
+    },
+    {
+      "chargeType": "charge-type",
+      "mainType": "main-type",
+      "mainTrans": "2000",
+      "subTrans": "1020",
+      "taxPeriodFrom": "2023-04-06",
+      "taxPeriodTo": "2024-04-05",
+      "chargeReference": "XM000000000001",
+      "outstandingAmount": 100,
+      "dueDate": "<VALID_DUE_DATE_14>"
+    },
+    {
+      "chargeType": "charge-type",
+      "mainType": "main-type",
+      "mainTrans": "2000",
+      "subTrans": "1020",
+      "taxPeriodFrom": "2023-04-06",
+      "taxPeriodTo": "2024-04-05",
+      "chargeReference": "XM000000000001",
+      "outstandingAmount": 100,
+           "dueDate": "<VALID_DUE_DATE_14>"
+    },
+    {
+      "chargeType": "charge-type",
+      "mainType": "main-type",
+      "mainTrans": "2000",
+      "subTrans": "1020",
+      "taxPeriodFrom": "2023-04-06",
+      "taxPeriodTo": "2024-04-05",
+      "chargeReference": "XM000000000001",
+      "outstandingAmount": 100,
+           "dueDate": "<VALID_DUE_DATE_14>"
+    },
+    {
+      "chargeType": "charge-type",
+      "mainType": "main-type",
+      "mainTrans": "2000",
+      "subTrans": "1020",
+      "taxPeriodFrom": "2023-04-06",
+      "taxPeriodTo": "2024-04-05",
+      "chargeReference": "XM000000000001",
+      "outstandingAmount": 100,
+           "dueDate": "<VALID_DUE_DATE_14>"
+    },
+    {
+      "chargeType": "charge-type",
+      "mainType": "main-type",
+      "mainTrans": "2000",
+      "subTrans": "1020",
+      "taxPeriodFrom": "2023-04-06",
+      "taxPeriodTo": "2024-04-05",
+      "chargeReference": "XM000000000001",
+      "outstandingAmount": 100,
+           "dueDate": "<VALID_DUE_DATE_14>"
+    },
+    {
+      "chargeType": "charge-type",
+      "mainType": "main-type",
+      "mainTrans": "2000",
+      "subTrans": "1020",
+      "taxPeriodFrom": "2023-04-06",
+      "taxPeriodTo": "2024-04-05",
+      "chargeReference": "XM000000000001",
+      "outstandingAmount": 100,
+           "dueDate": "<VALID_DUE_DATE_14>"
+    },
+    {
+      "chargeType": "charge-type",
+      "mainType": "main-type",
+      "mainTrans": "2000",
+      "subTrans": "1020",
+      "taxPeriodFrom": "2023-04-06",
+      "taxPeriodTo": "2024-04-05",
+      "chargeReference": "XM000000000001",
+      "outstandingAmount": 100,
+           "dueDate": "<VALID_DUE_DATE_14>"
+    },
+    {
+      "chargeType": "charge-type",
+      "mainType": "main-type",
+      "mainTrans": "2000",
+      "subTrans": "1020",
+      "taxPeriodFrom": "2023-04-06",
+      "taxPeriodTo": "2024-04-05",
+      "chargeReference": "XM000000000001",
+      "outstandingAmount": 100,
+           "dueDate": "<VALID_DUE_DATE_14>"
+    },
+    {
+      "chargeType": "charge-type",
+      "mainType": "main-type",
+      "mainTrans": "2000",
+      "subTrans": "1020",
+      "taxPeriodFrom": "2023-04-06",
+      "taxPeriodTo": "2024-04-05",
+      "chargeReference": "XM000000000001",
+      "outstandingAmount": 100,
+           "dueDate": "<VALID_DUE_DATE_14>"
+    },
+    {
+      "chargeType": "charge-type",
+      "mainType": "main-type",
+      "mainTrans": "2000",
+      "subTrans": "1020",
+      "taxPeriodFrom": "2023-04-06",
+      "taxPeriodTo": "2024-04-05",
+      "chargeReference": "XM000000000001",
+      "outstandingAmount": 100,
+           "dueDate": "<VALID_DUE_DATE_14>"
+    },
+    {
+      "chargeType": "charge-type",
+      "mainType": "main-type",
+      "mainTrans": "2000",
+      "subTrans": "1020",
+      "taxPeriodFrom": "2023-04-06",
+      "taxPeriodTo": "2024-04-05",
+      "chargeReference": "XM000000000001",
+      "outstandingAmount": 100,
+           "dueDate": "<VALID_DUE_DATE_14>"
+    },
+    {
+      "chargeType": "charge-type",
+      "mainType": "main-type",
+      "mainTrans": "2000",
+      "subTrans": "1020",
+      "taxPeriodFrom": "2023-04-06",
+      "taxPeriodTo": "2024-04-05",
+      "chargeReference": "XM000000000001",
+      "outstandingAmount": 100,
+           "dueDate": "<VALID_DUE_DATE_14>"
+    },
+    {
+      "chargeType": "charge-type",
+      "mainType": "main-type",
+      "mainTrans": "2000",
+      "subTrans": "1020",
+      "taxPeriodFrom": "2023-04-06",
+      "taxPeriodTo": "2024-04-05",
+      "chargeReference": "XM000000000001",
+      "outstandingAmount": 100,
+           "dueDate": "<VALID_DUE_DATE_14>"
+    }
+  ]
+}
