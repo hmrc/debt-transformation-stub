@@ -3,11 +3,11 @@
   "identification": [
     {
       "idType": "EMPREF",
-      "idValue": "964FZ00049"
+      "idValue": "864FZ00049"
     },
     {
-      "idType": "VRN",
-      "idValue": "7381726332"
+      "idType": "BROCS",
+      "idValue": "6381726332"
     }
   ],
   "addresses": [
@@ -58,20 +58,45 @@
       "signalDescription": "gghsjsl"
     }
   ],
-
   "charges": [
     {
-      "chargeType": "VAT Mig Return Debit Charge",
-      "mainType": "VAT Mig Return Charge",
-      "mainTrans": "7700",
-      "subTrans": "1174",
-      "taxPeriodFrom": "2022-02-06",
-      "taxPeriodTo": "2022-03-05",
+      "chargeType": "In Year RTI Charge 1 - Tax",
+      "mainType": "In Year RTI Charge (FPS)",
+      "mainTrans": "4748",
+      "subTrans": "1090",
+      "taxPeriodFrom": "2023-02-06",
+      "taxPeriodTo": "2023-03-05",
       "chargeReference": "XM123456789812",
-      "outstandingAmount": 19999.00,
-      "dueDate": "<DUE_DATE_EQUALS_MAX_DEBT_AGE_VATC>",
+      "outstandingAmount": 2003.00,
+      "dueDate": "<DUE_DATE>",
       "interestStartDate": "2022-03-19",
-      "accruedInterest": 1.00
+      "accruedInterest": 25.81
+    },
+    {
+      "chargeType": "In Year RTI Charge 2 - Tax",
+      "mainType": "In Year RTI Charge (FPS)",
+      "mainTrans": "4749",
+      "subTrans": "1175",
+      "taxPeriodFrom": "2022-12-06",
+      "taxPeriodTo": "2023-01-05",
+      "chargeReference": "XM123456789813",
+      "outstandingAmount": 2004.00,
+      "dueDate": "<DUE_DATE>",
+      "interestStartDate": "2022-03-20",
+      "accruedInterest": 25.82
+    },
+    {
+      "chargeType": "In Year RTI Charge 3 - Tax",
+      "mainType": "In Year RTI Charge (FPS)",
+      "mainTrans": "4735",
+      "subTrans": "1090",
+      "taxPeriodFrom": "2023-02-06",
+      "taxPeriodTo": "2023-03-05",
+      "chargeReference": "XM123456789814",
+      "outstandingAmount": 2005.00,
+      "dueDate": "<DUE_DATE>",
+      "interestStartDate": "2022-03-21",
+      "accruedInterest": 0.00
     }
   ]
 }
