@@ -20,16 +20,17 @@ import com.mongodb.client.model.FindOneAndUpdateOptions
 import org.mongodb.scala.bson.Document
 import org.mongodb.scala.model.Filters._
 import org.mongodb.scala.model.Updates._
-import org.mongodb.scala.model.{ IndexModel, ReturnDocument }
+import org.mongodb.scala.model.{IndexModel, ReturnDocument}
 import org.mongodb.scala.result.DeleteResult
 import play.api.Logger
 import uk.gov.hmrc.debttransformationstub.models._
 import uk.gov.hmrc.mongo.MongoComponent
-import uk.gov.hmrc.mongo.play.json.{ Codecs, PlayMongoRepository }
+import uk.gov.hmrc.mongo.play.json.{Codecs, PlayMongoRepository}
 import play.api.libs.json.Json
+import play.api.mvc.Result
 
-import javax.inject.{ Inject, Singleton }
-import scala.concurrent.{ ExecutionContext, Future }
+import javax.inject.{Inject, Singleton}
+import scala.concurrent.{ExecutionContext, Future}
 
 case class EnactStage(
   correlationId: String,
@@ -54,8 +55,12 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
       indexes = Seq.empty[IndexModel],
       replaceIndexes = true
     ) {
-
   private val logger: Logger = Logger(classOf[EnactStageRepository])
+
+  def dropCollection(): Future[true] = {
+    logger.info("===\nDropping enact stub collection\n===\n")
+    collection.drop().toFuture().map(_ => true)
+  }
 
   def addNDDSStage(correlationId: String, request: NDDSRequest): Future[EnactStage] = {
     logger.warn(s"Recording NDDS stage request $correlationId")
