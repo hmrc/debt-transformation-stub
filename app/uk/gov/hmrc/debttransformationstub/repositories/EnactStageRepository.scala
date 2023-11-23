@@ -57,9 +57,9 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
     ) {
   private val logger: Logger = Logger(classOf[EnactStageRepository])
 
-  def dropCollection(): Future[true] = {
+  def testOnlyDeleteAllDocuments(): Future[true] = {
     logger.info("===\nDropping enact stub collection\n===\n")
-    collection.drop().toFuture().map(_ => true)
+    collection.deleteMany(filter = empty()).toFuture().map(_ => true)
   }
 
   def addNDDSStage(correlationId: String, request: NDDSRequest): Future[EnactStage] = {

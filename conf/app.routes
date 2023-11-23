@@ -36,6 +36,7 @@ GET           /test-only/requests                                               
 DELETE        /test-only/request/:requestId                                                                 uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.deleteTTPRequest(requestId: String)
 GET           /test-only/request/:requestId                                                                 uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.getTTPRequest(requestId: String )
 POST          /test-only/response                                                                           uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.createTTPRequests
+DELETE        /test-only/cron/delete-all-documents                                                          uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.testOnlyDeleteAllDocuments()
 
 GET           /individuals/debts/essttp/:regimeType/:idType/:idValue/payment-plan-eligibility               uk.gov.hmrc.debttransformationstub.controllers.ETMPController.paymentPlanEligibility(regimeType: String, idType: String, idValue: String)
 
@@ -43,6 +44,5 @@ POST          /individuals/debts/essttp/payment-plans/ddi                       
 POST          /individuals/debts/essttp/payment-lock                                                        uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.etmpExecutePaymentLock
 POST          /individuals/debts/essttp/monitoring-case                                                     uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.idmsCreateTTPMonitoringCase
 GET           /enactStage/:correlationId                                                                    uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.enactStage(correlationId: String)
-DELETE        /enactStage/dropCollection                                                                    uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.dropCollection()
 
 POST          /individuals/debts/essttp/eligibility-check                                                   uk.gov.hmrc.debttransformationstub.controllers.IDMSController.paymentPlanEligibilityDm

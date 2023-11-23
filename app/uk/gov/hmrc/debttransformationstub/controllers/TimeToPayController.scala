@@ -182,10 +182,6 @@ class TimeToPayController @Inject() (
     }
   }
 
-  def dropCollection() = Action.async { _ =>
-    enactStageRepository.dropCollection().map(res => Ok(s"The database has been dropped: $res"))
-  }
-
   private def findFile(path: String, fileName: String)(implicit hc: HeaderCarrier): Future[Result] = {
     val fileMaybe: Option[File] =
       environment.getExistingFile(s"$basePath$path$fileName")
