@@ -20,7 +20,7 @@ import java.util.Base64
 
 object BuildRulesIFS extends App {
 
-  def encodeList(notEncodedRuleValues: List[String], num: Int): String  = {
+  def encodeList(notEncodedRuleValues: List[String], num: Int): String =
     if (notEncodedRuleValues.isEmpty) {
       ""
     } else {
@@ -29,8 +29,6 @@ object BuildRulesIFS extends App {
       val rules = s"service-config.rules.$num: " + encoded + "\n" + s"# $rule" + "\n"
       rules + encodeList(notEncodedRuleValues.tail, num + 1)
     }
-
-  }
 
 //     e.g.  encodeList(
 //        List("IF mainTrans == '4794' AND subTrans == '1175' -> intRate = 0 AND interestOnlyDebt = true",
