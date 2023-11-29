@@ -31,12 +31,13 @@ POST          /debts/time-to-pay/quote/arrangement                              
 
 POST          /prweb/api/TTP/v1/create                                                                      uk.gov.hmrc.debttransformationstub.controllers.CaseManagementController.createCase
 
+#All of the below are related to the only repository - EnactStageRespository
 GET           /test-only/all-requests                                                                       uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.getTTPRequests
 GET           /test-only/requests                                                                           uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.getUnprocessedRequests
 DELETE        /test-only/request/:requestId                                                                 uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.deleteTTPRequest(requestId: String)
 GET           /test-only/request/:requestId                                                                 uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.getTTPRequest(requestId: String )
 POST          /test-only/response                                                                           uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.createTTPRequests
-DELETE        /test-only/cron/delete-all-documents                                                          uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.testOnlyDeleteAllDocuments()
+DELETE        /test-only/all-documents                                                                      uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.testOnlyDeleteAllDocuments()
 
 GET           /individuals/debts/essttp/:regimeType/:idType/:idValue/payment-plan-eligibility               uk.gov.hmrc.debttransformationstub.controllers.ETMPController.paymentPlanEligibility(regimeType: String, idType: String, idValue: String)
 
