@@ -16,22 +16,24 @@
 
 package uk.gov.hmrc.debttransformationstub.controllers
 
-import play.api.libs.json.{ JsValue, Json }
+import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.models.RequestDetail
-import uk.gov.hmrc.debttransformationstub.models.errors.{ TTPRequestsCreationError, TTPRequestsError }
+import uk.gov.hmrc.debttransformationstub.models.errors.{TTPRequestsCreationError, TTPRequestsError}
+import uk.gov.hmrc.debttransformationstub.repositories.EnactStageRepository
 import uk.gov.hmrc.debttransformationstub.services.TTPRequestsService
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
-import javax.inject.{ Inject, Singleton }
+import javax.inject.{Inject, Singleton}
 import scala.collection.immutable
 import scala.concurrent.ExecutionContext
 
 @Singleton()
 class TimeToPayTestController @Inject() (
   cc: ControllerComponents,
-  ttpRequestsService: TTPRequestsService
+  ttpRequestsService: TTPRequestsService,
+  enactStageRepository: EnactStageRepository
 )(implicit val executionContext: ExecutionContext)
     extends BackendController(cc) with CustomBaseController {
 
@@ -70,6 +72,10 @@ class TimeToPayTestController @Inject() (
         logger.error(s"TTPRequestDeletionError: $error")
         errorToResult(error)
     }
+  }
+
+  def testOnlyDeleteAllDocuments() = Action.async { _ =>
+    enactStageRepository.testOnlyDeleteAllDocuments().map(res => Ok(s"The database has been dropped: $res"))
   }
 
   private def errorToResult(error: TTPRequestsError): Result =
