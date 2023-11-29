@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet
 
-import play.api.libs.json.Json
+import play.api.libs.json.{ JsString, Json }
 import uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet.InterestForecastingRulesGenerator.ParsedArgs
 import uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet.InterestForecastingRulesGenerator.ParsedArgs.{ InputSettings, OutputSettings }
 import uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet.impl.{ IfsRulesMasterData, InterestForecastingConfigBuilder, SafeLogger }
@@ -25,6 +25,11 @@ import java.util.Locale
 import scala.io.Source
 import scala.util.Using
 
+/** This command-line application takes in a master spreadsheet with IFS rules and transforms it.
+  * See the unit tests for complete examples of how to use it.
+  *
+  * See `README.md` for instructions.
+  */
 object InterestForecastingRulesGenerator {
   def main(args: Array[String]): Unit = {
     implicit val logger: SafeLogger = SafeLogger.stderr
@@ -40,16 +45,27 @@ object InterestForecastingRulesGenerator {
 
   final case class ParsedArgs(inputSettings: ParsedArgs.InputSettings, outputSettings: ParsedArgs.OutputSettings)
   object ParsedArgs {
-    def parse(args: Vector[String]): ParsedArgs = args match {
-      case Vector(s"--input-file=$filePath", "--output-console-conf") =>
-        ParsedArgs(InputSettings.FromFile(filePath = filePath), OutputSettings.ConsoleApplicationConf)
+    def parse(args: Vector[String]): ParsedArgs =
+      args.sorted match {
+        case Vector(inputArgs @ s"--input-$_", outputArgs @ s"--output-$_") =>
+          val inputSettings =
+            inputArgs match {
+              case "--input-console-tsv"     => InputSettings.ConsoleTsv(inputTerminator = "END_INPUT")
+              case s"--input-file=$filePath" => InputSettings.FromFile(filePath = filePath)
+              case wrongArgs                 => throw new IllegalArgumentException(s"Unknown input args: ${Json.toJson(wrongArgs)}")
+            }
 
-      case Vector("--input-console-tsv", s"--input-terminator=$terminatorLine", "--output-console-conf") =>
-        ParsedArgs(InputSettings.ConsoleTsv(inputTerminator = terminatorLine), OutputSettings.ConsoleApplicationConf)
+          val outputSettings =
+            outputArgs match {
+              case "--output-console-conf"              => OutputSettings.ConsoleApplicationConf
+              case "--output-console-production-config" => OutputSettings.ConsoleProductionConfig
+              case wrongArgs                            => throw new IllegalArgumentException(s"Unknown output args: ${Json.toJson(wrongArgs)}")
+            }
 
-      case wrongArgs =>
-        throw new IllegalArgumentException(s"Unknown args: ${Json.toJson(wrongArgs)}")
-    }
+          ParsedArgs(inputSettings, outputSettings)
+
+        case wrongArgs => throw new IllegalArgumentException(s"Unknown args: ${Json.toJson(wrongArgs)}")
+      }
 
     sealed trait InputSettings
     object InputSettings {
@@ -60,6 +76,7 @@ object InterestForecastingRulesGenerator {
     sealed trait OutputSettings
     object OutputSettings {
       case object ConsoleApplicationConf extends OutputSettings
+      case object ConsoleProductionConfig extends OutputSettings
     }
   }
 }
@@ -82,14 +99,14 @@ final class InterestForecastingRulesGenerator(readFile: String => IterableOnce[S
   private def readRulesMasterData(inputSettings: InputSettings, stdin: Iterator[String]): IfsRulesMasterData = {
     val result = inputSettings match {
       case InputSettings.ConsoleTsv(terminatorLine) =>
-        logger.log(s"Paste the TSV and end the input with ${Json.toJson(terminatorLine)} on one line.")
+        logger.log(s"Paste the TSV and end the input with ${JsString(terminatorLine)} on one line.")
         val tsv: Seq[String] = stdin.takeWhile(_ != terminatorLine).toVector
         IfsRulesMasterData.fromMasterSpreadsheetTsv(tsv)
 
       case InputSettings.FromFile(filePath) =>
         lazy val fileLines: Vector[String] = readFile(filePath).iterator.toVector
 
-        logger.log(s"Reading from CSV/TSV file: ${Json.toJson(filePath)}")
+        logger.log(s"Reading from CSV/TSV file: ${JsString(filePath)}")
 
         val filename = filePath.split("/").last
         val fileExtension = filename.split("\\.").drop(1).last
@@ -100,7 +117,7 @@ final class InterestForecastingRulesGenerator(readFile: String => IterableOnce[S
             IfsRulesMasterData.fromMasterSpreadsheetTsv(tsv = fileLines)
           case unknownExtension =>
             throw new IllegalArgumentException(
-              s"Unknown extension ${Json.toJson(unknownExtension)} of file ${Json.toJson(filePath)}"
+              s"Unknown extension ${JsString(unknownExtension)} of file ${JsString(filePath)}"
             )
         }
     }
@@ -114,5 +131,7 @@ final class InterestForecastingRulesGenerator(readFile: String => IterableOnce[S
     outputSettings match {
       case OutputSettings.ConsoleApplicationConf =>
         InterestForecastingConfigBuilder.buildAppConfig(data)
+      case OutputSettings.ConsoleProductionConfig =>
+        InterestForecastingConfigBuilder.buildProductionConfig(data)
     }
 }

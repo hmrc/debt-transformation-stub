@@ -16,9 +16,11 @@
 
 package uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet.impl
 
-import play.api.libs.json.{ JsObject, JsValue, Json }
+import play.api.libs.json.{ JsObject, JsString, JsValue, Json }
 import uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet.impl.IfsRulesMasterData.KnownHeadings
 import uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet.impl.TableData.{ CellValue, Heading }
+
+import scala.collection.immutable.ListSet
 
 final case class IfsRulesMasterData(cdcs: TableData, paye: TableData, vat: TableData) {
 
@@ -50,7 +52,7 @@ final case class IfsRulesMasterData(cdcs: TableData, paye: TableData, vat: Table
         case unknown =>
           val rowDisplay: JsValue = Json.toJson(masterCollection(index)._3.map(_.actual))
           throw new IllegalArgumentException(
-            s"Cannot convert interestBearing=${Json.toJson(unknown)} to boolean; check the code. Row values: $rowDisplay"
+            s"Cannot convert interestBearing=${JsString(unknown)} to boolean; check the code. Row values: $rowDisplay"
           )
       }
 
@@ -62,7 +64,7 @@ final case class IfsRulesMasterData(cdcs: TableData, paye: TableData, vat: Table
         case unknown =>
           val rowDisplay: JsValue = Json.toJson(masterCollection(index)._3.map(_.actual))
           throw new IllegalArgumentException(
-            s"Cannot convert interestOnlyDebt=${Json.toJson(unknown)} to boolean; check the code. Row values: $rowDisplay"
+            s"Cannot convert interestOnlyDebt=${JsString(unknown)} to boolean; check the code. Row values: $rowDisplay"
           )
       }
 
@@ -75,7 +77,7 @@ final case class IfsRulesMasterData(cdcs: TableData, paye: TableData, vat: Table
         case unknown =>
           val rowDisplay: JsValue = Json.toJson(masterCollection(index)._3.map(_.actual))
           throw new IllegalArgumentException(
-            s"Cannot convert useChargeReference=${Json.toJson(unknown)} to boolean; check the code. Row values: $rowDisplay"
+            s"Cannot convert useChargeReference=${JsString(unknown)} to boolean; check the code. Row values: $rowDisplay"
           )
       }
   }
@@ -121,14 +123,14 @@ object IfsRulesMasterData {
   ): IfsRulesMasterData = {
 
     locally {
-      val expectedHeadings =
-        Set(TransactionSection.payeSectionHeading.value, TransactionSection.vatSectionHeading.value)
-
-      val headingsLines = rows.filter(expectedHeadings.contains)
+      val headingsLines = rows.filter(row => TransactionSection.isRowExpectedSectionHeading(row = row))
       if (headingsLines.size != 2) {
+        val validHeadingsStr: String = Json.toJson(TransactionSection.validSectionHeadings).toString()
+        val actualHeadingsStr: String = Json.toJson(headingsLines).toString()
+        val allRowsStr: String = Json.prettyPrint(Json.toJson(rows))
+
         throw new IllegalArgumentException(
-          s"Expected headings ${Json.toJson(expectedHeadings)}, but found only ${Json
-            .toJson(headingsLines)} in rows ${Json.prettyPrint(Json.toJson(rows))}"
+          s"Expected headings $validHeadingsStr, but found only $actualHeadingsStr in rows $allRowsStr"
         )
       }
     }
@@ -167,5 +169,15 @@ object IfsRulesMasterData {
     val cdcsSectionHeading: None.type = None
     val payeSectionHeading: Some[String] = Some("PAYE")
     val vatSectionHeading: Some[String] = Some("VAT")
+
+    def validSectionHeadings: ListSet[String] = ListSet(payeSectionHeading.value, vatSectionHeading.value)
+
+    def isRowExpectedSectionHeading(row: String): Boolean =
+      validSectionHeadings.exists(validHeading => isRowExpectedSectionHeading(row = row, sectionHeading = validHeading))
+
+    def isRowExpectedSectionHeading(row: String, sectionHeading: String): Boolean =
+      row.startsWith(s"$sectionHeading") ||
+        row.startsWith(s"$sectionHeading,") ||
+        row.startsWith(s"$sectionHeading\t")
   }
 }

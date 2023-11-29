@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet.impl
 
-import play.api.libs.json.{ JsObject, Json }
+import play.api.libs.json.{ JsObject, JsString, Json }
 import uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet.impl.TableData.{ CellValue, Heading }
 
 import scala.collection.immutable.ListMap
@@ -31,11 +31,9 @@ final case class TableData(headings: Vector[Heading], dataRows: Vector[Vector[Ce
     )
   )
 
-  private val columnNumbersByHeadings: ListMap[Int, Heading] = ListMap.from(headings.zipWithIndex.map(_.swap))
-
   locally {
     require(
-      columnNumbersByHeadings.size == headings.size,
+      headings.distinct.size == headings.size,
       s"Found duplicated headings: ${Json.toJson(headings.map(_.name))}"
     )
 
@@ -49,9 +47,7 @@ final case class TableData(headings: Vector[Heading], dataRows: Vector[Vector[Ce
   def dataRowAt(dataRowIndex: Int): ListMap[Heading, CellValue] = {
     val columnEntries: Seq[(Heading, CellValue)] =
       dataRows(dataRowIndex).zipWithIndex
-        .map { case (cell, columnIndex) =>
-          (columnNumbersByHeadings(columnIndex), cell) // No validation of duplicates.
-        }
+        .map { case (cell, columnIndex) => (headings(columnIndex), cell) }
 
     ListMap.from(columnEntries)
   }
@@ -72,7 +68,7 @@ object TableData {
     val rows: Vector[Vector[CellValue]] =
       parsedRowsWithRawRows.zipWithIndex.tail
         .map { case ((parsedRow, rawRow), rowIndex) =>
-          val rawRowPrintable = Json.toJson(rawRow)
+          val rawRowPrintable = JsString(rawRow)
           val headingsPrintable = Json.toJson(headings.map(_.name))
           require(
             parsedRow.size <= headingCount,

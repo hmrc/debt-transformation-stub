@@ -16,15 +16,24 @@
 
 package uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet.impl
 
-import play.api.libs.json.Json
+import play.api.libs.json.JsString
 
 import java.util.Base64
 
 object InterestForecastingConfigBuilder {
+  def buildProductionConfig(ifsData: IfsRulesMasterData): Seq[String] =
+    buildRules(ifsData).zipWithIndex
+      .flatMap { case (rule, index) =>
+        List(
+          s"service-config.rules.$index: ${JsString(rule.toBase64)}",
+          s"# ${rule.raw},"
+        )
+      }
+
   def buildAppConfig(ifsData: IfsRulesMasterData): Seq[String] =
     buildRules(ifsData).flatMap { rule =>
       List(
-        s"${Json.toJson(rule.toBase64)},",
+        s"${JsString(rule.toBase64)},",
         s"# ${rule.raw},"
       )
     }
