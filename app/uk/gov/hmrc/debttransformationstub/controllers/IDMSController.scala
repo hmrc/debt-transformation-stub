@@ -28,6 +28,8 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import java.nio.charset.Charset
 import javax.inject.Inject
 import scala.concurrent.Future
+import scala.io.Source
+import scala.util.Using
 
 class IDMSController @Inject() (environment: Environment, cc: ControllerComponents)
     extends BackendController(cc) with CustomBaseController {
@@ -46,7 +48,13 @@ class IDMSController @Inject() (environment: Environment, cc: ControllerComponen
           logger.error(s"Status $NOT_FOUND, message: $message")
           Future successful NotFound(message)
         case Some(file) =>
-          val result = FileUtils.readFileToString(file, Charset.defaultCharset())
+          val result =  Using(Source.fromFile(file)) {
+            source => source.mkString
+
+          } getOrElse {
+            // Handle failure to read the file, if necessary
+            throw new RuntimeException(s"Failed to read file: ${file.getPath}")
+          }
           Future successful Ok(Json.parse(result))
 
       }

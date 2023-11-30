@@ -18,7 +18,7 @@ package uk.gov.hmrc.debttransformationstub.controllers
 
 import play.api.Environment
 import play.api.libs.json.Json
-import play.api.mvc.{ Action, AnyContent, ControllerComponents }
+import play.api.mvc.{Action, AnyContent, ControllerComponents}
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import java.io.File
@@ -27,7 +27,7 @@ import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 import scala.io.Source
 import scala.math.Ordering.Implicits.infixOrderingOps
-import scala.util.Try
+import scala.util.{Try, Using}
 
 class ETMPController @Inject() (environment: Environment, cc: ControllerComponents) extends BackendController(cc) {
 
@@ -57,7 +57,15 @@ class ETMPController @Inject() (environment: Environment, cc: ControllerComponen
 
   private def paymentPlanEligibilityString(file: File, idValue: String): String = {
     val currentDate = LocalDate.now()
-    val responseTemplate: String = Source.fromFile(file).mkString
+
+    // Using a Using block to read file content and ensure it is closed after reading
+    val responseTemplate: String = {
+      Using(Source.fromFile(file)) { source =>source.mkString
+      } getOrElse {
+        // Handle failure to read the file, if necessary
+        throw new RuntimeException(s"Failed to read file: ${file.getPath}")
+      }
+    }
 
     /** Valid should mean in the past, but not too far in the past. */
     def validAsnDate(monthsAgo: Int): LocalDate = {
@@ -101,6 +109,7 @@ class ETMPController @Inject() (environment: Environment, cc: ControllerComponen
     result
   }
 }
+
 
 object ETMPController {
   val SingleErrorIdNumber = "012X012345"
