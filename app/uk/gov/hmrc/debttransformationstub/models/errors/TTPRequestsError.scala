@@ -28,7 +28,7 @@ sealed trait ConnectorError extends TTPRequestsError {
   val jsonErrorCause =
     s"""{name: $name, statusCode: $statusCode, reason:{${reason.mkString}}, uniqueReference: ${identifier.mkString}}"""
 }
-case object NO_RESPONSE  extends ConnectorError {
+case object NO_RESPONSE extends ConnectorError {
   override val statusCode: Int = 500
   override val jsonErrorCause: String = """{"failures": [
                                           |  {

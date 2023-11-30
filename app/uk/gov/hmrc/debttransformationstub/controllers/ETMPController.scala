@@ -76,10 +76,9 @@ class ETMPController @Inject() (environment: Environment, cc: ControllerComponen
 
     val initialOverride: String =
       (1 to 24)
-        .foldLeft(responseTemplate) {
-          case (accumulatingResponseTemplate, monthsAgo) =>
-            val validAsnDateString = validAsnDate(monthsAgo = monthsAgo).format(dateFormatter)
-            accumulatingResponseTemplate.replaceAll(s"<VALID_DUE_DATE_$monthsAgo>", validAsnDateString)
+        .foldLeft(responseTemplate) { case (accumulatingResponseTemplate, monthsAgo) =>
+          val validAsnDateString = validAsnDate(monthsAgo = monthsAgo).format(dateFormatter)
+          accumulatingResponseTemplate.replaceAll(s"<VALID_DUE_DATE_$monthsAgo>", validAsnDateString)
         }
 
     val result =

@@ -3,12 +3,12 @@
 
 This is a placeholder README.md for a new repository
 
-### License
+## License
 
 This code is open source software licensed under the [Apache 2.0 License]("http://www.apache.org/licenses/LICENSE-2.0.html").
 
 
-### Example usage of a polling service
+## Example usage of a polling service
 
 Modify application.conf to enable polling and increase the intervals for humans
 ```
@@ -16,7 +16,7 @@ isPollingEnv = true
 pollingIntervals = 5000
 ```
 
-### Run the service on a specific port
+### Running the service on a specific port
 ```sbt "run 9111"```
 
 Open a new terminal (this will be a long lived request)
@@ -63,3 +63,99 @@ sbt scalafmtAll scalafmtSbt
 ### To check files have been formatted as expected execute:
 
 sbt scalafmtCheckAll scalafmtSbtCheck
+
+## Interest Forecasting rules generator
+
+Run the `main` method in `InterestForecastingRulesGenerator` with the appropriate arguments.
+
+### Argument `--input-file=/absolute/path/to/file.tsv`
+Tells the tool to read a TSV or CSV file representing the "master spreadsheet" with the interest forecasting rules.
+
+The file can be `*.tsv` or `*.csv` and must have one of the following formats:
+```CSV
+Main Trans,Sub Trans,Interest bearing,Interest key,Interest only Debt,Charge Ref,Period End
+1545,1090,Y,4,N,N/A,Tax Yr (6/4/yyyy - 5/4/yyyy)
+3997,2091,N,N/A,Y,N/A,
+,,,,,,
+PAYE,,,,,,
+Main Trans,Sub Trans,Interest bearing,Interest key,Interest only Debt,Charge Ref,
+2090,1350,Y,,,ASN,
+2095,2020,N,,Y,Charge ref,
+,,,,,,
+VAT,,,,,,
+Main Trans,Sub Trans,Interest bearing,Interest key,Interest only Debt,Charge Ref,
+4700,1174,Y,,,VRN,
+4620,1175,,,Y,VRN,
+4703,1090,Y,,,VRN,
+```
+
+```CSV
+Main Trans,Sub Trans,Interest bearing,Interest key,Interest only Debt,Charge Ref,Period End
+1545,1090,Y,4,N,N/A,Tax Yr (6/4/yyyy - 5/4/yyyy)
+3997,2091,N,N/A,Y,N/A,
+
+PAYE
+Main Trans,Sub Trans,Interest bearing,Interest key,Interest only Debt,Charge Ref,
+2090,1350,Y,,,ASN,
+2095,2020,N,,Y,Charge ref,
+
+VAT
+Main Trans,Sub Trans,Interest bearing,Interest key,Interest only Debt,Charge Ref,
+4700,1174,Y,,,VRN,
+4620,1175,,,Y,VRN,
+4703,1090,Y,,,VRN,
+```
+
+```TSV
+Main Trans	Sub Trans	Interest bearing	Interest key	Interest only Debt	Charge Ref	Period End
+1545	1090	Y	4	N	N/A	Tax Yr (6/4/yyyy - 5/4/yyyy)
+1441	1150	N	N/A	N	N/A
+
+PAYE
+Main Trans	Sub Trans	Interest bearing	Interest key	Interest only Debt	Charge Ref
+2000	1100	Y			ASN
+2005	2000	N		Y	Charge ref
+2590	1090	Y			Charge ref
+2595	2090	N		Y	Charge ref
+
+VAT
+Main Trans	Sub Trans	Interest bearing	Interest key	Interest only Debt	Charge Ref
+4793	1090	Y			VRN
+4794	1175			Y	VRN
+4711	1174				VRN
+```
+
+### Argument `--input-console-tsv`
+
+Specified instead of `--input-file=...` to allow users to copy the data straight from Excel and paste it
+directly into the terminal.
+
+You'll be given a string to add after your pasted content, to signal the end of the data.
+
+The pasted content must have the following format:
+```TSV
+Main Trans	Sub Trans	Interest bearing	Interest key	Interest only Debt	Charge Ref	Period End
+1545	1090	Y	4	N	N/A	Tax Yr (6/4/yyyy - 5/4/yyyy)
+1441	1150	N	N/A	N	N/A
+
+PAYE
+Main Trans	Sub Trans	Interest bearing	Interest key	Interest only Debt	Charge Ref
+2000	1100	Y			ASN
+2005	2000	N		Y	Charge ref
+2590	1090	Y			Charge ref
+2595	2090	N		Y	Charge ref
+
+VAT
+Main Trans	Sub Trans	Interest bearing	Interest key	Interest only Debt	Charge Ref
+4793	1090	Y			VRN
+4794	1175			Y	VRN
+4711	1174				VRN
+```
+
+### Argument `--output-console-conf`
+
+Provided if the desired output is the `rules` section in the `application.conf` of `interest-forecasting`.
+
+### Argument `--output-console-production-config`
+
+Provided if the desired output is the `service-config.rules` entries in the production config of `interest-forecasting`.
