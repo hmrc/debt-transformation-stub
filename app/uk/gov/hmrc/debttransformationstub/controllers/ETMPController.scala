@@ -18,7 +18,8 @@ package uk.gov.hmrc.debttransformationstub.controllers
 
 import play.api.Environment
 import play.api.libs.json.Json
-import play.api.mvc.{Action, AnyContent, ControllerComponents}
+import play.api.mvc.{Action, AnyContent, ControllerComponents, Request}
+import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import java.io.File
@@ -26,10 +27,13 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 import scala.io.Source
+import scala.language.postfixOps
 import scala.math.Ordering.Implicits.infixOrderingOps
-import scala.util.{Try, Using}
+import scala.util.{Failure, Success, Try, Using}
 
 class ETMPController @Inject() (environment: Environment, cc: ControllerComponents) extends BackendController(cc) {
+
+  private lazy val logger = new RequestAwareLogger(this.getClass)
 
   private val basePath = "conf/resources/data/etmp.eligibility"
 
@@ -39,7 +43,7 @@ class ETMPController @Inject() (environment: Environment, cc: ControllerComponen
     regimeType: String,
     idType: String,
     idValue: String
-  ): Action[AnyContent] = Action { request =>
+  ): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
     val queryKeys: List[String] =
       List("showIds", "showAddresses", "showSignals", "showFiling", "showCharges", "addressFromDate")
     val queries: Map[String, Option[String]] = queryKeys.map(key => (key, request.getQueryString(key))).toMap
@@ -47,9 +51,12 @@ class ETMPController @Inject() (environment: Environment, cc: ControllerComponen
     val relativePath = s"$basePath" + "." + regimeType + "/" + s"$idValue.json"
     environment.getExistingFile(relativePath) match {
       case Some(file) =>
-        Try(Json.parse(paymentPlanEligibilityString(file, idValue))).toOption
-          .map(Ok(_))
-          .getOrElse(InternalServerError(s"stub failed to parse file $relativePath"))
+        Try(Json.parse(paymentPlanEligibilityString(file, idValue))) match {
+          case Success(value) => Ok(value)
+          case Failure(exception) =>
+            logger.error(s"Failed to parse the file $relativePath", exception)
+            InternalServerError(s"stub failed to parse file $relativePath")
+        }
       case _ =>
         NotFound("file not found")
     }
@@ -58,14 +65,14 @@ class ETMPController @Inject() (environment: Environment, cc: ControllerComponen
   private def paymentPlanEligibilityString(file: File, idValue: String): String = {
     val currentDate = LocalDate.now()
 
-    // Using a Using block to read file content and ensure it is closed after reading
-    val responseTemplate: String = {
-      Using(Source.fromFile(file)) { source =>source.mkString
-      } getOrElse {
-        // Handle failure to read the file, if necessary
-        throw new RuntimeException(s"Failed to read file: ${file.getPath}")
-      }
-    }
+    val responseTemplate: String =
+      Using(Source.fromFile(file))(source => source.mkString)
+        .recoverWith {
+          case ex: Throwable =>
+            // Explain which file failed to be read.
+            Failure(new RuntimeException(s"Failed to read file: ${file.getPath}", ex))
+        }
+        .get // Can throw.
 
     /** Valid should mean in the past, but not too far in the past. */
     def validAsnDate(monthsAgo: Int): LocalDate = {
@@ -83,12 +90,11 @@ class ETMPController @Inject() (environment: Environment, cc: ControllerComponen
     val dueDateEqualsMaxDebtAgePAYE = currentDate.minusDays(1825)
 
     val initialOverride: String =
-      (1 to 24)
-        .foldLeft(responseTemplate) {
-          case (accumulatingResponseTemplate, monthsAgo) =>
-            val validAsnDateString = validAsnDate(monthsAgo = monthsAgo).format(dateFormatter)
-            accumulatingResponseTemplate.replaceAll(s"<VALID_DUE_DATE_$monthsAgo>", validAsnDateString)
-        }
+      (1 to 24).foldLeft(responseTemplate) {
+        case (accumulatingResponseTemplate, monthsAgo) =>
+          val validAsnDateString = validAsnDate(monthsAgo = monthsAgo).format(dateFormatter)
+          accumulatingResponseTemplate.replaceAll(s"<VALID_DUE_DATE_$monthsAgo>", validAsnDateString)
+      }
 
     val result =
       initialOverride
