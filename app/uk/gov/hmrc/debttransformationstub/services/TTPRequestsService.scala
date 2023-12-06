@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.debttransformationstub.services
 
-import akka.http.scaladsl.model.StatusCodes
+import org.apache.pekko.http.scaladsl.model.StatusCodes
 import com.google.inject.ImplementedBy
 import org.mongodb.scala.result.{ DeleteResult, InsertOneResult }
 import uk.gov.hmrc.debttransformationstub.models.RequestDetail
