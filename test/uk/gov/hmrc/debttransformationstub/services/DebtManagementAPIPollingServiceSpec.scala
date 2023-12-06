@@ -19,7 +19,7 @@ package uk.gov.hmrc.debttransformationstub.services
 import org.mockito.ArgumentCaptor
 import org.mockito.scalatest.MockitoSugar
 import org.mongodb.scala.result.InsertOneResult
-import org.scalatest.WordSpec
+import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.play.guice.GuiceOneServerPerSuite
 import play.api.libs.json.Json
@@ -31,7 +31,7 @@ import java.time.LocalDateTime
 import scala.concurrent.duration.Duration
 import scala.concurrent.{ Await, ExecutionContext, Future }
 
-class DebtManagementAPIPollingServiceSpec extends WordSpec with Matchers with MockitoSugar with GuiceOneServerPerSuite {
+class DebtManagementAPIPollingServiceSpec extends AnyWordSpec with Matchers with MockitoSugar with GuiceOneServerPerSuite {
   implicit lazy val ec = app.injector.instanceOf[ExecutionContext]
 
   "the DebtManagementAPIPollingService" should {
