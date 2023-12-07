@@ -1,4 +1,3 @@
-import play.core.PlayVersion.current
 import sbt._
 
 object AppDependencies {
