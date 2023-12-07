@@ -31,7 +31,8 @@ import java.time.LocalDateTime
 import scala.concurrent.duration.Duration
 import scala.concurrent.{ Await, ExecutionContext, Future }
 
-class DebtManagementAPIPollingServiceSpec extends AnyWordSpec with Matchers with MockitoSugar with GuiceOneServerPerSuite {
+class DebtManagementAPIPollingServiceSpec
+    extends AnyWordSpec with Matchers with MockitoSugar with GuiceOneServerPerSuite {
   implicit lazy val ec = app.injector.instanceOf[ExecutionContext]
 
   "the DebtManagementAPIPollingService" should {
