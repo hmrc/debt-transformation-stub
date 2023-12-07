@@ -18,16 +18,16 @@ package uk.gov.hmrc.debttransformationstub.utils
 
 import java.util.Base64
 
-object BuildEtmpLocksTTPEligibility extends App{
+object BuildEtmpLocksTTPEligibility extends App {
 
   case class EtmpLock(lockReason: String, disallowPAYE: Boolean, disallowVAT: Boolean)
 
-  def encodeList(notEncodedLockReasons: List[EtmpLock]): List[String] = {
+  def encodeList(notEncodedLockReasons: List[EtmpLock]): List[String] =
     notEncodedLockReasons.map { item =>
-      val encodedReason = item.copy(lockReason = new String(Base64.getEncoder.encodeToString(item.lockReason.getBytes())))
+      val encodedReason =
+        item.copy(lockReason = new String(Base64.getEncoder.encodeToString(item.lockReason.getBytes())))
       s"\n{ lockReason =  ${encodedReason.lockReason}, disallowPAYE = ${item.disallowPAYE}, disallowVAT = ${item.disallowVAT} }, \n # lock reason = ${item.lockReason}"
     }
-  }
 
   //encodeList(List(EtmpLock(lockReason = "example lock reason", disallowPAYE = true, disallowVAT = false)))
   // when you call this method put it in a print line

@@ -96,6 +96,7 @@ class ETMPController @Inject() (environment: Environment, cc: ControllerComponen
           accumulatingResponseTemplate.replaceAll(s"<VALID_DUE_DATE_$monthsAgo>", validAsnDateString)
       }
 
+
     val result =
       initialOverride
         .replaceAll("<DUE_DATE>", dueDateInPast.format(dateFormatter))
