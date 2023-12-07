@@ -9,12 +9,17 @@ object AppDependencies {
     "commons-io"        %  "commons-io"                % "2.11.0"
   )
 
+  private val brokenMockito = true
+  private val mockitoLib: ModuleID = "org.mockito" % "mockito-core" % (if (brokenMockito) "4.11.0" else "4.6.1")
+  private val mockitoExclusion = ExclusionRule(mockitoLib.organization, mockitoLib.name)
+
   val test = Seq(
-    "uk.gov.hmrc"            %% "bootstrap-test-play-30"  % "8.1.0"   % Test,
-    "org.mockito"            %% "mockito-scala-scalatest" % "1.17.12" % Test,
+    mockitoLib                                                        % Test,
+    "uk.gov.hmrc"            %% "bootstrap-test-play-30"  % "8.1.0"   % Test excludeAll mockitoExclusion,
+    "org.mockito"            %% "mockito-scala-scalatest" % "1.17.12" % Test excludeAll mockitoExclusion,
     "com.typesafe.play"      %% "play-test"               % "2.8.18"  % Test,
     "uk.gov.hmrc.mongo"      %% "hmrc-mongo-test-play-30" % "1.6.0"   % Test,
     "com.vladsch.flexmark"    % "flexmark-all"            % "0.36.8"  % Test,
-    "org.scalatestplus.play" %% "scalatestplus-play"      % "5.1.0"   % Test
+    "org.scalatestplus.play" %% "scalatestplus-play"      % "5.1.0"   % Test excludeAll mockitoExclusion
   )
 }
