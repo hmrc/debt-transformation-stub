@@ -33,7 +33,7 @@ import scala.concurrent.{ Await, ExecutionContext, Future }
 
 class DebtManagementAPIPollingServiceSpec
     extends AnyWordSpec with Matchers with MockitoSugar with GuiceOneServerPerSuite {
-  implicit lazy val ec = app.injector.instanceOf[ExecutionContext]
+  implicit lazy val ec: ExecutionContext = app.injector.instanceOf[ExecutionContext]
 
   "the DebtManagementAPIPollingService" should {
     "not rewrite a URL for field collections charge, stripping path params" in {
