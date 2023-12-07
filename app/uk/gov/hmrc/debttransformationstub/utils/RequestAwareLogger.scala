@@ -25,11 +25,35 @@ class RequestAwareLogger(clazz: Class[_]) {
 
   val requestIdKey = "x-request-id"
 
-  def trace(msg: => String)(implicit hc: HeaderCarrier): Unit = withRequestIDInMDC(underlying.trace(msg))
-  def debug(msg: => String)(implicit hc: HeaderCarrier): Unit = withRequestIDInMDC(underlying.debug(msg))
-  def info(msg: => String)(implicit hc: HeaderCarrier): Unit = withRequestIDInMDC(underlying.info(msg))
-  def warn(msg: => String)(implicit hc: HeaderCarrier): Unit = withRequestIDInMDC(underlying.warn(msg))
-  def error(msg: => String)(implicit hc: HeaderCarrier): Unit = withRequestIDInMDC(underlying.error(msg))
+  def trace(msg: => String)(implicit hc: HeaderCarrier): Unit =
+    withRequestIDInMDC(underlying.trace(msg))
+
+  def trace(msg: => String, error: => Throwable)(implicit hc: HeaderCarrier): Unit =
+    withRequestIDInMDC(underlying.trace(msg, error))
+
+  def debug(msg: => String)(implicit hc: HeaderCarrier): Unit =
+    withRequestIDInMDC(underlying.debug(msg))
+
+  def debug(msg: => String, error: => Throwable)(implicit hc: HeaderCarrier): Unit =
+    withRequestIDInMDC(underlying.debug(msg, error))
+
+  def info(msg: => String)(implicit hc: HeaderCarrier): Unit =
+    withRequestIDInMDC(underlying.info(msg))
+
+  def info(msg: => String, error: => Throwable)(implicit hc: HeaderCarrier): Unit =
+    withRequestIDInMDC(underlying.info(msg, error))
+
+  def warn(msg: => String)(implicit hc: HeaderCarrier): Unit =
+    withRequestIDInMDC(underlying.warn(msg))
+
+  def warn(msg: => String, error: => Throwable)(implicit hc: HeaderCarrier): Unit =
+    withRequestIDInMDC(underlying.warn(msg, error))
+
+  def error(msg: => String)(implicit hc: HeaderCarrier): Unit =
+    withRequestIDInMDC(underlying.error(msg))
+
+  def error(msg: => String, error: => Throwable)(implicit hc: HeaderCarrier): Unit =
+    withRequestIDInMDC(underlying.error(msg, error))
 
   def withRequestIDInMDC(f: => Unit)(implicit hc: HeaderCarrier): Unit = {
     val requestId = hc.requestId.getOrElse(RequestId("Undefined"))

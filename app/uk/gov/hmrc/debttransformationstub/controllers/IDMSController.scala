@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.debttransformationstub.controllers
 
-import org.apache.commons.io.FileUtils
 import play.api.Environment
 import play.api.libs.json.{ JsValue, Json }
 import play.api.mvc.{ Action, ControllerComponents, Request }
@@ -25,9 +24,10 @@ import uk.gov.hmrc.debttransformationstub.models.errors.NO_RESPONSE
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
-import java.nio.charset.Charset
 import javax.inject.Inject
 import scala.concurrent.Future
+import scala.io.Source
+import scala.util.{Failure, Success, Try, Using}
 
 class IDMSController @Inject() (environment: Environment, cc: ControllerComponents)
     extends BackendController(cc) with CustomBaseController {
@@ -46,9 +46,22 @@ class IDMSController @Inject() (environment: Environment, cc: ControllerComponen
           logger.error(s"Status $NOT_FOUND, message: $message")
           Future successful NotFound(message)
         case Some(file) =>
-          val result = FileUtils.readFileToString(file, Charset.defaultCharset())
-          Future successful Ok(Json.parse(result))
+          val maybeFileContent: Try[String] =
+            Using(Source.fromFile(file))(source => source.mkString)
+              .recoverWith {
+                case ex: Throwable =>
+                  // Explain which file failed to be read.
+                  Failure(new RuntimeException(s"Failed to read file: ${file.getPath}", ex))
+              }
 
+          maybeFileContent match {
+            case Success(value) =>
+              // Might throw if parsing fails
+              Future.successful(Ok(Json.parse(value)))
+            case Failure(exception) =>
+              logger.error(s"Failed to parse the file $file", exception)
+              Future.successful(InternalServerError(s"Stub failed to parse file $file"))
+          }
       }
     }
   }
