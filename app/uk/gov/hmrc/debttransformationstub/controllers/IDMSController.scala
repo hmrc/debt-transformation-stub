@@ -27,7 +27,7 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import javax.inject.Inject
 import scala.concurrent.Future
 import scala.io.Source
-import scala.util.{Failure, Success, Try, Using}
+import scala.util.{ Failure, Success, Try, Using }
 
 class IDMSController @Inject() (environment: Environment, cc: ControllerComponents)
     extends BackendController(cc) with CustomBaseController {
@@ -48,10 +48,9 @@ class IDMSController @Inject() (environment: Environment, cc: ControllerComponen
         case Some(file) =>
           val maybeFileContent: Try[String] =
             Using(Source.fromFile(file))(source => source.mkString)
-              .recoverWith {
-                case ex: Throwable =>
-                  // Explain which file failed to be read.
-                  Failure(new RuntimeException(s"Failed to read file: ${file.getPath}", ex))
+              .recoverWith { case ex: Throwable =>
+                // Explain which file failed to be read.
+                Failure(new RuntimeException(s"Failed to read file: ${file.getPath}", ex))
               }
 
           maybeFileContent match {
