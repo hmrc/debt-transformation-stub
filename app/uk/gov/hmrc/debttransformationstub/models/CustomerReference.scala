@@ -16,9 +16,11 @@
 
 package uk.gov.hmrc.debttransformationstub.models
 
+import play.api.libs.json.Format
+
 final case class CustomerReference(value: String) extends AnyVal
 
 object CustomerReference extends ValueTypeFormatter {
-  implicit val format =
+  implicit val format: Format[CustomerReference] =
     valueTypeFormatter(CustomerReference.apply, CustomerReference.unapply)
 }

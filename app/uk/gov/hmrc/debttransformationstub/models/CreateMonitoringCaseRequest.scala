@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.debttransformationstub.models
 
-import play.api.libs.json.Json
+import play.api.libs.json.{ Json, OFormat }
 
 import java.time.LocalDate
 
@@ -37,5 +37,5 @@ final case class CreateMonitoringCaseRequest(
 )
 
 object CreateMonitoringCaseRequest {
-  implicit val format = Json.format[CreateMonitoringCaseRequest]
+  implicit val format: OFormat[CreateMonitoringCaseRequest] = Json.format[CreateMonitoringCaseRequest]
 }

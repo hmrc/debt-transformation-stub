@@ -74,7 +74,7 @@ class TimeToPayTestController @Inject() (
     }
   }
 
-  def testOnlyDeleteAllDocuments() = Action.async { _ =>
+  def testOnlyDeleteAllDocuments(): Action[AnyContent] = Action.async { _ =>
     enactStageRepository.testOnlyDeleteAllDocuments().map(res => Ok(s"The database has been dropped: $res"))
   }
 

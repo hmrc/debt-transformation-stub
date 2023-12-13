@@ -17,20 +17,19 @@
 package uk.gov.hmrc.debttransformationstub.models
 
 import java.time.LocalDate
-
-import play.api.libs.json.Json
+import play.api.libs.json.{ Format, Json, OFormat }
 
 final case class DebtItemId(value: String) extends AnyVal
 
 object DebtItemId extends ValueTypeFormatter {
-  implicit val format =
+  implicit val format: Format[DebtItemId] =
     valueTypeFormatter(DebtItemId.apply, DebtItemId.unapply)
 }
 
 final case class DebtItemChargeId(value: String) extends AnyVal
 
 object DebtItemChargeId extends ValueTypeFormatter {
-  implicit val format =
+  implicit val format: Format[DebtItemChargeId] =
     valueTypeFormatter(DebtItemChargeId.apply, DebtItemChargeId.unapply)
 }
 
@@ -44,7 +43,7 @@ final case class DebtItem(
 )
 
 object DebtItem {
-  implicit val format = Json.format[DebtItem]
+  implicit val format: OFormat[DebtItem] = Json.format[DebtItem]
 }
 
 final case class DebtItemForCreatePlan(
@@ -56,5 +55,5 @@ final case class DebtItemForCreatePlan(
   paymentHistory: Seq[Payment]
 )
 object DebtItemForCreatePlan {
-  implicit val format = Json.format[DebtItemForCreatePlan]
+  implicit val format: OFormat[DebtItemForCreatePlan] = Json.format[DebtItemForCreatePlan]
 }

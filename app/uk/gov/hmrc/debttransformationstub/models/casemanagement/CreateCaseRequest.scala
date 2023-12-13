@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.debttransformationstub.models.casemanagement
 
-import play.api.libs.json.Json
+import play.api.libs.json.{ Json, OFormat }
 import uk.gov.hmrc.debttransformationstub.models._
 
 final case class CreateCaseRequest(
@@ -32,5 +32,5 @@ final case class CreateCaseRequest(
 )
 
 object CreateCaseRequest {
-  implicit val format = Json.format[CreateCaseRequest]
+  implicit val format: OFormat[CreateCaseRequest] = Json.format[CreateCaseRequest]
 }

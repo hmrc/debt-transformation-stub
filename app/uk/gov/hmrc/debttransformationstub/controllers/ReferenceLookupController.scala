@@ -17,6 +17,7 @@
 package uk.gov.hmrc.debttransformationstub.controllers
 
 import play.api.Environment
+import play.api.libs.json.JsValue
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.utils.{ ListHelper, ReferenceDataLookupRequest, RequestAwareLogger }
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
@@ -38,21 +39,22 @@ class ReferenceLookupController @Inject() (
   private lazy val logger = new RequestAwareLogger(this.getClass)
   private val listHelper: ListHelper = new ListHelper()
 
-  def getReferenceData(descType: String, mainTrans: String, subTrans: String) = Action { implicit request =>
-    val testOnlyResponseCode: Option[String] = request.headers.get("testOnlyResponseCode")
-    if (testOnlyResponseCode.isDefined) {
-      Results.Status(testOnlyResponseCode.map(_.toInt).getOrElse(500))
-    } else {
-      environment.getExistingFile(basePath + refPath + descType + "-" + mainTrans + "-" + subTrans + ".json") match {
-        case Some(file) => Ok(Source.fromFile(file).mkString)
-        case _ =>
-          logger.error(s"Status $NOT_FOUND, message: file not found")
-          NotFound("file not found")
+  def getReferenceData(descType: String, mainTrans: String, subTrans: String): Action[AnyContent] = Action {
+    implicit request =>
+      val testOnlyResponseCode: Option[String] = request.headers.get("testOnlyResponseCode")
+      if (testOnlyResponseCode.isDefined) {
+        Results.Status(testOnlyResponseCode.map(_.toInt).getOrElse(500))
+      } else {
+        environment.getExistingFile(basePath + refPath + descType + "-" + mainTrans + "-" + subTrans + ".json") match {
+          case Some(file) => Ok(Source.fromFile(file).mkString)
+          case _ =>
+            logger.error(s"Status $NOT_FOUND, message: file not found")
+            NotFound("file not found")
+        }
       }
-    }
   }
 
-  def getReferenceDataLookup() = Action(parse.json).async { implicit request =>
+  def getReferenceDataLookup(): Action[JsValue] = Action(parse.json).async { implicit request =>
     withCustomJsonBody[ReferenceDataLookupRequest] { req =>
       val maybeBearerToken: Option[String] = request.headers.get("Authorization")
       if (maybeBearerToken.isDefined) {
@@ -75,7 +77,7 @@ class ReferenceLookupController @Inject() (
     }
   }
 
-  def getList() = Action {
+  def getList(): Action[AnyContent] = Action {
     Ok(listHelper.getList(basePath + refPath))
   }
 }

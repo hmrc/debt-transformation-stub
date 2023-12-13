@@ -70,23 +70,24 @@ class TimeToPayController @Inject() (
     }
   }
 
-  def getExistingQuote(customerReference: String, pegaId: String) = Action.async { implicit request =>
-    if (appConfig.isPollingEnv) {
-      ttpPollingService.insertRequestAndServeResponse(Json.toJson(""), Some(request.uri)).map {
-        case Some(v) => Status(v.status.getOrElse(200))(v.content)
-        case None    => ServiceUnavailable
+  def getExistingQuote(customerReference: String, pegaId: String): Action[AnyContent] = Action.async {
+    implicit request =>
+      if (appConfig.isPollingEnv) {
+        ttpPollingService.insertRequestAndServeResponse(Json.toJson(""), Some(request.uri)).map {
+          case Some(v) => Status(v.status.getOrElse(200))(v.content)
+          case None    => ServiceUnavailable
+        }
+      } else {
+        environment.getExistingFile(s"$basePath/ttp.viewPlan/$pegaId.json") match {
+          case Some(file) => Future.successful(Ok(Source.fromFile(file).mkString))
+          case _ =>
+            logger.error(s"Status $NOT_FOUND, message: file not found")
+            Future.successful(NotFound("file not found"))
+        }
       }
-    } else {
-      environment.getExistingFile(s"$basePath/ttp.viewPlan/$pegaId.json") match {
-        case Some(file) => Future.successful(Ok(Source.fromFile(file).mkString))
-        case _ =>
-          logger.error(s"Status $NOT_FOUND, message: file not found")
-          Future.successful(NotFound("file not found"))
-      }
-    }
   }
 
-  def updateQuote(customerReference: String, pegaId: String) = Action.async { implicit request =>
+  def updateQuote(customerReference: String, pegaId: String): Action[AnyContent] = Action.async { implicit request =>
     if (appConfig.isPollingEnv) {
       ttpPollingService.insertRequestAndServeResponse(Json.toJson(""), Some(request.uri)).map {
         case Some(v) => Status(v.status.getOrElse(200))(v.content)
@@ -102,7 +103,7 @@ class TimeToPayController @Inject() (
     }
   }
 
-  def createPlan = Action.async(parse.json) { implicit request =>
+  def createPlan: Action[JsValue] = Action.async(parse.json) { implicit request =>
     withCustomJsonBody[CreatePlanRequest] { req =>
       if (appConfig.isPollingEnv) {
         ttpPollingService.insertRequestAndServeResponse(Json.toJson(req), Some(request.uri)).map {
@@ -176,7 +177,7 @@ class TimeToPayController @Inject() (
     }
   }
 
-  def enactStage(correlationId: String) = Action.async { request =>
+  def enactStage(correlationId: String): Action[AnyContent] = Action.async { request =>
     enactStageRepository.findByCorrelationId(correlationId).map { stage: Option[EnactStage] =>
       Ok(Json.toJson(stage))
     }

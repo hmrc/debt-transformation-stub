@@ -36,7 +36,7 @@ class CaseManagementSystemController @Inject() (
   private val listHelper: ListHelper = new ListHelper()
   private lazy val logger = new RequestAwareLogger(this.getClass)
 
-  def getCaseDetails(debtID: String, duties: Option[String]) = Action { implicit request =>
+  def getCaseDetails(debtID: String, duties: Option[String]): Action[AnyContent] = Action { implicit request =>
     val testOnlyResponseCode: Option[String] = request.headers.get("testOnlyResponseCode")
     if (testOnlyResponseCode.isDefined) {
       Results.Status(testOnlyResponseCode.map(_.toInt).getOrElse(500))
@@ -50,20 +50,21 @@ class CaseManagementSystemController @Inject() (
     }
   }
 
-  def getDebtCaseManagement(customerUniqueRef: String, debtId: String, dutyIds: String) = Action { implicit request =>
-    val maybeBearerToken: Option[String] = request.headers.get("Authorization")
-    if (maybeBearerToken.isDefined) {
-      environment.getExistingFile(basePath + casePath + debtId + ".json") match {
-        case Some(file) =>
-          Ok(Source.fromFile(file).mkString)
-        case _ =>
-          logger.error(s"Status $NOT_FOUND, message: file not found")
-          NotFound("file not found")
-      }
-    } else Unauthorized("invalid token provided")
+  def getDebtCaseManagement(customerUniqueRef: String, debtId: String, dutyIds: String): Action[AnyContent] = Action {
+    implicit request =>
+      val maybeBearerToken: Option[String] = request.headers.get("Authorization")
+      if (maybeBearerToken.isDefined) {
+        environment.getExistingFile(basePath + casePath + debtId + ".json") match {
+          case Some(file) =>
+            Ok(Source.fromFile(file).mkString)
+          case _ =>
+            logger.error(s"Status $NOT_FOUND, message: file not found")
+            NotFound("file not found")
+        }
+      } else Unauthorized("invalid token provided")
   }
 
-  def getList() = Action {
+  def getList(): Action[AnyContent] = Action {
     Ok(listHelper.getList(basePath + casePath))
   }
 }
