@@ -18,7 +18,7 @@ package uk.gov.hmrc.debttransformationstub.controllers
 
 import play.api.Environment
 import play.api.libs.json.Json
-import play.api.mvc.{Action, AnyContent, ControllerComponents, Request}
+import play.api.mvc.{ Action, AnyContent, ControllerComponents, Request }
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
@@ -29,7 +29,7 @@ import javax.inject.Inject
 import scala.io.Source
 import scala.language.postfixOps
 import scala.math.Ordering.Implicits.infixOrderingOps
-import scala.util.{Failure, Success, Try, Using}
+import scala.util.{ Failure, Success, Try, Using }
 
 class ETMPController @Inject() (environment: Environment, cc: ControllerComponents) extends BackendController(cc) {
 
@@ -66,13 +66,10 @@ class ETMPController @Inject() (environment: Environment, cc: ControllerComponen
     val currentDate = LocalDate.now()
 
     val responseTemplate: String =
-      Using(Source.fromFile(file))(source => source.mkString)
-        .recoverWith {
-          case ex: Throwable =>
-            // Explain which file failed to be read.
-            Failure(new RuntimeException(s"Failed to read file: ${file.getPath}", ex))
-        }
-        .get // Can throw.
+      Using(Source.fromFile(file))(source => source.mkString).recoverWith { case ex: Throwable =>
+        // Explain which file failed to be read.
+        Failure(new RuntimeException(s"Failed to read file: ${file.getPath}", ex))
+      }.get // Can throw.
 
     /** Valid should mean in the past, but not too far in the past. */
     def validAsnDate(monthsAgo: Int): LocalDate = {
@@ -90,12 +87,10 @@ class ETMPController @Inject() (environment: Environment, cc: ControllerComponen
     val dueDateEqualsMaxDebtAgePAYE = currentDate.minusDays(1825)
 
     val initialOverride: String =
-      (1 to 24).foldLeft(responseTemplate) {
-        case (accumulatingResponseTemplate, monthsAgo) =>
-          val validAsnDateString = validAsnDate(monthsAgo = monthsAgo).format(dateFormatter)
-          accumulatingResponseTemplate.replaceAll(s"<VALID_DUE_DATE_$monthsAgo>", validAsnDateString)
+      (1 to 24).foldLeft(responseTemplate) { case (accumulatingResponseTemplate, monthsAgo) =>
+        val validAsnDateString = validAsnDate(monthsAgo = monthsAgo).format(dateFormatter)
+        accumulatingResponseTemplate.replaceAll(s"<VALID_DUE_DATE_$monthsAgo>", validAsnDateString)
       }
-
 
     val result =
       initialOverride
@@ -116,7 +111,6 @@ class ETMPController @Inject() (environment: Environment, cc: ControllerComponen
     result
   }
 }
-
 
 object ETMPController {
   val SingleErrorIdNumber = "012X012345"

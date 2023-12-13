@@ -30,7 +30,7 @@ class ReferenceLookupControllerSpec
 
   val cc = Helpers.stubControllerComponents()
   val env = app.injector.instanceOf[Environment]
-  implicit lazy val hc = HeaderCarrier()
+  implicit lazy val hc: HeaderCarrier = HeaderCarrier()
 
   private val fakeRequest = FakeRequest("GET", "/").withHeaders()
   private val controller = new ReferenceLookupController(env, cc)
