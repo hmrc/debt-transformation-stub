@@ -1,0 +1,70 @@
+{
+  "processingDateTime": "2023-11-21T09:36:07Z",
+  "identification": [
+    {
+      "idType": "BROCS",
+      "idValue": ""
+    },
+    {
+      "idType": "EMPREF",
+      "idValue": ""
+    }
+  ],
+  "addresses": [
+    {
+      "addressType": "Business",
+      "rls": false,
+      "postcodeHistory": [
+        {
+          "addressPostcode": "",
+          "postcodeDate": "2019-06-01"
+        }
+      ]
+    }
+  ],
+  "signals": [
+    {
+      "signalType": "Payment Frequency",
+      "signalValue": "QUARTERLY"
+    },
+    {
+      "signalType": "RLS",
+      "signalValue": "false"
+    }
+  ],
+  "filing": [
+    {
+      "icrCategory": "ZR01",
+      "icrDescription": "RTI-PAYE - Monthly returns",
+      "fromDate": "2023-11-06",
+      "toDate": "2023-12-05",
+      "dueDate": "2023-12-22"
+    }
+  ],
+  "charges": [
+    {
+      "chargeType": "RTI - E'yerNIC1-GB INT",
+      "mainType": "RTI - E'yerNIC1-GB INT",
+      "mainTrans": "2005",
+      "subTrans": "2023",
+      "taxPeriodFrom": "2023-01-06",
+      "taxPeriodTo": "2023-02-05",
+      "chargeReference": "XK002734901234",
+      "outstandingAmount": 2.26,
+      "dueDate": "2023-10-22",
+      "interestStartDate": "2023-10-22"
+    },
+    {
+      "chargeType": "RTI - E'yeeNIC1-GB INT",
+      "mainType": "RTI - E'yeeNIC1-GB INT",
+      "mainTrans": "2005",
+      "subTrans": "2026",
+      "taxPeriodFrom": "2023-01-06",
+      "taxPeriodTo": "2023-02-05",
+      "chargeReference": "XK002734901234",
+      "outstandingAmount": 6.03,
+      "dueDate": "2023-10-22",
+      "interestStartDate": "2023-10-22"
+    }
+  ]
+}
