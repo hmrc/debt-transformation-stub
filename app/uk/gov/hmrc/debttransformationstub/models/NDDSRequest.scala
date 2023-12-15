@@ -16,14 +16,14 @@
 
 package uk.gov.hmrc.debttransformationstub.models
 
-import play.api.libs.json.Json
+import play.api.libs.json.{ Json, OFormat }
 
 import java.time.LocalDate
 
 case class Identification(idType: String, idValue: String)
 
 object Identification {
-  implicit val format = Json.format[Identification]
+  implicit val format: OFormat[Identification] = Json.format[Identification]
 }
 
 case class DirectDebitInstruction(
@@ -34,13 +34,13 @@ case class DirectDebitInstruction(
 )
 
 object DirectDebitInstruction {
-  implicit val format = Json.format[DirectDebitInstruction]
+  implicit val format: OFormat[DirectDebitInstruction] = Json.format[DirectDebitInstruction]
 }
 
 case class PaymentPlanCharges(sequence: Int, hodService: String, hodReference: String, chargeAmount: Double)
 
 object PaymentPlanCharges {
-  implicit val format = Json.format[PaymentPlanCharges]
+  implicit val format: OFormat[PaymentPlanCharges] = Json.format[PaymentPlanCharges]
 }
 
 case class NDDSPaymentPlan(
@@ -58,7 +58,7 @@ case class NDDSPaymentPlan(
 )
 
 object NDDSPaymentPlan {
-  implicit val format = Json.format[NDDSPaymentPlan]
+  implicit val format: OFormat[NDDSPaymentPlan] = Json.format[NDDSPaymentPlan]
 }
 
 case class NDDSRequest(
@@ -70,5 +70,5 @@ case class NDDSRequest(
 )
 
 object NDDSRequest {
-  implicit val format = Json.format[NDDSRequest]
+  implicit val format: OFormat[NDDSRequest] = Json.format[NDDSRequest]
 }

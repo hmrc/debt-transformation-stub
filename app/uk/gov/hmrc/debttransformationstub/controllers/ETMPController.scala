@@ -27,7 +27,6 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 import scala.io.Source
-import scala.language.postfixOps
 import scala.math.Ordering.Implicits.infixOrderingOps
 import scala.util.{ Failure, Success, Try, Using }
 

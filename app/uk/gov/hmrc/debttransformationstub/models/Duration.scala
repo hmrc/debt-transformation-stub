@@ -16,9 +16,11 @@
 
 package uk.gov.hmrc.debttransformationstub.models
 
+import play.api.libs.json.Format
+
 case class Duration(value: Int) extends AnyVal
 
 object Duration extends ValueTypeFormatter {
-  implicit val format =
+  implicit val format: Format[Duration] =
     valueTypeFormatter(Duration.apply, Duration.unapply)
 }

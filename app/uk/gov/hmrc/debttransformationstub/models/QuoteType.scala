@@ -16,8 +16,10 @@
 
 package uk.gov.hmrc.debttransformationstub.models
 
+import play.api.libs.json.Format
+
 final case class QuoteType(value: String) extends AnyVal
 
 object QuoteType extends ValueTypeFormatter {
-  implicit val format = valueTypeFormatter(QuoteType.apply, QuoteType.unapply)
+  implicit val format: Format[QuoteType] = valueTypeFormatter(QuoteType.apply, QuoteType.unapply)
 }

@@ -16,8 +16,7 @@
 
 package uk.gov.hmrc.debttransformationstub.models.casemanagement
 import java.time.LocalDate
-
-import play.api.libs.json.Json
+import play.api.libs.json.{ Json, OFormat }
 import uk.gov.hmrc.debttransformationstub.models.{ DebtItemChargeId, MainTransType, Payment, SubTransType }
 
 final case class CaseManagementDebtItemCharge(
@@ -32,5 +31,5 @@ final case class CaseManagementDebtItemCharge(
 }
 
 object CaseManagementDebtItemCharge {
-  implicit val format = Json.format[CaseManagementDebtItemCharge]
+  implicit val format: OFormat[CaseManagementDebtItemCharge] = Json.format[CaseManagementDebtItemCharge]
 }

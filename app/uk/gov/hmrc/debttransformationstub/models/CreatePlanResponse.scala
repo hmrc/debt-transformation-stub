@@ -17,12 +17,12 @@
 package uk.gov.hmrc.debttransformationstub.models
 
 import enumeratum.{ Enum, EnumEntry, PlayJsonEnum }
-import play.api.libs.json.Json
+import play.api.libs.json.{ Format, Json, OFormat }
 
 final case class CaseId(value: String) extends AnyVal
 
 object CaseId extends ValueTypeFormatter {
-  implicit val format =
+  implicit val format: Format[CaseId] =
     valueTypeFormatter(CaseId.apply, CaseId.unapply)
 }
 
@@ -46,5 +46,5 @@ final case class CreatePlanResponse(
 )
 
 object CreatePlanResponse {
-  implicit val format = Json.format[CreatePlanResponse]
+  implicit val format: OFormat[CreatePlanResponse] = Json.format[CreatePlanResponse]
 }

@@ -16,18 +16,17 @@
 
 package uk.gov.hmrc.debttransformationstub.models
 import java.time.LocalDate
-
-import play.api.libs.json.Json
+import play.api.libs.json.{ Format, Json, OFormat }
 
 final case class PostCode(value: String) extends AnyVal
 
 object PostCode extends ValueTypeFormatter {
-  implicit val format =
+  implicit val format: Format[PostCode] =
     valueTypeFormatter(PostCode.apply, PostCode.unapply)
 }
 
 final case class CustomerPostCode(addressPostcode: PostCode, postcodeDate: LocalDate)
 
 object CustomerPostCode {
-  implicit val format = Json.format[CustomerPostCode]
+  implicit val format: OFormat[CustomerPostCode] = Json.format[CustomerPostCode]
 }

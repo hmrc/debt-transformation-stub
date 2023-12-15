@@ -16,16 +16,16 @@
 
 package uk.gov.hmrc.debttransformationstub.utils
 
-import play.api.libs.json.Json
+import play.api.libs.json.{ Json, OFormat }
 
 final case class TransType(mainTrans: String, subTrans: String)
 
 final case class ReferenceDataLookupRequest(`type`: String, items: Seq[TransType])
 
 object TransType {
-  implicit val format = Json.format[TransType]
+  implicit val format: OFormat[TransType] = Json.format[TransType]
 }
 
 object ReferenceDataLookupRequest {
-  implicit val format = Json.format[ReferenceDataLookupRequest]
+  implicit val format: OFormat[ReferenceDataLookupRequest] = Json.format[ReferenceDataLookupRequest]
 }

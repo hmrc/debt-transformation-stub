@@ -26,8 +26,7 @@ import play.api.Logger
 import uk.gov.hmrc.debttransformationstub.models._
 import uk.gov.hmrc.mongo.MongoComponent
 import uk.gov.hmrc.mongo.play.json.{ Codecs, PlayMongoRepository }
-import play.api.libs.json.Json
-import play.api.mvc.Result
+import play.api.libs.json.{ Json, OFormat }
 
 import javax.inject.{ Inject, Singleton }
 import scala.concurrent.{ ExecutionContext, Future }
@@ -43,7 +42,7 @@ case class EnactStage(
 )
 
 object EnactStage {
-  implicit val format = Json.format[EnactStage]
+  implicit val format: OFormat[EnactStage] = Json.format[EnactStage]
 }
 
 @Singleton

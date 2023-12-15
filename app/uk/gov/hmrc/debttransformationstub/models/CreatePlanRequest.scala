@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.debttransformationstub.models
 
-import play.api.libs.json.Json
+import play.api.libs.json.{ Format, Json, OFormat }
 
 import java.time.LocalDate
 import enumeratum.{ Enum, EnumEntry, PlayJsonEnum }
@@ -33,13 +33,13 @@ final case class Instalment(
 )
 
 object Instalment {
-  implicit val format = Json.format[Instalment]
+  implicit val format: OFormat[Instalment] = Json.format[Instalment]
 }
 
 final case class QuoteId(value: String) extends AnyVal
 
 object QuoteId extends ValueTypeFormatter {
-  implicit val format = valueTypeFormatter(QuoteId.apply, QuoteId.unapply)
+  implicit val format: Format[QuoteId] = valueTypeFormatter(QuoteId.apply, QuoteId.unapply)
 }
 
 sealed abstract class PaymentMethod(override val entryName: String) extends EnumEntry
@@ -73,20 +73,20 @@ final case class PlanToCreatePlan(
 )
 
 object PlanToCreatePlan {
-  implicit val format = Json.format[PlanToCreatePlan]
+  implicit val format: OFormat[PlanToCreatePlan] = Json.format[PlanToCreatePlan]
 }
 
 final case class PaymentReference(value: String) extends AnyVal
 
 object PaymentReference extends ValueTypeFormatter {
-  implicit val format =
+  implicit val format: Format[PaymentReference] =
     valueTypeFormatter(PaymentReference.apply, PaymentReference.unapply)
 }
 
 final case class PaymentInformation(paymentMethod: PaymentMethod, paymentReference: PaymentReference)
 
 object PaymentInformation {
-  implicit val format = Json.format[PaymentInformation]
+  implicit val format: OFormat[PaymentInformation] = Json.format[PaymentInformation]
 }
 
 final case class CreatePlanRequest(
@@ -101,5 +101,5 @@ final case class CreatePlanRequest(
 )
 
 object CreatePlanRequest {
-  implicit val format = Json.format[CreatePlanRequest]
+  implicit val format: OFormat[CreatePlanRequest] = Json.format[CreatePlanRequest]
 }

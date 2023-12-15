@@ -18,7 +18,7 @@ package uk.gov.hmrc.debttransformationstub.models
 
 import java.time.LocalDate
 import enumeratum.{ Enum, EnumEntry, PlayJsonEnum }
-import play.api.libs.json.Json
+import play.api.libs.json.{ Json, OFormat }
 
 import scala.collection.immutable
 
@@ -44,7 +44,7 @@ final case class Plan(
 )
 
 object Plan {
-  implicit val format = Json.format[Plan]
+  implicit val format: OFormat[Plan] = Json.format[Plan]
 }
 
 final case class GenerateQuoteRequest(
@@ -56,5 +56,5 @@ final case class GenerateQuoteRequest(
 )
 
 object GenerateQuoteRequest {
-  implicit val format = Json.format[GenerateQuoteRequest]
+  implicit val format: OFormat[GenerateQuoteRequest] = Json.format[GenerateQuoteRequest]
 }
