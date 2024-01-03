@@ -91,8 +91,8 @@
     {
       "chargeType": "RTI - NIC Comp on SAP",
       "mainType": "In Year RTI Charge (FPS)",
-      "mainTrans": "2030",
-      "subTrans": "1340",
+      "mainTrans": "2000",
+      "subTrans": "1026",
       "taxPeriodFrom": "2022-02-06",
       "taxPeriodTo": "2022-03-05",
       "chargeReference": "XM123456789812",
@@ -104,7 +104,6 @@
         {
           "lockType": "Dunning",
           "lockReason": "Suspension (Alleged appeal)"
-
         },
         {
           "lockType": "Calculate Interest",

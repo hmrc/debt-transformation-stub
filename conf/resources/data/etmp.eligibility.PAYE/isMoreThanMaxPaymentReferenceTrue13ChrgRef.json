@@ -235,12 +235,12 @@
       "chargeType": "In Year RTI Charge - Tax",
       "mainType": "In Year RTI Charge (FPS)",
       "mainTrans": "2005",
-      "subTrans": "2000",
-      "taxPeriodFrom": "2022-02-06",
-      "taxPeriodTo": "2022-03-05",
+      "subTrans": "2020",
+      "taxPeriodFrom": "2022-03-06",
+      "taxPeriodTo": "2022-04-05",
       "chargeReference": "XM000000000013",
       "outstandingAmount": 34.56,
-      "dueDate": "<VALID_DUE_DATE_1>",
+      "dueDate": "<VALID_DUE_DATE_2>",
       "interestStartDate": "2022-03-19",
       "accruedInterest": 2.09
     }
