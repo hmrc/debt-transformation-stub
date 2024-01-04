@@ -78,8 +78,8 @@
     {
       "chargeType": "In Year RTI Charge - Tax",
       "mainType": "In Year RTI Charge (FPS)",
-      "mainTrans": "2005",
-      "subTrans": "2000",
+      "mainTrans": "2000",
+      "subTrans": "1000",
       "taxPeriodFrom": "2022-02-06",
       "taxPeriodTo": "2022-03-05",
       "chargeReference": "XM000000000001",
@@ -91,8 +91,8 @@
     {
       "chargeType": "In Year RTI Charge - Tax",
       "mainType": "In Year RTI Charge (FPS)",
-      "mainTrans": "2005",
-      "subTrans": "2000",
+      "mainTrans": "2030",
+      "subTrans": "1310",
       "taxPeriodFrom": "2022-02-06",
       "taxPeriodTo": "2022-03-05",
       "chargeReference": "XM000000000001",
