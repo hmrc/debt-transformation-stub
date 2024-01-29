@@ -78,7 +78,7 @@ object InterestForecastingConfigBuilder {
       }
       .sortBy({ case (mainTrans, subTrans, _: InterestRule) =>
         (mainTrans, subTrans)
-      })(ConfigOrdering.MainTransSubTransInIfsConfigOrdering)
+      })
       .map(_._3)
 
   private final case class InterestRule(index: Int, raw: String) {
