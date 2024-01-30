@@ -25,16 +25,16 @@ object InterestForecastingConfigBuilder {
     buildRules(ifsData).zipWithIndex
       .flatMap { case (rule, index) =>
         List(
-          s"service-config.rules.$index: ${JsString(rule.toBase64)}",
-          s"# ${rule.raw},"
+          s"# ${rule.raw},",
+          s"service-config.rules.$index: ${JsString(rule.toBase64)}"
         )
       }
 
   def buildAppConfig(ifsData: IfsRulesMasterData): Seq[String] =
     buildRules(ifsData).flatMap { rule =>
       List(
-        s"${JsString(rule.toBase64)},",
-        s"# ${rule.raw},"
+        s"# ${rule.raw},",
+        s"${JsString(rule.toBase64)},"
       )
     }
 
