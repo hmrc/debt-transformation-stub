@@ -21,21 +21,24 @@ import uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet.impl.I
 import uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet.impl.TableData.{ CellValue, Heading }
 
 import scala.collection.immutable.ListSet
+import scala.util.matching.Regex
 
-final case class IfsRulesMasterData(cdcs: TableData, paye: TableData, vat: TableData) {
+final case class IfsRulesMasterData(cdcs: TableData, paye: TableData, vat: TableData, sa: TableData) {
 
   private lazy val jsonDescription: JsObject = JsObject(
     List(
-      "CDCS" -> cdcs.jsonDescription,
-      "PAYE" -> paye.jsonDescription,
-      "VAT"  -> vat.jsonDescription
+      "CDCS"     -> cdcs.jsonDescription,
+      "PAYE"     -> paye.jsonDescription,
+      "VAT"      -> vat.jsonDescription,
+      "SA DEBTS" -> sa.jsonDescription
     )
   )
 
-  private val masterCollection =
+  private val masterCollection: Vector[(Int, TableData, Vector[CellValue])] =
     cdcs.dataRows.zipWithIndex.map { case (dr, idx) => (idx, cdcs, dr) } ++
       paye.dataRows.zipWithIndex.map { case (dr, idx) => (idx, paye, dr) } ++
-      vat.dataRows.zipWithIndex.map { case (dr, idx) => (idx, vat, dr) }
+      vat.dataRows.zipWithIndex.map { case (dr, idx) => (idx, vat, dr) } ++
+      sa.dataRows.zipWithIndex.map { case (dr, idx) => (idx, sa, dr) }
 
   def length: Int = masterCollection.size
 
@@ -124,21 +127,27 @@ object IfsRulesMasterData {
 
     locally {
       val headingsLines = rows.filter(row => TransactionSection.isRowExpectedSectionHeading(row = row))
-      if (headingsLines.size != 2) {
-        val validHeadingsStr: String = Json.toJson(TransactionSection.validSectionHeadings).toString()
-        val actualHeadingsStr: String = Json.toJson(headingsLines).toString()
+      if (headingsLines.size != TransactionSection.validSectionHeadings.size) {
+        val validHeadingsStr: String = TransactionSection.validSectionHeadings.toString
+        val actualHeadingsStr: String = Json.toJson(headingsLines).toString
         val allRowsStr: String = Json.prettyPrint(Json.toJson(rows))
 
         throw new IllegalArgumentException(
-          s"Expected headings $validHeadingsStr, but found only $actualHeadingsStr in rows $allRowsStr"
+          s"""Expected a certain number of headings in the input.
+             |Required headings (regex): $validHeadingsStr
+             |Found headings (strings): $actualHeadingsStr
+             |All rows: $allRowsStr
+             |""".stripMargin
         )
       }
     }
 
-    val cdcsSectionRaw = rows.takeWhile(row => !row.startsWith(TransactionSection.payeSectionHeading.value))
+    val cdcsSectionRaw = rows.takeWhile(row => !TransactionSection.payeSectionHeading.value.matches(row))
     val sectionAfterCdcs = rows.drop(cdcsSectionRaw.size + 1)
-    val payeSectionRaw = sectionAfterCdcs.takeWhile(row => !row.startsWith(TransactionSection.vatSectionHeading.value))
-    val vatSectionRaw = sectionAfterCdcs.drop(payeSectionRaw.size + 1)
+    val payeSectionRaw = sectionAfterCdcs.takeWhile(row => !TransactionSection.vatSectionHeading.value.matches(row))
+    val sectionAfterPaye = sectionAfterCdcs.drop(payeSectionRaw.size + 1)
+    val vatSectionRaw = sectionAfterPaye.takeWhile(row => !TransactionSection.saSectionHeading.value.matches(row))
+    val saDebtsSectionRaw = sectionAfterPaye.drop(vatSectionRaw.size + 1)
 
     val cdcsData = TableData.fromCsvOrTsvRowsWithHeadings(
       rowsWithHeadings = cdcsSectionRaw.filter(keepRow),
@@ -152,8 +161,12 @@ object IfsRulesMasterData {
       rowsWithHeadings = vatSectionRaw.filter(keepRow),
       separator = cellSeparator
     )
+    val saData = TableData.fromCsvOrTsvRowsWithHeadings(
+      rowsWithHeadings = saDebtsSectionRaw.filter(keepRow),
+      separator = cellSeparator
+    )
 
-    IfsRulesMasterData(cdcs = cdcsData, paye = payeData, vat = vatData)
+    IfsRulesMasterData(cdcs = cdcsData, paye = payeData, vat = vatData, sa = saData)
   }
 
   private object KnownHeadings {
@@ -167,17 +180,15 @@ object IfsRulesMasterData {
 
   private object TransactionSection {
     val cdcsSectionHeading: None.type = None
-    val payeSectionHeading: Some[String] = Some("PAYE")
-    val vatSectionHeading: Some[String] = Some("VAT")
+    val payeSectionHeading: Some[Regex] = Some("^(?i)PAYE\\b[,\\t]*$".r)
+    val vatSectionHeading: Some[Regex] = Some("^(?i)VAT\\b[,\\t]*$".r)
+    val saSectionHeading: Some[Regex] = Some("^(?i)SA DEBTS\\b.*$".r) // we've seen comments on this heading
 
-    def validSectionHeadings: ListSet[String] = ListSet(payeSectionHeading.value, vatSectionHeading.value)
+    def validSectionHeadings: ListSet[Regex] =
+      ListSet(payeSectionHeading.value, vatSectionHeading.value, saSectionHeading.value)
 
     def isRowExpectedSectionHeading(row: String): Boolean =
-      validSectionHeadings.exists(validHeading => isRowExpectedSectionHeading(row = row, sectionHeading = validHeading))
+      validSectionHeadings.exists(validHeading => validHeading.matches(row))
 
-    def isRowExpectedSectionHeading(row: String, sectionHeading: String): Boolean =
-      row.startsWith(s"$sectionHeading") ||
-        row.startsWith(s"$sectionHeading,") ||
-        row.startsWith(s"$sectionHeading\t")
   }
 }
