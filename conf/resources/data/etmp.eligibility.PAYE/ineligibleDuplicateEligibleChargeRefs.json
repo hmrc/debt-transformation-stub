@@ -165,32 +165,6 @@
       "dueDate": "2023-05-22",
       "interestStartDate": "2023-05-19",
       "accruedInterest": 48.66
-    },
-    {
-      "chargeType": "In Year RTI ChargeE'yerNIC1-GB",
-      "mainType": "In Year RTI ChargeE'yerNIC1-GB",
-      "mainTrans": "2000",
-      "subTrans": "1023",
-      "taxPeriodFrom": "2023-06-06",
-      "taxPeriodTo": "2023-07-05",
-      "chargeReference": "XF006526354157",
-      "outstandingAmount": 468.79,
-      "dueDate": "2023-07-22",
-      "interestStartDate": "2023-07-19",
-      "accruedInterest": 22.05
-    },
-    {
-      "chargeType": "In Year RTI ChargeE'yerNIC1-GB",
-      "mainType": "In Year RTI ChargeE'yerNIC1-GB",
-      "mainTrans": "2000",
-      "subTrans": "1023",
-      "taxPeriodFrom": "2023-08-06",
-      "taxPeriodTo": "2023-09-05",
-      "chargeReference": "XL006605391665",
-      "outstandingAmount": 667.37,
-      "dueDate": "2023-09-22",
-      "interestStartDate": "2023-09-19",
-      "accruedInterest": 22.78
     }
 
   ]
