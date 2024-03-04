@@ -120,7 +120,7 @@
       "mainTrans": "2000",
       "subTrans": "1000",
       "taxPeriodFrom": "2023-09-06",
-      "taxPeriodTo": "2023-10-05",
+      "taxPeriodTo": "2023-07-05",
       "chargeReference": "XF006526354157",
       "outstandingAmount": 1118.8,
       "dueDate": "2023-10-22",
@@ -152,19 +152,6 @@
       "dueDate": "2023-09-22",
       "interestStartDate": "2023-09-19",
       "accruedInterest": 40.69
-    },
-    {
-      "chargeType": "In Year RTI Charge-TAX",
-      "mainType": "In Year RTI Charge-TAX",
-      "mainTrans": "2000",
-      "subTrans": "1000",
-      "taxPeriodFrom": "2023-04-06",
-      "taxPeriodTo": "2023-05-05",
-      "chargeReference": "XD005804100061",
-      "outstandingAmount": 827.8,
-      "dueDate": "2023-05-22",
-      "interestStartDate": "2023-05-19",
-      "accruedInterest": 48.66
     }
 
   ]
