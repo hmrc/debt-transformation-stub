@@ -1,0 +1,158 @@
+{
+  "processingDateTime": "2024-02-27T09:55:31Z",
+  "identification": [
+    {
+      "idType": "BROCS",
+      "idValue": "475PY00547269"
+    },
+    {
+      "idType": "EMPREF",
+      "idValue": "475HA97110"
+    }
+  ],
+  "addresses": [
+    {
+      "addressType": "Business",
+      "rls": false,
+      "postcodeHistory": [
+        {
+          "addressPostcode": "XXX XXX",
+          "postcodeDate": "2013-11-15"
+        }
+      ]
+    }
+  ],
+  "signals": [
+    {
+      "signalType": "Payment Frequency",
+      "signalValue": "MONTHLY"
+    },
+    {
+      "signalType": "Payment Frequency",
+      "signalValue": "MONTHLY"
+    },
+    {
+      "signalType": "RLS",
+      "signalValue": "false"
+    }
+  ],
+  "filing": [
+    {
+      "icrCategory": "ZR01",
+      "icrDescription": "RTI-PAYE - Monthly returns",
+      "fromDate": "2024-03-06",
+      "toDate": "2024-04-05",
+      "dueDate": "2024-04-22"
+    },
+    {
+      "icrCategory": "ZR01",
+      "icrDescription": "RTI-PAYE - Monthly returns",
+      "fromDate": "2024-02-06",
+      "toDate": "2024-03-05",
+      "dueDate": "2024-03-22"
+    },
+    {
+      "icrCategory": "ZR03",
+      "icrDescription": "CIS - Monthly returns",
+      "fromDate": "2024-03-06",
+      "toDate": "2024-04-05",
+      "dueDate": "2024-04-22"
+    },
+    {
+      "icrCategory": "ZR03",
+      "icrDescription": "CIS - Monthly returns",
+      "fromDate": "2024-02-06",
+      "toDate": "2024-03-05",
+      "dueDate": "2024-03-22"
+    },
+    {
+      "icrCategory": "ZR03",
+      "icrDescription": "CIS - Monthly returns",
+      "fromDate": "2024-01-06",
+      "toDate": "2024-02-05",
+      "dueDate": "2024-02-22"
+    },
+    {
+      "icrCategory": "ZR03",
+      "icrDescription": "CIS - Monthly returns",
+      "fromDate": "2023-10-06",
+      "toDate": "2023-11-05",
+      "dueDate": "2023-11-22"
+    },
+    {
+      "icrCategory": "ZR03",
+      "icrDescription": "CIS - Monthly returns",
+      "fromDate": "2017-10-06",
+      "toDate": "2017-11-05",
+      "dueDate": "2017-11-22"
+    }
+  ],
+  "charges": [
+    {
+      "chargeType": "CIS Fixed Penalty",
+      "mainType": "CIS Fixed Penalty",
+      "mainTrans": "9999",
+      "subTrans": "1090",
+      "taxPeriodFrom": "2023-10-06",
+      "taxPeriodTo": "2023-11-05",
+      "chargeReference": "XH006787678586",
+      "outstandingAmount": 100,
+      "dueDate": "2024-01-04",
+      "interestStartDate": "2024-01-04",
+      "accruedInterest": 1.14
+    },
+    {
+      "chargeType": " In Year RTI Charge 2 - Tax",
+      "mainType": " In Year RTI Charge 2 - Tax",
+      "mainTrans": "1481",
+      "subTrans": "1090",
+      "taxPeriodFrom": "2023-07-06",
+      "taxPeriodTo": "2023-08-05",
+      "chargeReference": "XC007247636332",
+      "outstandingAmount": 100,
+      "dueDate": "2023-10-05",
+      "interestStartDate": "2023-10-05",
+      "accruedInterest": 3.06
+    },
+    {
+      "chargeType": "In Year RTI Charge-TAX",
+      "mainType": "In Year RTI Charge-TAX",
+      "mainTrans": "2000",
+      "subTrans": "1000",
+      "taxPeriodFrom": "2023-09-06",
+      "taxPeriodTo": "2023-07-05",
+      "chargeReference": "XF006526354157",
+      "outstandingAmount": 1118.8,
+      "dueDate": "2023-10-22",
+      "interestStartDate": "2023-10-19",
+      "accruedInterest": 31.07
+    },
+    {
+      "chargeType": "In Year RTI Charge-TAX",
+      "mainType": "In Year RTI Charge-TAX",
+      "mainTrans": "2000",
+      "subTrans": "1000",
+      "taxPeriodFrom": "2023-06-06",
+      "taxPeriodTo": "2023-07-05",
+      "chargeReference": "XF006526354157",
+      "outstandingAmount": 1162.4,
+      "dueDate": "2023-07-22",
+      "interestStartDate": "2023-07-19",
+      "accruedInterest": 54.71
+    },
+    {
+      "chargeType": "In Year RTI Charge-TAX",
+      "mainType": "In Year RTI Charge-TAX",
+      "mainTrans": "2099",
+      "subTrans": "1000",
+      "taxPeriodFrom": "2023-08-06",
+      "taxPeriodTo": "2023-09-05",
+      "chargeReference": "XL006605391665",
+      "outstandingAmount": 1191.8,
+      "dueDate": "2023-09-22",
+      "interestStartDate": "2023-09-19",
+      "accruedInterest": 40.69
+    }
+
+  ]
+}
