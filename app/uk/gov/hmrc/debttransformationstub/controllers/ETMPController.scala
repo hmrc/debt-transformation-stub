@@ -18,7 +18,7 @@ package uk.gov.hmrc.debttransformationstub.controllers
 
 import play.api.Environment
 import play.api.libs.json.Json
-import play.api.mvc.{Action, AnyContent, ControllerComponents, Request}
+import play.api.mvc.{ Action, AnyContent, ControllerComponents, Request }
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
@@ -28,7 +28,7 @@ import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 import scala.io.Source
 import scala.math.Ordering.Implicits.infixOrderingOps
-import scala.util.{Failure, Success, Try, Using}
+import scala.util.{ Failure, Success, Try, Using }
 
 class ETMPController @Inject() (environment: Environment, cc: ControllerComponents) extends BackendController(cc) {
 
@@ -38,23 +38,24 @@ class ETMPController @Inject() (environment: Environment, cc: ControllerComponen
 
   private val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
-  def paymentPlanEligibility(regimeType: String, idType: String, idValue: String): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
-    val queryKeys: List[String] =
-      List("showIds", "showAddresses", "showSignals", "showFiling", "showCharges", "addressFromDate")
-    val queries: Map[String, Option[String]] = queryKeys.map(key => (key, request.getQueryString(key))).toMap
-    queries("showIds")
-    val relativePath = s"$basePath" + "." + regimeType + "/" + s"$idValue.json"
-    environment.getExistingFile(relativePath) match {
-      case Some(file) =>
-        Try(Json.parse(paymentPlanEligibilityString(file, idValue))) match {
-          case Success(value) => Ok(value)
-          case Failure(exception) =>
-            logger.error(s"Failed to parse the file $relativePath", exception)
-            InternalServerError(s"stub failed to parse file $relativePath")
-        }
-      case _ =>
-        NotFound("file not found")
-    }
+  def paymentPlanEligibility(regimeType: String, idType: String, idValue: String): Action[AnyContent] = Action {
+    implicit request: Request[AnyContent] =>
+      val queryKeys: List[String] =
+        List("showIds", "showAddresses", "showSignals", "showFiling", "showCharges", "addressFromDate")
+      val queries: Map[String, Option[String]] = queryKeys.map(key => (key, request.getQueryString(key))).toMap
+      queries("showIds")
+      val relativePath = s"$basePath" + "." + regimeType + "/" + s"$idValue.json"
+      environment.getExistingFile(relativePath) match {
+        case Some(file) =>
+          Try(Json.parse(paymentPlanEligibilityString(file, idValue))) match {
+            case Success(value) => Ok(value)
+            case Failure(exception) =>
+              logger.error(s"Failed to parse the file $relativePath", exception)
+              InternalServerError(s"stub failed to parse file $relativePath")
+          }
+        case _ =>
+          NotFound("file not found")
+      }
   }
 
   private def paymentPlanEligibilityString(file: File, idValue: String): String = {
