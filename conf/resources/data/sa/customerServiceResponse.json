@@ -1,13 +1,13 @@
 {
   "processingDateTime": "2022-03-23T13:49:51Z",
-  "CesaData": {
-    "Customer": {
-      "Individual": {
+  "cesaData": {
+    "customer": {
+      "individual": {
         "title": "Mr",
         "firstName": "Ben",
         "lastName": "Thomas",
-        "dateOfBirth": "0153-09-30",
-        "dateOfDeath": "7416-08-30",
+        "dateOfBirth": "2014-09-12",
+        "dateOfDeath": "2014-09-12",
         "identifications": [
           {
             "idType": "UTR",
@@ -16,14 +16,14 @@
         ]
       }
     },
-    "Signals": [
+    "signals": [
       {
         "signalType": "string",
         "signalValue": "string",
         "signalDescription": "string"
       }
     ],
-    "Addresses": [
+    "addresses": [
       {
         "addressType": "string",
         "addressLine1": "string",
@@ -35,45 +35,45 @@
         "country": "string"
       }
     ],
-    "Filing": [
+    "filings": [
       {
         "icrCategory": "string",
         "icrDescription": "string",
-        "fromDate": "9151-01-07",
-        "toDate": "5202-12-30",
-        "dueDate": "9013-02-22"
+        "fromDate": "2014-09-12",
+        "toDate": "2014-09-12",
+        "dueDate": "2014-09-12"
       }
     ],
-    "Charges": [
+    "charges": [
       {
         "chargeType": "string",
         "UTR": "string",
         "tiebreaker": "string",
-        "creationDate": "0698-11-26",
-        "saTaxYearEnd": "9577-11-31",
+        "creationDate": "2014-09-12",
+        "saTaxYearEnd": "2014-09-12",
         "originalChargeType": "string",
         "originalTieBreaker": "string",
         "mainType": "string",
         "mainTrans": "RI2B",
         "subTrans": "jBbc",
-        "taxPeriodFrom": "0432-12-29",
-        "taxPeriodTo": "4848-12-27",
+        "taxPeriodFrom": "2014-09-12",
+        "taxPeriodTo": "2014-09-12",
         "chargeReference": "leu9M6h59Y0",
-        "dueDate": "3516-05-30",
-        "interestStartDate": "8130-01-04",
-        "outstandingAmount": 999999999.99,
-        "accruedInterest": 999999999.99
+        "dueDate": "2014-09-12",
+        "interestStartDate": "2014-09-12",
+        "outstandingAmount": 999,
+        "accruedInterest": 999
       }
     ]
   },
-  "EtmpData": {
-        "Customer": {
-        "Individual": {
+  "etmpData": {
+        "customer": {
+        "individual": {
         "title": "Mr",
         "firstName": "Ben",
         "lastName": "Thomas",
-        "dateOfBirth": "3225-10-18",
-        "dateOfDeath": "5154-10-20",
+        "dateOfBirth": "2014-09-12",
+        "dateOfDeath": "2014-09-12",
         "identifications": [
           {
             "idType": "UTR",
@@ -82,14 +82,14 @@
         ]
       }
     },
-    "Signals": [
+    "signals": [
       {
         "signalType": "string",
         "signalValue": "string",
         "signalDescription": "string"
       }
     ],
-    "Addresses": [
+    "addresses": [
       {
         "addressType": "string",
         "addressLine1": "string",
@@ -101,31 +101,31 @@
         "country": "string"
       }
     ],
-    "Filing": [
+    "filings": [
       {
         "icrCategory": "string",
         "icrDescription": "string",
-        "fromDate": "8710-12-01",
-        "toDate": "3949-04-30",
-        "dueDate": "8072-08-31"
+        "fromDate": "2014-09-12",
+        "toDate": "2014-09-12",
+        "dueDate": "2014-09-12"
       }
     ],
-    "Charges": [
+    "charges": [
       {
         "chargeType": "string",
         "mainType": "string",
         "mainTrans": "string",
         "subTrans": "string",
-        "taxPeriodFrom": "0002-09-05",
-        "taxPeriodTo": "4670-12-31",
+        "taxPeriodFrom": "2014-09-12",
+        "taxPeriodTo": "2014-09-12",
         "chargeReference": "jPtIUvO",
-        "dueDate": "2334-12-31",
-        "interestStartDate": "5713-02-06",
-        "outstandingAmount": 999999999.99,
-        "accruedInterest": 999999999.99,
+        "dueDate": "2014-09-12",
+        "interestStartDate": "2014-09-12",
+        "outstandingAmount": 999,
+        "accruedInterest": 999,
         "locks": [
           {
-            "lockType": "string",
+            "lockType": "Dunning",
             "lockReason": "string"
           }
         ]

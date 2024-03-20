@@ -39,10 +39,10 @@ class SACustomersDataController @Inject() (environment: Environment, cc: Control
       case JsError(errors) =>
         BadRequest(s"Unable to parse to CustomerDataRequest: $errors")
       case JsSuccess(value, _) =>
-        val fileName: Option[String] = value.identifications
+        val fileName: String = value.identifications
           .getOrElse(List.empty[Identity])
           .find { case Identity(idType, _) => idType == "UTR" }
-          .map(_.idValue)
+          .map(_.idValue).get
 
         if (fileName.isEmpty) {
           NotFound("IdValue for UTR not provided")
