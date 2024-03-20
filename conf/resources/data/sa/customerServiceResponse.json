@@ -1,0 +1,135 @@
+{
+  "processingDateTime": "2022-03-23T13:49:51Z",
+  "cesaData": {
+    "customer": {
+      "individual": {
+        "title": "Mr",
+        "firstName": "Ben",
+        "lastName": "Thomas",
+        "dateOfBirth": "2014-09-12",
+        "dateOfDeath": "2014-09-12",
+        "identifications": [
+          {
+            "idType": "UTR",
+            "idValue": "SA123545"
+          }
+        ]
+      }
+    },
+    "signals": [
+      {
+        "signalType": "string",
+        "signalValue": "string",
+        "signalDescription": "string"
+      }
+    ],
+    "addresses": [
+      {
+        "addressType": "string",
+        "addressLine1": "string",
+        "addressLine2": "string",
+        "addressLine3": "string",
+        "addressLine4": "string",
+        "rls": true,
+        "postCode": "string",
+        "country": "string"
+      }
+    ],
+    "filings": [
+      {
+        "icrCategory": "string",
+        "icrDescription": "string",
+        "fromDate": "2014-09-12",
+        "toDate": "2014-09-12",
+        "dueDate": "2014-09-12"
+      }
+    ],
+    "charges": [
+      {
+        "chargeType": "string",
+        "UTR": "string",
+        "tiebreaker": "string",
+        "creationDate": "2014-09-12",
+        "saTaxYearEnd": "2014-09-12",
+        "originalChargeType": "string",
+        "originalTieBreaker": "string",
+        "mainType": "string",
+        "mainTrans": "RI2B",
+        "subTrans": "jBbc",
+        "taxPeriodFrom": "2014-09-12",
+        "taxPeriodTo": "2014-09-12",
+        "chargeReference": "leu9M6h59Y0",
+        "dueDate": "2014-09-12",
+        "interestStartDate": "2014-09-12",
+        "outstandingAmount": 999,
+        "accruedInterest": 999
+      }
+    ]
+  },
+  "etmpData": {
+        "customer": {
+        "individual": {
+        "title": "Mr",
+        "firstName": "Ben",
+        "lastName": "Thomas",
+        "dateOfBirth": "2014-09-12",
+        "dateOfDeath": "2014-09-12",
+        "identifications": [
+          {
+            "idType": "UTR",
+            "idValue": "SA123545"
+          }
+        ]
+      }
+    },
+    "signals": [
+      {
+        "signalType": "string",
+        "signalValue": "string",
+        "signalDescription": "string"
+      }
+    ],
+    "addresses": [
+      {
+        "addressType": "string",
+        "addressLine1": "string",
+        "addressLine2": "string",
+        "addressLine3": "string",
+        "addressLine4": "string",
+        "rls": true,
+        "postCode": "string",
+        "country": "string"
+      }
+    ],
+    "filings": [
+      {
+        "icrCategory": "string",
+        "icrDescription": "string",
+        "fromDate": "2014-09-12",
+        "toDate": "2014-09-12",
+        "dueDate": "2014-09-12"
+      }
+    ],
+    "charges": [
+      {
+        "chargeType": "string",
+        "mainType": "string",
+        "mainTrans": "string",
+        "subTrans": "string",
+        "taxPeriodFrom": "2014-09-12",
+        "taxPeriodTo": "2014-09-12",
+        "chargeReference": "jPtIUvO",
+        "dueDate": "2014-09-12",
+        "interestStartDate": "2014-09-12",
+        "outstandingAmount": 999,
+        "accruedInterest": 999,
+        "locks": [
+          {
+            "lockType": "Dunning",
+            "lockReason": "string"
+          }
+        ]
+      }
+    ]
+  }
+}

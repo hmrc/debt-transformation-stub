@@ -41,6 +41,9 @@ DELETE        /test-only/all-documents                                          
 
 GET           /individuals/debts/essttp/:regimeType/:idType/:idValue/payment-plan-eligibility               uk.gov.hmrc.debttransformationstub.controllers.ETMPController.paymentPlanEligibility(regimeType: String, idType: String, idValue: String)
 
+POST          /prweb/api/TTP/01/CustomerDataAPI                                                             uk.gov.hmrc.debttransformationstub.controllers.SACustomersDataController.saCustomerData()
+
+
 POST          /individuals/debts/essttp/payment-plans/ddi                                                   uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.nddsEnactArrangement
 POST          /individuals/debts/essttp/payment-lock                                                        uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.etmpExecutePaymentLock
 POST          /individuals/debts/essttp/monitoring-case                                                     uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.idmsCreateTTPMonitoringCase
