@@ -50,4 +50,3 @@ POST          /individuals/debts/essttp/monitoring-case                         
 GET           /enactStage/:correlationId                                                                    uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.enactStage(correlationId: String)
 
 POST          /individuals/debts/essttp/eligibility-check                                                   uk.gov.hmrc.debttransformationstub.controllers.IDMSController.paymentPlanEligibilityDm
-/individuals/debts/essttp/${request.regimeType.entryName}/${request.idType.entryName}/${request.idValue.idValue}/payment-plan-eligibility

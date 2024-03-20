@@ -17,13 +17,13 @@
 package uk.gov.hmrc.debttransformationstub.controllers
 
 import play.api.Environment
-import play.api.libs.json.Json
-import play.api.mvc.{Action, AnyContent, ControllerComponents, Request}
+import play.api.libs.json._
+import play.api.mvc.{Action, ControllerComponents}
+import uk.gov.hmrc.debttransformationstub.models.{CustomerDataRequest, Identity}
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import java.io.File
-import java.time.LocalDate
 import javax.inject.Inject
 import scala.io.Source
 import scala.util.{Failure, Success, Try, Using}
@@ -33,19 +33,24 @@ class SACustomersDataController@Inject() (environment: Environment, cc: Controll
 
     private val basePath = "conf/resources/data/sa"
 
-    def saCustomerData(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
-      val fileName: String = request.asInstanceOf[CustomerDataRequest].identifications.getOrElse(List(Identity(idType = "", idValue = "customerDataResponseEmptyIdentifications"))).map(_.idValue).head
-      val relativePath = s"$basePath" + "/" + s"$fileName.json"
-      environment.getExistingFile(relativePath) match {
-        case Some(file) =>
-          Try(Json.parse(saCustomerDataString(file))) match {
-            case Success(value) => Ok(value)
-            case Failure(exception) =>
-              logger.error(s"Failed to parse the file $relativePath", exception)
-              InternalServerError(s"stub failed to parse file $relativePath")
+    def saCustomerData(): Action[JsValue] = Action(parse.json) { implicit request =>
+      request.body.validate[CustomerDataRequest] match {
+        case JsError(errors) =>
+          BadRequest(s"Unable to parse to CustomerDataRequest: $errors")
+        case JsSuccess(value, _) =>
+          val fileName: String = value.identifications.getOrElse(List(Identity(idType = "", idValue = "customerDataResponseEmptyIdentifications"))).map(_.idValue).head
+          val relativePath = s"$basePath" + "/" + s"$fileName.json"
+          environment.getExistingFile(relativePath) match {
+            case Some(file) =>
+              Try(Json.parse(saCustomerDataString(file))) match {
+                case Success(value) => Ok(value)
+                case Failure(exception) =>
+                  logger.error(s"Failed to parse the file $relativePath", exception)
+                  InternalServerError(s"stub failed to parse file $relativePath")
+              }
+            case _ =>
+              NotFound("file not found")
           }
-        case _ =>
-          NotFound("file not found")
       }
     }
 
@@ -56,19 +61,3 @@ class SACustomersDataController@Inject() (environment: Environment, cc: Controll
         }.get // Can throw.
 
   }
-
-final case class Identity(
-  idType: String,
-  idValue: String
-)
-
-case class CustomerDataRequest(
-  showIds: Boolean,
-  showAddresses: Boolean,
-  addressFromDate: Option[LocalDate],
-  showSignals: Boolean,
-  showFiling: Boolean,
-  showCharges: Boolean,
-  showAdditionalCustData: Boolean,
-  identifications: Option[List[Identity]]
-)
