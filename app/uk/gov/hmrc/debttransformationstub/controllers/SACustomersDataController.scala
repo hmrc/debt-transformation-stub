@@ -39,21 +39,26 @@ class SACustomersDataController @Inject() (environment: Environment, cc: Control
       case JsError(errors) =>
         BadRequest(s"Unable to parse to CustomerDataRequest: $errors")
       case JsSuccess(value, _) =>
-        val fileName: String = value.identifications
-          .getOrElse(List(Identity(idType = "", idValue = "customerDataResponseEmptyIdentifications")))
+        val fileName: Option[String] = value.identifications
+          .getOrElse(List.empty[Identity])
+          .find { case Identity(idType, _) => idType == "UTR" }
           .map(_.idValue)
-          .head
-        val relativePath = s"$basePath" + "/" + s"$fileName.json"
-        environment.getExistingFile(relativePath) match {
-          case Some(file) =>
-            Try(Json.parse(saCustomerDataString(file))) match {
-              case Success(value) => Ok(value)
-              case Failure(exception) =>
-                logger.error(s"Failed to parse the file $relativePath", exception)
-                InternalServerError(s"stub failed to parse file $relativePath")
-            }
-          case _ =>
-            NotFound("file not found")
+
+        if (fileName.isEmpty) {
+          NotFound("IdValue for UTR not provided")
+        } else {
+          val relativePath = s"$basePath" + "/" + s"$fileName.json"
+          environment.getExistingFile(relativePath) match {
+            case Some(file) =>
+              Try(Json.parse(saCustomerDataString(file))) match {
+                case Success(value) => Ok(value)
+                case Failure(exception) =>
+                  logger.error(s"Failed to parse the file $relativePath", exception)
+                  InternalServerError(s"stub failed to parse file $relativePath")
+              }
+            case _ =>
+              NotFound("file not found")
+          }
         }
     }
   }
