@@ -87,6 +87,7 @@
       "dueDate": "<DUE_DATE>",
       "interestStartDate": "2022-03-19",
       "accruedInterest": 25.81,
+      "ddInProgress": "true",
       "locks": [
         {
           "lockType": "Dunning",
@@ -135,6 +136,7 @@
       "dueDate": "<DUE_DATE>",
       "interestStartDate": "2022-03-21",
       "accruedInterest": 0.00,
+      "ddInProgress": "true",
       "locks": [
         {
           "lockType": "Dunning",

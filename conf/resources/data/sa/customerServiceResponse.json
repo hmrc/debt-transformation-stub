@@ -62,7 +62,8 @@
         "dueDate": "2014-09-12",
         "interestStartDate": "2014-09-12",
         "outstandingAmount": 999,
-        "accruedInterest": 999
+        "accruedInterest": 999,
+        "ddInProgress": false
       }
     ]
   },
@@ -123,6 +124,7 @@
         "interestStartDate": "2014-09-12",
         "outstandingAmount": 999,
         "accruedInterest": 999,
+        "ddInProgress": false,
         "locks": [
           {
             "lockType": "Dunning",
