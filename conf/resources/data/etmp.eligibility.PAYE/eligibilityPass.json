@@ -83,6 +83,7 @@
       "taxPeriodFrom": "2022-02-06",
       "taxPeriodTo": "2022-03-05",
       "chargeReference": "XM123456789812",
+      "ddInProgress": "true",
       "outstandingAmount": 1234.56,
       "dueDate": "<DUE_DATE>",
       "interestStartDate": "2022-03-19",
