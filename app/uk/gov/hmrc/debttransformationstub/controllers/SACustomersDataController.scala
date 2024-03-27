@@ -42,8 +42,7 @@ class SACustomersDataController @Inject() (environment: Environment, cc: Control
         val fileName: String = value.identifications
           .getOrElse(List.empty[Identity])
           .find { case Identity(idType, _) => idType == "UTR" }
-          .map(_.idValue)
-          .get
+          .map(_.idValue).get
 
         if (fileName.isEmpty) {
           NotFound("IdValue for UTR not provided")
