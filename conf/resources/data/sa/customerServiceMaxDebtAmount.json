@@ -62,8 +62,7 @@
         "dueDate": "2014-09-12",
         "interestStartDate": "2014-09-12",
         "outstandingAmount": 999,
-        "accruedInterest": 999,
-        "ddInProgress": false
+        "accruedInterest": 0.5
       }
     ]
   },
@@ -122,8 +121,8 @@
         "chargeReference": "jPtIUvO",
         "dueDate": "2014-09-12",
         "interestStartDate": "2014-09-12",
-        "outstandingAmount": 999,
-        "accruedInterest": 999,
+        "outstandingAmount": 29000,
+        "accruedInterest": 0.5,
         "locks": [
           {
             "lockType": "Dunning",
