@@ -35,7 +35,7 @@ import scala.concurrent.{ ExecutionContext, Future }
 import scala.io.Source
 import scala.util.Try
 
-class TimeToPayController @Inject() (
+class TimeToPayController @Inject()(
   environment: Environment,
   cc: ControllerComponents,
   appConfig: AppConfig,
@@ -66,6 +66,22 @@ class TimeToPayController @Inject() (
             val result = Source.fromFile(file).mkString.stripMargin
             Future successful Ok(result)
         }
+      }
+    }
+  }
+
+  def generateAffordabilityQuote: Action[JsValue] = Action.async(parse.json) { implicit request: Request[JsValue] =>
+    if (appConfig.isPollingEnv) {
+      ttpPollingService.insertRequestAndServeResponse(Json.toJson(""), Some(request.uri)).map {
+        case Some(v) => Status(v.status.getOrElse(200))(v.content)
+        case None    => ServiceUnavailable
+      }
+    } else {
+      environment.getExistingFile(s"$basePath/ttp.generateAffordabilityQuote/affordabilityQuoteResponse.json") match {
+        case Some(file) => Future.successful(Ok(Source.fromFile(file).mkString))
+        case _ =>
+          logger.error(s"Status $NOT_FOUND, message: file not found")
+          Future.successful(NotFound("file not found"))
       }
     }
   }

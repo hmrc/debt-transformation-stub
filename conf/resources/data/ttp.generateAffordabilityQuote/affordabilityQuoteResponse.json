@@ -1,0 +1,134 @@
+{
+  "processingDateTime": "2024-04-17T10:03:57.664392",
+  "paymentPlans": [
+    {
+      "numberOfInstalments": 1,
+      "planDuration": 1,
+      "planInterest": 0,
+      "totalDebt": 300,
+      "totalDebtIncInt": 301,
+      "collections": {
+        "initialCollection": {
+          "dueDate": "2022-05-30",
+          "amountDue": 50
+        },
+        "regularCollections": [
+          {
+            "dueDate": "2022-05-30",
+            "amountDue": 251
+          }
+        ]
+      },
+      "instalments": [
+        {
+          "debtItemChargeId": "ChargeRef 0745_2",
+          "dueDate": "2022-05-30",
+          "amountDue": 301,
+          "instalmentNumber": 1,
+          "instalmentInterestAccrued": 0,
+          "instalmentBalance": 300,
+          "debtItemOriginalDueDate": "2021-05-22"
+        }
+      ]
+    },
+    {
+      "numberOfInstalments": 2,
+      "planDuration": 2,
+      "planInterest": 0,
+      "totalDebt": 300,
+      "totalDebtIncInt": 301,
+      "collections": {
+        "initialCollection": {
+          "dueDate": "2022-05-30",
+          "amountDue": 50
+        },
+        "regularCollections": [
+          {
+            "dueDate": "2022-05-30",
+            "amountDue": 125
+          },
+          {
+            "dueDate": "2022-06-30",
+            "amountDue": 126
+          }
+        ]
+      },
+      "instalments": [
+        {
+          "debtItemChargeId": "ChargeRef 0745_2",
+          "dueDate": "2022-05-30",
+          "amountDue": 175,
+          "instalmentNumber": 1,
+          "instalmentInterestAccrued": 0,
+          "instalmentBalance": 300,
+          "debtItemOriginalDueDate": "2021-05-22"
+        },
+        {
+          "debtItemChargeId": "ChargeRef 0745_2",
+          "dueDate": "2022-06-30",
+          "amountDue": 126,
+          "instalmentNumber": 2,
+          "instalmentInterestAccrued": 0,
+          "instalmentBalance": 125,
+          "debtItemOriginalDueDate": "2021-05-22"
+        }
+      ]
+    },
+    {
+      "numberOfInstalments": 3,
+      "planDuration": 3,
+      "planInterest": 0,
+      "totalDebt": 300,
+      "totalDebtIncInt": 301,
+      "collections": {
+        "initialCollection": {
+          "dueDate": "2022-05-30",
+          "amountDue": 50
+        },
+        "regularCollections": [
+          {
+            "dueDate": "2022-05-30",
+            "amountDue": 83
+          },
+          {
+            "dueDate": "2022-06-30",
+            "amountDue": 83
+          },
+          {
+            "dueDate": "2022-07-30",
+            "amountDue": 85
+          }
+        ]
+      },
+      "instalments": [
+        {
+          "debtItemChargeId": "ChargeRef 0745_2",
+          "dueDate": "2022-05-30",
+          "amountDue": 133,
+          "instalmentNumber": 1,
+          "instalmentInterestAccrued": 0,
+          "instalmentBalance": 300,
+          "debtItemOriginalDueDate": "2021-05-22"
+        },
+        {
+          "debtItemChargeId": "ChargeRef 0745_2",
+          "dueDate": "2022-06-30",
+          "amountDue": 83,
+          "instalmentNumber": 2,
+          "instalmentInterestAccrued": 0,
+          "instalmentBalance": 167,
+          "debtItemOriginalDueDate": "2021-05-22"
+        },
+        {
+          "debtItemChargeId": "ChargeRef 0745_2",
+          "dueDate": "2022-07-30",
+          "amountDue": 85,
+          "instalmentNumber": 3,
+          "instalmentInterestAccrued": 0,
+          "instalmentBalance": 84,
+          "debtItemOriginalDueDate": "2021-05-22"
+        }
+      ]
+    }
+  ]
+}
