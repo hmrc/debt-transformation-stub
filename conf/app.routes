@@ -18,16 +18,19 @@ GET           /individuals/subcontractor/idms/taxpayer/:idKey                   
 
 
 POST          /individuals/debts/time-to-pay/quote                                                          uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.generateQuote
-POST          /debts/time-to-pay/quote                                                          uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.generateQuote
+POST          /debts/time-to-pay/quote                                                                      uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.generateQuote
+
+POST          /individuals/time-to-pay/affordability/affordable-quotes                                      uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.generateAffordabilityQuote
+POST          /debts/time-to-pay/affordability/affordable-quotes                                            uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.generateAffordabilityQuote
 
 GET           /individuals/time-to-pay/quote/:customerReference/:pegaId                                     uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.getExistingQuote(customerReference: String, pegaId: String)
-GET           /debts/time-to-pay/quote/:customerReference/:pegaId                                     uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.getExistingQuote(customerReference: String, pegaId: String)
+GET           /debts/time-to-pay/quote/:customerReference/:pegaId                                           uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.getExistingQuote(customerReference: String, pegaId: String)
 
 PUT           /individuals/time-to-pay/quote/:customerReference/:pegaId                                     uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.updateQuote(customerReference: String, pegaId: String)
-PUT           /debts/time-to-pay/quote/:customerReference/:pegaId                                     uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.updateQuote(customerReference: String, pegaId: String)
+PUT           /debts/time-to-pay/quote/:customerReference/:pegaId                                           uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.updateQuote(customerReference: String, pegaId: String)
 
 POST          /individuals/debts/time-to-pay/quote/arrangement                                              uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.createPlan
-POST          /debts/time-to-pay/quote/arrangement                                              uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.createPlan
+POST          /debts/time-to-pay/quote/arrangement                                                          uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.createPlan
 
 POST          /prweb/api/TTP/v1/create                                                                      uk.gov.hmrc.debttransformationstub.controllers.CaseManagementController.createCase
 
