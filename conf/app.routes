@@ -20,7 +20,6 @@ GET           /individuals/subcontractor/idms/taxpayer/:idKey                   
 POST          /individuals/debts/time-to-pay/quote                                                          uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.generateQuote
 POST          /debts/time-to-pay/quote                                                                      uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.generateQuote
 
-POST          /self-serve/affordable-quotes                                                                 uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.generateAffordabilityQuote
 POST          /debts/time-to-pay/affordability/affordable-quotes                                            uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.generateAffordabilityQuote
 
 GET           /individuals/time-to-pay/quote/:customerReference/:pegaId                                     uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.getExistingQuote(customerReference: String, pegaId: String)
