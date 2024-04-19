@@ -70,6 +70,22 @@ class TimeToPayController @Inject() (
     }
   }
 
+  def generateAffordabilityQuote: Action[JsValue] = Action.async(parse.json) { implicit request: Request[JsValue] =>
+    if (appConfig.isPollingEnv) {
+      ttpPollingService.insertRequestAndServeResponse(Json.toJson(""), Some(request.uri)).map {
+        case Some(v) => Status(v.status.getOrElse(200))(v.content)
+        case None    => ServiceUnavailable
+      }
+    } else {
+      environment.getExistingFile(s"$basePath/ttp.generateAffordabilityQuote/affordabilityQuoteResponse.json") match {
+        case Some(file) => Future.successful(Ok(Source.fromFile(file).mkString))
+        case _ =>
+          logger.error(s"Status $NOT_FOUND, message: file not found")
+          Future.successful(NotFound("file not found"))
+      }
+    }
+  }
+
   def getExistingQuote(customerReference: String, pegaId: String): Action[AnyContent] = Action.async {
     implicit request =>
       if (appConfig.isPollingEnv) {
