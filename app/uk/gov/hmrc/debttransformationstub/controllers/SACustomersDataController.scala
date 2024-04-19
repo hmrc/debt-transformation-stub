@@ -41,7 +41,7 @@ class SACustomersDataController @Inject() (environment: Environment, cc: Control
       case JsSuccess(value, _) =>
         val fileName: String = value.identifications
           .getOrElse(List.empty[Identity])
-          .find { case Identity(idType, _) => idType == "UTR" }
+          .find { case Identity(idType, _) => idType == 73 }
           .map(_.idValue)
           .get
 
