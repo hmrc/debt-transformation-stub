@@ -18,15 +18,15 @@ package uk.gov.hmrc.debttransformationstub.controllers
 
 import play.api.Environment
 import play.api.libs.json._
-import play.api.mvc.{ Action, ControllerComponents }
-import uk.gov.hmrc.debttransformationstub.models.{ CustomerDataRequest, Identity }
+import play.api.mvc.{Action, ControllerComponents}
+import uk.gov.hmrc.debttransformationstub.models.{CustomerDataRequest, Identity}
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import java.io.File
 import javax.inject.Inject
 import scala.io.Source
-import scala.util.{ Failure, Success, Try, Using }
+import scala.util.{Failure, Success, Try, Using}
 class SACustomersDataController @Inject() (environment: Environment, cc: ControllerComponents)
     extends BackendController(cc) {
 
@@ -41,7 +41,7 @@ class SACustomersDataController @Inject() (environment: Environment, cc: Control
       case JsSuccess(value, _) =>
         val fileName: String = value.identifications
           .getOrElse(List.empty[Identity])
-          .find { case Identity(idType, _) => idType == "UTR" }
+          .find { case Identity(idType, _) => idType == 73 }
           .map(_.idValue)
           .get
 
@@ -69,5 +69,7 @@ class SACustomersDataController @Inject() (environment: Environment, cc: Control
       // Explain which file failed to be read.
       Failure(new RuntimeException(s"Failed to read file: ${file.getPath}", ex))
     }.get // Can throw.
+
+
 
 }
