@@ -18,16 +18,16 @@ package uk.gov.hmrc.debttransformationstub.controllers
 
 import play.api.Environment
 import play.api.libs.json._
-import play.api.mvc.{Action, ControllerComponents}
-import uk.gov.hmrc.debttransformationstub.models.{CustomerDataRequest, Identity}
+import play.api.mvc.{ Action, ControllerComponents }
+import uk.gov.hmrc.debttransformationstub.models.{ CustomerDataRequest, Identity }
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import java.io.File
 import javax.inject.Inject
 import scala.io.Source
-import scala.util.{Failure, Success, Try, Using}
-class SACustomersDataController @Inject() (environment: Environment, cc: ControllerComponents)
+import scala.util.{ Failure, Success, Try, Using }
+class SACustomersDataController @Inject()(environment: Environment, cc: ControllerComponents)
     extends BackendController(cc) {
 
   private lazy val logger = new RequestAwareLogger(this.getClass)
@@ -65,11 +65,10 @@ class SACustomersDataController @Inject() (environment: Environment, cc: Control
   }
 
   private def saCustomerDataString(file: File): String =
-    Using(Source.fromFile(file))(source => source.mkString).recoverWith { case ex: Throwable =>
-      // Explain which file failed to be read.
-      Failure(new RuntimeException(s"Failed to read file: ${file.getPath}", ex))
+    Using(Source.fromFile(file))(source => source.mkString).recoverWith {
+      case ex: Throwable =>
+        // Explain which file failed to be read.
+        Failure(new RuntimeException(s"Failed to read file: ${file.getPath}", ex))
     }.get // Can throw.
-
-
 
 }
