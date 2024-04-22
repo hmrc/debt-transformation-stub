@@ -61,14 +61,14 @@
         "originalChargeType": "string",
         "originalTieBreaker": "string",
         "chargeReference": "XM123456789812",
-        "outstandingAmount": 3000 ,
+        "outstandingAmount": 3000,
         "accruedInterest": 500
       }
     ]
   },
   "etmpData": {
-        "customer": {
-        "individual": {
+    "customer": {
+      "individual": {
         "title": "Mr",
         "firstName": "Ben",
         "lastName": "Thomas",
@@ -129,15 +129,14 @@
         "chargeReference": "XM123456789813",
         "dueDate": "2022-03-05",
         "interestStartDate": "2022-03-05",
-        "outstandingAmount": 1000 ,
-        "accruedInterest": 50 ,
+        "outstandingAmount": 1000,
+        "accruedInterest": 50,
         "locks": [
-      {
-        "lockType": "Dunning",
-        "lockReason": "Suspension (Alleged appeal)"
-
-      }
-    ]
+          {
+            "lockType": "Dunning",
+            "lockReason": "Suspension (Alleged appeal)"
+          }
+        ]
       }
     ]
   }
