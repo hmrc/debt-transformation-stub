@@ -27,7 +27,7 @@ import java.io.File
 import javax.inject.Inject
 import scala.io.Source
 import scala.util.{ Failure, Success, Try, Using }
-class SACustomersDataController @Inject()(environment: Environment, cc: ControllerComponents)
+class SACustomersDataController @Inject() (environment: Environment, cc: ControllerComponents)
     extends BackendController(cc) {
 
   private lazy val logger = new RequestAwareLogger(this.getClass)
@@ -65,10 +65,9 @@ class SACustomersDataController @Inject()(environment: Environment, cc: Controll
   }
 
   private def saCustomerDataString(file: File): String =
-    Using(Source.fromFile(file))(source => source.mkString).recoverWith {
-      case ex: Throwable =>
-        // Explain which file failed to be read.
-        Failure(new RuntimeException(s"Failed to read file: ${file.getPath}", ex))
+    Using(Source.fromFile(file))(source => source.mkString).recoverWith { case ex: Throwable =>
+      // Explain which file failed to be read.
+      Failure(new RuntimeException(s"Failed to read file: ${file.getPath}", ex))
     }.get // Can throw.
 
 }
