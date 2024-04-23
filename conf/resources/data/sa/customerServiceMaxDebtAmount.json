@@ -6,8 +6,8 @@
         "title": "Mr",
         "firstName": "Ben",
         "lastName": "Thomas",
-        "dateOfBirth": "2014-09-12",
-        "dateOfDeath": "2014-09-12",
+        "dateOfBirth": "1954-09-12",
+        "dateOfDeath": "2023-09-12",
         "identifications": [
           {
             "idType": 73,
@@ -19,14 +19,33 @@
 
     "addresses": [
       {
-        "addressType": "string",
-        "addressLine1": "string",
-        "addressLine2": "string",
-        "addressLine3": "string",
-        "addressLine4": "string",
-        "rls": true,
-        "postCode": "string",
-        "country": "string"
+        "addressType": "PPOB",
+        "rls": false,
+        "emailAddress": "joe@snailmail.com",
+        "postcodeHistory": [
+          {
+            "addressPostcode": "BN127ER",
+            "postcodeDate": "2022-05-22"
+          },
+          {
+            "addressPostcode": "BN129ER",
+            "postcodeDate": "2022-02-28"
+          },
+          {
+            "addressPostcode": "BN119ER",
+            "postcodeDate": "2001-01-31"
+          }
+        ]
+      },
+      {
+        "addressType": "AGENT",
+        "rls": false,
+        "postcodeHistory": [
+          {
+            "addressPostcode": "BN164QR",
+            "postcodeDate": "2022-03-02"
+          }
+        ]
       }
     ],
     "filings": [
@@ -55,7 +74,7 @@
         "originalChargeType": "string",
         "originalTieBreaker": "string",
         "chargeReference": "XM123456789812",
-        "outstandingAmount": 3000,
+        "outstandingAmount": 28000 ,
         "accruedInterest": 500
       }
     ]
@@ -84,25 +103,18 @@
         "addressLine2": "string",
         "addressLine3": "string",
         "addressLine4": "string",
-        "rls": true,
+        "rls": false,
         "postCode": "string",
         "country": "string"
       }
     ],
-    "filing": [
+    "filings": [
       {
         "icrCategory": "ZR01",
         "icrDescription": "RTI - PAYE - Monthly Returns",
         "fromDate": "2022-03-06",
         "toDate": "2022-04-05",
         "dueDate": "2022-04-22"
-      },
-      {
-        "icrCategory": "ZR01",
-        "icrDescription": "RTI - PAYE - Monthly Returns",
-        "fromDate": "2022-04-06",
-        "toDate": "2022-05-05",
-        "dueDate": "2022-05-22"
       }
     ],
     "charges": [
@@ -114,15 +126,15 @@
         "UTR": "73",
         "taxPeriodFrom": "2022-02-06",
         "taxPeriodTo": "2022-03-05",
-        "chargeReference": "XM123456789813",
+        "chargeReference": "XM123456789812",
         "dueDate": "2022-03-05",
         "interestStartDate": "2022-03-05",
         "outstandingAmount": 1000,
-        "accruedInterest": 50,
+        "accruedInterest": 500 ,
         "locks": [
           {
             "lockType": "Dunning",
-            "lockReason": "Suspension (Alleged appeal)"
+            "lockReason": "string"
           }
         ]
       }
