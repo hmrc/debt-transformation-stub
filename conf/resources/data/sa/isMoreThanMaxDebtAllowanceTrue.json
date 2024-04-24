@@ -74,8 +74,8 @@
         "originalChargeType": "string",
         "originalTieBreaker": "string",
         "chargeReference": "XM123456789812",
-        "outstandingAmount": 28000 ,
-        "accruedInterest": 500
+        "outstandingAmount": 25000.00 ,
+        "accruedInterest": 500.00
       }
     ]
   },
@@ -126,11 +126,11 @@
         "UTR": "73",
         "taxPeriodFrom": "2022-02-06",
         "taxPeriodTo": "2022-03-05",
-        "chargeReference": "XM123456789812",
+        "chargeReference": "XM123456789813",
         "dueDate": "2022-03-05",
         "interestStartDate": "2022-03-05",
-        "outstandingAmount": 1000,
-        "accruedInterest": 500 ,
+        "outstandingAmount": 5000.00,
+        "accruedInterest": 500.00 ,
         "locks": [
           {
             "lockType": "Dunning",
