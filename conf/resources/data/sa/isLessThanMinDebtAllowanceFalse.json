@@ -74,8 +74,8 @@
         "originalChargeType": "string",
         "originalTieBreaker": "string",
         "chargeReference": "XM123456789812",
-        "outstandingAmount": 20.0,
-        "accruedInterest": 1
+        "outstandingAmount": 20.00,
+        "accruedInterest": 1.00
       }
     ]
   },
@@ -129,7 +129,7 @@
         "chargeReference": "XM123456789813",
         "dueDate": "2022-03-05",
         "interestStartDate": "2022-03-05",
-        "outstandingAmount": 10.0,
+        "outstandingAmount": 10.00,
         "accruedInterest": 1.01,
         "locks": [
           {
