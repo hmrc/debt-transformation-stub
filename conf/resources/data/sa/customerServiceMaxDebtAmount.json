@@ -126,7 +126,7 @@
         "UTR": "73",
         "taxPeriodFrom": "2022-02-06",
         "taxPeriodTo": "2022-03-05",
-        "chargeReference": "XM123456789812",
+        "chargeReference": "XM123456789813",
         "dueDate": "2022-03-05",
         "interestStartDate": "2022-03-05",
         "outstandingAmount": 1000,
