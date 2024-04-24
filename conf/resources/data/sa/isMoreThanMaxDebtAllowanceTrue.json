@@ -74,8 +74,8 @@
         "originalChargeType": "string",
         "originalTieBreaker": "string",
         "chargeReference": "XM123456789812",
-        "outstandingAmount": 25000 ,
-        "accruedInterest": 500
+        "outstandingAmount": 25000.00 ,
+        "accruedInterest": 500.00
       }
     ]
   },
@@ -129,8 +129,8 @@
         "chargeReference": "XM123456789813",
         "dueDate": "2022-03-05",
         "interestStartDate": "2022-03-05",
-        "outstandingAmount": 5000,
-        "accruedInterest": 500 ,
+        "outstandingAmount": 5000.00,
+        "accruedInterest": 500.00 ,
         "locks": [
           {
             "lockType": "Dunning",
