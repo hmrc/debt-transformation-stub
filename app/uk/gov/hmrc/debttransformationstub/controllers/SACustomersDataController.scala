@@ -15,7 +15,6 @@
  */
 
 package uk.gov.hmrc.debttransformationstub.controllers
-
 import play.api.Environment
 import play.api.libs.json._
 import play.api.mvc.{ Action, ControllerComponents }
@@ -24,6 +23,8 @@ import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import java.io.File
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 import scala.io.Source
 import scala.util.{ Failure, Success, Try, Using }
@@ -33,6 +34,7 @@ class SACustomersDataController @Inject() (environment: Environment, cc: Control
   private lazy val logger = new RequestAwareLogger(this.getClass)
 
   private val basePath = "conf/resources/data/sa"
+  private val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
   def saCustomerData(): Action[JsValue] = Action(parse.json) { implicit request =>
     request.body.validate[CustomerDataRequest] match {
@@ -64,10 +66,32 @@ class SACustomersDataController @Inject() (environment: Environment, cc: Control
     }
   }
 
-  private def saCustomerDataString(file: File): String =
-    Using(Source.fromFile(file))(source => source.mkString).recoverWith { case ex: Throwable =>
-      // Explain which file failed to be read.
-      Failure(new RuntimeException(s"Failed to read file: ${file.getPath}", ex))
-    }.get // Can throw.
+  private def saCustomerDataString(file: File): String = {
+    val currentDate = LocalDate.now()
+
+    val responseTemplate: String =
+      Using(Source.fromFile(file))(source => source.mkString).recoverWith { case ex: Throwable =>
+        // Explain which file failed to be read.
+        Failure(new RuntimeException(s"Failed to read file: ${file.getPath}", ex))
+      }.get // Can throw.
+
+    val dueDateInPast = currentDate.minusDays(24)
+    val dueDateToday = currentDate
+    val dueDateInFuture = currentDate.plusDays(24)
+
+    val result =
+      responseTemplate
+        .replaceAll("<DUE_DATE>", dueDateInPast.format(dateFormatter))
+        .replaceAll("<DUE_DATE_TODAY>", dueDateToday.format(dateFormatter))
+        .replaceAll("<DUE_DATE_FOR_FUTURE>", dueDateInFuture.format(dateFormatter))
+
+    println(
+      s"""====================
+         |$result
+         |====================
+         |""".stripMargin
+    )
+    result
+  }
 
 }

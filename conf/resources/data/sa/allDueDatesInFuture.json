@@ -50,11 +50,11 @@
     ],
     "filings": [
       {
-        "icrCategory": "string",
-        "icrDescription": "string",
-        "fromDate": "2014-09-12",
-        "toDate": "2014-09-12",
-        "dueDate": "2014-09-12"
+        "icrCategory": "ZR01",
+        "icrDescription": "RTI - PAYE - Monthly Returns",
+        "fromDate": "2022-03-06",
+        "toDate": "2022-04-05",
+        "dueDate": "2022-04-22"
       }
     ],
     "charges": [
@@ -66,16 +66,16 @@
         "UTR": "73",
         "taxPeriodFrom": "2022-02-06",
         "taxPeriodTo": "2022-03-05",
-        "dueDate": "<DUE_DATE>",
+        "dueDate": "<DUE_DATE_FOR_FUTURE>",
         "interestStartDate": "2022-03-05",
         "tiebreaker": "string",
         "creationDate": "2022-03-05",
         "saTaxYearEnd": "2022-03-05",
         "originalChargeType": "string",
         "originalTieBreaker": "string",
-        "chargeReference": "XM123456789812",
-        "outstandingAmount": 10.00,
-        "accruedInterest": 1.00
+        "chargeReference": "XM123456789813",
+        "outstandingAmount": 28000.00,
+        "accruedInterest": 500.00
       }
     ]
   },
@@ -126,11 +126,11 @@
         "UTR": "73",
         "taxPeriodFrom": "2022-02-06",
         "taxPeriodTo": "2022-03-05",
-        "chargeReference": "XM123456789813",
-        "dueDate": "<DUE_DATE>",
+        "chargeReference": "XM123456789812",
+        "dueDate": "<DUE_DATE_FOR_FUTURE>",
         "interestStartDate": "2022-03-05",
-        "outstandingAmount": 10.00,
-        "accruedInterest": 1.01,
+        "outstandingAmount": 1000.00,
+        "accruedInterest": 500.00 ,
         "locks": [
           {
             "lockType": "Dunning",
