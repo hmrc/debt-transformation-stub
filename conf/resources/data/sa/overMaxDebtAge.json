@@ -1,0 +1,131 @@
+{
+  "processingDateTime": "2022-03-23T13:49:51Z",
+  "cesaData": {
+    "customer": {
+      "individual": {
+        "title": "Mr",
+        "firstName": "Ben",
+        "lastName": "Thomas",
+        "dateOfBirth": "2014-09-12",
+        "dateOfDeath": "2014-09-12",
+        "identifications": [
+          {
+            "idType": 73,
+            "idValue": "SA123545"
+          }
+        ]
+      }
+    },
+
+    "addresses": [
+      {
+        "addressType": "string",
+        "addressLine1": "string",
+        "addressLine2": "string",
+        "addressLine3": "string",
+        "addressLine4": "string",
+        "rls": true,
+        "postCode": "string",
+        "country": "string"
+      }
+    ],
+    "filings": [
+      {
+        "icrCategory": "string",
+        "icrDescription": "string",
+        "fromDate": "2014-09-12",
+        "toDate": "2014-09-12",
+        "dueDate": "2014-09-12"
+      }
+    ],
+    "charges": [
+      {
+        "chargeType": "In Year RTI Charge - Tax",
+        "mainType": "In Year RTI Charge (FPS)",
+        "mainTrans": "2000",
+        "subTrans": "1000",
+        "UTR": "73",
+        "taxPeriodFrom": "2022-02-06",
+        "taxPeriodTo": "2022-03-05",
+        "dueDate": "2022-02-12",
+        "interestStartDate": "2022-03-05",
+        "tiebreaker": "string",
+        "creationDate": "2022-03-05",
+        "saTaxYearEnd": "2022-03-05",
+        "originalChargeType": "string",
+        "originalTieBreaker": "string",
+        "chargeReference": "XM123456789812",
+        "outstandingAmount": 3000.00,
+        "accruedInterest": 500.00
+      }
+    ]
+  },
+  "etmpData": {
+    "customer": {
+      "individual": {
+        "title": "Mr",
+        "firstName": "Ben",
+        "lastName": "Thomas",
+        "dateOfBirth": "2014-09-12",
+        "dateOfDeath": "2014-09-12",
+        "identifications": [
+          {
+            "idType": 73,
+            "idValue": "SA123545"
+          }
+        ]
+      }
+    },
+
+    "addresses": [
+      {
+        "addressType": "string",
+        "addressLine1": "string",
+        "addressLine2": "string",
+        "addressLine3": "string",
+        "addressLine4": "string",
+        "rls": true,
+        "postCode": "string",
+        "country": "string"
+      }
+    ],
+    "filing": [
+      {
+        "icrCategory": "ZR01",
+        "icrDescription": "RTI - PAYE - Monthly Returns",
+        "fromDate": "2022-03-06",
+        "toDate": "2022-04-05",
+        "dueDate": "2022-04-22"
+      },
+      {
+        "icrCategory": "ZR01",
+        "icrDescription": "RTI - PAYE - Monthly Returns",
+        "fromDate": "2022-04-06",
+        "toDate": "2022-05-05",
+        "dueDate": "2022-05-22"
+      }
+    ],
+    "charges": [
+      {
+        "chargeType": "In Year RTI Charge - Tax",
+        "mainType": "In Year RTI Charge (FPS)",
+        "mainTrans": "2000",
+        "subTrans": "1000",
+        "UTR": "73",
+        "taxPeriodFrom": "2022-02-06",
+        "taxPeriodTo": "2022-03-05",
+        "chargeReference": "XM123456789813",
+        "dueDate": "2009-09-13",
+        "interestStartDate": "2022-03-05",
+        "outstandingAmount": 1000.00,
+        "accruedInterest": 50.00,
+        "locks": [
+          {
+            "lockType": "Dunning",
+            "lockReason": "Suspension (Alleged appeal)"
+          }
+        ]
+      }
+    ]
+  }
+}
