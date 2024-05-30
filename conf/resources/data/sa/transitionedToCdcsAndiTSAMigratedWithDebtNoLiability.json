@@ -48,13 +48,6 @@
         ]
       }
     ],
-    "signals": [
-      {
-        "signalType": "ITSA MigraTed",
-        "signalValue": "2024",
-        "signalDescription": "cesa signal type"
-      }
-    ],
     "filings": [
       {
         "icrCategory": "string",
@@ -137,7 +130,7 @@
       {
         "signalType": "ITSA MigraTed",
         "signalValue": "2024",
-        "signalDescription": "etmp signal type"
+        "signalDescription": "ETMP ITSA MigraTed signal type"
       }
     ],
     "filing": [
@@ -153,7 +146,7 @@
         "icrDescription": "RTI - PAYE - Monthly Returns",
         "fromDate": "2022-04-06",
         "toDate": "2022-05-05",
-        "dueDate": "2022-05-22"
+        "dueDate": "<DUE_DATE_FOR_FUTURE>"
       }
     ],
     "charges": [
@@ -165,17 +158,16 @@
         "UTR": "73",
         "taxPeriodFrom": "2022-02-06",
         "taxPeriodTo": "2022-03-05",
-        "chargeReference": "XM123456789813",
         "dueDate": "<DUE_DATE>",
         "interestStartDate": "2022-03-05",
-        "outstandingAmount": 1000.00,
-        "accruedInterest": 50.00,
-        "locks": [
-          {
-            "lockType": "Dunning",
-            "lockReason": "Suspension (Alleged appeal)"
-          }
-        ]
+        "tiebreaker": "string",
+        "creationDate": "2022-03-05",
+        "saTaxYearEnd": "2022-03-05",
+        "originalChargeType": "string",
+        "originalTieBreaker": "string",
+        "chargeReference": "XM123456789812",
+        "outstandingAmount": 3000.00,
+        "accruedInterest": 500.00
       }
     ]
   }
