@@ -57,7 +57,27 @@
         "dueDate": "2014-09-12"
       }
     ],
-    "charges": []
+    "charges": [
+      {
+        "chargeType": "In Year RTI Charge - Tax",
+        "mainType": "In Year RTI Charge (FPS)",
+        "mainTrans": "2000",
+        "subTrans": "1000",
+        "UTR": "73",
+        "taxPeriodFrom": "2022-02-06",
+        "taxPeriodTo": "2022-03-05",
+        "dueDate": "<DUE_DATE_FOR_FUTURE>",
+        "interestStartDate": "2022-03-05",
+        "tiebreaker": "string",
+        "creationDate": "2022-03-05",
+        "saTaxYearEnd": "2022-03-05",
+        "originalChargeType": "string",
+        "originalTieBreaker": "string",
+        "chargeReference": "XM123456789812",
+        "outstandingAmount": 3000.00,
+        "accruedInterest": 500.00
+      }
+    ]
   },
   "etmpData": {
     "customer": {
@@ -106,7 +126,6 @@
         ]
       }
     ],
-
     "filing": [
       {
         "icrCategory": "ZR01",
@@ -123,24 +142,26 @@
         "dueDate": "<DUE_DATE_FOR_FUTURE>"
       }
     ],
-    "charges": [{
-      "chargeType": "In Year RTI Charge - Tax",
-      "mainType": "In Year RTI Charge (FPS)",
-      "mainTrans": "2000",
-      "subTrans": "1000",
-      "UTR": "73",
-      "taxPeriodFrom": "2022-02-06",
-      "taxPeriodTo": "2022-03-05",
-      "dueDate": "<DUE_DATE_FOR_FUTURE>",
-      "interestStartDate": "2022-03-05",
-      "tiebreaker": "string",
-      "creationDate": "2022-03-05",
-      "saTaxYearEnd": "2022-03-05",
-      "originalChargeType": "string",
-      "originalTieBreaker": "string",
-      "chargeReference": "XM123456789812",
-      "outstandingAmount": 1000.00,
-      "accruedInterest": 50.00
-    }]
+    "charges": [
+      {
+        "chargeType": "In Year RTI Charge - Tax",
+        "mainType": "In Year RTI Charge (FPS)",
+        "mainTrans": "2000",
+        "subTrans": "1000",
+        "UTR": "73",
+        "taxPeriodFrom": "2022-02-06",
+        "taxPeriodTo": "2022-03-05",
+        "dueDate": "<DUE_DATE_FOR_FUTURE>",
+        "interestStartDate": "2022-03-05",
+        "tiebreaker": "string",
+        "creationDate": "2022-03-05",
+        "saTaxYearEnd": "2022-03-05",
+        "originalChargeType": "string",
+        "originalTieBreaker": "string",
+        "chargeReference": "XM123456789812",
+        "outstandingAmount": 3000.00,
+        "accruedInterest": 500.00
+      }
+    ]
   }
 }
