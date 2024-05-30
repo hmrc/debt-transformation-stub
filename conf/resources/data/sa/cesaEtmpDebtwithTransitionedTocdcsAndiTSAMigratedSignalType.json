@@ -40,13 +40,8 @@
     "signals": [
       {
         "signalType": "Transitioned to CDCS",
-        "signalValue": "false",
+        "signalValue": "2024",
         "signalDescription": "CESA Transitioned to CDCS signal type"
-      },
-      {
-        "signalType": "ITSA MigraTed",
-        "signalValue": "false",
-        "signalDescription": "CESA ITSA MigraTed signal type"
       }
     ],
     "filings": [
@@ -119,13 +114,8 @@
     ],
   "signals": [
         {
-          "signalType": "Transitioned to CDCS",
-          "signalValue": "false",
-          "signalDescription": "ETMP Transitioned to CDCS signal type"
-        },
-        {
           "signalType": "ITSA MigraTed",
-          "signalValue": "false",
+          "signalValue": "2024",
           "signalDescription": "ETMP ITSA MigraTed signal type"
         }
     ],

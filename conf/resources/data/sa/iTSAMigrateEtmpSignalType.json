@@ -129,7 +129,7 @@
     "signals": [
       {
         "signalType": "ITSA MigraTed",
-        "signalValue": "false",
+        "signalValue": "2024",
         "signalDescription": "etmp signal type"
       }
     ],
