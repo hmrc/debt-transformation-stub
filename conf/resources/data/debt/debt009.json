@@ -14,7 +14,16 @@
     "periodFrom": "2019-12-20",
     "periodEnd": "2021-01-20",
     "payments": [],
-    "breathingSpaces": [],
+    "breathingSpaces": [
+      {
+        "debtRespiteFrom": "2021-02-04",
+        "debtRespiteTo": "2021-03-04"
+      },
+      {
+        "debtRespiteFrom": "2021-04-05",
+        "debtRespiteTo": "2021-06-04"
+      }
+    ],
     "customerPostcodes": [
       { "addressPostcode": "BN12 4XH", "postcodeDate": "2019-01-01" }
     ]

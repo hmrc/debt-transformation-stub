@@ -9,11 +9,11 @@
       "originalAmount": 500000,
       "outstandingAmount": 500000,
       "interestKey": "01",
-      "interestStartDate": "2020-12-20",
-      "dateCreated": "2020-12-20",
+      "interestStartDate": "2021-01-01",
+      "dateCreated": "2021-03-04",
       "dateCalculationTo": "2021-05-24",
-      "periodFrom": "2019-12-20",
-      "periodEnd": "2021-01-20",
+      "periodFrom": "2011-01-01",
+      "periodEnd": "2021-03-04",
       "payments": [],
       "breathingSpaces": [
         {

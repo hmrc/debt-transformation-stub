@@ -20,7 +20,12 @@
           "paymentDate": "2020-02-23"
         }
       ],
-      "breathingSpaces": []
+      "breathingSpaces": [
+        {
+          "debtRespiteFrom": "2021-02-04",
+          "debtRespiteTo": "2021-03-04"
+        }
+      ]
     },
     {
       "dutyId": "duty02",
@@ -33,15 +38,20 @@
       "interestKey": "01",
       "interestStartDate": "2020-02-04",
       "dateCreated": "2020-02-04",
-      "dateCalculationTo": "2021-05-24",
+      "dateCalculationTo": "2023-05-24",
       "periodFrom": "2019-01-20",
-      "periodEnd": "2021-01-20",
+      "periodEnd": "2023-01-20",
       "payments": [
         {"paymentAmount" : 100000,
           "paymentDate" : "2020-02-23"},
         {"paymentAmount" : 100000,
           "paymentDate" : "2020-03-20"}],
-      "breathingSpaces": []
+      "breathingSpaces": [
+        {
+          "debtRespiteFrom": "2021-04-04",
+          "debtRespiteTo": "2021-06-04"
+        }
+      ]
     }
   ],
   "customerPostcodes": [

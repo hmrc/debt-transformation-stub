@@ -1,0 +1,68 @@
+{
+  "debtItems": [
+    {
+      "dutyId": "duty0010",
+      "debtID": "debt0010",
+      "mainTrans": "1525",
+      "subTrans": "1000",
+      "chargeDescription": "RTI-Income Tax",
+      "originalAmount": 50000000,
+      "outstandingAmount": 50000000,
+      "interestKey": "01",
+      "interestStartDate": "2023-03-01",
+      "dateCreated": "2023-03-01",
+      "dateCalculationTo": "2023-03-08",
+      "periodFrom": "2023-02-20",
+      "periodEnd": "2023-04-20",
+      "payments": [
+        {
+          "paymentAmount": 40000000,
+          "paymentDate": "2024-01-01"
+        }
+      ],
+      "breathingSpaces": [
+        {
+          "debtRespiteFrom": "2023-02-04",
+          "debtRespiteTo": "2023-03-04"
+        }
+      ]
+    },
+    {
+      "dutyId": "duty0011",
+      "debtID": "debt0011",
+      "mainTrans": "1525",
+      "subTrans": "1000",
+      "chargeDescription": "RTI-Income Tax",
+      "originalAmount": 9000000,
+      "outstandingAmount": 9000000,
+      "interestKey": "01",
+      "interestStartDate": "2020-02-04",
+      "dateCreated": "2020-02-04",
+      "dateCalculationTo": "2023-05-24",
+      "periodFrom": "2019-01-20",
+      "periodEnd": "2023-01-20",
+      "payments": [
+        {
+          "paymentAmount": 4000000,
+          "paymentDate": "2020-08-23"
+        },
+        {
+          "paymentAmount": 2000000,
+          "paymentDate": "2021-04-01"
+        }
+      ],
+      "breathingSpaces": [
+        {
+          "debtRespiteFrom": "2021-03-03",
+          "debtRespiteTo": "2021-06-04"
+        }
+      ]
+    }
+  ],
+  "customerPostcodes": [
+    {
+      "addressPostcode": "TW33 4QQ",
+      "postcodeDate": "2020-01-01"
+    }
+  ]
+}
