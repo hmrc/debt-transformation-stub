@@ -16,6 +16,10 @@
       "periodEnd": "2021-04-20",
       "payments": [],
       "breathingSpaces": [
+        {
+          "debtRespiteFrom": "2021-04-04",
+          "debtRespiteTo": "2021-06-04"
+        }
       ]
     }
   ],
