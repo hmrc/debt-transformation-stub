@@ -23,22 +23,30 @@ import uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet.impl.T
 import scala.collection.immutable.ListSet
 import scala.util.matching.Regex
 
-final case class IfsRulesMasterData(cdcs: TableData, paye: TableData, vat: TableData, sa: TableData) {
+final case class IfsRulesMasterData(
+  cdcs: TableData,
+  paye: TableData,
+  vat: TableData,
+  sa: TableData,
+  saSsttp: TableData
+) {
 
   private lazy val jsonDescription: JsObject = JsObject(
     List(
-      "CDCS"     -> cdcs.jsonDescription,
-      "PAYE"     -> paye.jsonDescription,
-      "VAT"      -> vat.jsonDescription,
-      "SA DEBTS" -> sa.jsonDescription
+      "CDCS"           -> cdcs.jsonDescription,
+      "PAYE"           -> paye.jsonDescription,
+      "VAT"            -> vat.jsonDescription,
+      "SA DEBTS"       -> sa.jsonDescription,
+      "SA SSTTP DEBTS" -> saSsttp.jsonDescription
     )
   )
 
   private val masterCollection: Vector[(Int, TableData, Vector[CellValue])] =
-    cdcs.dataRows.zipWithIndex.map { case (dr, idx) => (idx, cdcs, dr) } ++
-      paye.dataRows.zipWithIndex.map { case (dr, idx) => (idx, paye, dr) } ++
-      vat.dataRows.zipWithIndex.map { case (dr, idx) => (idx, vat, dr) } ++
-      sa.dataRows.zipWithIndex.map { case (dr, idx) => (idx, sa, dr) }
+    cdcs.dataRows.zipWithIndex.map { case (dataRow, idx) => (idx, cdcs, dataRow) } ++
+      paye.dataRows.zipWithIndex.map { case (dataRow, idx) => (idx, paye, dataRow) } ++
+      vat.dataRows.zipWithIndex.map { case (dataRow, idx) => (idx, vat, dataRow) } ++
+      sa.dataRows.zipWithIndex.map { case (dataRow, idx) => (idx, sa, dataRow) } ++
+      saSsttp.dataRows.zipWithIndex.map { case (dataRow, idx) => (idx, saSsttp, dataRow) }
 
   def length: Int = masterCollection.size
 
@@ -147,7 +155,10 @@ object IfsRulesMasterData {
     val payeSectionRaw = sectionAfterCdcs.takeWhile(row => !TransactionSection.vatSectionHeading.value.matches(row))
     val sectionAfterPaye = sectionAfterCdcs.drop(payeSectionRaw.size + 1)
     val vatSectionRaw = sectionAfterPaye.takeWhile(row => !TransactionSection.saSectionHeading.value.matches(row))
-    val saDebtsSectionRaw = sectionAfterPaye.drop(vatSectionRaw.size + 1)
+    val sectionAfterVat = sectionAfterPaye.drop(vatSectionRaw.size + 1)
+    val saDebtsSectionRaw =
+      sectionAfterVat.takeWhile(row => !TransactionSection.saSsttpSectionHeading.value.matches(row))
+    val saSsttpDebtsSectionRaw = sectionAfterVat.drop(saDebtsSectionRaw.size + 1)
 
     val cdcsData = TableData.fromCsvOrTsvRowsWithHeadings(
       rowsWithHeadings = cdcsSectionRaw.filter(keepRow),
@@ -165,8 +176,12 @@ object IfsRulesMasterData {
       rowsWithHeadings = saDebtsSectionRaw.filter(keepRow),
       separator = cellSeparator
     )
+    val saSsttpData = TableData.fromCsvOrTsvRowsWithHeadings(
+      rowsWithHeadings = saSsttpDebtsSectionRaw.filter(keepRow),
+      separator = cellSeparator
+    )
 
-    IfsRulesMasterData(cdcs = cdcsData, paye = payeData, vat = vatData, sa = saData)
+    IfsRulesMasterData(cdcs = cdcsData, paye = payeData, vat = vatData, sa = saData, saSsttp = saSsttpData)
   }
 
   private object KnownHeadings {
@@ -183,9 +198,10 @@ object IfsRulesMasterData {
     val payeSectionHeading: Some[Regex] = Some("^(?i)PAYE\\b[,\\t]*$".r)
     val vatSectionHeading: Some[Regex] = Some("^(?i)VAT\\b[,\\t]*$".r)
     val saSectionHeading: Some[Regex] = Some("^(?i)SA DEBTS\\b.*$".r) // we've seen comments on this heading
+    val saSsttpSectionHeading: Some[Regex] = Some("^(?i)SA SSTTP DEBTS\\b.*$".r)
 
     def validSectionHeadings: ListSet[Regex] =
-      ListSet(payeSectionHeading.value, vatSectionHeading.value, saSectionHeading.value)
+      ListSet(payeSectionHeading.value, vatSectionHeading.value, saSectionHeading.value, saSsttpSectionHeading.value)
 
     def isRowExpectedSectionHeading(row: String): Boolean =
       validSectionHeadings.exists(validHeading => validHeading.matches(row))
