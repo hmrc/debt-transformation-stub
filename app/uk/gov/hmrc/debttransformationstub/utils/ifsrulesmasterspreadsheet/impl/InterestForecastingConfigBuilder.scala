@@ -22,53 +22,53 @@ import java.util.Base64
 
 object InterestForecastingConfigBuilder {
   def buildProductionConfig(ifsData: IfsRulesMasterData): Seq[String] =
-    buildRules(ifsData).zipWithIndex
+    buildRules(ifsData).map(_.raw).distinct.zipWithIndex
       .flatMap { case (rule, index) =>
         List(
-          s"# ${rule.raw},",
-          s"service-config.rules.$index: ${JsString(rule.toBase64)}"
+          s"# $rule,",
+          s"service-config.rules.$index: ${JsString(Base64.getEncoder.encodeToString(rule.getBytes()))}"
         )
       }
 
   def buildAppConfig(ifsData: IfsRulesMasterData): Seq[String] =
-    buildRules(ifsData).flatMap { rule =>
+    buildRules(ifsData).map(_.raw).distinct.flatMap { rule =>
       List(
-        s"# ${rule.raw},",
-        s"${JsString(rule.toBase64)},"
+        s"# $rule,",
+        s"${JsString(Base64.getEncoder.encodeToString(rule.getBytes()))},"
       )
     }
 
   private def buildRules(ifsData: IfsRulesMasterData): Seq[InterestRule] =
-    (0 until ifsData.length)
-      .map { dataIndex =>
-        val mainTransString = ifsData.Interpreted.mainTrans(dataIndex)
-        val subTransString = ifsData.Interpreted.subTrans(dataIndex)
+      (0 until ifsData.length)
+        .map { dataIndex =>
+          val mainTransString = ifsData.Interpreted.mainTrans(dataIndex)
+          val subTransString = ifsData.Interpreted.subTrans(dataIndex)
 
-        val ifCondition: String = {
-          val mainTransClause = s"mainTrans == '${mainTransString: String}'"
+          val ifCondition: String = {
+            val mainTransClause = s"mainTrans == '${mainTransString: String}'"
 
-          val subTransClause = s"subTrans == '${subTransString: String}'"
+            val subTransClause = s"subTrans == '${subTransString: String}'"
 
-          List(mainTransClause, subTransClause).mkString(" AND ")
-        }
+            List(mainTransClause, subTransClause).mkString(" AND ")
+          }
 
-        val thenClauses: String = {
-          val interestRateClause: String =
-            s"intRate = ${ifsData.Interpreted.interestBearing(dataIndex): Int}"
+          val thenClauses: String = {
+            val interestRateClause: String =
+              s"intRate = ${ifsData.Interpreted.interestBearing(dataIndex): Int}"
 
-          val interestOnlyDebtClause: String =
-            s"interestOnlyDebt = ${ifsData.Interpreted.interestOnlyDebt(dataIndex): Boolean}"
+            val interestOnlyDebtClause: String =
+              s"interestOnlyDebt = ${ifsData.Interpreted.interestOnlyDebt(dataIndex): Boolean}"
 
-          val useChargeReferenceClause: Option[String] =
-            ifsData.Interpreted
-              .useChargeReference(dataIndex)
-              .map(useChargeRef => s"useChargeReference = ${useChargeRef: Boolean}")
+            val useChargeReferenceClause: Option[String] =
+              ifsData.Interpreted
+                .useChargeReference(dataIndex)
+                .map(useChargeRef => s"useChargeReference = ${useChargeRef: Boolean}")
 
-          val subClauses: Seq[String] =
-            List(Some(interestRateClause), Some(interestOnlyDebtClause), useChargeReferenceClause).flatten
+            val subClauses: Seq[String] =
+              List(Some(interestRateClause), Some(interestOnlyDebtClause), useChargeReferenceClause).flatten
 
-          subClauses.mkString(" AND ")
-        }
+            subClauses.mkString(" AND ")
+          }
 
         (
           mainTransString,
@@ -81,7 +81,5 @@ object InterestForecastingConfigBuilder {
       })
       .map(_._3)
 
-  private final case class InterestRule(index: Int, raw: String) {
-    def toBase64: String = Base64.getEncoder.encodeToString(raw.getBytes())
-  }
+  private final case class InterestRule(index: Int, raw: String)
 }

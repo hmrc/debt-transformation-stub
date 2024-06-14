@@ -85,7 +85,7 @@ final class InterestForecastingRulesGenerator(readFile: String => IterableOnce[S
 
   def execute(args: Vector[String], stdin: Iterator[String]): IterableOnce[String] = {
     val parsedArgs = ParsedArgs.parse(args)
-    executeWithParsedArgs(parsedArgs, stdin).iterator.distinct
+    executeWithParsedArgs(parsedArgs, stdin)
   }
 
   private def executeWithParsedArgs(args: ParsedArgs, stdin: Iterator[String]): IterableOnce[String] = {
