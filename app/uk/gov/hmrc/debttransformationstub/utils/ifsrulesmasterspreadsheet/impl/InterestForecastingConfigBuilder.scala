@@ -22,19 +22,22 @@ import java.util.Base64
 
 object InterestForecastingConfigBuilder {
   def buildProductionConfig(ifsData: IfsRulesMasterData): Seq[String] =
-    buildRules(ifsData).zipWithIndex
+    buildRules(ifsData)
+      .map(_.raw)
+      .distinct
+      .zipWithIndex
       .flatMap { case (rule, index) =>
         List(
-          s"# ${rule.raw},",
-          s"service-config.rules.$index: ${JsString(rule.toBase64)}"
+          s"# $rule,",
+          s"service-config.rules.$index: ${JsString(Base64.getEncoder.encodeToString(rule.getBytes()))}"
         )
       }
 
   def buildAppConfig(ifsData: IfsRulesMasterData): Seq[String] =
-    buildRules(ifsData).flatMap { rule =>
+    buildRules(ifsData).map(_.raw).distinct.flatMap { rule =>
       List(
-        s"# ${rule.raw},",
-        s"${JsString(rule.toBase64)},"
+        s"# $rule,",
+        s"${JsString(Base64.getEncoder.encodeToString(rule.getBytes()))},"
       )
     }
 
@@ -81,7 +84,5 @@ object InterestForecastingConfigBuilder {
       })
       .map(_._3)
 
-  private final case class InterestRule(index: Int, raw: String) {
-    def toBase64: String = Base64.getEncoder.encodeToString(raw.getBytes())
-  }
+  private final case class InterestRule(index: Int, raw: String)
 }
