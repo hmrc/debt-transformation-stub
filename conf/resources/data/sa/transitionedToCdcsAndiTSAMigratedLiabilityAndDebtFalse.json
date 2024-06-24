@@ -16,7 +16,6 @@
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "PPOB",
@@ -36,23 +35,6 @@
             "postcodeDate": "2001-01-31"
           }
         ]
-      },
-      {
-        "addressType": "AGENT",
-        "rls": false,
-        "postcodeHistory": [
-          {
-            "addressPostcode": "BN164QR", 
-            "postcodeDate": "2022-03-02"
-          }
-        ]
-      }
-    ],
-    "signals": [
-      {
-        "signalType": "Transitioned to CDCS",
-        "signalValue": "True",
-        "signalDescription": ""
       }
     ],
     "filings": [
@@ -121,24 +103,23 @@
             "postcodeDate": "2001-01-31"
           }
         ]
-      },
-      {
-        "addressType": "AGENT",
-        "rls": false,
-        "postcodeHistory": [
-          {
-            "addressPostcode": "BN164QR",
-            "postcodeDate": "2022-03-02"
-          }
-        ]
       }
     ],
-    "signals": [
-      {
-        "signalType": "Transitioned to CDCS",
-        "signalValue": "True",
-        "signalDescription": ""
-      }
+  "signals": [
+        {
+          "signalType": "Transitioned to CDCS",
+          "signalValue": "True",
+          "signalDescription": "ETMP ITSA MigraTed signal type"
+        },{
+      "signalType": "Transitioned to CDCS",
+      "signalValue": "True",
+      "signalDescription": "ETMP ITSA MigraTed signal type"
+    },
+    {
+      "signalType": "ITSA MigraTed",
+      "signalValue": "True",
+      "signalDescription": "ETMP ITSA MigraTed signal type"
+    }
     ],
     "filing": [
       {
@@ -166,7 +147,7 @@
         "taxPeriodFrom": "2022-02-06",
         "taxPeriodTo": "2022-03-05",
         "chargeReference": "XM123456789813",
-        "dueDate": "<DUE_DATE>",
+        "dueDate": "<DUE_DATE_FOR_FUTURE>",
         "interestStartDate": "2022-03-05",
         "outstandingAmount": 1000.00,
         "accruedInterest": 50.00,
