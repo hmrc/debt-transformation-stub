@@ -51,7 +51,7 @@
     "signals": [
       {
         "signalType": "ITSA MigraTed",
-        "signalValue": "True",
+        "signalValue": "2024",
         "signalDescription": "cesa signal type"
       }
     ],
