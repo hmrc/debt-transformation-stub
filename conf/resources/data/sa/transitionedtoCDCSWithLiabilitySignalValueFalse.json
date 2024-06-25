@@ -118,6 +118,11 @@
         "signalType": "Transitioned to CDCS",
         "signalValue": "True",
         "signalDescription": ""
+      },
+      {
+        "signalType": "Transitioned to CDCS",
+        "signalValue": "True",
+        "signalDescription": ""
       }
     ],
     "filing": [
@@ -147,6 +152,26 @@
         "taxPeriodTo": "2022-03-05",
         "chargeReference": "XM123456789813",
         "dueDate": "<DUE_DATE_FOR_FUTURE>",
+        "interestStartDate": "2022-03-05",
+        "outstandingAmount": 1000.00,
+        "accruedInterest": 50.00,
+        "locks": [
+          {
+            "lockType": "Dunning",
+            "lockReason": "Suspension (Alleged appeal)"
+          }
+        ]
+      },
+      {
+        "chargeType": "In Year RTI Charge - Tax",
+        "mainType": "In Year RTI Charge (FPS)",
+        "mainTrans": "2000",
+        "subTrans": "1000",
+        "UTR": "73",
+        "taxPeriodFrom": "2022-02-06",
+        "taxPeriodTo": "2022-03-05",
+        "chargeReference": "XM123456789813",
+        "dueDate": "<DUE_DATE>",
         "interestStartDate": "2022-03-05",
         "outstandingAmount": 1000.00,
         "accruedInterest": 50.00,

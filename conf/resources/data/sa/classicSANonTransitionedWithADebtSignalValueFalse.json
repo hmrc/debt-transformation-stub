@@ -48,13 +48,6 @@
         ]
       }
     ],
-    "signals": [
-      {
-        "signalType": "Transitioned to CDCS",
-        "signalValue": "True",
-        "signalDescription": ""
-      }
-    ],
     "filings": [
       {
         "icrCategory": "string",
@@ -116,13 +109,13 @@
     "signals": [
       {
         "signalType": "Transitioned to CDCS",
-        "signalValue": "True",
-        "signalDescription": "ETMP ITSA MigraTed signal type"
+        "signalValue": "False",
+        "signalDescription": "ETMP transitioned to CDCS signal type"
       },
       {
         "signalType": "Transitioned to CDCS",
-        "signalValue": "false",
-        "signalDescription": "ETMP ITSA MigraTed signal type"
+        "signalValue": "False",
+        "signalDescription": "ETMP transitioned to CDCS signal type"
       }
     ],
     "filing": [
