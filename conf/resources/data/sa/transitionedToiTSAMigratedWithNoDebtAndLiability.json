@@ -48,13 +48,6 @@
         ]
       }
     ],
-    "signals": [
-      {
-        "signalType": "Transitioned to CDCS",
-        "signalValue": "2024",
-        "signalDescription": "CESA Transitioned to CDCS signal type"
-      }
-    ],
     "filings": [
       {
         "icrCategory": "string",
@@ -115,6 +108,20 @@
     ],
     "signals": [
       {
+        "signalType": "Transitioned to CDCS",
+        "signalValue": "True",
+        "signalDescription": "ETMP Transitioned to CDCS signal type"
+      },
+      {
+        "signalType": "Transitioned to CDCS",
+        "signalValue": "True",
+        "signalDescription": "ETMP Transitioned to CDCS signal type"
+      },
+      {
+        "signalType": "ITSA MigraTed",
+        "signalValue": "2024",
+        "signalDescription": "ETMP ITSA MigraTed signal type"
+      },{
         "signalType": "ITSA MigraTed",
         "signalValue": "2024",
         "signalDescription": "ETMP ITSA MigraTed signal type"

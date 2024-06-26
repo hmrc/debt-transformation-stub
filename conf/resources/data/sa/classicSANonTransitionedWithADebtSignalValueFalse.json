@@ -42,17 +42,10 @@
         "rls": false,
         "postcodeHistory": [
           {
-            "addressPostcode": "BN164QR", 
+            "addressPostcode": "BN164QR",
             "postcodeDate": "2022-03-02"
           }
         ]
-      }
-    ],
-    "signals": [
-      {
-        "signalType": "Transitioned to CDCS",
-        "signalValue": "True",
-        "signalDescription": ""
       }
     ],
     "filings": [
@@ -64,27 +57,7 @@
         "dueDate": "2014-09-12"
       }
     ],
-    "charges": [
-      {
-        "chargeType": "In Year RTI Charge - Tax",
-        "mainType": "In Year RTI Charge (FPS)",
-        "mainTrans": "2000",
-        "subTrans": "1000",
-        "UTR": "73",
-        "taxPeriodFrom": "2022-02-06",
-        "taxPeriodTo": "2022-03-05",
-        "dueDate": "<DUE_DATE>",
-        "interestStartDate": "2022-03-05",
-        "tiebreaker": "string",
-        "creationDate": "2022-03-05",
-        "saTaxYearEnd": "2022-03-05",
-        "originalChargeType": "string",
-        "originalTieBreaker": "string",
-        "chargeReference": "XM123456789812",
-        "outstandingAmount": 3000.00,
-        "accruedInterest": 500.00
-      }
-    ]
+    "charges": []
   },
   "etmpData": {
     "customer": {
@@ -136,8 +109,13 @@
     "signals": [
       {
         "signalType": "Transitioned to CDCS",
-        "signalValue": "True",
-        "signalDescription": ""
+        "signalValue": "False",
+        "signalDescription": "ETMP transitioned to CDCS signal type"
+      },
+      {
+        "signalType": "Transitioned to CDCS",
+        "signalValue": "False",
+        "signalDescription": "ETMP transitioned to CDCS signal type"
       }
     ],
     "filing": [

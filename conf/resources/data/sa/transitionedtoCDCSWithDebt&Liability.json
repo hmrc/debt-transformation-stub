@@ -51,7 +51,7 @@
     "signals": [
       {
         "signalType": "Transitioned to CDCS",
-        "signalValue": "2024",
+        "signalValue": "True",
         "signalDescription": ""
       }
     ],
@@ -136,7 +136,7 @@
     "signals": [
       {
         "signalType": "Transitioned to CDCS",
-        "signalValue": "2024",
+        "signalValue": "True",
         "signalDescription": ""
       }
     ],

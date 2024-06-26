@@ -40,7 +40,7 @@
     "signals": [
       {
         "signalType": "Transitioned to CDCS",
-        "signalValue": "2024",
+        "signalValue": "True",
         "signalDescription": "CESA Transitioned to CDCS signal type"
       }
     ],
@@ -115,7 +115,7 @@
   "signals": [
         {
           "signalType": "ITSA MigraTed",
-          "signalValue": "2024",
+          "signalValue": "True",
           "signalDescription": "ETMP ITSA MigraTed signal type"
         }
     ],
