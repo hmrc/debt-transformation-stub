@@ -26,12 +26,11 @@ object InterestForecastingConfigBuilder {
       .map(_.raw)
       .distinct
       .zipWithIndex
-      .flatMap {
-        case (rule, index) =>
-          List(
-            s"# $rule,",
-            s"service-config.rules.$index: ${JsString(Base64.getEncoder.encodeToString(rule.getBytes()))}"
-          )
+      .flatMap { case (rule, index) =>
+        List(
+          s"# $rule,",
+          s"service-config.rules.$index: ${JsString(Base64.getEncoder.encodeToString(rule.getBytes()))}"
+        )
       }
 
   def buildAppConfig(ifsData: IfsRulesMasterData): Seq[String] =
@@ -80,9 +79,8 @@ object InterestForecastingConfigBuilder {
           InterestRule(index = dataIndex, raw = s"""IF ${ifCondition: String} -> ${thenClauses: String}""")
         )
       }
-      .sortBy({
-        case (mainTrans, subTrans, _: InterestRule) =>
-          (mainTrans, subTrans)
+      .sortBy({ case (mainTrans, subTrans, _: InterestRule) =>
+        (mainTrans, subTrans)
       })
       .map(_._3)
 
