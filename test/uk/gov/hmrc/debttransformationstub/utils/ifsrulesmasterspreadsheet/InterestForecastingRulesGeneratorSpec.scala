@@ -99,7 +99,7 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
             "6010\t1554\tN\t\tY\tN/A",
             "SA SSTTP Debts",
             "Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref",
-            "4910\t1005\tY\t\tN\tVRN",
+            "4910\t1005\tY\t\tN\tUTR",
             "4910\t1007\tY\t\tN\tN/A"
           )
 
