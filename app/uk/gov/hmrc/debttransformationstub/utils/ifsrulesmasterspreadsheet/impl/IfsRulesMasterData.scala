@@ -42,10 +42,10 @@ final case class IfsRulesMasterData(
   )
 
   private val masterCollection: Vector[(Int, TableData, Vector[CellValue])] =
-    cdcs.dataRows.zipWithIndex.map { case (dataRow, idx) => (idx, cdcs, dataRow) } ++
-      paye.dataRows.zipWithIndex.map { case (dataRow, idx) => (idx, paye, dataRow) } ++
-      vat.dataRows.zipWithIndex.map { case (dataRow, idx) => (idx, vat, dataRow) } ++
-      sa.dataRows.zipWithIndex.map { case (dataRow, idx) => (idx, sa, dataRow) } ++
+    cdcs.dataRows.zipWithIndex.map { case (dataRow, idx)      => (idx, cdcs, dataRow) } ++
+      paye.dataRows.zipWithIndex.map { case (dataRow, idx)    => (idx, paye, dataRow) } ++
+      vat.dataRows.zipWithIndex.map { case (dataRow, idx)     => (idx, vat, dataRow) } ++
+      sa.dataRows.zipWithIndex.map { case (dataRow, idx)      => (idx, sa, dataRow) } ++
       saSsttp.dataRows.zipWithIndex.map { case (dataRow, idx) => (idx, saSsttp, dataRow) }
 
   def length: Int = masterCollection.size
@@ -85,6 +85,7 @@ final case class IfsRulesMasterData(
         case "Charge ref" => Some(true)
         case "ASN"        => Some(false)
         case "VRN"        => Some(false)
+        case "UTR"        => Some(false)
         case unknown =>
           val rowDisplay: JsValue = Json.toJson(masterCollection(index)._3.map(_.actual))
           throw new IllegalArgumentException(
