@@ -99,7 +99,7 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
             "6010\t1554\tN\t\tY\tN/A",
             "SA SSTTP Debts",
             "Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref",
-            "4910\t1005\tY\t\tN\tN/A",
+            "4910\t1005\tY\t\tN\tUTR",
             "4910\t1007\tY\t\tN\tN/A"
           )
 
@@ -129,8 +129,8 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
                 |"SUYgbWFpblRyYW5zID09ICc0NjIwJyBBTkQgc3ViVHJhbnMgPT0gJzExNzUnIC0+IGludFJhdGUgPSAwIEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gdHJ1ZSBBTkQgdXNlQ2hhcmdlUmVmZXJlbmNlID0gdHJ1ZQ==",
                 |# IF mainTrans == '4700' AND subTrans == '1174' -> intRate = 4 AND interestOnlyDebt = false AND useChargeReference = false,
                 |"SUYgbWFpblRyYW5zID09ICc0NzAwJyBBTkQgc3ViVHJhbnMgPT0gJzExNzQnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2UgQU5EIHVzZUNoYXJnZVJlZmVyZW5jZSA9IGZhbHNl",
-                |# IF mainTrans == '4910' AND subTrans == '1005' -> intRate = 4 AND interestOnlyDebt = false,
-                |"SUYgbWFpblRyYW5zID09ICc0OTEwJyBBTkQgc3ViVHJhbnMgPT0gJzEwMDUnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2U=",
+                |# IF mainTrans == '4910' AND subTrans == '1005' -> intRate = 4 AND interestOnlyDebt = false AND useChargeReference = false,
+                |"SUYgbWFpblRyYW5zID09ICc0OTEwJyBBTkQgc3ViVHJhbnMgPT0gJzEwMDUnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2UgQU5EIHVzZUNoYXJnZVJlZmVyZW5jZSA9IGZhbHNl",
                 |# IF mainTrans == '4910' AND subTrans == '1007' -> intRate = 4 AND interestOnlyDebt = false,
                 |"SUYgbWFpblRyYW5zID09ICc0OTEwJyBBTkQgc3ViVHJhbnMgPT0gJzEwMDcnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2U=",
                 |# IF mainTrans == '4920' AND subTrans == '1553' -> intRate = 4 AND interestOnlyDebt = false,
@@ -161,8 +161,8 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
                 |service-config.rules.4: "SUYgbWFpblRyYW5zID09ICc0NjIwJyBBTkQgc3ViVHJhbnMgPT0gJzExNzUnIC0+IGludFJhdGUgPSAwIEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gdHJ1ZSBBTkQgdXNlQ2hhcmdlUmVmZXJlbmNlID0gdHJ1ZQ=="
                 |# IF mainTrans == '4700' AND subTrans == '1174' -> intRate = 4 AND interestOnlyDebt = false AND useChargeReference = false,
                 |service-config.rules.5: "SUYgbWFpblRyYW5zID09ICc0NzAwJyBBTkQgc3ViVHJhbnMgPT0gJzExNzQnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2UgQU5EIHVzZUNoYXJnZVJlZmVyZW5jZSA9IGZhbHNl"
-                |# IF mainTrans == '4910' AND subTrans == '1005' -> intRate = 4 AND interestOnlyDebt = false,
-                |service-config.rules.6: "SUYgbWFpblRyYW5zID09ICc0OTEwJyBBTkQgc3ViVHJhbnMgPT0gJzEwMDUnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2U="
+                |# IF mainTrans == '4910' AND subTrans == '1005' -> intRate = 4 AND interestOnlyDebt = false AND useChargeReference = false,
+                |service-config.rules.6: "SUYgbWFpblRyYW5zID09ICc0OTEwJyBBTkQgc3ViVHJhbnMgPT0gJzEwMDUnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2UgQU5EIHVzZUNoYXJnZVJlZmVyZW5jZSA9IGZhbHNl"
                 |# IF mainTrans == '4910' AND subTrans == '1007' -> intRate = 4 AND interestOnlyDebt = false,
                 |service-config.rules.7: "SUYgbWFpblRyYW5zID09ICc0OTEwJyBBTkQgc3ViVHJhbnMgPT0gJzEwMDcnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2U="
                 |# IF mainTrans == '4920' AND subTrans == '1553' -> intRate = 4 AND interestOnlyDebt = false,
