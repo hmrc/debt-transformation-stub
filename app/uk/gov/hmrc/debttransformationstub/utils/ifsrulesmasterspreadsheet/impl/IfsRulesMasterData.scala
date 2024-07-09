@@ -85,6 +85,7 @@ final case class IfsRulesMasterData(
         case "Charge ref" => Some(true)
         case "ASN"        => Some(false)
         case "VRN"        => Some(false)
+        case "UTR"        => Some(false)
         case unknown =>
           val rowDisplay: JsValue = Json.toJson(masterCollection(index)._3.map(_.actual))
           throw new IllegalArgumentException(
