@@ -17,38 +17,22 @@
 package uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet.impl
 
 import play.api.libs.json.{ JsObject, JsString, JsValue, Json }
-import uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet.impl.IfsRulesMasterData.KnownHeadings
+import uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet.impl.IfsRulesMasterData.{ KnownHeadings, RegimeUsage }
 import uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet.impl.TableData.{ CellValue, Heading }
 
-import scala.collection.immutable.ListSet
-import scala.util.matching.Regex
+import enumeratum.{ Enum, EnumEntry }
 
 final case class IfsRulesMasterData(
-  cdcs: TableData,
-  paye: TableData,
-  vat: TableData,
-  sa: TableData,
-  saSsttp: TableData
+  tableData: TableData
 ) {
 
   private lazy val jsonDescription: JsObject = JsObject(
     List(
-      "CDCS"           -> cdcs.jsonDescription,
-      "PAYE"           -> paye.jsonDescription,
-      "VAT"            -> vat.jsonDescription,
-      "SA DEBTS"       -> sa.jsonDescription,
-      "SA SSTTP DEBTS" -> saSsttp.jsonDescription
+      "tableData" -> tableData.jsonDescription
     )
   )
 
-  private val masterCollection: Vector[(Int, TableData, Vector[CellValue])] =
-    cdcs.dataRows.zipWithIndex.map { case (dataRow, idx) => (idx, cdcs, dataRow) } ++
-      paye.dataRows.zipWithIndex.map { case (dataRow, idx) => (idx, paye, dataRow) } ++
-      vat.dataRows.zipWithIndex.map { case (dataRow, idx) => (idx, vat, dataRow) } ++
-      sa.dataRows.zipWithIndex.map { case (dataRow, idx) => (idx, sa, dataRow) } ++
-      saSsttp.dataRows.zipWithIndex.map { case (dataRow, idx) => (idx, saSsttp, dataRow) }
-
-  def length: Int = masterCollection.size
+  def maxLength: Int = tableData.dataRows.length
 
   object Interpreted {
     def mainTrans(index: Int): String = Lookup2D.mainTransAt(index).actual
@@ -61,7 +45,7 @@ final case class IfsRulesMasterData(
         case "N" => 0
         case "Y" => 4
         case unknown =>
-          val rowDisplay: JsValue = Json.toJson(masterCollection(index)._3.map(_.actual))
+          val rowDisplay: JsValue = Json.toJson(tableData.dataRowAt(index).values.map(_.actual))
           throw new IllegalArgumentException(
             s"Cannot convert interestBearing=${JsString(unknown)} to boolean; check the code. Row values: $rowDisplay"
           )
@@ -73,7 +57,7 @@ final case class IfsRulesMasterData(
         case "N" => false
         case "Y" => true
         case unknown =>
-          val rowDisplay: JsValue = Json.toJson(masterCollection(index)._3.map(_.actual))
+          val rowDisplay: JsValue = Json.toJson(tableData.dataRowAt(index).values.map(_.actual))
           throw new IllegalArgumentException(
             s"Cannot convert interestOnlyDebt=${JsString(unknown)} to boolean; check the code. Row values: $rowDisplay"
           )
@@ -87,9 +71,24 @@ final case class IfsRulesMasterData(
         case "VRN"        => Some(false)
         case "UTR"        => Some(false)
         case unknown =>
-          val rowDisplay: JsValue = Json.toJson(masterCollection(index)._3.map(_.actual))
+          val rowDisplay: JsValue = Json.toJson(tableData.dataRowAt(index).values.map(_.actual))
           throw new IllegalArgumentException(
             s"Cannot convert useChargeReference=${JsString(unknown)} to boolean; check the code. Row values: $rowDisplay"
+          )
+      }
+
+    def regimeUsage(index: Int): RegimeUsage =
+      Lookup2D.regimeUsage(index).actual match {
+        case "CDCS"                    => RegimeUsage.Cdcs
+        case "PAYE"                    => RegimeUsage.Paye
+        case "VAT"                     => RegimeUsage.Vat
+        case "SA Op Led AND NOT SSTTP" => RegimeUsage.`SA OpLed AND NOT SA SSTP`
+        case "SA SSTTP AND NOT Op Led" => RegimeUsage.`SA SSTTP AND NOT OpLed`
+        case "SA SSTTP AND Op Led"     => RegimeUsage.`SA SSTTP AND Op Led`
+        case unknown =>
+          val rowDisplay: JsValue = Json.toJson(tableData.dataRowAt(index).values.map(_.actual))
+          throw new IllegalArgumentException(
+            s"Cannot convert regimeUsage=${JsString(unknown)} to RegimeUsage; check the code. Row values: $rowDisplay"
           )
       }
   }
@@ -107,11 +106,10 @@ final case class IfsRulesMasterData(
 
     def chargeReferenceAt(index: Int): CellValue = cellValueAt(index, KnownHeadings.chargeReference)
 
-    def cellValueAt(rowIndex: Int, heading: Heading): CellValue =
-      masterCollection(rowIndex) match {
-        case (index, table, _) => table.dataRowAt(index)(heading)
-      }
+    def regimeUsage(index: Int): CellValue = cellValueAt(index, KnownHeadings.regimeUsage)
 
+    def cellValueAt(rowIndex: Int, heading: Heading): CellValue =
+      tableData.dataRowAt(rowIndex)(heading)
   }
 
   override def toString: String = Json.prettyPrint(jsonDescription)
@@ -134,55 +132,12 @@ object IfsRulesMasterData {
     keepRow: String => Boolean
   ): IfsRulesMasterData = {
 
-    locally {
-      val headingsLines = rows.filter(row => TransactionSection.isRowExpectedSectionHeading(row = row))
-      if (headingsLines.size != TransactionSection.validSectionHeadings.size) {
-        val validHeadingsStr: String = TransactionSection.validSectionHeadings.toString
-        val actualHeadingsStr: String = Json.toJson(headingsLines).toString
-        val allRowsStr: String = Json.prettyPrint(Json.toJson(rows))
-
-        throw new IllegalArgumentException(
-          s"""Expected a certain number of headings in the input.
-             |Required headings (regex): $validHeadingsStr
-             |Found headings (strings): $actualHeadingsStr
-             |All rows: $allRowsStr
-             |""".stripMargin
-        )
-      }
-    }
-
-    val cdcsSectionRaw = rows.takeWhile(row => !TransactionSection.payeSectionHeading.value.matches(row))
-    val sectionAfterCdcs = rows.drop(cdcsSectionRaw.size + 1)
-    val payeSectionRaw = sectionAfterCdcs.takeWhile(row => !TransactionSection.vatSectionHeading.value.matches(row))
-    val sectionAfterPaye = sectionAfterCdcs.drop(payeSectionRaw.size + 1)
-    val vatSectionRaw = sectionAfterPaye.takeWhile(row => !TransactionSection.saSectionHeading.value.matches(row))
-    val sectionAfterVat = sectionAfterPaye.drop(vatSectionRaw.size + 1)
-    val saDebtsSectionRaw =
-      sectionAfterVat.takeWhile(row => !TransactionSection.saSsttpSectionHeading.value.matches(row))
-    val saSsttpDebtsSectionRaw = sectionAfterVat.drop(saDebtsSectionRaw.size + 1)
-
-    val cdcsData = TableData.fromCsvOrTsvRowsWithHeadings(
-      rowsWithHeadings = cdcsSectionRaw.filter(keepRow),
-      separator = cellSeparator
-    )
-    val payeData = TableData.fromCsvOrTsvRowsWithHeadings(
-      rowsWithHeadings = payeSectionRaw.filter(keepRow),
-      separator = cellSeparator
-    )
-    val vatData = TableData.fromCsvOrTsvRowsWithHeadings(
-      rowsWithHeadings = vatSectionRaw.filter(keepRow),
-      separator = cellSeparator
-    )
-    val saData = TableData.fromCsvOrTsvRowsWithHeadings(
-      rowsWithHeadings = saDebtsSectionRaw.filter(keepRow),
-      separator = cellSeparator
-    )
-    val saSsttpData = TableData.fromCsvOrTsvRowsWithHeadings(
-      rowsWithHeadings = saSsttpDebtsSectionRaw.filter(keepRow),
+    val tableData: TableData = TableData.fromCsvOrTsvRowsWithHeadings(
+      rowsWithHeadings = rows.filter(keepRow),
       separator = cellSeparator
     )
 
-    IfsRulesMasterData(cdcs = cdcsData, paye = payeData, vat = vatData, sa = saData, saSsttp = saSsttpData)
+    IfsRulesMasterData(tableData)
   }
 
   private object KnownHeadings {
@@ -192,20 +147,21 @@ object IfsRulesMasterData {
     val interestKey: Heading = Heading("Interest key")
     val interestOnlyDebt: Heading = Heading("Interest only Debt")
     val chargeReference: Heading = Heading("Charge Ref")
+    val regimeUsage: Heading = Heading("Regime Usage")
   }
 
-  private object TransactionSection {
-    val cdcsSectionHeading: None.type = None
-    val payeSectionHeading: Some[Regex] = Some("^(?i)PAYE\\b[,\\t]*$".r)
-    val vatSectionHeading: Some[Regex] = Some("^(?i)VAT\\b[,\\t]*$".r)
-    val saSectionHeading: Some[Regex] = Some("^(?i)SA DEBTS\\b.*$".r) // we've seen comments on this heading
-    val saSsttpSectionHeading: Some[Regex] = Some("^(?i)SA SSTTP DEBTS\\b.*$".r)
+  sealed abstract class RegimeUsage(val isForSelfServe: Boolean, val isForIfs: Boolean) extends EnumEntry
 
-    def validSectionHeadings: ListSet[Regex] =
-      ListSet(payeSectionHeading.value, vatSectionHeading.value, saSectionHeading.value, saSsttpSectionHeading.value)
+  object RegimeUsage extends Enum[RegimeUsage] {
+    case object Cdcs extends RegimeUsage(isForSelfServe = true, isForIfs = true)
+    case object Paye extends RegimeUsage(isForSelfServe = true, isForIfs = true)
+    case object Vat extends RegimeUsage(isForSelfServe = true, isForIfs = true)
+    case object `SA OpLed AND NOT SA SSTP` extends RegimeUsage(isForSelfServe = false, isForIfs = true)
+    case object `SA SSTTP AND NOT OpLed` extends RegimeUsage(isForSelfServe = true, isForIfs = true)
 
-    def isRowExpectedSectionHeading(row: String): Boolean =
-      validSectionHeadings.exists(validHeading => validHeading.matches(row))
+    /** Debts that can be used for both SSTTP and Operator led. */
+    case object `SA SSTTP AND Op Led` extends RegimeUsage(isForSelfServe = true, isForIfs = true)
 
+    override def values: IndexedSeq[RegimeUsage] = findValues
   }
 }

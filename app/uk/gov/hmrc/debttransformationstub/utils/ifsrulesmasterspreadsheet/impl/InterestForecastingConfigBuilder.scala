@@ -17,6 +17,7 @@
 package uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet.impl
 
 import play.api.libs.json.JsString
+import uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet.impl.IfsRulesMasterData.RegimeUsage
 
 import java.util.Base64
 
@@ -42,7 +43,12 @@ object InterestForecastingConfigBuilder {
     }
 
   private def buildRules(ifsData: IfsRulesMasterData): Seq[InterestRule] =
-    (0 until ifsData.length)
+    (0 until ifsData.maxLength)
+      .filter { dataIndex =>
+        val regimeUsage: RegimeUsage = ifsData.Interpreted.regimeUsage(dataIndex)
+
+        regimeUsage.isForIfs
+      }
       .map { dataIndex =>
         val mainTransString = ifsData.Interpreted.mainTrans(dataIndex)
         val subTransString = ifsData.Interpreted.subTrans(dataIndex)
