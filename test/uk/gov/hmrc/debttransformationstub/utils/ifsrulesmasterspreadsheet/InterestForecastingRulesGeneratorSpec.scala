@@ -55,15 +55,7 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
       "when asked to read from stdin" - {
         "given empty sections" in {
           val input = Vector(
-            "Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref\tPeriod End",
-            "PAYE",
-            "Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref",
-            "VAT",
-            "Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref",
-            "SA debts - not in production or code yet\t\t",
-            "Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref",
-            "SA SSTTP Debts",
-            "Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref"
+            "Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref\tPeriod End"
           )
           val stdin: Iterator[String] =
             input.iterator ++
@@ -82,25 +74,17 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
 
         "given vanilla sections" - {
           val input = Vector(
-            "Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref\tPeriod End",
-            "1520\t1090\tN\tN/A\tN\tN/A",
-            "1525\t1000\tY\t4\tN\tN/A\tsome description",
-            "PAYE",
-            "Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref",
-            "1045\t1090\tN\t\t\tCharge ref",
-            "2000\t1000\tY\t\t\tASN",
-            "VAT",
-            "Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref",
-            "4700\t1174\tY\t\t\tVRN",
-            "4620\t1175\t\t\tY\tCharge ref",
-            "SA DEBTS - not in production or code yet",
-            "Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref",
-            "4920\t1553\tY\t\tN\tN/A",
-            "6010\t1554\tN\t\tY\tN/A",
-            "SA SSTTP Debts",
-            "Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref",
-            "4910\t1005\tY\t\tN\tUTR",
-            "4910\t1007\tY\t\tN\tN/A"
+            "Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref\tPeriod End\tRegime Usage",
+            "1520\t1090\tN\tN/A\tN\tN/A\tperiodEnd\tCDCS",
+            "1525\t1000\tY\t4\tN\tN/A\tsome description\tPAYE",
+            "1045\t1090\tN\t\t\tCharge ref\tperiodEnd\tCDCS",
+            "2000\t1000\tY\t\t\tASN\tperiodEnd\tCDCS",
+            "4700\t1174\tY\t\t\tVRN\tperiodEnd\tCDCS",
+            "4620\t1175\t\t\tY\tCharge ref\tperiodEnd\tVAT",
+            "4920\t1553\tY\t\tN\tN/A\tperiodEnd\tCDCS",
+            "6010\t1554\tN\t\tY\tN/A\tperiodEnd\tCDCS",
+            "4910\t1005\tY\t\tN\tUTR\tperiodEnd\tCDCS",
+            "4910\t1007\tY\t\tN\tN/A\tperiodEnd\tCDCS"
           )
 
           def newStdin(): Iterator[String] =
@@ -176,33 +160,25 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
 
         "given sections with duplicates" - {
           val input = Vector(
-            "Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref\tPeriod End",
-            "1520\t1090\tN\tN/A\tN\tN/A",
-            "1520\t1090\tN\tN/A\tN\tN/A",
-            "1520\t1090\tN\tN/A\tN\tN/A",
-            "1525\t1000\tY\t4\tN\tN/A\tsome description",
-            "PAYE",
-            "Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref",
-            "1045\t1090\tN\t\t\tCharge ref",
-            "1045\t1090\tN\t\t\tCharge ref",
-            "2000\t1000\tY\t\t\tASN",
-            "2000\t1000\tY\t\t\tASN",
-            "VAT",
-            "Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref",
-            "4700\t1174\tY\t\t\tVRN",
-            "4700\t1174\tY\t\t\tVRN",
-            "4620\t1175\t\t\tY\tCharge ref",
-            "SA DEBTS - not in production or code yet",
-            "Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref",
-            "4920\t1553\tY\t\tN\tN/A",
-            "6010\t1554\tN\t\tY\tN/A",
-            "6010\t1554\tN\t\tY\tN/A",
-            "6010\t1554\tN\t\tY\tN/A",
-            "SA SSTTP Debts",
-            "Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref",
-            "4910\t1005\tY\t\tN\tN/A",
-            "4910\t1005\tY\t\tN\tN/A",
-            "4910\t1007\tY\t\tN\tN/A"
+            "Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref\tPeriod End\tRegime Usage",
+            "1520\t1090\tN\tN/A\tN\tN/A\tsome description\tCDCS",
+            "1520\t1090\tN\tN/A\tN\tN/A\tsome description\tVAT",
+            "1520\t1090\tN\tN/A\tN\tN/A\tsome description\tCDCS",
+            "1525\t1000\tY\t4\tN\tN/A\tsome description\tCDCS",
+            "1045\t1090\tN\t\t\tCharge ref\tsome description\tCDCS",
+            "1045\t1090\tN\t\t\tCharge ref\tsome description\tCDCS",
+            "2000\t1000\tY\t\t\tASN\tsome description\tVAT",
+            "2000\t1000\tY\t\t\tASN\tsome description\tCDCS",
+            "4700\t1174\tY\t\t\tVRN\tsome description\tPAYE",
+            "4700\t1174\tY\t\t\tVRN\tsome description\tCDCS",
+            "4620\t1175\t\t\tY\tCharge ref\tsome description\tCDCS",
+            "4920\t1553\tY\t\tN\tN/A\tsome description\tPAYE",
+            "6010\t1554\tN\t\tY\tN/A\tsome description\tCDCS",
+            "6010\t1554\tN\t\tY\tN/A\tsome description\tPAYE",
+            "6010\t1554\tN\t\tY\tN/A\tsome description\tCDCS",
+            "4910\t1005\tY\t\tN\tN/A\tsome description\tCDCS",
+            "4910\t1005\tY\t\tN\tN/A\tsome description\tVAT",
+            "4910\t1007\tY\t\tN\tN/A\tsome description\tCDCS"
           )
 
           def newStdin(): Iterator[String] =
@@ -273,6 +249,48 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
                 |service-config.rules.9: "SUYgbWFpblRyYW5zID09ICc2MDEwJyBBTkQgc3ViVHJhbnMgPT0gJzE1NTQnIC0+IGludFJhdGUgPSAwIEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gdHJ1ZQ=="
                 |""".stripMargin.trim
           }
+
+        }
+
+        "given sections with duplicate main and sub trans with different values" - {
+          val input = Vector(
+            "Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref\tPeriod End",
+            "1520\t1090\tN\tN/A\tN\tN/A",
+            "1520\t1090\tN\tN/A\tN\tN/A",
+            "1520\t1090\tN\tN/A\tN\tN/A",
+            "1525\t1000\tY\t4\tN\tN/A\tsome description",
+            "PAYE",
+            "Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref",
+            "1045\t1090\tN\t\t\tCharge ref",
+            "1045\t1090\tN\t\t\tCharge ref",
+            "2000\t1000\tY\t\t\tASN",
+            "2000\t1000\tY\t\t\tASN",
+            "VAT",
+            "Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref",
+            "4700\t1174\tY\t\t\tVRN",
+            "4700\t1174\tY\t\t\tVRN",
+            "4620\t1175\t\t\tY\tCharge ref",
+            "SA DEBTS - not in production or code yet",
+            "Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref",
+            "4920\t1553\tY\t\tN\tN/A",
+            "6010\t1554\tN\t\tY\tN/A",
+            "6010\t1554\tN\t\tY\tN/A",
+            "6010\t1554\tN\t\tY\tN/A",
+            "SA SSTTP Debts",
+            "Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref",
+            "4910\t1005\tY\t\tN\tN/A",
+            "4910\t1005\tY\t\tN\tN/A",
+            "4910\t1007\tY\t\tN\tN/A"
+          )
+
+          def newStdin(): Iterator[String] =
+            input.iterator ++
+              Vector("""END_INPUT""") ++
+              Iterator.continually(fail(s"Tried to read line after input terminator."))
+
+          "when asked to output application config duplicates will be removed" in {}
+
+          "when asked to output production config  duplicates will be removed" in {}
 
         }
       }
@@ -363,25 +381,25 @@ object InterestForecastingRulesGeneratorSpec {
     object `Sample--2024-01-29--DTD-1924` {
       def tsvInput(): String = {
         val path =
-          "test/resources/InterestForecastingRulesGenerator/samples/2024-01-29--DTD-1924/input-with-clean-headings.tsv"
+          "test/resources/InterestForecastingRulesGenerator/samples/2024-07-11--DTD-1924-DTD-2557/input-with-clean-headings.tsv"
         Using(scala.io.Source.fromFile(path))(_.mkString).get
       }
 
       def csvInputWithCleanHeadings(): String = {
         val path =
-          "test/resources/InterestForecastingRulesGenerator/samples/2024-01-29--DTD-1924/input-with-clean-headings.csv"
+          "test/resources/InterestForecastingRulesGenerator/samples/2024-07-11--DTD-1924-DTD-2557/input-with-clean-headings.csv"
         Using(scala.io.Source.fromFile(path))(_.mkString).get
       }
 
       def csvInputWithMessyHeadings(): String = {
         val path =
-          "test/resources/InterestForecastingRulesGenerator/samples/2024-01-29--DTD-1924/input-with-messy-headings.csv"
+          "test/resources/InterestForecastingRulesGenerator/samples/2024-07-11--DTD-1924-DTD-2557/input-with-messy-headings.csv"
         Using(scala.io.Source.fromFile(path))(_.mkString).get
       }
 
       def outputApplicationConf(): String = {
         val path =
-          "test/resources/InterestForecastingRulesGenerator/samples/2024-01-29--DTD-1924/output-application-conf-array.txt"
+          "test/resources/InterestForecastingRulesGenerator/samples/2024-07-11--DTD-1924-DTD-2557/output-application-conf-array.txt"
         Using(scala.io.Source.fromFile(path))(_.mkString).get
       }
     }
