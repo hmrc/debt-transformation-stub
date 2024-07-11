@@ -381,25 +381,25 @@ object InterestForecastingRulesGeneratorSpec {
     object `Sample--2024-01-29--DTD-1924` {
       def tsvInput(): String = {
         val path =
-          "test/resources/InterestForecastingRulesGenerator/samples/2024-01-29--DTD-1924/input-with-clean-headings.tsv"
+          "test/resources/InterestForecastingRulesGenerator/samples/2024-07-11--DTD-1924-DTD-2557/input-with-clean-headings.tsv"
         Using(scala.io.Source.fromFile(path))(_.mkString).get
       }
 
       def csvInputWithCleanHeadings(): String = {
         val path =
-          "test/resources/InterestForecastingRulesGenerator/samples/2024-01-29--DTD-1924/input-with-clean-headings.csv"
+          "test/resources/InterestForecastingRulesGenerator/samples/2024-07-11--DTD-1924-DTD-2557/input-with-clean-headings.csv"
         Using(scala.io.Source.fromFile(path))(_.mkString).get
       }
 
       def csvInputWithMessyHeadings(): String = {
         val path =
-          "test/resources/InterestForecastingRulesGenerator/samples/2024-01-29--DTD-1924/input-with-messy-headings.csv"
+          "test/resources/InterestForecastingRulesGenerator/samples/2024-07-11--DTD-1924-DTD-2557/input-with-messy-headings.csv"
         Using(scala.io.Source.fromFile(path))(_.mkString).get
       }
 
       def outputApplicationConf(): String = {
         val path =
-          "test/resources/InterestForecastingRulesGenerator/samples/2024-01-29--DTD-1924/output-application-conf-array.txt"
+          "test/resources/InterestForecastingRulesGenerator/samples/2024-07-11--DTD-1924-DTD-2557/output-application-conf-array.txt"
         Using(scala.io.Source.fromFile(path))(_.mkString).get
       }
     }

@@ -79,12 +79,12 @@ final case class IfsRulesMasterData(
 
     def regimeUsage(index: Int): RegimeUsage =
       Lookup2D.regimeUsage(index).actual match {
-        case "CDCS"                    => RegimeUsage.Cdcs
-        case "PAYE"                    => RegimeUsage.Paye
-        case "VAT"                     => RegimeUsage.Vat
-        case "SA Op Led AND NOT SSTTP" => RegimeUsage.`SA OpLed AND NOT SA SSTP`
-        case "SA SSTTP AND NOT Op Led" => RegimeUsage.`SA SSTTP AND NOT OpLed`
-        case "SA SSTTP AND Op Led"     => RegimeUsage.`SA SSTTP AND Op Led`
+        case "CDCS"                              => RegimeUsage.Cdcs
+        case "PAYE"                              => RegimeUsage.Paye
+        case "VAT"                               => RegimeUsage.Vat
+        case "SA into IFS and SoL AND NOT SSTTP" => RegimeUsage.`SA into IFS and SoL AND NOT SSTTP`
+        case "SA SSTTP AND NOT into IFS and SoL" => RegimeUsage.`SA SSTTP AND NOT into IFS and SoL`
+        case "SA SSTTP AND into IFS and SoL"     => RegimeUsage.`SA SSTTP AND into IFS and SoL`
         case unknown =>
           val rowDisplay: JsValue = Json.toJson(tableData.dataRowAt(index).values.map(_.actual))
           throw new IllegalArgumentException(
@@ -156,11 +156,11 @@ object IfsRulesMasterData {
     case object Cdcs extends RegimeUsage(isForSelfServe = true, isForIfs = true)
     case object Paye extends RegimeUsage(isForSelfServe = true, isForIfs = true)
     case object Vat extends RegimeUsage(isForSelfServe = true, isForIfs = true)
-    case object `SA OpLed AND NOT SA SSTP` extends RegimeUsage(isForSelfServe = false, isForIfs = true)
-    case object `SA SSTTP AND NOT OpLed` extends RegimeUsage(isForSelfServe = true, isForIfs = true)
+    case object `SA into IFS and SoL AND NOT SSTTP` extends RegimeUsage(isForSelfServe = false, isForIfs = true)
+    case object `SA SSTTP AND NOT into IFS and SoL` extends RegimeUsage(isForSelfServe = true, isForIfs = true)
 
     /** Debts that can be used for both SSTTP and Operator led. */
-    case object `SA SSTTP AND Op Led` extends RegimeUsage(isForSelfServe = true, isForIfs = true)
+    case object `SA SSTTP AND into IFS and SoL` extends RegimeUsage(isForSelfServe = true, isForIfs = true)
 
     override def values: IndexedSeq[RegimeUsage] = findValues
   }
