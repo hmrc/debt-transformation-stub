@@ -1,0 +1,98 @@
+{
+  "processingDateTime": "2022-03-23T13:49:51Z",
+  "identification": [
+    {
+      "idType": "EMPREF",
+      "idValue": "964FZ00049"
+    },
+    {
+      "idType": "VRN",
+      "idValue": "6381726332"
+    }
+  ],
+  "addresses": [
+    {
+      "addressType": "PPOB",
+      "rls": false,
+      "emailAddress": "joe@snailmail.com",
+      "postcodeHistory": [
+        {
+          "addressPostcode": "BN127ER",
+          "postcodeDate": "2022-05-22"
+        },
+        {
+          "addressPostcode": "BN129ER",
+          "postcodeDate": "2022-02-28"
+        },
+        {
+          "addressPostcode": "BN119ER",
+          "postcodeDate": "2001-01-31"
+        }
+      ]
+    },
+    {
+      "addressType": "AGENT",
+      "rls": false,
+      "postcodeHistory": [
+        {
+          "addressPostcode": "BN164QR",
+          "postcodeDate": "2022-03-02"
+        }
+      ]
+    }
+  ],
+  "signals": [
+    {
+      "signalType": "RLS",
+      "signalValue": "false",
+      "signalDescription": "false"
+    },
+    {
+      "signalType": "Insolvent",
+      "signalValue": "false",
+      "signalDescription": "false"
+    },
+    {
+      "signalType": "Payment Frequency",
+      "signalValue": "Monthly",
+      "signalDescription": "false"
+    }
+  ],
+  "filing": [
+    {
+      "icrCategory": "ZR01",
+      "icrDescription": "RTI - PAYE - Monthly Returns",
+      "fromDate": "2022-03-01",
+      "toDate": "2022-03-28",
+      "dueDate": "<DUE_DATE_FOR_FUTURE>"
+    },
+    {
+      "icrCategory": "ZR01",
+      "icrDescription": "RTI - VAT - Monthly Returns",
+      "fromDate": "2022-04-06",
+      "toDate": "2022-05-05",
+      "dueDate": "<DUE_DATE_FOR_FUTURE>"
+    }
+  ],
+  "charges": [
+    {
+      "chargeType": "VAT Indirect Tax Revenue Rec",
+      "mainType": "VAT Debit",
+      "mainTrans": "4711",
+      "subTrans": "1174",
+      "taxPeriodFrom": "2023-04-01",
+      "taxPeriodTo": "2023-04-28",
+      "chargeReference": "XM123456789812",
+      "outstandingAmount": 49999.00,
+      "dueDate": "<DUE_DATE>",
+      "interestStartDate": "2022-03-19",
+      "accruedInterest": 1,
+      "locks": [
+        {
+          "lockType": "Calculate Interest",
+          "lockReason": "manual RPI Signal"
+        }
+      ]
+    }
+  ]
+}
