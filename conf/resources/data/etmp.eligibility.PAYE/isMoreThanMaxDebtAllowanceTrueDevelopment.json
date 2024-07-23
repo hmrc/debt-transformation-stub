@@ -83,10 +83,10 @@
       "taxPeriodFrom": "2022-02-06",
       "taxPeriodTo": "2022-03-05",
       "chargeReference": "XM123456789812",
-      "outstandingAmount": 990000.01,
+      "outstandingAmount": 999999.00,
       "dueDate": "<DUE_DATE>",
       "interestStartDate": "2022-03-19",
-      "accruedInterest": 1000.00,
+      "accruedInterest": 2.00,
       "locks": [
         {
           "lockType": "Dunning",
