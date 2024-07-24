@@ -83,7 +83,7 @@
       "taxPeriodFrom": "2023-04-01",
       "taxPeriodTo": "2023-04-28",
       "chargeReference": "XM123456789812",
-      "outstandingAmount": 999999.00,
+      "outstandingAmount": 99999.00,
       "dueDate": "<DUE_DATE>",
       "interestStartDate": "2022-03-19",
       "accruedInterest": 1,
