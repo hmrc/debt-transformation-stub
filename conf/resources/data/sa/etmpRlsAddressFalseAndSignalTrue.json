@@ -97,7 +97,7 @@
         "addressType": "Default address",
         "addressLine1": "2 Farthingale Walk",
         "addressLine2": "London",
-        "rls": true,
+        "rls": false,
         "postCode": "E15 1AW",
         "country": "UK"
       }
@@ -120,7 +120,7 @@
     ],
     "signals": [{
       "signalType": "RLS",
-      "signalValue": "false",
+      "signalValue": "true",
       "signalDescription": "thhe"
     }
     ],
