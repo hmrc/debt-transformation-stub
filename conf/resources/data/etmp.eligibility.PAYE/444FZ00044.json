@@ -53,7 +53,7 @@
     },
     {
       "signalType": "Insolvent",
-      "signalValue": "false",
+      "signalValue": "001",
       "signalDescription": "false"
     },
     {

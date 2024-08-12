@@ -16,33 +16,22 @@
         ]
       }
     },
-
-    "addresses": [{
-      "addressType": "PPOB",
-      "rls": true,
-      "emailAddress": "joe@snailmail.com",
-      "postcodeHistory": [{
-        "addressPostcode": "BN127ER",
-        "postcodeDate": "2022-05-22"
-      },
-        {
-          "addressPostcode": "BN129ER",
-          "postcodeDate": "2022-02-28"
-        },
-        {
-          "addressPostcode": "BN119ER",
-          "postcodeDate": "2001-01-31"
-        }
-      ]
-    },
+    "addresses": [
       {
-        "addressType": "AGENT",
-        "rls": true,
-        "postcodeHistory": [{
-          "addressPostcode": "BN164QR",
-          "postcodeDate": "2022-03-02"
-        }]
+        "addressType": "Base",
+        "addressLine1": "City Park",
+        "addressLine2": "The Droveway",
+        "addressLine3": "Hove",
+        "rls": false,
+        "postCode": "BNE3 7PY"
       }
+    ],
+
+    "signals": [{
+      "signalType": "RLS",
+      "signalValue": "false",
+      "signalDescription": "thhe"
+    }
     ],
     "filings": [
       {
@@ -118,11 +107,17 @@
         "dueDate": "2022-05-22"
       }
     ],
-    "signals": [{
-      "signalType": "RLS",
-      "signalValue": "true",
-      "signalDescription": "Any thing"
-    }
+    "signals": [
+      {
+        "signalType": "Insolvent",
+        "signalValue": "false",
+        "signalDescription": "gghsjsl"
+      },
+      {
+        "signalType": "rls",
+        "signalValue": "true",
+        "signalDescription": "gghsjsl"
+      }
     ],
     "charges": [
       {

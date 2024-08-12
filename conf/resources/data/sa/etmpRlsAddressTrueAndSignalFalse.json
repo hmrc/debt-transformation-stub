@@ -17,24 +17,33 @@
       }
     },
 
-    "addresses": [
+    "addresses": [{
+      "addressType": "String",
+      "rls": false,
+      "emailAddress": "joe@snailmail.com",
+      "postcodeHistory": [{
+        "addressPostcode": "BN127ER",
+        "postcodeDate": "2022-05-22"
+      },
+        {
+          "addressPostcode": "BN129ER",
+          "postcodeDate": "2022-02-28"
+        },
+        {
+          "addressPostcode": "BN119ER",
+          "postcodeDate": "2001-01-31"
+        }
+      ]
+    },
       {
-        "addressType": "Base",
-        "addressLine1": "City Park",
-        "addressLine2": "The Droveway",
-        "addressLine3": "Hove",
-        "rls": true,
-        "postCode": "BNE3 7PY"
+        "addressType": "AGENT",
+        "rls": false,
+        "postcodeHistory": [{
+          "addressPostcode": "BN164QR",
+          "postcodeDate": "2022-03-02"
+        }]
       }
     ],
-
-    "signals": [{
-      "signalType": "RLS",
-      "signalValue": "true",
-      "signalDescription": "thhe"
-    }
-    ],
-
     "filings": [
       {
         "icrCategory": "string",
@@ -85,14 +94,12 @@
 
     "addresses": [
       {
-        "addressType": "string",
-        "addressLine1": "string",
-        "addressLine2": "string",
-        "addressLine3": "string",
-        "addressLine4": "string",
-        "rls": false,
-        "postCode": "string",
-        "country": "string"
+        "addressType": "Default address",
+        "addressLine1": "2 Farthingale Walk",
+        "addressLine2": "London",
+        "rls": true,
+        "postCode": "E15 1AW",
+        "country": "UK"
       }
     ],
     "filing": [
@@ -110,6 +117,12 @@
         "toDate": "2022-05-05",
         "dueDate": "2022-05-22"
       }
+    ],
+    "signals": [{
+      "signalType": "RLS",
+      "signalValue": "false",
+      "signalDescription": "thhe"
+    }
     ],
     "charges": [
       {

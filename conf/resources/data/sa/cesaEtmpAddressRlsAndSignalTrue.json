@@ -23,14 +23,14 @@
         "addressLine1": "City Park",
         "addressLine2": "The Droveway",
         "addressLine3": "Hove",
-        "rls": false,
+        "rls": true,
         "postCode": "BNE3 7PY"
       }
     ],
 
     "signals": [{
       "signalType": "RLS",
-      "signalValue": "true",
+      "signalValue": "false",
       "signalDescription": "thhe"
     }
     ],
@@ -85,15 +85,19 @@
 
     "addresses": [
       {
-        "addressType": "Base",
-        "addressLine1": "string",
-        "addressLine2": "string",
-        "addressLine3": "string",
-        "addressLine4": "string",
-        "rls": false,
-        "postCode": "string",
-        "country": "string"
+        "addressType": "Default address",
+        "emailAddress": "joe@snailmail.com",
+        "postcodeDate": "2022-05-22",
+        "rls": true,
+        "postCode": "BN127ER",
+        "country": "United Kingdom"
       }
+    ],
+    "signals": [{
+      "signalType": "RLS",
+      "signalValue": "true",
+      "signalDescription": "thhe"
+    }
     ],
     "filing": [
       {

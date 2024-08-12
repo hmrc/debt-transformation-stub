@@ -23,14 +23,14 @@
         "addressLine1": "City Park",
         "addressLine2": "The Droveway",
         "addressLine3": "Hove",
-        "rls": true,
+        "rls": false,
         "postCode": "BNE3 7PY"
       }
     ],
 
     "signals": [{
       "signalType": "RLS",
-      "signalValue": "true",
+      "signalValue": "false",
       "signalDescription": "thhe"
     }
     ],

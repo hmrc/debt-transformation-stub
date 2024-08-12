@@ -18,8 +18,8 @@
     },
 
     "addresses": [{
-      "addressType": "PPOB",
-      "rls": true,
+      "addressType": "String",
+      "rls": false,
       "emailAddress": "joe@snailmail.com",
       "postcodeHistory": [{
         "addressPostcode": "BN127ER",
@@ -37,7 +37,7 @@
     },
       {
         "addressType": "AGENT",
-        "rls": true,
+        "rls": false,
         "postcodeHistory": [{
           "addressPostcode": "BN164QR",
           "postcodeDate": "2022-03-02"
@@ -97,7 +97,7 @@
         "addressType": "Default address",
         "addressLine1": "2 Farthingale Walk",
         "addressLine2": "London",
-        "rls": true,
+        "rls": false,
         "postCode": "E15 1AW",
         "country": "UK"
       }
@@ -120,7 +120,7 @@
     ],
     "signals": [{
       "signalType": "RLS",
-      "signalValue": "true",
+      "signalValue": "false",
       "signalDescription": "thhe"
     }
     ],
