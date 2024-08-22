@@ -19,24 +19,14 @@
 
     "addresses": [
       {
-        "addressType": "Base",
-        "addressLine1": "City Park",
-        "addressLine2": "The Droveway",
-        "addressLine3": "Hove",
-        "rls": false,
-        "postCode": "BNE3 7PY"
-      }
-    ],
-    "signals": [
-      {
-        "signalType": "Capacitor Present",
-        "signalValue": "false",
-        "signalDescription": "customer with capacitor"
-      },
-      {
-        "signalType": "Capacitor Present",
-        "signalValue": "false",
-        "signalDescription": "customer with capacitor"
+        "addressType": "string",
+        "addressLine1": "string",
+        "addressLine2": "string",
+        "addressLine3": "string",
+        "addressLine4": "string",
+        "rls": true,
+        "postCode": "string",
+        "country": "string"
       }
     ],
     "filings": [
@@ -131,8 +121,8 @@
         "accruedInterest": 50.00,
         "locks": [
           {
-            "lockType": "Dunning",
-            "lockReason": "Suspension (Alleged appeal)"
+            "lockType": "Payment locks ",
+            "lockReason": "Collected via TTP"
           }
         ]
       }
