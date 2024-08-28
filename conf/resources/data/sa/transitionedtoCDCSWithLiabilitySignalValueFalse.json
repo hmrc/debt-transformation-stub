@@ -156,10 +156,6 @@
         "outstandingAmount": 1000.00,
         "accruedInterest": 50.00,
         "locks": [
-          {
-            "lockType": "Dunning",
-            "lockReason": "Suspension (Alleged appeal)"
-          }
         ]
       },
       {
@@ -176,10 +172,6 @@
         "outstandingAmount": 1000.00,
         "accruedInterest": 50.00,
         "locks": [
-          {
-            "lockType": "Dunning",
-            "lockReason": "Suspension (Alleged appeal)"
-          }
         ]
       }
     ]

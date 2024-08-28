@@ -121,8 +121,8 @@
         "accruedInterest": 50.00,
         "locks": [
           {
-            "lockType": "Payment locks ",
-            "lockReason": "Collected via TTP"
+            "lockType": "Payments",
+            "lockReason": "Operations Lock"
           }
         ]
       }

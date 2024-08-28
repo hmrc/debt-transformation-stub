@@ -121,7 +121,7 @@
         "accruedInterest": 50.00,
         "locks": [
           {
-            "lockType": "Interest locks",
+            "lockType": "Calculate Interest",
             "lockReason": "Clerical Interest Signal"
           }
         ]

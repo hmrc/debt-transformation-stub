@@ -121,8 +121,8 @@
         "accruedInterest": 50.00,
         "locks": [
           {
-            "lockType": "Clearing Locks",
-            "lockReason": "Await AppLevy Charge "
+            "lockType": "Posting/Clearing",
+            "lockReason": "Await AppLevy Charge"
           }
         ]
       }
