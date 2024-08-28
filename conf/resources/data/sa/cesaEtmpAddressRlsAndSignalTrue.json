@@ -19,7 +19,7 @@
 
     "addresses": [
       {
-        "addressType": "Base",
+        "addressType": "BA",
         "addressLine1": "City Park",
         "addressLine2": "The Droveway",
         "addressLine3": "Hove",
@@ -85,7 +85,7 @@
 
     "addresses": [
       {
-        "addressType": "Default address",
+        "addressType": "XXDefault",
         "emailAddress": "joe@snailmail.com",
         "postcodeDate": "2022-05-22",
         "rls": true,

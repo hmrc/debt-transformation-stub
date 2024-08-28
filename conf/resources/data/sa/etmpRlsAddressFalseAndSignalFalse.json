@@ -94,7 +94,7 @@
 
     "addresses": [
       {
-        "addressType": "Default address",
+        "addressType": "XXDefault",
         "addressLine1": "2 Farthingale Walk",
         "addressLine2": "London",
         "rls": false,

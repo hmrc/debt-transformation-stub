@@ -19,7 +19,7 @@
 
     "addresses": [
       {
-        "addressType": "Base",
+        "addressType": "BA",
         "addressLine1": "City Park",
         "addressLine2": "The Droveway",
         "addressLine3": "Hove",
@@ -27,7 +27,7 @@
         "postCode": "BNE3 7PY"
       },
       {
-        "addressType": "Base",
+        "addressType": "BA",
         "addressLine1": "City Park",
         "addressLine2": "The Droveway",
         "addressLine3": "Hove",
