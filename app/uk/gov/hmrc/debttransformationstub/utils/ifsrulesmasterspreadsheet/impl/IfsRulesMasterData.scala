@@ -63,19 +63,22 @@ final case class IfsRulesMasterData(
           )
       }
 
-    def useChargeReference(index: Int): Option[Boolean] =
-      Lookup2D.chargeReferenceAt(index).actual match {
-        case "N/A"        => None
-        case "Charge ref" => Some(true)
-        case "ASN"        => Some(false)
-        case "VRN"        => Some(false)
-        case "UTR"        => Some(false)
-        case unknown =>
+    def useChargeReference(index: Int): Option[Boolean] = {
+      val chargeReference: String = Lookup2D.chargeReferenceAt(index).actual
+
+      chargeReference.toLowerCase match {
+        case "n/a"        => None
+        case "charge ref" => Some(true)
+        case "asn"        => Some(false)
+        case "vrn"        => Some(false)
+        case "utr"        => Some(false)
+        case _ =>
           val rowDisplay: JsValue = Json.toJson(tableData.dataRowAt(index).values.map(_.actual))
           throw new IllegalArgumentException(
-            s"Cannot convert useChargeReference=${JsString(unknown)} to boolean; check the code. Row values: $rowDisplay"
+            s"Cannot convert useChargeReference=${JsString(chargeReference)} to boolean; check the code. Row values: $rowDisplay"
           )
       }
+    }
 
     def regimeUsage(index: Int): RegimeUsage =
       Lookup2D.regimeUsage(index).actual match {
@@ -85,6 +88,7 @@ final case class IfsRulesMasterData(
         case "SA into IFS and SoL AND NOT SSTTP" => RegimeUsage.`SA into IFS and SoL AND NOT SSTTP`
         case "SA SSTTP AND NOT into IFS and SoL" => RegimeUsage.`SA SSTTP AND NOT into IFS and SoL`
         case "SA SSTTP AND into IFS and SoL"     => RegimeUsage.`SA SSTTP AND into IFS and SoL`
+        case "SIA"                               => RegimeUsage.`Sia`
         case unknown =>
           val rowDisplay: JsValue = Json.toJson(tableData.dataRowAt(index).values.map(_.actual))
           throw new IllegalArgumentException(
@@ -158,6 +162,7 @@ object IfsRulesMasterData {
     case object Vat extends RegimeUsage(isForSelfServe = true, isForIfs = true)
     case object `SA into IFS and SoL AND NOT SSTTP` extends RegimeUsage(isForSelfServe = false, isForIfs = true)
     case object `SA SSTTP AND NOT into IFS and SoL` extends RegimeUsage(isForSelfServe = true, isForIfs = true)
+    case object `Sia` extends RegimeUsage(isForSelfServe = true, isForIfs = true)
 
     /** Debts that can be used for both SSTTP and Operator led. */
     case object `SA SSTTP AND into IFS and SoL` extends RegimeUsage(isForSelfServe = true, isForIfs = true)
