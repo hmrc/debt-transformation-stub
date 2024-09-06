@@ -162,7 +162,7 @@ object IfsRulesMasterData {
     case object Vat extends RegimeUsage(isForSelfServe = true, isForIfs = true)
     case object `SA into IFS and SoL AND NOT SSTTP` extends RegimeUsage(isForSelfServe = false, isForIfs = true)
     case object `SA SSTTP AND NOT into IFS and SoL` extends RegimeUsage(isForSelfServe = true, isForIfs = true)
-    case object `Sia` extends RegimeUsage(isForSelfServe = true, isForIfs = true)
+    case object Sia extends RegimeUsage(isForSelfServe = true, isForIfs = true)
 
     /** Debts that can be used for both SSTTP and Operator led. */
     case object `SA SSTTP AND into IFS and SoL` extends RegimeUsage(isForSelfServe = true, isForIfs = true)

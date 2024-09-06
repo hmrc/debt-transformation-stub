@@ -84,7 +84,9 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
             "4920\t1553\tY\t\tN\tN/A\tperiodEnd\tCDCS",
             "6010\t1554\tN\t\tY\tN/A\tperiodEnd\tCDCS",
             "4910\t1005\tY\t\tN\tUTR\tperiodEnd\tCDCS",
-            "4910\t1007\tY\t\tN\tN/A\tperiodEnd\tCDCS"
+            "4910\t1007\tY\t\tN\tN/A\tperiodEnd\tCDCS",
+            "4910\t1007\tY\t\tN\tN/A\tperiodEnd\tCDCS",
+            "4530\t1000\tN\t\tN\tCharge Ref\tperiodEnd\tSIA"
           )
 
           def newStdin(): Iterator[String] =
@@ -109,6 +111,8 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
                 |"SUYgbWFpblRyYW5zID09ICcxNTI1JyBBTkQgc3ViVHJhbnMgPT0gJzEwMDAnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2U=",
                 |# IF mainTrans == '2000' AND subTrans == '1000' -> intRate = 4 AND interestOnlyDebt = false AND useChargeReference = false,
                 |"SUYgbWFpblRyYW5zID09ICcyMDAwJyBBTkQgc3ViVHJhbnMgPT0gJzEwMDAnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2UgQU5EIHVzZUNoYXJnZVJlZmVyZW5jZSA9IGZhbHNl",
+                |# IF mainTrans == '4530' AND subTrans == '1000' -> intRate = 0 AND interestOnlyDebt = false AND useChargeReference = true,
+                |"SUYgbWFpblRyYW5zID09ICc0NTMwJyBBTkQgc3ViVHJhbnMgPT0gJzEwMDAnIC0+IGludFJhdGUgPSAwIEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2UgQU5EIHVzZUNoYXJnZVJlZmVyZW5jZSA9IHRydWU=",
                 |# IF mainTrans == '4620' AND subTrans == '1175' -> intRate = 0 AND interestOnlyDebt = true AND useChargeReference = true,
                 |"SUYgbWFpblRyYW5zID09ICc0NjIwJyBBTkQgc3ViVHJhbnMgPT0gJzExNzUnIC0+IGludFJhdGUgPSAwIEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gdHJ1ZSBBTkQgdXNlQ2hhcmdlUmVmZXJlbmNlID0gdHJ1ZQ==",
                 |# IF mainTrans == '4700' AND subTrans == '1174' -> intRate = 4 AND interestOnlyDebt = false AND useChargeReference = false,
@@ -141,18 +145,20 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
                 |service-config.rules.2: "SUYgbWFpblRyYW5zID09ICcxNTI1JyBBTkQgc3ViVHJhbnMgPT0gJzEwMDAnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2U="
                 |# IF mainTrans == '2000' AND subTrans == '1000' -> intRate = 4 AND interestOnlyDebt = false AND useChargeReference = false,
                 |service-config.rules.3: "SUYgbWFpblRyYW5zID09ICcyMDAwJyBBTkQgc3ViVHJhbnMgPT0gJzEwMDAnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2UgQU5EIHVzZUNoYXJnZVJlZmVyZW5jZSA9IGZhbHNl"
+                |# IF mainTrans == '4530' AND subTrans == '1000' -> intRate = 0 AND interestOnlyDebt = false AND useChargeReference = true,
+                |service-config.rules.4: "SUYgbWFpblRyYW5zID09ICc0NTMwJyBBTkQgc3ViVHJhbnMgPT0gJzEwMDAnIC0+IGludFJhdGUgPSAwIEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2UgQU5EIHVzZUNoYXJnZVJlZmVyZW5jZSA9IHRydWU="
                 |# IF mainTrans == '4620' AND subTrans == '1175' -> intRate = 0 AND interestOnlyDebt = true AND useChargeReference = true,
-                |service-config.rules.4: "SUYgbWFpblRyYW5zID09ICc0NjIwJyBBTkQgc3ViVHJhbnMgPT0gJzExNzUnIC0+IGludFJhdGUgPSAwIEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gdHJ1ZSBBTkQgdXNlQ2hhcmdlUmVmZXJlbmNlID0gdHJ1ZQ=="
+                |service-config.rules.5: "SUYgbWFpblRyYW5zID09ICc0NjIwJyBBTkQgc3ViVHJhbnMgPT0gJzExNzUnIC0+IGludFJhdGUgPSAwIEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gdHJ1ZSBBTkQgdXNlQ2hhcmdlUmVmZXJlbmNlID0gdHJ1ZQ=="
                 |# IF mainTrans == '4700' AND subTrans == '1174' -> intRate = 4 AND interestOnlyDebt = false AND useChargeReference = false,
-                |service-config.rules.5: "SUYgbWFpblRyYW5zID09ICc0NzAwJyBBTkQgc3ViVHJhbnMgPT0gJzExNzQnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2UgQU5EIHVzZUNoYXJnZVJlZmVyZW5jZSA9IGZhbHNl"
+                |service-config.rules.6: "SUYgbWFpblRyYW5zID09ICc0NzAwJyBBTkQgc3ViVHJhbnMgPT0gJzExNzQnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2UgQU5EIHVzZUNoYXJnZVJlZmVyZW5jZSA9IGZhbHNl"
                 |# IF mainTrans == '4910' AND subTrans == '1005' -> intRate = 4 AND interestOnlyDebt = false AND useChargeReference = false,
-                |service-config.rules.6: "SUYgbWFpblRyYW5zID09ICc0OTEwJyBBTkQgc3ViVHJhbnMgPT0gJzEwMDUnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2UgQU5EIHVzZUNoYXJnZVJlZmVyZW5jZSA9IGZhbHNl"
+                |service-config.rules.7: "SUYgbWFpblRyYW5zID09ICc0OTEwJyBBTkQgc3ViVHJhbnMgPT0gJzEwMDUnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2UgQU5EIHVzZUNoYXJnZVJlZmVyZW5jZSA9IGZhbHNl"
                 |# IF mainTrans == '4910' AND subTrans == '1007' -> intRate = 4 AND interestOnlyDebt = false,
-                |service-config.rules.7: "SUYgbWFpblRyYW5zID09ICc0OTEwJyBBTkQgc3ViVHJhbnMgPT0gJzEwMDcnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2U="
+                |service-config.rules.8: "SUYgbWFpblRyYW5zID09ICc0OTEwJyBBTkQgc3ViVHJhbnMgPT0gJzEwMDcnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2U="
                 |# IF mainTrans == '4920' AND subTrans == '1553' -> intRate = 4 AND interestOnlyDebt = false,
-                |service-config.rules.8: "SUYgbWFpblRyYW5zID09ICc0OTIwJyBBTkQgc3ViVHJhbnMgPT0gJzE1NTMnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2U="
+                |service-config.rules.9: "SUYgbWFpblRyYW5zID09ICc0OTIwJyBBTkQgc3ViVHJhbnMgPT0gJzE1NTMnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2U="
                 |# IF mainTrans == '6010' AND subTrans == '1554' -> intRate = 0 AND interestOnlyDebt = true,
-                |service-config.rules.9: "SUYgbWFpblRyYW5zID09ICc2MDEwJyBBTkQgc3ViVHJhbnMgPT0gJzE1NTQnIC0+IGludFJhdGUgPSAwIEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gdHJ1ZQ=="
+                |service-config.rules.10: "SUYgbWFpblRyYW5zID09ICc2MDEwJyBBTkQgc3ViVHJhbnMgPT0gJzE1NTQnIC0+IGludFJhdGUgPSAwIEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gdHJ1ZQ=="
                 |""".stripMargin.trim
           }
 
@@ -178,7 +184,10 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
             "6010\t1554\tN\t\tY\tN/A\tsome description\tCDCS",
             "4910\t1005\tY\t\tN\tN/A\tsome description\tCDCS",
             "4910\t1005\tY\t\tN\tN/A\tsome description\tVAT",
-            "4910\t1007\tY\t\tN\tN/A\tsome description\tCDCS"
+            "4910\t1007\tY\t\tN\tN/A\tsome description\tCDCS",
+            "4530\t1000\tN\t\tN\tCharge Ref\tsome description\tSIA",
+            "4530\t1000\tN\t\tN\tCharge Ref\tsome description\tVAT",
+            "4530\t1000\tN\t\tN\tChArGe ReF\tsome description\tVAT"
           )
 
           def newStdin(): Iterator[String] =
@@ -203,6 +212,8 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
                 |"SUYgbWFpblRyYW5zID09ICcxNTI1JyBBTkQgc3ViVHJhbnMgPT0gJzEwMDAnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2U=",
                 |# IF mainTrans == '2000' AND subTrans == '1000' -> intRate = 4 AND interestOnlyDebt = false AND useChargeReference = false,
                 |"SUYgbWFpblRyYW5zID09ICcyMDAwJyBBTkQgc3ViVHJhbnMgPT0gJzEwMDAnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2UgQU5EIHVzZUNoYXJnZVJlZmVyZW5jZSA9IGZhbHNl",
+                |# IF mainTrans == '4530' AND subTrans == '1000' -> intRate = 0 AND interestOnlyDebt = false AND useChargeReference = true,
+                |"SUYgbWFpblRyYW5zID09ICc0NTMwJyBBTkQgc3ViVHJhbnMgPT0gJzEwMDAnIC0+IGludFJhdGUgPSAwIEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2UgQU5EIHVzZUNoYXJnZVJlZmVyZW5jZSA9IHRydWU=",
                 |# IF mainTrans == '4620' AND subTrans == '1175' -> intRate = 0 AND interestOnlyDebt = true AND useChargeReference = true,
                 |"SUYgbWFpblRyYW5zID09ICc0NjIwJyBBTkQgc3ViVHJhbnMgPT0gJzExNzUnIC0+IGludFJhdGUgPSAwIEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gdHJ1ZSBBTkQgdXNlQ2hhcmdlUmVmZXJlbmNlID0gdHJ1ZQ==",
                 |# IF mainTrans == '4700' AND subTrans == '1174' -> intRate = 4 AND interestOnlyDebt = false AND useChargeReference = false,
@@ -235,18 +246,20 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
                 |service-config.rules.2: "SUYgbWFpblRyYW5zID09ICcxNTI1JyBBTkQgc3ViVHJhbnMgPT0gJzEwMDAnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2U="
                 |# IF mainTrans == '2000' AND subTrans == '1000' -> intRate = 4 AND interestOnlyDebt = false AND useChargeReference = false,
                 |service-config.rules.3: "SUYgbWFpblRyYW5zID09ICcyMDAwJyBBTkQgc3ViVHJhbnMgPT0gJzEwMDAnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2UgQU5EIHVzZUNoYXJnZVJlZmVyZW5jZSA9IGZhbHNl"
+                |# IF mainTrans == '4530' AND subTrans == '1000' -> intRate = 0 AND interestOnlyDebt = false AND useChargeReference = true,
+                |service-config.rules.4: "SUYgbWFpblRyYW5zID09ICc0NTMwJyBBTkQgc3ViVHJhbnMgPT0gJzEwMDAnIC0+IGludFJhdGUgPSAwIEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2UgQU5EIHVzZUNoYXJnZVJlZmVyZW5jZSA9IHRydWU="
                 |# IF mainTrans == '4620' AND subTrans == '1175' -> intRate = 0 AND interestOnlyDebt = true AND useChargeReference = true,
-                |service-config.rules.4: "SUYgbWFpblRyYW5zID09ICc0NjIwJyBBTkQgc3ViVHJhbnMgPT0gJzExNzUnIC0+IGludFJhdGUgPSAwIEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gdHJ1ZSBBTkQgdXNlQ2hhcmdlUmVmZXJlbmNlID0gdHJ1ZQ=="
+                |service-config.rules.5: "SUYgbWFpblRyYW5zID09ICc0NjIwJyBBTkQgc3ViVHJhbnMgPT0gJzExNzUnIC0+IGludFJhdGUgPSAwIEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gdHJ1ZSBBTkQgdXNlQ2hhcmdlUmVmZXJlbmNlID0gdHJ1ZQ=="
                 |# IF mainTrans == '4700' AND subTrans == '1174' -> intRate = 4 AND interestOnlyDebt = false AND useChargeReference = false,
-                |service-config.rules.5: "SUYgbWFpblRyYW5zID09ICc0NzAwJyBBTkQgc3ViVHJhbnMgPT0gJzExNzQnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2UgQU5EIHVzZUNoYXJnZVJlZmVyZW5jZSA9IGZhbHNl"
+                |service-config.rules.6: "SUYgbWFpblRyYW5zID09ICc0NzAwJyBBTkQgc3ViVHJhbnMgPT0gJzExNzQnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2UgQU5EIHVzZUNoYXJnZVJlZmVyZW5jZSA9IGZhbHNl"
                 |# IF mainTrans == '4910' AND subTrans == '1005' -> intRate = 4 AND interestOnlyDebt = false,
-                |service-config.rules.6: "SUYgbWFpblRyYW5zID09ICc0OTEwJyBBTkQgc3ViVHJhbnMgPT0gJzEwMDUnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2U="
+                |service-config.rules.7: "SUYgbWFpblRyYW5zID09ICc0OTEwJyBBTkQgc3ViVHJhbnMgPT0gJzEwMDUnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2U="
                 |# IF mainTrans == '4910' AND subTrans == '1007' -> intRate = 4 AND interestOnlyDebt = false,
-                |service-config.rules.7: "SUYgbWFpblRyYW5zID09ICc0OTEwJyBBTkQgc3ViVHJhbnMgPT0gJzEwMDcnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2U="
+                |service-config.rules.8: "SUYgbWFpblRyYW5zID09ICc0OTEwJyBBTkQgc3ViVHJhbnMgPT0gJzEwMDcnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2U="
                 |# IF mainTrans == '4920' AND subTrans == '1553' -> intRate = 4 AND interestOnlyDebt = false,
-                |service-config.rules.8: "SUYgbWFpblRyYW5zID09ICc0OTIwJyBBTkQgc3ViVHJhbnMgPT0gJzE1NTMnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2U="
+                |service-config.rules.9: "SUYgbWFpblRyYW5zID09ICc0OTIwJyBBTkQgc3ViVHJhbnMgPT0gJzE1NTMnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2U="
                 |# IF mainTrans == '6010' AND subTrans == '1554' -> intRate = 0 AND interestOnlyDebt = true,
-                |service-config.rules.9: "SUYgbWFpblRyYW5zID09ICc2MDEwJyBBTkQgc3ViVHJhbnMgPT0gJzE1NTQnIC0+IGludFJhdGUgPSAwIEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gdHJ1ZQ=="
+                |service-config.rules.10: "SUYgbWFpblRyYW5zID09ICc2MDEwJyBBTkQgc3ViVHJhbnMgPT0gJzE1NTQnIC0+IGludFJhdGUgPSAwIEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gdHJ1ZQ=="
                 |""".stripMargin.trim
           }
 
@@ -280,7 +293,11 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
             "Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref",
             "4910\t1005\tY\t\tN\tN/A",
             "4910\t1005\tY\t\tN\tN/A",
-            "4910\t1007\tY\t\tN\tN/A"
+            "4910\t1007\tY\t\tN\tN/A",
+            "SIA",
+            "Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref",
+            "4530\t1000\tN\t\tN\tCharge Ref",
+            "4530\t1000\tN\t\tN\tCharge Ref"
           )
 
           def newStdin(): Iterator[String] =
@@ -296,14 +313,14 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
       }
     }
 
-    "for the use case on 2023-11-24 for DTD-2025" - {
+    "for the use case on 2024-08-24 for DTD-2418" - {
 
       "as a TSV from a file" in {
-        val exampleFilename = "/some/file/path/master-ifs-data-november-2023.tsv"
+        val exampleFilename = "/some/file/path/master-ifs-data-august-2024.tsv"
 
         def readFile(filename: String): IterableOnce[String] =
           filename match {
-            case `exampleFilename` => Data.`Sample--2024-01-29--DTD-1924`.tsvInput().split("\n")
+            case `exampleFilename` => Data.`Sample--2024-08-24-DTD-2418`.tsvInput().split("\n")
             case unknownFile       => fail(s"Attempted to read file that hasn't been prepared: $unknownFile")
           }
 
@@ -314,7 +331,7 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
           stdin = brokenStandardInput
         )
 
-        result.iterator.mkString("\n") shouldBe Data.`Sample--2024-01-29--DTD-1924`.outputApplicationConf
+        result.iterator.mkString("\n") shouldBe Data.`Sample--2024-08-24-DTD-2418`.outputApplicationConf
       }
 
       "as a clean CSV from a file" in {
@@ -322,7 +339,7 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
 
         def readFile(filename: String): IterableOnce[String] =
           filename match {
-            case `exampleFilename` => Data.`Sample--2024-01-29--DTD-1924`.csvInputWithCleanHeadings().split("\n")
+            case `exampleFilename` => Data.`Sample--2024-08-24-DTD-2418`.csvInputWithCleanHeadings().split("\n")
             case unknownFile       => fail(s"Attempted to read file that hasn't been prepared: $unknownFile")
           }
 
@@ -333,7 +350,7 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
           stdin = brokenStandardInput
         )
 
-        result.iterator.mkString("\n") shouldBe Data.`Sample--2024-01-29--DTD-1924`.outputApplicationConf
+        result.iterator.mkString("\n") shouldBe Data.`Sample--2024-08-24-DTD-2418`.outputApplicationConf
       }
 
       "as a messy CSV export (from Excel) from a file" in {
@@ -341,7 +358,7 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
 
         def readFile(filename: String): IterableOnce[String] =
           filename match {
-            case `exampleFilename` => Data.`Sample--2024-01-29--DTD-1924`.csvInputWithMessyHeadings().split("\n")
+            case `exampleFilename` => Data.`Sample--2024-08-24-DTD-2418`.csvInputWithMessyHeadings().split("\n")
             case unknownFile       => fail(s"Attempted to read file that hasn't been prepared: $unknownFile")
           }
 
@@ -352,12 +369,12 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
           stdin = brokenStandardInput
         )
 
-        result.iterator.mkString("\n") shouldBe Data.`Sample--2024-01-29--DTD-1924`.outputApplicationConf
+        result.iterator.mkString("\n") shouldBe Data.`Sample--2024-08-24-DTD-2418`.outputApplicationConf
       }
 
       "as a TSV from stdin" in {
         val stdin: Iterator[String] = {
-          Iterator.from(Data.`Sample--2024-01-29--DTD-1924`.tsvInput().split("\n")) ++
+          Iterator.from(Data.`Sample--2024-08-24-DTD-2418`.tsvInput().split("\n")) ++
             Iterator.single("END_INPUT") ++
             Iterator.continually(fail(s"Tried to read line after input terminator."))
         }
@@ -369,7 +386,7 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
           stdin = stdin
         )
 
-        result.iterator.mkString("\n") shouldBe Data.`Sample--2024-01-29--DTD-1924`.outputApplicationConf
+        result.iterator.mkString("\n") shouldBe Data.`Sample--2024-08-24-DTD-2418`.outputApplicationConf
       }
 
     }
@@ -378,28 +395,28 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
 
 object InterestForecastingRulesGeneratorSpec {
   private object Data {
-    object `Sample--2024-01-29--DTD-1924` {
+    object `Sample--2024-08-24-DTD-2418` {
       def tsvInput(): String = {
         val path =
-          "test/resources/InterestForecastingRulesGenerator/samples/2024-07-11--DTD-1924-DTD-2557/input-with-clean-headings.tsv"
+          "test/resources/InterestForecastingRulesGenerator/samples/2024-08-24-DTD-2418/input-with-clean-headings.tsv"
         Using(scala.io.Source.fromFile(path))(_.mkString).get
       }
 
       def csvInputWithCleanHeadings(): String = {
         val path =
-          "test/resources/InterestForecastingRulesGenerator/samples/2024-07-11--DTD-1924-DTD-2557/input-with-clean-headings.csv"
+          "test/resources/InterestForecastingRulesGenerator/samples/2024-08-24-DTD-2418/input-with-clean-headings.csv"
         Using(scala.io.Source.fromFile(path))(_.mkString).get
       }
 
       def csvInputWithMessyHeadings(): String = {
         val path =
-          "test/resources/InterestForecastingRulesGenerator/samples/2024-07-11--DTD-1924-DTD-2557/input-with-messy-headings.csv"
+          "test/resources/InterestForecastingRulesGenerator/samples/2024-08-24-DTD-2418/input-with-messy-headings.csv"
         Using(scala.io.Source.fromFile(path))(_.mkString).get
       }
 
       def outputApplicationConf(): String = {
         val path =
-          "test/resources/InterestForecastingRulesGenerator/samples/2024-07-11--DTD-1924-DTD-2557/output-application-conf-array.txt"
+          "test/resources/InterestForecastingRulesGenerator/samples/2024-08-24-DTD-2418/output-application-conf-array.txt"
         Using(scala.io.Source.fromFile(path))(_.mkString).get
       }
     }
