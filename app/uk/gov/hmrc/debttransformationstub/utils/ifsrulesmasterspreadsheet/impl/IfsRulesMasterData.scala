@@ -88,7 +88,7 @@ final case class IfsRulesMasterData(
         case "SA into IFS and SoL AND NOT SSTTP" => RegimeUsage.`SA into IFS and SoL AND NOT SSTTP`
         case "SA SSTTP AND NOT into IFS and SoL" => RegimeUsage.`SA SSTTP AND NOT into IFS and SoL`
         case "SA SSTTP AND into IFS and SoL"     => RegimeUsage.`SA SSTTP AND into IFS and SoL`
-        case "SIA"                               => RegimeUsage.`Sia`
+        case "SIA"                               => RegimeUsage.Sia
         case unknown =>
           val rowDisplay: JsValue = Json.toJson(tableData.dataRowAt(index).values.map(_.actual))
           throw new IllegalArgumentException(
