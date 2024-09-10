@@ -2,12 +2,12 @@
   "processingDateTime": "2022-03-23T13:49:51Z",
   "identification": [
     {
-      "idType": "EMPREF",
-      "idValue": "964FZ00049"
+      "idType": "NINO",
+      "idValue": "SIA123545"
     },
     {
-      "idType": "VRN",
-      "idValue": "7381726332"
+      "idType": "NINO",
+      "idValue": "SIA123546"
     }
   ],
   "addresses": [
