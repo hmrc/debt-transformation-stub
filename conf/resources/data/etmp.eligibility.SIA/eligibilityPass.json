@@ -61,10 +61,10 @@
 
   "charges": [
     {
-      "chargeType": "VAT Mig Return Debit Charge",
-      "mainType": "VAT Mig Return Charge",
-      "mainTrans": "7700",
-      "subTrans": "1174",
+      "chargeType": "In Year RTI Charge - Tax",
+      "mainType": "In Year RTI Charge (FPS)",
+      "mainTrans": "4920",
+      "subTrans": "1553",
       "taxPeriodFrom": "2023-02-06",
       "taxPeriodTo": "2023-03-05",
       "chargeReference": "XM123456789812",
