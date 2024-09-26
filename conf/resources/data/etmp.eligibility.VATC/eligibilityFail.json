@@ -13,6 +13,9 @@
   "addresses": [
     {
       "addressType": "PPOB",
+      "addressLine1": "Worthing1",
+      "addressLine2": "Worthing2",
+      "countryCode": "GB",
       "rls": true,
       "emailAddress": "joe@snailmail.com",
       "postcodeHistory": [
@@ -32,6 +35,9 @@
     },
     {
       "addressType": "AGENT",
+      "addressLine1": "Worthing1",
+      "addressLine2": "Worthing2",
+      "countryCode": "GB",
       "rls": false,
       "postcodeHistory": [
         {
@@ -58,7 +64,6 @@
       "signalDescription": "false"
     }
   ],
-
   "charges": [
     {
       "chargeType": "In Year RTI Charge - Tax",

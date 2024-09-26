@@ -13,6 +13,9 @@
   "addresses": [
     {
       "addressType": "Business",
+      "addressLine1": "Worthing1",
+      "addressLine2": "Worthing2",
+      "countryCode": "GB",
       "rls": false,
       "postcodeHistory": [
         {
