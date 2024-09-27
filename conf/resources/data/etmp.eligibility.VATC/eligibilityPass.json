@@ -19,6 +19,7 @@
       "addressLine4": "Worthing4",
       "countryCode": "GB",
       "rls": false,
+      "telephoneNumber": "07823412345",
       "emailAddress": "joe@snailmail.com",
       "postcodeHistory": [
         {
@@ -43,6 +44,8 @@
       "addressLine4": "Worthing4",
       "countryCode": "GB",
       "rls": false,
+      "telephoneNumber": "07823412345",
+      "emailAddress": "joe@snailmail.com",
       "postcodeHistory": [
         {
           "addressPostcode": "BN164QR",
@@ -82,6 +85,17 @@
       "interestStartDate": "2022-03-19",
       "accruedInterest": 1.00,
       "ddInProgress": "true"
+    }
+  ],
+  "additionalCustData": [
+    {
+      "title": "Mr",
+      "firstName": "Bob",
+      "middleName": "K",
+      "lastName": "Smith",
+      "dateOfBirth": "1910-01-01",
+      "dateOfDeath": "2000-01-01",
+      "districtNumber": "001"
     }
   ]
 }

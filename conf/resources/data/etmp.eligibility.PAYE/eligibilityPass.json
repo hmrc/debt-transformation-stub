@@ -19,6 +19,7 @@
       "addressLine4": "Worthing4",
       "countryCode": "GB",
       "rls": false,
+      "telephoneNumber": "07823412345",
       "emailAddress": "joe@snailmail.com",
       "postcodeHistory": [
         {
@@ -109,5 +110,9 @@
         }
       ]
     }
-  ]
-}
+  ],
+  "additionalCustData": {
+    "orgName": "Abc Ltd"
+
+    }
+  }
