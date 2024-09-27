@@ -15,8 +15,6 @@
       "addressType": "PPOB",
       "addressLine1": "Worthing1",
       "addressLine2": "Worthing2",
-      "addressLine3": "Worthing3",
-      "addressLine4": "Worthing4",
       "countryCode": "GB",
       "rls": false,
       "emailAddress": "joe@snailmail.com",
@@ -43,8 +41,6 @@
       "addressType": "AGENT",
       "addressLine1": "Worthing1",
       "addressLine2": "Worthing2",
-      "addressLine3": "Worthing3",
-      "addressLine4": "Worthing4",
       "countryCode": "GB",
       "rls": false,
       "postcodeHistory": [
