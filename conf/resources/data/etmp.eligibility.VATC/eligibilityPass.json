@@ -87,8 +87,9 @@
       "ddInProgress": "true"
     }
   ],
-  "additionalCustData": [
+  "additionalCustData":
     {
+      "orgName": "Abc Ltd",
       "title": "Mr",
       "firstName": "Bob",
       "middleName": "K",
@@ -97,5 +98,4 @@
       "dateOfDeath": "2000-01-01",
       "districtNumber": "001"
     }
-  ]
 }
