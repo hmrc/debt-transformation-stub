@@ -41,7 +41,7 @@ class ETMPController @Inject() (environment: Environment, cc: ControllerComponen
   def paymentPlanEligibility(regimeType: String, idType: String, idValue: String): Action[AnyContent] = Action {
     implicit request: Request[AnyContent] =>
       val queryKeys: List[String] =
-        List("showIds", "showAddresses", "showSignals", "showFiling", "showCharges", "addressFromDate")
+        List("showIds", "showAddresses", "showSignals", "showFiling", "showCharges", "addressFromDate","showAdditionalCustData")
       val queries: Map[String, Option[String]] = queryKeys.map(key => (key, request.getQueryString(key))).toMap
       queries("showIds")
       val relativePath = s"$basePath" + "." + regimeType + "/" + s"$idValue.json"
