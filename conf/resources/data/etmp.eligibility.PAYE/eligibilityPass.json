@@ -13,7 +13,13 @@
   "addresses": [
     {
       "addressType": "PPOB",
+      "addressLine1": "Worthing1",
+      "addressLine2": "Worthing2",
+      "addressLine3": "Worthing3",
+      "addressLine4": "Worthing4",
+      "countryCode": "GB",
       "rls": false,
+      "telephoneNumber": "07823412345",
       "emailAddress": "joe@snailmail.com",
       "postcodeHistory": [
         {
@@ -32,6 +38,11 @@
     },
     {
       "addressType": "AGENT",
+      "addressLine1": "Worthing1",
+      "addressLine2": "Worthing2",
+      "addressLine3": "Worthing3",
+      "addressLine4": "Worthing4",
+      "countryCode": "GB",
       "rls": false,
       "postcodeHistory": [
         {
@@ -92,7 +103,6 @@
         {
           "lockType": "Dunning",
           "lockReason": "Suspension (Alleged appeal)"
-
         },
         {
           "lockType": "Calculate Interest",
@@ -100,5 +110,16 @@
         }
       ]
     }
-  ]
-}
+  ],
+  "additionalCustData":
+    {
+      "orgName": "Abc Ltd",
+      "title": "Mr",
+      "firstName": "Bob",
+      "middleName": "K",
+      "lastName": "Smith",
+      "dateOfBirth": "1910-01-01",
+      "dateOfDeath": "2000-01-01",
+      "districtNumber": "001"
+    }
+  }

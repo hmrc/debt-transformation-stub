@@ -13,6 +13,9 @@
   "addresses": [
     {
       "addressType": "PPOB",
+      "addressLine1": "Worthing1",
+      "addressLine2": "Worthing2",
+      "countryCode": "GB",
       "rls": false,
       "emailAddress": "joe@snailmail.com",
       "postcodeHistory": [
@@ -32,6 +35,9 @@
     },
     {
       "addressType": "AGENT",
+      "addressLine1": "Worthing1",
+      "addressLine2": "Worthing2",
+      "countryCode": "GB",
       "rls": false,
       "postcodeHistory": [
         {
@@ -74,7 +80,6 @@
       "dueDate": "2022-05-22"
     }
   ],
-
   "charges": [
     {
       "chargeType": "In Year RTI Charge - Tax",
@@ -92,7 +97,6 @@
         {
           "lockType": "Dunning",
           "lockReason": "Suspension (Alleged appeal)"
-
         },
         {
           "lockType": "Calculate Interest",

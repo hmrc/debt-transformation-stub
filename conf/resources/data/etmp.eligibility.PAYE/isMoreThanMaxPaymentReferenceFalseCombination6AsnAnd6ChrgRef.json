@@ -13,6 +13,9 @@
   "addresses": [
     {
       "addressType": "PPOB",
+      "addressLine1": "Worthing1",
+      "addressLine2": "Worthing2",
+      "countryCode": "GB",
       "rls": false,
       "emailAddress": "joe@snailmail.com",
       "postcodeHistory": [
@@ -32,6 +35,9 @@
     },
     {
       "addressType": "AGENT",
+      "addressLine1": "Worthing1",
+      "addressLine2": "Worthing2",
+      "countryCode": "GB",
       "rls": false,
       "postcodeHistory": [
         {
@@ -153,7 +159,6 @@
       "interestStartDate": "2022-03-19",
       "accruedInterest": 2.09
     },
-
     {
       "chargeType": "In Year RTI Charge - Tax",
       "mainType": "In Year RTI Charge (FPS)",
