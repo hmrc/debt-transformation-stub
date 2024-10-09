@@ -48,6 +48,7 @@ POST          /prweb/api/TTP/01/CustomerDataAPI                                 
 
 
 POST          /individuals/debts/essttp/payment-plans/ddi                                                   uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.nddsEnactArrangement
+POST          /individuals/debts/essttp/ADD-URL-HERE                                                        uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.pegaUpdateCase
 POST          /individuals/debts/essttp/payment-lock                                                        uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.etmpExecutePaymentLock
 POST          /individuals/debts/essttp/monitoring-case                                                     uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.idmsCreateTTPMonitoringCase
 GET           /enactStage/:correlationId                                                                    uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.enactStage(correlationId: String)

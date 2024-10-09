@@ -173,6 +173,14 @@ class TimeToPayController @Inject() (
     }
   }
 
+  def pegaUpdateCase: Action[JsValue] = Action.async(parse.json) { implicit request =>
+    val correlationId = getCorrelationIdHeader(request.headers)
+    withCustomJsonBody[UpdateCaseRequest] { req =>
+      enactStageRepository.addPegaStage(correlationId, req)
+      Future successful Ok(Json.toJson(UpdateCaseResponse("PEGA response")))
+    }
+  }
+
   def etmpExecutePaymentLock: Action[JsValue] = Action.async(parse.json) { implicit request =>
     val correlationId = getCorrelationIdHeader(request.headers)
     withCustomJsonBody[PaymentLockRequest] { req =>
