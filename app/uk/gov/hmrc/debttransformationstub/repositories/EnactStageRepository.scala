@@ -34,9 +34,11 @@ import scala.concurrent.{ ExecutionContext, Future }
 case class EnactStage(
   correlationId: String,
   nddsRequest: Option[NDDSRequest] = None,
+  pegaRequest: Option[UpdateCaseRequest] = None,
   etmpRequest: Option[PaymentLockRequest] = None,
   idmsRequest: Option[CreateMonitoringCaseRequest] = None,
   nddsAttempts: Option[Int] = None,
+  pegaAttempts: Option[Int] = None,
   etmpAttempts: Option[Int] = None,
   idmsAttempts: Option[Int] = None
 )
@@ -67,6 +69,17 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
       .findOneAndUpdate(
         equal("correlationId", correlationId),
         combine(set("nddsRequest", Codecs.toBson(request)), inc("nddsAttempts", 1)),
+        new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
+      )
+      .toFuture()
+  }
+
+  def addPegaStage(correlationId: String, request: UpdateCaseRequest): Future[EnactStage] = {
+    logger.warn(s"Recording PEGA stage request $correlationId")
+    collection
+      .findOneAndUpdate(
+        equal("correlationId", correlationId),
+        combine(set("pegaRequest", Codecs.toBson(request)), inc("pegaAttempts", 1)),
         new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
       )
       .toFuture()
