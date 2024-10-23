@@ -110,8 +110,8 @@
       {
         "chargeType": "SA Late Payment interest",
         "mainType": "SA Late Payment interest",
-        "mainTrans": "6010",
-        "subTrans": "1555",
+        "mainTrans": "4920",
+        "subTrans": "1553",
         "UTR": "73",
         "taxPeriodFrom": "2022-02-06",
         "taxPeriodTo": "2022-03-05",
