@@ -133,8 +133,8 @@
         "accruedInterest": 1.01,
         "locks": [
           {
-            "lockType": "Dunning",
-            "lockReason": "string"
+            "lockType": "Payments",
+            "lockReason": "RSO"
           }
         ]
       }

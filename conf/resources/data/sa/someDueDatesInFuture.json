@@ -146,12 +146,7 @@
         "interestStartDate": "2022-03-05",
         "outstandingAmount": 1000.00,
         "accruedInterest": 500.00 ,
-        "locks": [
-          {
-            "lockType": "Dunning",
-            "lockReason": "string"
-          }
-        ]
+        "locks": []
       }
     ]
   }

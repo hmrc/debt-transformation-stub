@@ -133,8 +133,8 @@
         "accruedInterest": 500.00 ,
         "locks": [
           {
-            "lockType": "Dunning",
-            "lockReason": "string"
+            "lockType": "Payments",
+            "lockReason": "EFT Failure"
           }
         ]
       }

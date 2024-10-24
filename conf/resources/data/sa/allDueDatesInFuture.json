@@ -134,7 +134,7 @@
         "locks": [
           {
             "lockType": "Dunning",
-            "lockReason": "string"
+            "lockReason": "RSO"
           }
         ]
       }
