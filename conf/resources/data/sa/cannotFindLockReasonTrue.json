@@ -18,14 +18,14 @@
     },
     "addresses": [
       {
-        "addressType": "string",
-        "addressLine1": "string",
-        "addressLine2": "string",
-        "addressLine3": "string",
-        "addressLine4": "string",
+        "addressType": "Business",
+        "addressLine1": "Rough Trade East",
+        "addressLine2": "Old Truman Brewery",
+        "addressLine3": "91 Brick Ln",
+        "addressLine4": "London",
         "rls": true,
-        "postCode": "string",
-        "country": "string"
+        "postCode": "E1 6QL",
+        "country": "UK"
       }
     ],
     "filings": [
@@ -75,18 +75,6 @@
         ]
       }
     },
-    "addresses": [
-      {
-        "addressType": "string",
-        "addressLine1": "string",
-        "addressLine2": "string",
-        "addressLine3": "string",
-        "addressLine4": "string",
-        "rls": true,
-        "postCode": "string",
-        "country": "string"
-      }
-    ],
     "filing": [
       {
         "icrCategory": "ZR01",
