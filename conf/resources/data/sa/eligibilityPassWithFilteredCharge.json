@@ -157,8 +157,8 @@
         "accruedInterest": 500.00 ,
         "locks": [
           {
-            "lockType": "Dunning",
-            "lockReason": "string"
+            "lockType": "Calculate Interest",
+            "lockReason": "C18 Appeal in Progress"
           }
         ]
       }
