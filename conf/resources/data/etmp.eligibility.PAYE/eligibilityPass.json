@@ -44,6 +44,7 @@
       "addressLine4": "Worthing4",
       "countryCode": "GB",
       "rls": false,
+      "emailAddress": "joe@snailmail.com",
       "postcodeHistory": [
         {
           "addressPostcode": "BN164QR",
