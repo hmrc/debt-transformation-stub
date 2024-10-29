@@ -87,8 +87,7 @@
       "ddInProgress": "true"
     }
   ],
-  "additionalCustData":
-  {
+  "additionalCustData": {
     "orgName": "Abc Ltd",
     "title": "Mr",
     "firstName": "Bob",
