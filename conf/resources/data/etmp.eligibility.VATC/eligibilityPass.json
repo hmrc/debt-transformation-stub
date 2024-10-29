@@ -88,14 +88,16 @@
     }
   ],
   "additionalCustData":
-    {
-      "orgName": "Abc Ltd",
-      "title": "Mr",
-      "firstName": "Bob",
-      "middleName": "K",
-      "lastName": "Smith",
-      "dateOfBirth": "1910-01-01",
-      "dateOfDeath": "2000-01-01",
-      "districtNumber": "001"
-    }
+  {
+    "orgName": "Abc Ltd",
+    "title": "Mr",
+    "firstName": "Bob",
+    "middleName": "K",
+    "lastName": "Smith",
+    "dateOfBirth": "1910-01-01",
+    "dateOfDeath": "2000-01-01",
+    "districtNumber": "001"
+  }
 }
+
+
