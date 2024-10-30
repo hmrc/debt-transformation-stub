@@ -10,6 +10,15 @@
       "idValue": "6381726332"
     }
   ],
+  "individualDetails": {
+    "title": "Mr",
+    "firstName": "John",
+    "lastName": "Doe",
+    "dateOfBirth": "2069-06-06",
+    "districtNumber": "xyz",
+    "customerType": "MTD(ITSA)",
+    "transitionToCDCS": true
+  },
   "addresses": [
     {
       "addressType": "PPOB",
