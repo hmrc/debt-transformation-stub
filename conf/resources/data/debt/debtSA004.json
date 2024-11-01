@@ -1,0 +1,85 @@
+{
+  "debtItems": [
+    {
+      "dutyId": "duty01",
+      "debtID": "debtSA004",
+      "mainTrans": "4003",
+      "subTrans": "1015",
+      "chargeDescription": "SA 1st Payment on Account",
+      "originalAmount": 500000,
+      "outstandingAmount": 500000,
+      "interestKey": "01",
+      "interestStartDate": "2020-12-20",
+      "dateCreated": "2020-12-20",
+      "dateCalculationTo": "2021-05-24",
+      "periodFrom": "2019-12-20",
+      "periodEnd": "2021-01-20",
+      "payments": [
+        {
+          "paymentAmount": 100000,
+          "paymentDate": "2020-02-23"
+        },
+        {
+          "paymentAmount": 50000,
+          "paymentDate": "2020-06-23"
+        }
+      ],
+      "breathingSpaces": [
+        {
+          "debtRespiteFrom": "2021-02-04",
+          "debtRespiteTo": "2021-03-04"
+        },
+        {
+          "debtRespiteFrom": "2021-04-04",
+          "debtRespiteTo": "2021-06-04"
+        }
+      ]
+    },
+    {
+      "dutyId": "duty02",
+      "debtID": "debtSA001",
+      "mainTrans": "4003",
+      "subTrans": "1046",
+      "chargeDescription": "SA Late Payment Interest",
+      "originalAmount": 400000,
+      "outstandingAmount": 400000,
+      "interestKey": "01",
+      "interestStartDate": "2021-02-04",
+      "dateCreated": "2021-02-04",
+      "dateCalculationTo": "2021-05-24",
+      "periodFrom": "2019-12-20",
+      "periodEnd": "2021-01-20",
+      "payments": [
+        {
+          "paymentAmount": 100000,
+          "paymentDate": "2020-02-23"
+        },
+        {
+          "paymentAmount": 50000,
+          "paymentDate": "2020-08-23"
+        }
+
+      ],
+      "breathingSpaces": [
+        {
+          "debtRespiteFrom": "2021-02-04",
+          "debtRespiteTo": "2021-03-04"
+        },
+        {
+          "debtRespiteFrom": "2021-04-04",
+          "debtRespiteTo": "2021-06-04"
+        }
+      ]
+    }
+  ],
+  "customerPostcodes": [
+    {
+      "addressPostcode": "BN12 4XH",
+      "postcodeDate": "2019-01-01"
+    },
+    {
+      "addressPostcode": "BN12 4XH",
+      "postcodeDate": "2019-01-01"
+    }
+  ]
+}
