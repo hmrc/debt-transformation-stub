@@ -1,5 +1,4 @@
 {
-  "processingDateTime": "2022-03-23T13:49:51Z",
   "identification": [
     {
       "idType": "EMPREF",
@@ -10,11 +9,35 @@
       "idValue": "6381726332"
     }
   ],
+  "processingDateTime": "2022-03-23T13:49:51",
+  "customerPostcodes": [
+    {
+      "addressPostcode": "BN127ER",
+      "postcodeDate": "2022-05-22"
+    },
+    {
+      "addressPostcode": "BN129ER",
+      "postcodeDate": "2022-02-28"
+    },
+    {
+      "addressPostcode": "BN119ER",
+      "postcodeDate": "2001-01-31"
+    },
+    {
+      "addressPostcode": "BN164QR",
+      "postcodeDate": "2022-03-02"
+    }
+  ],
+  "customerDetails": [
+    {
+      "emailAddress": "joe@snailmail.com"
+    }
+  ],
   "individualDetails": {
     "title": "Mr",
     "firstName": "John",
     "lastName": "Doe",
-    "dateOfBirth": "2069-06-06",
+    "dateOfBirth": "1910-01-01",
     "districtNumber": "xyz",
     "customerType": "MTD(ITSA)",
     "transitionToCDCS": true
@@ -28,8 +51,11 @@
       "addressLine4": "Worthing4",
       "countryCode": "GB",
       "rls": false,
-      "telephoneNumber": "07823412345",
-      "emailAddress": "joe@snailmail.com",
+      "contactDetails": {
+        "telephoneNumber": "07823412345",
+        "emailAddress": "joe@snailmail.com"
+      },
+      "country": "GB",
       "postcodeHistory": [
         {
           "addressPostcode": "BN127ER",
@@ -53,7 +79,11 @@
       "addressLine4": "Worthing4",
       "countryCode": "GB",
       "rls": false,
-      "emailAddress": "joe@snailmail.com",
+      "contactDetails": {
+        "telephoneNumber": "07823412345",
+        "emailAddress": "joe@snailmail.com"
+      },
+      "country": "GB",
       "postcodeHistory": [
         {
           "addressPostcode": "BN164QR",
