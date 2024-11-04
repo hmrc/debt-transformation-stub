@@ -1,4 +1,5 @@
 {
+  "processingDateTime": "2022-03-23T13:49:51",
   "identification": [
     {
       "idType": "EMPREF",
@@ -9,7 +10,6 @@
       "idValue": "6381726332"
     }
   ],
-  "processingDateTime": "2022-03-23T13:49:51",
   "customerPostcodes": [
     {
       "addressPostcode": "BN127ER",
@@ -35,10 +35,10 @@
   ],
   "individualDetails": {
     "title": "Mr",
-    "firstName": "John",
-    "lastName": "Doe",
+    "firstName": "Bob",
+    "lastName": "Smith",
     "dateOfBirth": "1910-01-01",
-    "districtNumber": "xyz",
+    "districtNumber": "001",
     "customerType": "MTD(ITSA)",
     "transitionToCDCS": true
   },
@@ -53,8 +53,12 @@
       "rls": false,
       "contactDetails": {
         "telephoneNumber": "07823412345",
-        "emailAddress": "joe@snailmail.com"
+        "fax": "07823412345",
+        "mobile": "07823412345",
+        "emailAddress": "joe@snailmail.com",
+        "altFormat": "123"
       },
+      "postcode": "BN164QR",
       "country": "GB",
       "postcodeHistory": [
         {
@@ -81,8 +85,12 @@
       "rls": false,
       "contactDetails": {
         "telephoneNumber": "07823412345",
-        "emailAddress": "joe@snailmail.com"
+        "fax": "07823412345",
+        "mobile": "07823412345",
+        "emailAddress": "joe@snailmail.com",
+        "altFormat": "123"
       },
+      "postcode": "BN164QR",
       "country": "GB",
       "postcodeHistory": [
         {
