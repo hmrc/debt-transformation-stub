@@ -16,17 +16,17 @@
 
 package uk.gov.hmrc.debttransformationstub.models
 
-import play.api.libs.json.{Json, OFormat, Writes}
+import play.api.libs.json.{ Json, OFormat }
 
 import java.time.LocalDate
 
 final case class IdmsChargeReference(
-    chargeReference:   String,
-    mainTrans:         String,
-    subTrans:          String,
-    dueDate:           LocalDate,
-    collectibleAmount: BigDecimal)
+  chargeReference: String,
+  mainTrans: String,
+  subTrans: String,
+  dueDate: LocalDate,
+  collectibleAmount: BigDecimal)
 
-object IdmsChargeReference{
+object IdmsChargeReference {
   implicit val format: OFormat[IdmsChargeReference] = Json.format[IdmsChargeReference]
 }
