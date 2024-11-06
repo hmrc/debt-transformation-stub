@@ -25,7 +25,8 @@ final case class IdmsChargeReference(
   mainTrans: String,
   subTrans: String,
   dueDate: LocalDate,
-  collectibleAmount: BigDecimal)
+  collectibleAmount: BigDecimal
+)
 
 object IdmsChargeReference {
   implicit val format: OFormat[IdmsChargeReference] = Json.format[IdmsChargeReference]

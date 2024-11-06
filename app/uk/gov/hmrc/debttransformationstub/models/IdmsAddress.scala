@@ -23,7 +23,8 @@ final case class IdmsAddress(
   addressLine2: Option[String],
   addressLine3: Option[String],
   addressLine4: Option[String],
-  postCode: Option[String])
+  postCode: Option[String]
+)
 
 object IdmsAddress {
   implicit val format: OFormat[IdmsAddress] = Json.format[IdmsAddress]

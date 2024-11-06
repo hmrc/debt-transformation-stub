@@ -40,7 +40,7 @@ final case class CreateMonitoringCaseRequest(
   idValue: String,
   districtNumber: String,
   address: IdmsAddress,
-  chargeReferences: List[IdmsChargeReference],
+  chargeReferences: List[IdmsChargeReference]
 )
 
 object CreateMonitoringCaseRequest {
