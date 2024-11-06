@@ -31,9 +31,16 @@ final case class CreateMonitoringCaseRequest(
   paymentPlanFrequency: String,
   arrangementReviewDate: LocalDate,
   regimeType: String,
+  regimeDigitalCorrespondence: Boolean,
+  emailAddress: String,
+  emailSource: String,
   etmpChargesMarked: Boolean,
   ddiReference: String,
-  chargeReferences: List[String]
+  idType: String,
+  idValue: String,
+  districtNumber: String,
+  address: IdmsAddress,
+  chargeReferences: List[IdmsChargeReference],
 )
 
 object CreateMonitoringCaseRequest {
