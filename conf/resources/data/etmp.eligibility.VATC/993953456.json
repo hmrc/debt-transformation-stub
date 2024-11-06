@@ -1,0 +1,47 @@
+{
+  "processingDateTime": "2024-09-30T13:28:42Z",
+  "identification": [
+    {
+      "idType": "VRN",
+      "idValue": "993953456"
+    }
+  ],
+  "addresses": [
+    {
+      "addressType": "ZVAT1",
+      "rls": false,
+      "postcodeHistory": [
+        {
+          "addressPostcode": "SO13 4RY",
+          "postcodeDate": "2012-08-22"
+        }
+      ]
+    }
+  ],
+  "signals": [
+    {
+      "signalType": "INSOLVENT",
+      "signalValue": "false"
+    },
+    {
+      "signalType": "RLS",
+      "signalValue": "false"
+    }
+  ],
+  "charges": [
+    {
+      "chargeType": "VAT Return Debit Charge",
+      "mainType": "VAT Return Charge",
+      "mainTrans": "4700",
+      "subTrans": "1174",
+      "taxPeriodFrom": "2023-09-01",
+      "taxPeriodTo": "2023-09-30",
+      "chargeReference": "XM123456781891",
+      "outstandingAmount": 40000,
+      "dueDate": "2023-11-07",
+      "interestStartDate": "2023-11-08",
+      "accruedInterest": 2767.91,
+      "ddInProgress": "false"
+    }
+  ]
+}
