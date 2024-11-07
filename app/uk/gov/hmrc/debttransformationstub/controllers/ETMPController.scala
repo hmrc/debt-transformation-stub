@@ -19,7 +19,7 @@ package uk.gov.hmrc.debttransformationstub.controllers
 import play.api.Environment
 import play.api.libs.json.Json
 import play.api.mvc.{ Action, AnyContent, ControllerComponents, Request }
-import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
+import uk.gov.hmrc.debttransformationstub.utils.{ FilePath, RequestAwareLogger }
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import java.io.File
@@ -52,7 +52,7 @@ class ETMPController @Inject() (environment: Environment, cc: ControllerComponen
         )
       val queries: Map[String, Option[String]] = queryKeys.map(key => (key, request.getQueryString(key))).toMap
       queries("showIds")
-      val relativePath = s"$basePath" + "." + regimeType + "/" + s"$idValue.json"
+      val relativePath = FilePath.getFilePath(s"$basePath.$regimeType", idValue)
       environment.getExistingFile(relativePath) match {
         case Some(file) =>
           Try(Json.parse(paymentPlanEligibilityString(file, idValue))) match {

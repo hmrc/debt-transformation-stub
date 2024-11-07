@@ -21,7 +21,7 @@ import play.api.libs.json.{ JsValue, Json }
 import play.api.mvc.{ Action, ControllerComponents, Request }
 import uk.gov.hmrc.debttransformationstub.models.PaymentPlanEligibilityDmRequest
 import uk.gov.hmrc.debttransformationstub.models.errors.NO_RESPONSE
-import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
+import uk.gov.hmrc.debttransformationstub.utils.{ FilePath, RequestAwareLogger }
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.Inject
@@ -33,16 +33,16 @@ class IDMSController @Inject() (environment: Environment, cc: ControllerComponen
     extends BackendController(cc) with CustomBaseController {
 
   private lazy val logger = new RequestAwareLogger(this.getClass)
-  private val basePath = "conf/resources/data/idms"
+  private val basePath = "conf/resources/data/idms.eligibilityDm/"
 
   def paymentPlanEligibilityDm(): Action[JsValue] = Action.async(parse.json) { implicit rawRequest: Request[JsValue] =>
     withCustomJsonBody[PaymentPlanEligibilityDmRequest] { request =>
-      val fileName = s"$basePath.eligibilityDm/${request.idValue}.json"
-      environment.getExistingFile(fileName) match {
+      val relativePath = FilePath.getFilePath(basePath, request.idValue)
+      environment.getExistingFile(relativePath) match {
         case _ if request.idValue.equals("idmsNoResultDebtAllowance") =>
           Future.successful(GatewayTimeout(Json.parse(NO_RESPONSE.jsonErrorCause)))
         case None =>
-          val message = s"file [$fileName] not found"
+          val message = s"file [$relativePath] not found"
           logger.error(s"Status $NOT_FOUND, message: $message")
           Future successful NotFound(message)
         case Some(file) =>
