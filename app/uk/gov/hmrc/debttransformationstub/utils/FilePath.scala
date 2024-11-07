@@ -22,18 +22,15 @@ object FilePath {
 
   def getFilePath(basePath: String, idValue: String): String = {
     val directory = new File(basePath)
-
-    var fileName = ""
     if (directory.exists() && directory.isDirectory) {
-      val files = directory.listFiles()
-      if (files != null) {
-        for (file <- files)
-          if (file.getName.contains(idValue)) {
-            fileName = file.getName
-          }
+      val directoryFiles = Option(directory.listFiles())
+      val fileNameOption: Option[String] = directoryFiles.flatMap { files =>
+        files.find(file => file.getName.contains(idValue)).map(_.getName)
       }
+      val fileName = fileNameOption.getOrElse("")
+      s"$basePath" + "/" + s"$fileName"
+    } else {
+      ""
     }
-    s"$basePath" + "/" + s"$fileName"
   }
-
 }
