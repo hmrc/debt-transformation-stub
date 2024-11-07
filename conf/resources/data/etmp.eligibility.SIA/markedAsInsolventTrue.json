@@ -1,0 +1,99 @@
+{
+  "processingDateTime": "2022-03-23T13:49:51Z",
+  "identification": [
+    {
+      "idType": "NINO",
+      "idValue": "SIA123545"
+    },
+    {
+      "idType": "NINO",
+      "idValue": "SIA123546"
+    }
+  ],
+  "addresses": [
+    {
+      "addressType": "PPOB",
+      "addressLine1": "Worthing1",
+      "addressLine2": "Worthing2",
+      "countryCode": "GB",
+      "rls": false,
+      "emailAddress": "joe@snailmail.com",
+      "postcodeHistory": [
+        {
+          "addressPostcode": "BN127ER",
+          "postcodeDate": "2022-05-22"
+        },
+        {
+          "addressPostcode": "BN129ER",
+          "postcodeDate": "2022-02-28"
+        },
+        {
+          "addressPostcode": "BN119ER",
+          "postcodeDate": "2001-01-31"
+        }
+      ]
+    },
+    {
+      "addressType": "AGENT",
+      "addressLine1": "Worthing1",
+      "addressLine2": "Worthing2",
+      "countryCode": "GB",
+      "rls": false,
+      "postcodeHistory": [
+        {
+          "addressPostcode": "BN164QR",
+          "postcodeDate": "2022-03-02"
+        }
+      ]
+    }
+  ],
+  "signals": [
+    {
+      "signalType": "RLS",
+      "signalValue": "false",
+      "signalDescription": "gghsjsl"
+    },
+    {
+      "signalType": "Insolvent",
+      "signalValue": "true",
+      "signalDescription": "gghsjsl"
+    },
+    {
+      "signalType": "Payment Frequency",
+      "signalValue": "Monthly",
+      "signalDescription": "gghsjsl"
+    }
+  ],
+  "filing": [
+    {
+      "icrCategory": "ZR01",
+      "icrDescription": "RTI - PAYE - Monthly Returns",
+      "fromDate": "2022-03-06",
+      "toDate": "2022-04-05",
+      "dueDate": "2022-04-22"
+    },
+    {
+      "icrCategory": "ZR01",
+      "icrDescription": "RTI - PAYE - Monthly Returns",
+      "fromDate": "2022-04-06",
+      "toDate": "2022-05-05",
+      "dueDate": "2022-05-22"
+    }
+  ],
+  "charges": [
+    {
+      "chargeType": "In Year RTI Charge - Tax",
+      "mainType": "In Year RTI Charge (FPS)",
+      "mainTrans": "4530",
+      "subTrans": "1000",
+      "taxPeriodFrom": "2023-02-06",
+      "taxPeriodTo": "2023-03-05",
+      "chargeReference": "XM123456789812",
+      "outstandingAmount": 19999.00,
+      "dueDate": "<DUE_DATE>",
+      "interestStartDate": "2022-03-19",
+      "accruedInterest": 0.00,
+      "ddInProgress": "true"
+    }
+  ]
+}
