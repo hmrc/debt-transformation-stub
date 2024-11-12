@@ -18,19 +18,23 @@ package uk.gov.hmrc.debttransformationstub.utils
 
 import java.io.File
 
+case class FilePath(value: String)
+
 object FilePath {
 
-  def getFilePath(basePath: String, idValue: String): String = {
-    val directory = new File(basePath)
-    if (directory.exists() && directory.isDirectory) {
-      val directoryFiles = Option(directory.listFiles())
-      val fileNameOption: Option[String] = directoryFiles.flatMap { files =>
-        files.find(file => file.getName.contains(idValue)).map(_.getName)
+  def findAndCreateFilePath(directory: File, basePath: String, idValue: String): List[FilePath] = {
+    val maybeFileName: List[String] = {
+      if (!(directory.exists() && directory.isDirectory)) {
+        List.empty
+      } else {
+        val files: Array[File] = directory.listFiles()
+
+        files
+          .map(_.getName)
+          .filter(name => name == s"$idValue.json")
+          .toList
       }
-      val fileName = fileNameOption.getOrElse("")
-      s"$basePath" + "/" + s"$fileName"
-    } else {
-      ""
     }
+    maybeFileName.map(fileName => FilePath(s"$basePath" + "/" + fileName))
   }
 }

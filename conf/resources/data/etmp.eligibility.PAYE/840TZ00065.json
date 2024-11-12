@@ -1,0 +1,47 @@
+{
+  "processingDateTime": "2024-10-07T13:14:21Z",
+  "identification": [
+    {
+      "idType": "BROCS",
+      "idValue": "840PC00002261"
+    },
+    {
+      "idType": "EMPREF",
+      "idValue": "840TZ00065"
+    }
+  ],
+  "addresses": [
+    {
+      "addressType": "Business",
+      "rls": false,
+      "postcodeHistory": [
+        {
+          "addressPostcode": "TF3 4ER",
+          "postcodeDate": "2012-10-17"
+        }
+      ]
+    }
+  ],
+  "signals": [
+    {
+      "signalType": "Payment Frequency",
+      "signalValue": "QUARTERLY"
+    }
+  ],
+  "charges": [
+    {
+      "chargeType": "In Year RTI Charge-TAX",
+      "mainType": "In Year RTI Charge (FPS)",
+      "mainTrans": "2000",
+      "subTrans": "1000",
+      "taxPeriodFrom": "2023-08-06",
+      "taxPeriodTo": "2023-09-05",
+      "chargeReference": "XM123456781841",
+      "outstandingAmount": 31.91,
+      "dueDate": "2023-09-22",
+      "interestStartDate": "2023-09-19",
+      "accruedInterest": 2.57,
+      "ddInProgress": "false"
+    }
+  ]
+}

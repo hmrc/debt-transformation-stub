@@ -24,6 +24,7 @@ import uk.gov.hmrc.debttransformationstub.models.errors.NO_RESPONSE
 import uk.gov.hmrc.debttransformationstub.utils.{ FilePath, RequestAwareLogger }
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
+import java.io.File
 import javax.inject.Inject
 import scala.concurrent.Future
 import scala.io.Source
@@ -37,22 +38,18 @@ class IDMSController @Inject() (environment: Environment, cc: ControllerComponen
 
   def paymentPlanEligibilityDm(): Action[JsValue] = Action.async(parse.json) { implicit rawRequest: Request[JsValue] =>
     withCustomJsonBody[PaymentPlanEligibilityDmRequest] { request =>
-      val relativePath = FilePath.getFilePath(basePath, request.idValue)
-      environment.getExistingFile(relativePath) match {
+      val directory: File = new File(basePath)
+      val maybeFilePath: List[FilePath] = FilePath.findAndCreateFilePath(directory, basePath, request.idValue)
+      maybeFilePath.flatMap(filePath => environment.getExistingFile(filePath.value)) match {
         case _ if request.idValue.equals("idmsNoResultDebtAllowance") =>
           Future.successful(GatewayTimeout(Json.parse(NO_RESPONSE.jsonErrorCause)))
-        case None =>
-          val message = s"file [$relativePath] not found"
-          logger.error(s"Status $NOT_FOUND, message: $message")
-          Future successful NotFound(message)
-        case Some(file) =>
+        case file :: Nil =>
           val maybeFileContent: Try[String] =
             Using(Source.fromFile(file))(source => source.mkString)
               .recoverWith { case ex: Throwable =>
                 // Explain which file failed to be read.
                 Failure(new RuntimeException(s"Failed to read file: ${file.getPath}", ex))
               }
-
           maybeFileContent match {
             case Success(value) =>
               // Might throw if parsing fails
@@ -61,6 +58,14 @@ class IDMSController @Inject() (environment: Environment, cc: ControllerComponen
               logger.error(s"Failed to parse the file $file", exception)
               Future.successful(InternalServerError(s"Stub failed to parse file $file"))
           }
+        case Nil =>
+          val message = s"IDMS file not found for request with idValue: ${request.idValue}"
+          logger.error(s"Status $NOT_FOUND, message: $message")
+          Future successful NotFound(message)
+        case _ :: _ =>
+          val message = s"Multiple files found for request with idValue: ${request.idValue}"
+          logger.error(s"Status $BadRequest, message: $message")
+          Future successful BadRequest(message)
       }
     }
   }

@@ -34,8 +34,6 @@ class ETMPController @Inject() (environment: Environment, cc: ControllerComponen
 
   private lazy val logger = new RequestAwareLogger(this.getClass)
 
-  private val basePath = "conf/resources/data/etmp.eligibility"
-
   private val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
   def paymentPlanEligibility(regimeType: String, idType: String, idValue: String): Action[AnyContent] = Action {
@@ -52,17 +50,20 @@ class ETMPController @Inject() (environment: Environment, cc: ControllerComponen
         )
       val queries: Map[String, Option[String]] = queryKeys.map(key => (key, request.getQueryString(key))).toMap
       queries("showIds")
-      val relativePath = FilePath.getFilePath(s"$basePath.$regimeType", idValue)
-      environment.getExistingFile(relativePath) match {
-        case Some(file) =>
+      val basePath = s"conf/resources/data/etmp.eligibility.$regimeType"
+      val directory: File = new File(basePath)
+      val maybeFilePath: List[FilePath] =
+        FilePath.findAndCreateFilePath(directory = directory, basePath = basePath, idValue = idValue)
+      maybeFilePath.flatMap(filePath => environment.getExistingFile(filePath.value)) match {
+        case file :: Nil =>
           Try(Json.parse(paymentPlanEligibilityString(file, idValue))) match {
             case Success(value) => Ok(value)
             case Failure(exception) =>
-              logger.error(s"Failed to parse the file $relativePath", exception)
-              InternalServerError(s"stub failed to parse file $relativePath")
+              logger.error(s"Failed to parse the file $maybeFilePath", exception)
+              InternalServerError(s"stub failed to parse file $maybeFilePath")
           }
         case _ =>
-          NotFound("file not found")
+          NotFound("ETMP file not found")
       }
   }
 
