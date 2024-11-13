@@ -19,7 +19,7 @@ package uk.gov.hmrc.debttransformationstub.controllers
 import play.api.Environment
 import play.api.libs.json.Json
 import play.api.mvc.{ Action, AnyContent, ControllerComponents, Request }
-import uk.gov.hmrc.debttransformationstub.utils.{ FilePath, RequestAwareLogger }
+import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import java.io.File
@@ -33,6 +33,8 @@ import scala.util.{ Failure, Success, Try, Using }
 class ETMPController @Inject() (environment: Environment, cc: ControllerComponents) extends BackendController(cc) {
 
   private lazy val logger = new RequestAwareLogger(this.getClass)
+
+  private val basePath = "conf/resources/data/etmp.eligibility"
 
   private val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
@@ -50,20 +52,17 @@ class ETMPController @Inject() (environment: Environment, cc: ControllerComponen
         )
       val queries: Map[String, Option[String]] = queryKeys.map(key => (key, request.getQueryString(key))).toMap
       queries("showIds")
-      val basePath = s"conf/resources/data/etmp.eligibility.$regimeType"
-      val directory: File = new File(basePath)
-      val maybeFilePath: List[FilePath] =
-        FilePath.findAndCreateFilePath(directory = directory, basePath = basePath, idValue = idValue)
-      maybeFilePath.flatMap(filePath => environment.getExistingFile(filePath.value)) match {
-        case file :: Nil =>
+      val relativePath = s"$basePath" + "." + regimeType + "/" + s"$idValue.json"
+      environment.getExistingFile(relativePath) match {
+        case Some(file) =>
           Try(Json.parse(paymentPlanEligibilityString(file, idValue))) match {
             case Success(value) => Ok(value)
             case Failure(exception) =>
-              logger.error(s"Failed to parse the file $maybeFilePath", exception)
-              InternalServerError(s"stub failed to parse file $maybeFilePath")
+              logger.error(s"Failed to parse the file $relativePath", exception)
+              InternalServerError(s"stub failed to parse file $relativePath")
           }
         case _ =>
-          NotFound("ETMP file not found")
+          NotFound("file not found")
       }
   }
 
