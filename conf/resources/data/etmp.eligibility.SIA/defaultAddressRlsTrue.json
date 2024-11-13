@@ -12,8 +12,14 @@
   ],
   "addresses": [
     {
-      "addressType": "Default address",
+      "addressType": "XXDEFAULT",
       "rls": true,
+      "emailAddress": "joe@snailmail.com",
+      "postcodeHistory": []
+    },
+    {
+      "addressType": "PPOB",
+      "rls": false,
       "emailAddress": "joe@snailmail.com",
       "postcodeHistory": [
         {
@@ -44,8 +50,8 @@
   "signals": [
     {
       "signalType": "RLS",
-      "signalValue": "true",
-      "signalDescription": "gghsjsl"
+      "signalValue": "false",
+      "signalDescription": "false"
     },
     {
       "signalType": "Insolvent",
