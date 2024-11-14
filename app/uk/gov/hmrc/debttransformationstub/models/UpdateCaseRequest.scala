@@ -18,8 +18,13 @@ package uk.gov.hmrc.debttransformationstub.models
 
 import play.api.libs.json.{ Json, OFormat }
 
-final case class UpdateCaseRequest(request: String)
+final case class UpdateCaseRequest(listOfPropsToUpdate: Seq[PegaRequestProp])
 
 object UpdateCaseRequest {
   implicit val format: OFormat[UpdateCaseRequest] = Json.format[UpdateCaseRequest]
+}
+
+case class PegaRequestProp(pyName: String, pyValue: String)
+object PegaRequestProp {
+  implicit val format: OFormat[PegaRequestProp] = Json.format[PegaRequestProp]
 }
