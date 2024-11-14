@@ -18,7 +18,9 @@ package uk.gov.hmrc.debttransformationstub.models
 
 import play.api.libs.json.{ Json, OFormat }
 
-final case class UpdateCaseResponse(response: String)
+import java.time.Instant
+
+final case class UpdateCaseResponse(processingDateTime: Instant, message: String)
 
 object UpdateCaseResponse {
   implicit val format: OFormat[UpdateCaseResponse] = Json.format[UpdateCaseResponse]
