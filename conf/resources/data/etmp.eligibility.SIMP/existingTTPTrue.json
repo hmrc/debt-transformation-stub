@@ -3,19 +3,16 @@
   "identification": [
     {
       "idType": "NINO",
-      "idValue": "SIA123545"
+      "idValue": "SIMP123545"
     },
     {
       "idType": "NINO",
-      "idValue": "SIA123546"
+      "idValue": "SIMP123546"
     }
   ],
   "addresses": [
     {
       "addressType": "PPOB",
-      "addressLine1": "Worthing1",
-      "addressLine2": "Worthing2",
-      "countryCode": "GB",
       "rls": false,
       "emailAddress": "joe@snailmail.com",
       "postcodeHistory": [
@@ -35,9 +32,6 @@
     },
     {
       "addressType": "AGENT",
-      "addressLine1": "Worthing1",
-      "addressLine2": "Worthing2",
-      "countryCode": "GB",
       "rls": false,
       "postcodeHistory": [
         {
@@ -55,7 +49,7 @@
     },
     {
       "signalType": "Insolvent",
-      "signalValue": "true",
+      "signalValue": "false",
       "signalDescription": "gghsjsl"
     },
     {
@@ -64,22 +58,7 @@
       "signalDescription": "gghsjsl"
     }
   ],
-  "filing": [
-    {
-      "icrCategory": "ZR01",
-      "icrDescription": "RTI - PAYE - Monthly Returns",
-      "fromDate": "2022-03-06",
-      "toDate": "2022-04-05",
-      "dueDate": "2022-04-22"
-    },
-    {
-      "icrCategory": "ZR01",
-      "icrDescription": "RTI - PAYE - Monthly Returns",
-      "fromDate": "2022-04-06",
-      "toDate": "2022-05-05",
-      "dueDate": "2022-05-22"
-    }
-  ],
+
   "charges": [
     {
       "chargeType": "In Year RTI Charge - Tax",
@@ -92,8 +71,14 @@
       "outstandingAmount": 19999.00,
       "dueDate": "<DUE_DATE>",
       "interestStartDate": "2022-03-19",
-      "accruedInterest": 0.00,
-      "ddInProgress": "true"
+      "accruedInterest": 1.00,
+      "ddInProgress": "true",
+      "locks": [
+        {
+          "lockType": "Payments",
+          "lockReason": "Collected via TTP"
+        }
+      ]
     }
   ]
 }

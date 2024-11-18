@@ -3,11 +3,11 @@
   "identification": [
     {
       "idType": "NINO",
-      "idValue": "SIA123545"
+      "idValue": "SIMP123545"
     },
     {
       "idType": "NINO",
-      "idValue": "SIA123546"
+      "idValue": "SIMP123546"
     }
   ],
   "addresses": [
@@ -68,10 +68,10 @@
       "taxPeriodFrom": "2023-02-06",
       "taxPeriodTo": "2023-03-05",
       "chargeReference": "XM123456789812",
-      "outstandingAmount": 50001,
+      "outstandingAmount": 50000.00,
       "dueDate": "<DUE_DATE>",
       "interestStartDate": "2022-03-19",
-      "accruedInterest": 1.00,
+      "accruedInterest": 0,
       "ddInProgress": "true"
     }
   ]

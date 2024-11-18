@@ -3,11 +3,11 @@
   "identification": [
     {
       "idType": "NINO",
-      "idValue": "SIA123545"
+      "idValue": "SIMP123545"
     },
     {
       "idType": "NINO",
-      "idValue": "SIA123546"
+      "idValue": "SIMP123546"
     }
   ],
   "addresses": [
@@ -58,45 +58,21 @@
       "signalDescription": "gghsjsl"
     }
   ],
-  "filing": [
-    {
-      "icrCategory": "ZR01",
-      "icrDescription": "RTI - PAYE - Monthly Returns",
-      "fromDate": "2022-03-06",
-      "toDate": "2022-04-05",
-      "dueDate": "2022-04-22"
-    },
-    {
-      "icrCategory": "ZR01",
-      "icrDescription": "RTI - PAYE - Monthly Returns",
-      "fromDate": "2022-04-06",
-      "toDate": "2022-05-05",
-      "dueDate": "2022-05-22"
-    }
-  ],
+
   "charges": [
     {
-      "chargeType": "In Year RTI Charge - Tax",
-      "mainType": "In Year RTI Charge (FPS)",
+      "chargeType": "VAT Mig Return Debit Charge",
+      "mainType": "VAT Mig Return Charge",
       "mainTrans": "4530",
       "subTrans": "1000",
-      "taxPeriodFrom": "2022-02-06",
-      "taxPeriodTo": "2022-03-05",
+      "taxPeriodFrom": "2023-02-06",
+      "taxPeriodTo": "2023-03-05",
       "chargeReference": "XM123456789812",
-      "outstandingAmount": 32.00,
+      "outstandingAmount": 50001,
       "dueDate": "<DUE_DATE>",
       "interestStartDate": "2022-03-19",
-      "accruedInterest": 0.00,
-      "locks": [
-        {
-          "lockType": "Dunning",
-          "lockReason": "TC Debt Notification to DWP"
-        },
-        {
-          "lockType": "Calculate Interest",
-          "lockReason": "manual RPI Signal"
-        }
-      ]
+      "accruedInterest": 1.00,
+      "ddInProgress": "true"
     }
   ]
 }
