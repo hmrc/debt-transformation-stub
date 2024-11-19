@@ -17,7 +17,7 @@ pollingIntervals = 5000
 ```
 
 ### Running the service on a specific port
-```sbt "run 9111"```
+```sbt "run 10003"```
 
 Open a new terminal (this will be a long lived request)
 Call an endpoint defined in app.routes
