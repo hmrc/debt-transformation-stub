@@ -27,7 +27,7 @@ import scala.concurrent.{ ExecutionContext, Future }
 import scala.io.Source
 import scala.util.{ Failure, Success, Using }
 
-class AuthController @Inject()(environment: Environment, cc: ControllerComponents)
+class AuthController @Inject() (environment: Environment, cc: ControllerComponents)
     extends BackendController(cc) with CustomBaseController {
 
   private lazy val logger = new RequestAwareLogger(this.getClass)
