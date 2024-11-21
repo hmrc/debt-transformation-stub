@@ -17,21 +17,68 @@
 package uk.gov.hmrc.debttransformationstub.controllers
 
 import play.api.Environment
-import play.api.mvc.{ Action, ControllerComponents }
+import play.api.mvc.{ Action, ControllerComponents, Request, Result }
+import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
+import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.Inject
-import scala.concurrent.Future
+import scala.concurrent.{ ExecutionContext, Future }
 import scala.io.Source
+import scala.util.{ Failure, Success, Using }
 
 class AuthController @Inject() (environment: Environment, cc: ControllerComponents)
     extends BackendController(cc) with CustomBaseController {
 
+  private lazy val logger = new RequestAwareLogger(this.getClass)
+
   def getAccessToken(): Action[Map[String, Seq[String]]] = Action(parse.tolerantFormUrlEncoded).async {
-    implicit request =>
-      Future successful Accepted(
-        Source.fromFile(environment.getFile("conf/resources/data/auth/bearer-token.json")).mkString
+    implicit request: Request[Map[String, Seq[String]]] =>
+      val clientIdFileMapping = Map(
+        "scheduler-stub-client-id" -> "scheduled-bearer-token.json",
+        "stub-client-id"           -> "non-scheduled-bearer-token.json"
       )
+
+      val maybeClientId = request.body.get("client_id").toList.flatten
+      maybeClientId.headOption match {
+        case Some(clientId) =>
+          clientIdFileMapping
+            .get(clientId)
+            .map { fileName =>
+              val file = s"conf/resources/data/auth/$fileName"
+
+              Using(Source.fromFile(environment.getFile(file))) { bufferedSource =>
+                bufferedSource.mkString
+              } match {
+                case Failure(exception) =>
+                  logger.error(s"failed reading $file", exception)
+                  Future successful InternalServerError(exception.getMessage)
+                case Success(content) =>
+                  Future successful Accepted(content)
+              }
+            }
+            .getOrElse {
+              returnClientIdNotMappedError(clientIdFileMapping, maybeClientId)
+            }
+
+        case None =>
+          returnNoClientIdPassedError
+      }
   }
 
+  private def returnClientIdNotMappedError(
+    clientIdFileMapping: Map[String, String],
+    maybeClientId: List[String]
+  )(implicit hc: HeaderCarrier): Future[Result] = {
+    val errorMessage =
+      s"client id was not mapped, got $maybeClientId, valid options ${clientIdFileMapping.keys}"
+    logger.error(errorMessage)
+    Future successful UnprocessableEntity(errorMessage)
+  }
+
+  private def returnNoClientIdPassedError(implicit hc: HeaderCarrier): Future[Result] = {
+    val errorMessage = s"No client_id was passed in the payload"
+    logger.error(errorMessage)
+    Future successful UnprocessableEntity(errorMessage)
+  }
 }

@@ -174,13 +174,22 @@ class TimeToPayController @Inject() (
   }
 
   def pegaUpdateCase(caseId: String): Action[JsValue] = Action.async(parse.json) { implicit request =>
-    val correlationId = getCorrelationIdHeader(request.headers)
-    withCustomJsonBody[UpdateCaseRequest] { req =>
-      for {
-        _            <- enactStageRepository.addPegaStage(correlationId, req)
-        fileResponse <- findFile(s"/pega.updateCase/", s"$caseId.json")
-      } yield fileResponse
+    val maybeAuthToken: Option[String] = request.headers.get("Authorization")
+    val isSchedulerCall = maybeAuthToken.contains("Bearer scheduled-pega-access-token")
+    if (isSchedulerCall) {
+      val correlationId = getCorrelationIdHeader(request.headers)
+      withCustomJsonBody[UpdateCaseRequest] { req =>
+        for {
+          _            <- enactStageRepository.addPegaStage(correlationId, req)
+          fileResponse <- findFile(s"/pega.updateCase/", s"$caseId.json")
+        } yield fileResponse
+      }
+    } else {
+      val errorMessage = s"expected token to be 'Bearer scheduled-pega-access-token', got $maybeAuthToken"
+      logger.error(errorMessage)
+      Future successful UnprocessableEntity(errorMessage)
     }
+
   }
 
   def etmpExecutePaymentLock: Action[JsValue] = Action.async(parse.json) { implicit request =>
