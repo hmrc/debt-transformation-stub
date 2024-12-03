@@ -3,11 +3,11 @@
   "identification": [
     {
       "idType": "NINO",
-      "idValue": "SIA123545"
+      "idValue": "SIMP123545"
     },
     {
       "idType": "NINO",
-      "idValue": "SIA123546"
+      "idValue": "SIMP123546"
     }
   ],
   "addresses": [
@@ -64,7 +64,6 @@
       "signalDescription": "gghsjsl"
     }
   ],
-
   "charges": [
     {
       "chargeType": "In Year RTI Charge - Tax",
