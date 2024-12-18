@@ -35,7 +35,7 @@ import scala.concurrent.{ ExecutionContext, Future }
 import scala.io.Source
 import scala.util.Try
 
-class TimeToPayController @Inject() (
+class TimeToPayController @Inject()(
   environment: Environment,
   cc: ControllerComponents,
   appConfig: AppConfig,
@@ -173,12 +173,11 @@ class TimeToPayController @Inject() (
           .map(_.idValue)
           .getOrElse(throw new IllegalArgumentException("NINO id is required for SIMP NDDS enact arrangement"))
         for {
-          _ <- enactStageRepository.addNDDSStage(correlationId, req)
+          _            <- enactStageRepository.addNDDSStage(correlationId, req)
           fileResponse <- findFile(s"/ndds.enactArrangement/", s"$vrnId.json")
         } yield fileResponse
       }
-    }
-    else {
+    } else {
       throw new IllegalArgumentException(
         "Either BROCS or VRN id type is required for PAYE and VAT an enact arrangement"
       )
