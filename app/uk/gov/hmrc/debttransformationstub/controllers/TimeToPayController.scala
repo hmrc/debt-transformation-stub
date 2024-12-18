@@ -35,7 +35,7 @@ import scala.concurrent.{ ExecutionContext, Future }
 import scala.io.Source
 import scala.util.Try
 
-class TimeToPayController @Inject()(
+class TimeToPayController @Inject() (
   environment: Environment,
   cc: ControllerComponents,
   appConfig: AppConfig,
