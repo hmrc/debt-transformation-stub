@@ -95,6 +95,12 @@
         "country": "string"
       }
     ],
+    "signals": [{
+      "signalType": "Additional Security Check",
+      "signalValue": "false",
+      "signalDescription": "Additional Security Signal Check"
+    }
+    ],
     "filing": [
       {
         "icrCategory": "ZR01",

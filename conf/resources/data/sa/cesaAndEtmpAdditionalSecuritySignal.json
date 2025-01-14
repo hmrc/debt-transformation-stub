@@ -32,7 +32,7 @@
     "signals": [{
       "signalType": "Additional Security Check",
       "signalValue": "true",
-      "signalDescription": "Additional Security Signal Check"
+      "signalDescription": "CESA Additional Security Signal Check"
     }
     ],
     "filings": [
@@ -98,7 +98,7 @@
     "signals": [{
       "signalType": "Additional Security Check",
       "signalValue": "false",
-      "signalDescription": "Additional Security Signal Check"
+      "signalDescription": "ETMP additional Security Signal Check"
     }
     ],
     "filing": [
