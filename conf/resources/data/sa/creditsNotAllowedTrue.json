@@ -6,6 +6,7 @@
         "title": "Mr",
         "firstName": "Ben",
         "lastName": "Thomas",
+        "unallocatedCredit": 123.45,
         "dateOfBirth": "2014-09-12",
         "dateOfDeath": "2014-09-12",
         "identifications": [
