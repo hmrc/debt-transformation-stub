@@ -3,6 +3,7 @@
     {
       "dutyId": "duty01",
       "debtID": "debtSA004",
+      "parentMainTrans" : "6003",
       "mainTrans": "4003",
       "subTrans": "1015",
       "chargeDescription": "SA 1st Payment on Account",
@@ -38,6 +39,7 @@
     {
       "dutyId": "duty02",
       "debtID": "debtSA001",
+      "parentMainTrans" : "6003",
       "mainTrans": "4003",
       "subTrans": "1046",
       "chargeDescription": "SA Late Payment Interest",

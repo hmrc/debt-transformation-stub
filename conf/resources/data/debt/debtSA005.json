@@ -3,6 +3,7 @@
     {
       "dutyId": "duty01",
       "debtID": "debtSA005",
+      "parentMainTrans" : "6903",
       "mainTrans": "4930",
       "subTrans": "1011",
       "chargeDescription": "SA Payment on Account 2",
