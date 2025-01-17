@@ -1,5 +1,5 @@
 {
-  "processingDateTime": "2022-03-23T13:49:51Z",
+  "processingDateTime": "2022-03-23T13:49:51",
   "identification": [
     {
       "idType": "EMPREF",
@@ -10,14 +10,56 @@
       "idValue": "6381726332"
     }
   ],
+  "customerPostcodes": [
+    {
+      "addressPostcode": "BN127ER",
+      "postcodeDate": "2022-05-22"
+    },
+    {
+      "addressPostcode": "BN129ER",
+      "postcodeDate": "2022-02-28"
+    },
+    {
+      "addressPostcode": "BN119ER",
+      "postcodeDate": "2001-01-31"
+    },
+    {
+      "addressPostcode": "BN164QR",
+      "postcodeDate": "2022-03-02"
+    }
+  ],
+  "customerDetails": [
+    {
+      "emailAddress": "joe@snailmail.com"
+    }
+  ],
+  "individualDetails": {
+    "title": "Mr",
+    "firstName": "Bob",
+    "lastName": "Smith",
+    "dateOfBirth": "1910-01-01",
+    "districtNumber": "001",
+    "customerType": "MTD(ITSA)",
+    "transitionToCDCS": true
+  },
   "addresses": [
     {
       "addressType": "PPOB",
       "addressLine1": "Worthing1",
       "addressLine2": "Worthing2",
+      "addressLine3": "Worthing3",
+      "addressLine4": "Worthing4",
       "countryCode": "GB",
       "rls": false,
-      "emailAddress": "joe@snailmail.com",
+      "contactDetails": {
+        "telephoneNumber": "07823412345",
+        "fax": "07823412345",
+        "mobile": "07823412345",
+        "emailAddress": "joe@snailmail.com",
+        "altFormat": "123"
+      },
+      "postcode": "BN164QR",
+      "country": "GB",
       "postcodeHistory": [
         {
           "addressPostcode": "BN127ER",
@@ -36,8 +78,20 @@
     {
       "addressType": "AGENT",
       "addressLine1": "Worthing1",
+      "addressLine2": "Worthing2",
+      "addressLine3": "Worthing3",
+      "addressLine4": "Worthing4",
       "countryCode": "GB",
       "rls": false,
+      "contactDetails": {
+        "telephoneNumber": "07823412345",
+        "fax": "07823412345",
+        "mobile": "07823412345",
+        "emailAddress": "joe@snailmail.com",
+        "altFormat": "123"
+      },
+      "postcode": "BN164QR",
+      "country": "GB",
       "postcodeHistory": [
         {
           "addressPostcode": "BN164QR",
@@ -88,33 +142,28 @@
       "taxPeriodFrom": "2022-02-06",
       "taxPeriodTo": "2022-03-05",
       "chargeReference": "XM123456789812",
+      "ddInProgress": "true",
       "outstandingAmount": 1234.56,
       "dueDate": "<DUE_DATE>",
       "interestStartDate": "2022-03-19",
-      "accruedInterest": 2.09
-    },
-    {
-      "chargeType": "RTI - NIC Comp on SAP",
-      "mainType": "In Year RTI Charge (FPS)",
-      "mainTrans": "2000",
-      "subTrans": "1026",
-      "taxPeriodFrom": "2022-02-06",
-      "taxPeriodTo": "2022-03-05",
-      "chargeReference": "XM123456789812",
-      "outstandingAmount": -987.23,
-      "dueDate": "<DUE_DATE>",
-      "interestStartDate": "2022-03-19",
-      "accruedInterest": 0.55,
+      "accruedInterest": 2.09,
       "locks": [
         {
-          "lockType": "Dunning",
-          "lockReason": "Suspension (Alleged appeal)"
-        },
-        {
-          "lockType": "Calculate Interest",
-          "lockReason": "Clerical Interest Signal"
+          "lockType": "Posting/Clearing",
+          "lockReason": "cashless sd"
         }
       ]
     }
-  ]
-}
+  ],
+  "additionalCustData":
+    {
+      "orgName": "Abc Ltd",
+      "title": "Mr",
+      "firstName": "Bob",
+      "middleName": "K",
+      "lastName": "Smith",
+      "dateOfBirth": "1910-01-01",
+      "dateOfDeath": "2000-01-01",
+      "districtNumber": "001"
+    }
+  }

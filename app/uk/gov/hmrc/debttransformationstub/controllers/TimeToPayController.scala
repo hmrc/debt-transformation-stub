@@ -166,6 +166,17 @@ class TimeToPayController @Inject() (
           fileResponse <- findFile(s"/ndds.enactArrangement/", s"$vrnId.json")
         } yield fileResponse
       }
+    } else if (request.body.toString().contains("SIMP")) {
+      withCustomJsonBody[NDDSRequest] { req =>
+        val vrnId = req.identification
+          .find(_.idType.equalsIgnoreCase("NINO"))
+          .map(_.idValue)
+          .getOrElse(throw new IllegalArgumentException("NINO id is required for SIMP NDDS enact arrangement"))
+        for {
+          _            <- enactStageRepository.addNDDSStage(correlationId, req)
+          fileResponse <- findFile(s"/ndds.enactArrangement/", s"$vrnId.json")
+        } yield fileResponse
+      }
     } else {
       throw new IllegalArgumentException(
         "Either BROCS or VRN id type is required for PAYE and VAT an enact arrangement"
