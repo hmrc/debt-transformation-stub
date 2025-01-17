@@ -6,7 +6,7 @@
         "title": "Mr",
         "firstName": "Ben",
         "lastName": "Thomas",
-        "unallocatedCredit": 123.45,
+        "unallocatedCredit": 1,
         "dateOfBirth": "2014-09-12",
         "dateOfDeath": "2014-09-12",
         "identifications": [
@@ -29,7 +29,7 @@
         "country": "string"
       }
     ],
-    "filings": [
+    "filing": [
       {
         "icrCategory": "string",
         "icrDescription": "string",
@@ -55,8 +55,8 @@
         "originalChargeType": "string",
         "originalTieBreaker": "string",
         "chargeReference": "XM123456789812",
-        "outstandingAmount": 3000,
-        "accruedInterest": 500
+        "outstandingAmount": 10,
+        "accruedInterest": 2
       }
     ]
   },
@@ -83,25 +83,18 @@
         "addressLine2": "string",
         "addressLine3": "string",
         "addressLine4": "string",
-        "rls": true,
+        "rls": false,
         "postCode": "string",
         "country": "string"
       }
     ],
-    "filing": [
+    "filings": [
       {
         "icrCategory": "ZR01",
         "icrDescription": "RTI - PAYE - Monthly Returns",
         "fromDate": "2022-03-06",
         "toDate": "2022-04-05",
         "dueDate": "2022-04-22"
-      },
-      {
-        "icrCategory": "ZR01",
-        "icrDescription": "RTI - PAYE - Monthly Returns",
-        "fromDate": "2022-04-06",
-        "toDate": "2022-05-05",
-        "dueDate": "2022-05-22"
       }
     ],
     "charges": [
@@ -116,9 +109,14 @@
         "chargeReference": "XM123456789813",
         "dueDate": "<DUE_DATE>",
         "interestStartDate": "2022-03-05",
-        "outstandingAmount": 1000,
-        "accruedInterest": 50,
-        "locks": []
+        "outstandingAmount": 10,
+        "accruedInterest": 1,
+        "locks": [
+          {
+            "lockType": "Payments",
+            "lockReason": "Government Funded Schemes (RA)"
+          }
+        ]
       }
     ]
   }
