@@ -50,7 +50,7 @@ class CaseManagementSystemController @Inject() (
     }
   }
 
-  def getDebtCaseManagement(customerUniqueRef: String, debtId: String, dutyIds: String): Action[AnyContent] = Action {
+  def getDebtCaseManagement(customerUniqueRef: String, debtId: String): Action[AnyContent] = Action {
     implicit request =>
       val maybeBearerToken: Option[String] = request.headers.get("Authorization")
       if (maybeBearerToken.isDefined) {
