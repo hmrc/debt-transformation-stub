@@ -1,7 +1,6 @@
 {
   "debtItems": [
     {
-      "dutyId": "duty01",
       "debtID": "debt003",
       "mainTrans": "5330",
       "subTrans": "7006",
@@ -28,7 +27,6 @@
       ]
     },
     {
-      "dutyId": "duty02",
       "debtID": "debt003",
       "mainTrans": "1525",
       "subTrans": "1000",
