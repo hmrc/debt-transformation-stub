@@ -6,7 +6,7 @@
         "title": "Mr",
         "firstName": "Ben",
         "lastName": "Thomas",
-        "unallocatedCredit": 2000,
+        "unallocatedCredit": 1001,
         "dateOfBirth": "2014-09-12",
         "dateOfDeath": "2014-09-12",
         "identifications": [
@@ -109,7 +109,7 @@
         "chargeReference": "XM123456789813",
         "dueDate": "<DUE_DATE>",
         "interestStartDate": "2022-03-05",
-        "outstandingAmount": 30000,
+        "outstandingAmount": 26000,
         "accruedInterest": 500,
         "locks": []
       }
