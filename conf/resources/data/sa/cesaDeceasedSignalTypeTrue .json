@@ -31,7 +31,7 @@
     ],
     "signals": [{
       "signalType": "Deceased",
-      "signalValue": "false",
+      "signalValue": "true",
       "signalDescription": "deceased signal check"
     }
     ],
