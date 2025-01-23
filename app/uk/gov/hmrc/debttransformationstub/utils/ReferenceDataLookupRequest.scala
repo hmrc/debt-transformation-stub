@@ -18,7 +18,7 @@ package uk.gov.hmrc.debttransformationstub.utils
 
 import play.api.libs.json.{ Json, OFormat }
 
-final case class TransType(mainTrans: String, subTrans: String)
+final case class TransType(mainTrans: String,parentMainTrans: String, subTrans: String)
 
 final case class ReferenceDataLookupRequest(`type`: String, items: Seq[TransType])
 
