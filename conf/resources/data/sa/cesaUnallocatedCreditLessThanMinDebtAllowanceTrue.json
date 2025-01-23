@@ -55,8 +55,8 @@
         "originalChargeType": "string",
         "originalTieBreaker": "string",
         "chargeReference": "XM123456789812",
-        "outstandingAmount": 10,
-        "accruedInterest": 2
+        "outstandingAmount": 20,
+        "accruedInterest": 3
       }
     ]
   },
@@ -76,7 +76,6 @@
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "string",
@@ -110,12 +109,13 @@
         "chargeReference": "XM123456789813",
         "dueDate": "<DUE_DATE>",
         "interestStartDate": "2022-03-05",
-        "outstandingAmount": 10,
-        "accruedInterest": 1,
+        "outstandingAmount": 10.00,
+        "accruedInterest": 0.01,
         "locks": [
-
-
-
+          {
+            "lockType": "Payments",
+            "lockReason": "Government Funded Schemes (RA)"
+          }
         ]
       }
     ]
