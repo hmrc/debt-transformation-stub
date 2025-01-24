@@ -39,13 +39,15 @@ class ReferenceLookupController @Inject() (
   private lazy val logger = new RequestAwareLogger(this.getClass)
   private val listHelper: ListHelper = new ListHelper()
 
-  def getReferenceData(descType: String, mainTrans: String, subTrans: String): Action[AnyContent] = Action {
+  def getReferenceData(descType: String, mainTrans: String, subTrans: String,parentMainTrans: Option[String]=None): Action[AnyContent] = Action {
     implicit request =>
       val testOnlyResponseCode: Option[String] = request.headers.get("testOnlyResponseCode")
       if (testOnlyResponseCode.isDefined) {
         Results.Status(testOnlyResponseCode.map(_.toInt).getOrElse(500))
       } else {
-        environment.getExistingFile(basePath + refPath + descType + "-" + mainTrans + "-" + subTrans + ".json") match {
+        environment.getExistingFile(basePath + refPath + descType + "-" + mainTrans + "-" + subTrans + s"${parentMainTrans.map(_ => "-" + _).getOrElse("")}" + ".json")
+         match {
+
           case Some(file) => Ok(Source.fromFile(file).mkString)
           case _ =>
             logger.error(s"Status $NOT_FOUND, message: file not found")
