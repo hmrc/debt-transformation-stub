@@ -4,7 +4,6 @@ GET           /debt                                                             
 GET           /debt/:debtID                                                                                 uk.gov.hmrc.debttransformationstub.controllers.CaseManagementSystemController.getCaseDetails(debtID: String, duties: Option[String])
 GET           /data                                                                                         uk.gov.hmrc.debttransformationstub.controllers.ReferenceLookupController.getList
 GET           /data/:type/mainTrans/:mainTrans/subTrans/:subTrans                                           uk.gov.hmrc.debttransformationstub.controllers.ReferenceLookupController.getReferenceData(type: String, mainTrans: String, subTrans: String)
-GET           /data/:type/mainTrans/:mainTrans/subTrans/:subTrans/parentMainTrans/:parentMainTrans          uk.gov.hmrc.debttransformationstub.controllers.ReferenceLookupController.getReferenceData(type: String, mainTrans: String, subTrans: String, parentMainTrans: String )
 
 GET           /prweb/api/ARC/01/ChargeData/customer/:customerUniqueRef/debts/debtId/:debtId        uk.gov.hmrc.debttransformationstub.controllers.CaseManagementSystemController.getDebtCaseManagement(customerUniqueRef: String, debtId: String)
 POST          /prweb/api/ARC/01/RefData                                                                     uk.gov.hmrc.debttransformationstub.controllers.ReferenceLookupController.getReferenceDataLookup
