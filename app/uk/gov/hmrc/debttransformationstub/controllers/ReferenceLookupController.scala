@@ -39,13 +39,13 @@ class ReferenceLookupController @Inject() (
   private lazy val logger = new RequestAwareLogger(this.getClass)
   private val listHelper: ListHelper = new ListHelper()
 
-  def getReferenceData(descType: String, mainTrans: String, subTrans: String,parentMainTrans: Option[String]=None): Action[AnyContent] = Action {
+  def getReferenceData(descType: String, mainTrans: String, subTrans: String): Action[AnyContent] = Action {
     implicit request =>
       val testOnlyResponseCode: Option[String] = request.headers.get("testOnlyResponseCode")
       if (testOnlyResponseCode.isDefined) {
         Results.Status(testOnlyResponseCode.map(_.toInt).getOrElse(500))
       } else {
-        environment.getExistingFile(basePath + refPath + descType + "-" + mainTrans + "-" + subTrans + s"${parentMainTrans.map(_ => "-" + _).getOrElse("")}" + ".json")
+        environment.getExistingFile(basePath + refPath + descType + "-" + mainTrans + "-" + subTrans + ".json")
          match {
 
           case Some(file) => Ok(Source.fromFile(file).mkString)
@@ -62,7 +62,7 @@ class ReferenceLookupController @Inject() (
       if (maybeBearerToken.isDefined) {
         val files: Seq[File] = req.items.flatMap { item =>
           environment.getExistingFile(
-            basePath + refPath + req.`type` + "-" + item.mainTrans + "-" + item.subTrans + ".json"
+            basePath + refPath + req.`type` + "-" + item.mainTrans + "-" + item.subTrans + s"${item.parentMainTrans.map("-" + _).getOrElse("")}" + ".json"
           )
         }
 
