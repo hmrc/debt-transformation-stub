@@ -45,8 +45,7 @@ class ReferenceLookupController @Inject() (
       if (testOnlyResponseCode.isDefined) {
         Results.Status(testOnlyResponseCode.map(_.toInt).getOrElse(500))
       } else {
-        environment.getExistingFile(basePath + refPath + descType + "-" + mainTrans + "-" + subTrans + ".json")
-         match {
+        environment.getExistingFile(basePath + refPath + descType + "-" + mainTrans + "-" + subTrans + ".json") match {
 
           case Some(file) => Ok(Source.fromFile(file).mkString)
           case _ =>
