@@ -1,12 +1,12 @@
 {
   "debtItems": [
     {
-      "dutyId": "duty01",
+     "dutyId": "duty01",
       "debtID": "debtSA0014",
       "mainTrans": "6010",
       "subTrans": "1554",
       "parentMainTrans": "33",
-      "chargeDescription": "SA Payment on Account 2",
+      "chargeDescription": "SA Late Payment Interest",
       "originalAmount": 500000,
       "outstandingAmount": 500000,
       "interestKey": "01",
