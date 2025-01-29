@@ -1,0 +1,69 @@
+{
+  "debtItems": [
+    {
+      "dutyId": "duty01",
+      "debtID": "debtSA0016",
+      "mainTrans": "6010",
+      "subTrans": "1554",
+      "parentMainTrans": "25",
+      "chargeDescription": "SA Balancing Charge Interest",
+      "originalAmount": 500000,
+      "outstandingAmount": 300000,
+      "interestKey": "01",
+      "interestStartDate": "2020-01-20",
+      "dateCreated": "2020-01-20",
+      "dateCalculationTo": "2021-05-24",
+      "periodFrom": "2019-01-20",
+      "periodEnd": "2021-01-20",
+      "payments": [
+        {
+          "paymentAmount": 100000,
+          "paymentDate": "2020-02-23"
+        }
+      ],
+      "breathingSpaces": [
+        {
+          "debtRespiteFrom": "2021-02-04",
+          "debtRespiteTo": "2021-03-04"
+        }
+      ]
+    },
+    {
+      "dutyId": "duty02",
+      "debtID": "debtSA0014",
+      "mainTrans": "6010",
+      "subTrans": "1554",
+      "parentMainTrans": "33",
+      "chargeDescription": "SA Payment on Account 2 Interest",
+      "originalAmount": 400000,
+      "outstandingAmount": 400000,
+      "interestKey": "01",
+      "interestStartDate": "2020-02-04",
+      "dateCreated": "2020-02-04",
+      "dateCalculationTo": "2023-05-24",
+      "periodFrom": "2019-01-20",
+      "periodEnd": "2023-01-20",
+      "payments": [
+        {"paymentAmount" : 100000,
+          "paymentDate" : "2020-02-23"},
+        {"paymentAmount" : 100000,
+          "paymentDate" : "2020-03-20"}],
+      "breathingSpaces": [
+        {
+          "debtRespiteFrom": "2021-04-04",
+          "debtRespiteTo": "2021-06-04"
+        }
+      ]
+    }
+  ],
+  "customerPostcodes": [
+    {
+      "addressPostcode": "BN12 4XH",
+      "postcodeDate": "2019-01-01"
+    },
+    {
+      "addressPostcode": "BN12 4XH",
+      "postcodeDate": "2019-01-01"
+    }
+  ]
+}
