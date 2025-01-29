@@ -30,7 +30,7 @@
     },
     {
       "dutyId": "duty02",
-      "debtID": "debt003",
+      "debtID": "debtSA0014",
       "mainTrans": "6010",
       "subTrans": "1554",
       "parentMainTrans": "33",
