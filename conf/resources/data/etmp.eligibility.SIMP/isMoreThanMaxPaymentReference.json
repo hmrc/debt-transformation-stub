@@ -70,14 +70,14 @@
       "icrDescription": "RTI - PAYE - Monthly Returns",
       "fromDate": "2022-03-06",
       "toDate": "2022-04-05",
-      "dueDate": "2022-04-22"
+      "dueDate": "<DUE_DATE_FOR_FUTURE>"
     },
     {
       "icrCategory": "ZR01",
       "icrDescription": "RTI - PAYE - Monthly Returns",
       "fromDate": "2022-04-06",
       "toDate": "2022-05-05",
-      "dueDate": "2022-05-22"
+      "dueDate": "<DUE_DATE_FOR_FUTURE>"
     }
   ],
   "charges": [
@@ -90,7 +90,7 @@
       "taxPeriodTo": "2022-03-05",
       "chargeReference": "XM000000000001",
       "outstandingAmount": 102.00,
-      "dueDate": "<VALID_DUE_DATE_1>",
+      "dueDate": "<DUE_DATE_FOR_FUTURE>",
       "interestStartDate": "2022-03-19",
       "accruedInterest": 25.81
     },
@@ -103,7 +103,7 @@
       "taxPeriodTo": "2022-03-05",
       "chargeReference": "XM000000000002",
       "outstandingAmount": 123.56,
-      "dueDate": "<VALID_DUE_DATE_2>",
+      "dueDate": "<DUE_DATE_FOR_FUTURE>",
       "interestStartDate": "2022-03-19",
       "accruedInterest": 2.09
     },
