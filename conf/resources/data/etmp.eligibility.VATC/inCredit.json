@@ -12,7 +12,7 @@
   ],
   "addresses": [
     {
-      "addressType": "ZVAT1",
+      "addressType": "PPOB",
       "addressLine1": "Worthing1",
       "countryCode": "GB",
       "rls": false,
