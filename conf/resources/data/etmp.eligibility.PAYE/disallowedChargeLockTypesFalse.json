@@ -3,13 +3,13 @@
   "identification": [
     {
       "idType": "EMPREF",
-      "idValue": "964FZ00049"
+      "idValue": "864FZ00049"
     },
     {
-      "idType": "VRN",
-      "idValue": "7381726332"
+      "idType": "BROCS",
+      "idValue": "6381726332"
     }
-    ],
+  ],
   "customerPostcodes": [
     {
       "addressPostcode": "BN127ER",
@@ -30,8 +30,7 @@
   ],
   "customerDetails": [
     {
-      "emailAddress": "joe@snailmail.com",
-      "emailSource": "ETMP"
+      "emailAddress": "joe@snailmail.com"
     }
   ],
   "individualDetails": {
@@ -45,7 +44,7 @@
   },
   "addresses": [
     {
-      "addressType": "ZVAT1",
+      "addressType": "PPOB",
       "addressLine1": "Worthing1",
       "addressLine2": "Worthing2",
       "addressLine3": "Worthing3",
@@ -57,7 +56,6 @@
         "fax": "07823412345",
         "mobile": "07823412345",
         "emailAddress": "joe@snailmail.com",
-        "emailSource": "ETMP",
         "altFormat": "123"
       },
       "postcode": "BN164QR",
@@ -90,7 +88,6 @@
         "fax": "07823412345",
         "mobile": "07823412345",
         "emailAddress": "joe@snailmail.com",
-        "emailSource": "ETMP",
         "altFormat": "123"
       },
       "postcode": "BN164QR",
@@ -107,45 +104,66 @@
     {
       "signalType": "RLS",
       "signalValue": "false",
-      "signalDescription": "gghsjsl"
+      "signalDescription": "false"
     },
     {
       "signalType": "Insolvent",
       "signalValue": "false",
-      "signalDescription": "gghsjsl"
+      "signalDescription": "false"
     },
     {
       "signalType": "Payment Frequency",
       "signalValue": "Monthly",
-      "signalDescription": "gghsjsl"
+      "signalDescription": "false"
+    }
+  ],
+  "filing": [
+    {
+      "icrCategory": "ZR01",
+      "icrDescription": "RTI - PAYE - Monthly Returns",
+      "fromDate": "2022-03-06",
+      "toDate": "2022-04-05",
+      "dueDate": "2022-04-22"
+    },
+    {
+      "icrCategory": "ZR01",
+      "icrDescription": "RTI - PAYE - Monthly Returns",
+      "fromDate": "2022-04-06",
+      "toDate": "2022-05-05",
+      "dueDate": "2022-05-22"
     }
   ],
   "charges": [
     {
-      "chargeType": "VAT Mig Return Debit Charge",
-      "mainType": "VAT Mig Return Charge",
-      "mainTrans": "7700",
-      "subTrans": "1174",
-      "taxPeriodFrom": "2023-02-06",
-      "taxPeriodTo": "2023-03-05",
+      "chargeType": "In Year RTI Charge - Tax",
+      "mainType": "In Year RTI Charge (FPS)",
+      "mainTrans": "2000",
+      "subTrans": "1000",
+      "taxPeriodFrom": "2022-02-06",
+      "taxPeriodTo": "2022-03-05",
       "chargeReference": "XM123456789812",
-      "outstandingAmount": 19999.00,
+      "ddInProgress": "true",
+      "outstandingAmount": 1234.56,
       "dueDate": "<DUE_DATE>",
       "interestStartDate": "2022-03-19",
-      "accruedInterest": 1.00,
-      "ddInProgress": "true"
+      "accruedInterest": 2.09,
+      "locks": [
+        {
+          "lockType": "Posting/Clearing",
+          "lockReason": "cashless sd"
+        }
+      ]
     }
   ],
-  "additionalCustData": {
-    "orgName": "Abc Ltd",
-    "title": "Mr",
-    "firstName": "Bob",
-    "middleName": "K",
-    "lastName": "Smith",
-    "dateOfBirth": "1910-01-01",
-    "dateOfDeath": "2000-01-01",
-    "districtNumber": "001"
+  "additionalCustData":
+    {
+      "orgName": "Abc Ltd",
+      "title": "Mr",
+      "firstName": "Bob",
+      "middleName": "K",
+      "lastName": "Smith",
+      "dateOfBirth": "1910-01-01",
+      "dateOfDeath": "2000-01-01",
+      "districtNumber": "001"
+    }
   }
-}
-
-

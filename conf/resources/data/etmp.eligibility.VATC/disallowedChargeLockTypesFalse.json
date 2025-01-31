@@ -45,7 +45,7 @@
   },
   "addresses": [
     {
-      "addressType": "ZVAT1",
+      "addressType": "PPOB",
       "addressLine1": "Worthing1",
       "addressLine2": "Worthing2",
       "addressLine3": "Worthing3",
@@ -133,7 +133,13 @@
       "dueDate": "<DUE_DATE>",
       "interestStartDate": "2022-03-19",
       "accruedInterest": 1.00,
-      "ddInProgress": "true"
+      "ddInProgress": "true",
+      "locks": [
+        {
+          "lockType": "Posting/Clearing",
+          "lockReason": "cashless sd"
+        }
+      ]
     }
   ],
   "additionalCustData": {

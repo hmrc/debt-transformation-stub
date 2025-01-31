@@ -46,6 +46,7 @@ class ReferenceLookupController @Inject() (
         Results.Status(testOnlyResponseCode.map(_.toInt).getOrElse(500))
       } else {
         environment.getExistingFile(basePath + refPath + descType + "-" + mainTrans + "-" + subTrans + ".json") match {
+
           case Some(file) => Ok(Source.fromFile(file).mkString)
           case _ =>
             logger.error(s"Status $NOT_FOUND, message: file not found")
@@ -60,7 +61,7 @@ class ReferenceLookupController @Inject() (
       if (maybeBearerToken.isDefined) {
         val files: Seq[File] = req.items.flatMap { item =>
           environment.getExistingFile(
-            basePath + refPath + req.`type` + "-" + item.mainTrans + "-" + item.subTrans + ".json"
+            basePath + refPath + req.`type` + "-" + item.mainTrans + "-" + item.subTrans + s"${item.parentMainTrans.map("-" + _).getOrElse("")}" + ".json"
           )
         }
 

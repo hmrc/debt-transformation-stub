@@ -2,19 +2,17 @@
   "processingDateTime": "2022-03-23T13:49:51Z",
   "identification": [
     {
-      "idType": "EMPREF",
-      "idValue": "964FZ00049"
+      "idType": "NINO",
+      "idValue": "SIMP123545"
     },
     {
-      "idType": "VRN",
-      "idValue": "7381726332"
+      "idType": "NINO",
+      "idValue": "SIMP123546"
     }
   ],
   "addresses": [
     {
       "addressType": "PPOB",
-      "addressLine1": "Worthing1",
-      "countryCode": "GB",
       "rls": false,
       "emailAddress": "joe@snailmail.com",
       "postcodeHistory": [
@@ -34,9 +32,6 @@
     },
     {
       "addressType": "AGENT",
-      "addressLine1": "Worthing1",
-      "addressLine2": "Worthing2",
-      "countryCode": "GB",
       "rls": false,
       "postcodeHistory": [
         {
@@ -65,30 +60,31 @@
   ],
   "charges": [
     {
-      "chargeType": "VAT Mig Return Debit Charge",
-      "mainType": "VAT Mig Return Charge",
-      "mainTrans": "7700",
-      "subTrans": "1174",
-      "taxPeriodFrom": "2023-02-06",
-      "taxPeriodTo": "2023-03-05",
-      "chargeReference": "XM123456789812",
-      "outstandingAmount": -1.01,
+      "chargeType": "In Year RTI Charge - Tax",
+      "mainType": "In Year RTI Charge (FPS)",
+      "mainTrans": "4530",
+      "subTrans": "1000",
+      "taxPeriodFrom": "2022-02-06",
+      "taxPeriodTo": "2022-03-05",
+      "chargeReference": "XM000000000004",
+      "outstandingAmount": 12.56,
       "dueDate": "<DUE_DATE>",
-      "interestStartDate": "2022-03-19",
-      "accruedInterest": 1.00
+      "interestStartDate": "2022-04-19",
+      "accruedInterest": 2.09
     },
     {
-      "chargeType": "VAT Return Debit Charge",
-      "mainType": "VAT Return charge",
-      "mainTrans": "4700",
-      "subTrans": "1174",
+      "chargeType": "In Year RTI Charge - Tax",
+      "mainType": "In Year RTI Charge (FPS)",
+      "mainTrans": "4530",
+      "subTrans": "1000",
       "taxPeriodFrom": "2023-02-06",
       "taxPeriodTo": "2023-03-05",
       "chargeReference": "XM123456789812",
-      "outstandingAmount": 2356.01,
+      "outstandingAmount": -0.01,
       "dueDate": "<DUE_DATE>",
       "interestStartDate": "2022-03-19",
-      "accruedInterest": 1.00
+      "accruedInterest": 1.00,
+      "ddInProgress": "true"
     }
   ]
 }
