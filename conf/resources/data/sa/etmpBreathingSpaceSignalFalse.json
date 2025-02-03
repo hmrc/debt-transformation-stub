@@ -6,8 +6,8 @@
         "title": "Mr",
         "firstName": "Ben",
         "lastName": "Thomas",
-        "dateOfBirth": "1954-09-12",
-        "dateOfDeath": "2023-09-12",
+        "dateOfBirth": "2014-09-12",
+        "dateOfDeath": "2014-09-12",
         "identifications": [
           {
             "idType": 73,
@@ -19,40 +19,14 @@
 
     "addresses": [
       {
-        "addressType": "PPOB",
-        "rls": false,
-        "emailAddress": "joe@snailmail.com",
-        "postcodeHistory": [
-          {
-            "addressPostcode": "BN127ER",
-            "postcodeDate": "2022-05-22"
-          },
-          {
-            "addressPostcode": "BN129ER",
-            "postcodeDate": "2022-02-28"
-          },
-          {
-            "addressPostcode": "BN119ER",
-            "postcodeDate": "2001-01-31"
-          }
-        ]
-      },
-      {
-        "addressType": "AGENT",
-        "rls": false,
-        "postcodeHistory": [
-          {
-            "addressPostcode": "BN164QR",
-            "postcodeDate": "2022-03-02"
-          }
-        ]
-      }
-    ],
-    "signals": [
-      {
-        "signalType": "Active TTP",
-        "signalValue": "true",
-        "signalDescription": "cesa signal type"
+        "addressType": "string",
+        "addressLine1": "string",
+        "addressLine2": "string",
+        "addressLine3": "string",
+        "addressLine4": "string",
+        "rls": true,
+        "postCode": "string",
+        "country": "string"
       }
     ],
     "filings": [
@@ -68,12 +42,12 @@
       {
         "chargeType": "In Year RTI Charge - Tax",
         "mainType": "In Year RTI Charge (FPS)",
-         "mainTrans": "4000",
+        "mainTrans": "4000",
         "subTrans": "1005",
         "UTR": "73",
         "taxPeriodFrom": "2022-02-06",
         "taxPeriodTo": "2022-03-05",
-        "dueDate": "2022-02-12",
+        "dueDate": "<DUE_DATE>",
         "interestStartDate": "2022-03-05",
         "tiebreaker": "string",
         "creationDate": "2022-03-05",
@@ -81,7 +55,7 @@
         "originalChargeType": "string",
         "originalTieBreaker": "string",
         "chargeReference": "XM123456789812",
-        "outstandingAmount": 25000.00 ,
+        "outstandingAmount": 3000.00,
         "accruedInterest": 500.00
       }
     ]
@@ -110,17 +84,16 @@
         "addressLine2": "string",
         "addressLine3": "string",
         "addressLine4": "string",
-        "rls": false,
+        "rls": true,
         "postCode": "string",
         "country": "string"
       }
     ],
-    "signals": [
-      {
-        "signalType": "Breathing Space",
-        "signalValue": "false",
-        "signalDescription": "Breathing Space"
-      }
+    "signals": [{
+      "signalType": "Breathing Space",
+      "signalValue": "false",
+      "signalDescription": "Breathing Space signal type"
+    }
     ],
     "filing": [
       {
@@ -129,13 +102,20 @@
         "fromDate": "2022-03-06",
         "toDate": "2022-04-05",
         "dueDate": "2022-04-22"
+      },
+      {
+        "icrCategory": "ZR01",
+        "icrDescription": "RTI - PAYE - Monthly Returns",
+        "fromDate": "2022-04-06",
+        "toDate": "2022-05-05",
+        "dueDate": "2022-05-22"
       }
     ],
     "charges": [
       {
         "chargeType": "In Year RTI Charge - Tax",
         "mainType": "In Year RTI Charge (FPS)",
-         "mainTrans": "4000",
+        "mainTrans": "4000",
         "subTrans": "1005",
         "UTR": "73",
         "taxPeriodFrom": "2022-02-06",
@@ -143,13 +123,9 @@
         "chargeReference": "XM123456789813",
         "dueDate": "<DUE_DATE>",
         "interestStartDate": "2022-03-05",
-        "outstandingAmount": 5000.00,
-        "accruedInterest": 500.00 ,
+        "outstandingAmount": 1000.00,
+        "accruedInterest": 50.00,
         "locks": [
-          {
-            "lockType": "Dunning",
-            "lockReason": "string"
-          }
         ]
       }
     ]
