@@ -75,7 +75,7 @@
       "locks": [
         {
           "lockType": "Payments",
-          "lockReason": "missing address / bank details in BP"
+          "lockReason": "missing address/bank details in BP"
         },
         {
           "lockType": "Payments",

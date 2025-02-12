@@ -76,11 +76,11 @@
       "locks": [
         {
           "lockType": "Payments",
-          "lockReason": "missing address / bank details in BP"
+          "lockReason": "missing address/bank details in BP"
         },
         {
           "lockType": "Payments",
-          "lockReason": "Under Enquiry (Payment)"
+          "lockReason": "Under Enquiry  (Payment)"
         },
         {
           "lockType": "Calculate Interest",
