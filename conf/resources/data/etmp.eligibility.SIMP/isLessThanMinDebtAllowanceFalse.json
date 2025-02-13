@@ -87,16 +87,7 @@
       "dueDate": "<DUE_DATE>",
       "interestStartDate": "2022-03-19",
       "accruedInterest": 0.00,
-      "locks": [
-        {
-          "lockType": "Dunning",
-          "lockReason": "TC Debt Notification to DWP"
-        },
-        {
-          "lockType": "Calculate Interest",
-          "lockReason": "manual RPI Signal"
-        }
-      ]
+      "locks": []
     }
   ]
 }
