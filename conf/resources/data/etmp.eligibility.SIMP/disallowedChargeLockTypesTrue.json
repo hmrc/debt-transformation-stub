@@ -58,7 +58,6 @@
       "signalDescription": "gghsjsl"
     }
   ],
-
   "charges": [
     {
       "chargeType": "In Year RTI Charge - Tax",
@@ -79,7 +78,7 @@
           "lockReason": "missing address/bank details in BP"
         },
         {
-          "lockType": "Payments",
+          "lockType": "Dunning",
           "lockReason": "Under Enquiry  (Payment)"
         },
         {
