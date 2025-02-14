@@ -58,36 +58,34 @@
       "signalDescription": "gghsjsl"
     }
   ],
-  "filing": [
-    {
-      "icrCategory": "ZR01",
-      "icrDescription": "RTI - PAYE - Monthly Returns",
-      "fromDate": "2022-03-06",
-      "toDate": "2022-04-05",
-      "dueDate": "<DUE_DATE_FOR_FUTURE>"
-    },
-    {
-      "icrCategory": "ZR01",
-      "icrDescription": "RTI - PAYE - Monthly Returns",
-      "fromDate": "2022-04-06",
-      "toDate": "2022-05-05",
-      "dueDate": "<DUE_DATE_FOR_FUTURE>"
-    }
-  ],
   "charges": [
     {
       "chargeType": "In Year RTI Charge - Tax",
       "mainType": "In Year RTI Charge (FPS)",
       "mainTrans": "4530",
       "subTrans": "1000",
-      "taxPeriodFrom": "2022-02-06",
-      "taxPeriodTo": "2022-03-05",
+      "taxPeriodFrom": "2023-02-06",
+      "taxPeriodTo": "2023-03-05",
       "chargeReference": "XM123456789812",
-      "outstandingAmount": 32.01,
+      "outstandingAmount": 19999.00,
       "dueDate": "<DUE_DATE>",
       "interestStartDate": "2022-03-19",
-      "accruedInterest": 0.00,
-      "locks": []
+      "accruedInterest": 1.00,
+      "ddInProgress": "true",
+      "locks": [
+        {
+          "lockType": "Payments",
+          "lockReason": "missing address/bank details in BP"
+        },
+        {
+          "lockType": "Dunning",
+          "lockReason": "Under Enquiry  (Payment)"
+        },
+        {
+          "lockType": "Calculate Interest",
+          "lockReason": "Clerical Interest Signal"
+        }
+      ]
     }
   ]
 }
