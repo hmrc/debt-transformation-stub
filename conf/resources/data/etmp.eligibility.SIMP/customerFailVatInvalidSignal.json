@@ -56,8 +56,18 @@
       "signalDescription": "false"
     },
     {
-      "signalType": "Payment Frequency",
-      "signalValue": "Monthly",
+      "signalType": "Deceased",
+      "signalValue": "false",
+      "signalDescription": "false"
+    },
+    {
+      "signalType": "Additional Security Check",
+      "signalValue": "false",
+      "signalDescription": "false"
+    },
+    {
+      "signalType": "Breathing Space",
+      "signalValue": "false",
       "signalDescription": "false"
     }
   ],

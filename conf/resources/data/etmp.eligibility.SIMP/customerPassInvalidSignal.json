@@ -46,414 +46,99 @@
   ],
   "signals": [
     {
+      "signalType": "No Repayment Signal",
+      "signalValue": "001",
+      "signalDescription": "No Repayment"
+    },
+    {
+      "signalType": "NRS - EIS",
+      "signalValue": "002",
+      "signalDescription": "No Repayment"
+    },
+    {
+      "signalType": "NRS - PTOPs",
+      "signalValue": "010",
+      "signalDescription": "No Repayment"
+    },
+    {
+      "signalType": "NRS - Debt Mgnt",
+      "signalValue": "036",
+      "signalDescription": "No Repayment"
+    },
+    {
+      "signalType": "NRS - Remission",
+      "signalValue": "001",
+      "signalDescription": "No Repayment"
+    },
+    {
+      "signalType": "NRS - ISBC",
+      "signalValue": "002",
+      "signalDescription": "No Repayment"
+    },
+    {
+      "signalType": "NRS - WMBC",
+      "signalValue": "010",
+      "signalDescription": "No Repayment"
+    },
+    {
+      "signalType": "NRS - LB",
+      "signalValue": "036",
+      "signalDescription": "No Repayment"
+    },
+    {
+      "signalType": "NRS - CA",
+      "signalValue": "001",
+      "signalDescription": "No Repayment"
+    },
+    {
+      "signalType": "NRS - RIS",
+      "signalValue": "002",
+      "signalDescription": "No Repayment"
+    },
+    {
+      "signalType": "No Repayment Reason",
+      "signalValue": "010",
+      "signalDescription": "No Repayment Reason"
+    },
+    {
+      "signalType": "Insolvent",
+      "signalValue": "036",
+      "signalDescription": "Solvency Status"
+    },
+    {
+      "signalType": "Deceased",
+      "signalValue": "001",
+      "signalDescription": "Deceased"
+    },
+    {
       "signalType": "RLS",
-      "signalValue": "false",
-      "signalDescription": "gghsjsl"
-    },
-    {
-      "signalType": "User Interest 1",
-      "signalValue": "001",
-      "signalDescription": "Accelerated Payments Team"
-    },
-    {
-      "signalType": "User Interest 2",
       "signalValue": "002",
-      "signalDescription": "Allocated LB CCM"
+      "signalDescription": "RLS"
     },
     {
-      "signalType": "User Interest 3",
+      "signalType": "Additional Security Check",
       "signalValue": "010",
-      "signalDescription": "ISBC C&A"
+      "signalDescription": "Additional Security Check"
     },
     {
-      "signalType": "User Interest 4",
+      "signalType": "Welsh Language Signal",
       "signalValue": "036",
-      "signalDescription": "Excise Environmental Customs Duty team (EECD)"
+      "signalDescription": "Welsh Language Signal"
     },
     {
-      "signalType": "User Interest 1",
+      "signalType": "Agent",
       "signalValue": "001",
-      "signalDescription": "Accelerated Payments Team"
+      "signalDescription": "Presence of an Agent "
     },
     {
-      "signalType": "User Interest 2",
+      "signalType": "ITSA Migrated",
       "signalValue": "002",
-      "signalDescription": "Allocated LB CCM"
+      "signalDescription": "Year of Migration"
     },
     {
-      "signalType": "User Interest 3",
+      "signalType": "Breathing Space",
       "signalValue": "010",
-      "signalDescription": "ISBC C&A"
-    },
-    {
-      "signalType": "User Interest 4",
-      "signalValue": "036",
-      "signalDescription": "Excise Environmental Customs Duty team (EECD)"
-    },
-    {
-      "signalType": "User Interest 1",
-      "signalValue": "001",
-      "signalDescription": "Accelerated Payments Team"
-    },
-    {
-      "signalType": "User Interest 2",
-      "signalValue": "002",
-      "signalDescription": "Allocated LB CCM"
-    },
-    {
-      "signalType": "User Interest 3",
-      "signalValue": "010",
-      "signalDescription": "ISBC C&A"
-    },
-    {
-      "signalType": "User Interest 4",
-      "signalValue": "036",
-      "signalDescription": "Excise Environmental Customs Duty team (EECD)"
-    },
-    {
-      "signalType": "User Interest 1",
-      "signalValue": "001",
-      "signalDescription": "Accelerated Payments Team"
-    },
-    {
-      "signalType": "User Interest 2",
-      "signalValue": "002",
-      "signalDescription": "Allocated LB CCM"
-    },
-    {
-      "signalType": "User Interest 3",
-      "signalValue": "010",
-      "signalDescription": "ISBC C&A"
-    },
-    {
-      "signalType": "User Interest 4",
-      "signalValue": "036",
-      "signalDescription": "Excise Environmental Customs Duty team (EECD)"
-    },
-    {
-      "signalType": "User Interest 1",
-      "signalValue": "001",
-      "signalDescription": "Accelerated Payments Team"
-    },
-    {
-      "signalType": "User Interest 2",
-      "signalValue": "002",
-      "signalDescription": "Allocated LB CCM"
-    },
-    {
-      "signalType": "User Interest 3",
-      "signalValue": "010",
-      "signalDescription": "ISBC C&A"
-    },
-    {
-      "signalType": "User Interest 4",
-      "signalValue": "036",
-      "signalDescription": "Excise Environmental Customs Duty team (EECD)"
-    },
-    {
-      "signalType": "User Interest 1",
-      "signalValue": "001",
-      "signalDescription": "Accelerated Payments Team"
-    },
-    {
-      "signalType": "User Interest 2",
-      "signalValue": "002",
-      "signalDescription": "Allocated LB CCM"
-    },
-    {
-      "signalType": "User Interest 3",
-      "signalValue": "010",
-      "signalDescription": "ISBC C&A"
-    },
-    {
-      "signalType": "User Interest 4",
-      "signalValue": "036",
-      "signalDescription": "Excise Environmental Customs Duty team (EECD)"
-    },
-    {
-      "signalType": "User Interest 1",
-      "signalValue": "001",
-      "signalDescription": "Accelerated Payments Team"
-    },
-    {
-      "signalType": "User Interest 2",
-      "signalValue": "002",
-      "signalDescription": "Allocated LB CCM"
-    },
-    {
-      "signalType": "User Interest 3",
-      "signalValue": "010",
-      "signalDescription": "ISBC C&A"
-    },
-    {
-      "signalType": "User Interest 4",
-      "signalValue": "036",
-      "signalDescription": "Excise Environmental Customs Duty team (EECD)"
-    },
-    {
-      "signalType": "User Interest 1",
-      "signalValue": "001",
-      "signalDescription": "Accelerated Payments Team"
-    },
-    {
-      "signalType": "User Interest 2",
-      "signalValue": "002",
-      "signalDescription": "Allocated LB CCM"
-    },
-    {
-      "signalType": "User Interest 3",
-      "signalValue": "010",
-      "signalDescription": "ISBC C&A"
-    },
-    {
-      "signalType": "User Interest 4",
-      "signalValue": "036",
-      "signalDescription": "Excise Environmental Customs Duty team (EECD)"
-    },
-    {
-      "signalType": "User Interest 1",
-      "signalValue": "001",
-      "signalDescription": "Accelerated Payments Team"
-    },
-    {
-      "signalType": "User Interest 2",
-      "signalValue": "002",
-      "signalDescription": "Allocated LB CCM"
-    },
-    {
-      "signalType": "User Interest 3",
-      "signalValue": "010",
-      "signalDescription": "ISBC C&A"
-    },
-    {
-      "signalType": "User Interest 4",
-      "signalValue": "036",
-      "signalDescription": "Excise Environmental Customs Duty team (EECD)"
-    },
-    {
-      "signalType": "User Interest 1",
-      "signalValue": "001",
-      "signalDescription": "Accelerated Payments Team"
-    },
-    {
-      "signalType": "User Interest 2",
-      "signalValue": "002",
-      "signalDescription": "Allocated LB CCM"
-    },
-    {
-      "signalType": "User Interest 3",
-      "signalValue": "010",
-      "signalDescription": "ISBC C&A"
-    },
-    {
-      "signalType": "User Interest 4",
-      "signalValue": "036",
-      "signalDescription": "Excise Environmental Customs Duty team (EECD)"
-    },
-    {
-      "signalType": "User Interest 1",
-      "signalValue": "001",
-      "signalDescription": "Accelerated Payments Team"
-    },
-    {
-      "signalType": "User Interest 2",
-      "signalValue": "002",
-      "signalDescription": "Allocated LB CCM"
-    },
-    {
-      "signalType": "User Interest 3",
-      "signalValue": "010",
-      "signalDescription": "ISBC C&A"
-    },
-    {
-      "signalType": "User Interest 4",
-      "signalValue": "036",
-      "signalDescription": "Excise Environmental Customs Duty team (EECD)"
-    },
-    {
-      "signalType": "User Interest 1",
-      "signalValue": "001",
-      "signalDescription": "Accelerated Payments Team"
-    },
-    {
-      "signalType": "User Interest 2",
-      "signalValue": "002",
-      "signalDescription": "Allocated LB CCM"
-    },
-    {
-      "signalType": "User Interest 3",
-      "signalValue": "010",
-      "signalDescription": "ISBC C&A"
-    },
-    {
-      "signalType": "User Interest 4",
-      "signalValue": "036",
-      "signalDescription": "Excise Environmental Customs Duty team (EECD)"
-    },
-    {
-      "signalType": "User Interest 1",
-      "signalValue": "001",
-      "signalDescription": "Accelerated Payments Team"
-    },
-    {
-      "signalType": "User Interest 2",
-      "signalValue": "002",
-      "signalDescription": "Allocated LB CCM"
-    },
-    {
-      "signalType": "User Interest 3",
-      "signalValue": "010",
-      "signalDescription": "ISBC C&A"
-    },
-    {
-      "signalType": "User Interest 4",
-      "signalValue": "036",
-      "signalDescription": "Excise Environmental Customs Duty team (EECD)"
-    },
-    {
-      "signalType": "User Interest 1",
-      "signalValue": "001",
-      "signalDescription": "Accelerated Payments Team"
-    },
-    {
-      "signalType": "User Interest 2",
-      "signalValue": "002",
-      "signalDescription": "Allocated LB CCM"
-    },
-    {
-      "signalType": "User Interest 3",
-      "signalValue": "010",
-      "signalDescription": "ISBC C&A"
-    },
-    {
-      "signalType": "User Interest 4",
-      "signalValue": "036",
-      "signalDescription": "Excise Environmental Customs Duty team (EECD)"
-    },
-    {
-      "signalType": "User Interest 1",
-      "signalValue": "001",
-      "signalDescription": "Accelerated Payments Team"
-    },
-    {
-      "signalType": "User Interest 2",
-      "signalValue": "002",
-      "signalDescription": "Allocated LB CCM"
-    },
-    {
-      "signalType": "User Interest 3",
-      "signalValue": "010",
-      "signalDescription": "ISBC C&A"
-    },
-    {
-      "signalType": "User Interest 4",
-      "signalValue": "036",
-      "signalDescription": "Excise Environmental Customs Duty team (EECD)"
-    },
-    {
-      "signalType": "User Interest 1",
-      "signalValue": "001",
-      "signalDescription": "Accelerated Payments Team"
-    },
-    {
-      "signalType": "User Interest 2",
-      "signalValue": "002",
-      "signalDescription": "Allocated LB CCM"
-    },
-    {
-      "signalType": "User Interest 3",
-      "signalValue": "010",
-      "signalDescription": "ISBC C&A"
-    },
-    {
-      "signalType": "User Interest 4",
-      "signalValue": "036",
-      "signalDescription": "Excise Environmental Customs Duty team (EECD)"
-    },
-    {
-      "signalType": "User Interest 1",
-      "signalValue": "001",
-      "signalDescription": "Accelerated Payments Team"
-    },
-    {
-      "signalType": "User Interest 2",
-      "signalValue": "002",
-      "signalDescription": "Allocated LB CCM"
-    },
-    {
-      "signalType": "User Interest 3",
-      "signalValue": "010",
-      "signalDescription": "ISBC C&A"
-    },
-    {
-      "signalType": "User Interest 4",
-      "signalValue": "036",
-      "signalDescription": "Excise Environmental Customs Duty team (EECD)"
-    },
-    {
-      "signalType": "User Interest 1",
-      "signalValue": "001",
-      "signalDescription": "Accelerated Payments Team"
-    },
-    {
-      "signalType": "User Interest 2",
-      "signalValue": "002",
-      "signalDescription": "Allocated LB CCM"
-    },
-    {
-      "signalType": "User Interest 3",
-      "signalValue": "010",
-      "signalDescription": "ISBC C&A"
-    },
-    {
-      "signalType": "User Interest 4",
-      "signalValue": "036",
-      "signalDescription": "Excise Environmental Customs Duty team (EECD)"
-    },
-    {
-      "signalType": "User Interest 1",
-      "signalValue": "001",
-      "signalDescription": "Accelerated Payments Team"
-    },
-    {
-      "signalType": "User Interest 2",
-      "signalValue": "002",
-      "signalDescription": "Allocated LB CCM"
-    },
-    {
-      "signalType": "User Interest 3",
-      "signalValue": "010",
-      "signalDescription": "ISBC C&A"
-    },
-    {
-      "signalType": "User Interest 4",
-      "signalValue": "036",
-      "signalDescription": "Excise Environmental Customs Duty team (EECD)"
-    },
-    {
-      "signalType": "User Interest 1",
-      "signalValue": "001",
-      "signalDescription": "Accelerated Payments Team"
-    },
-    {
-      "signalType": "User Interest 2",
-      "signalValue": "002",
-      "signalDescription": "Allocated LB CCM"
-    },
-    {
-      "signalType": "User Interest 3",
-      "signalValue": "010",
-      "signalDescription": "ISBC C&A"
-    },
-    {
-      "signalType": "User Interest 4",
-      "signalValue": "036",
-      "signalDescription": "Excise Environmental Customs Duty team (EECD)"
-    },
-    {
-      "signalType": "Payment Frequency",
-      "signalValue": "Monthly",
-      "signalDescription": "gghsjsl"
+      "signalDescription": "Breathing Space"
     }
   ],
   "filing": [
