@@ -3,7 +3,7 @@
   "identification": [
     {
       "idType": "NINO",
-      "idValue": "SIMP123545"
+      "idValue": "SIMP123546"
     },
     {
       "idType": "NINO",
@@ -32,6 +32,9 @@
     },
     {
       "addressType": "AGENT",
+      "addressLine1": "Worthing1",
+      "addressLine2": "Worthing2",
+      "countryCode": "GB",
       "rls": false,
       "postcodeHistory": [
         {
@@ -44,47 +47,53 @@
   "signals": [
     {
       "signalType": "RLS",
-      "signalValue": "false",
-      "signalDescription": "gghsjsl"
+      "signalValue": "true",
+      "signalDescription": "true"
     },
     {
       "signalType": "Insolvent",
-      "signalValue": "true",
-      "signalDescription": "gghsjsl"
+      "signalValue": "false",
+      "signalDescription": "false"
     },
     {
-      "signalType": "Payment Frequency",
-      "signalValue": "Monthly",
-      "signalDescription": "gghsjsl"
+      "signalType": "Deceased",
+      "signalValue": "false",
+      "signalDescription": "false"
+    },
+    {
+      "signalType": "Additional Security Check",
+      "signalValue": "false",
+      "signalDescription": "false"
+    },
+    {
+      "signalType": "Breathing Space",
+      "signalValue": "false",
+      "signalDescription": "false"
     }
   ],
   "charges": [
     {
       "chargeType": "In Year RTI Charge - Tax",
       "mainType": "In Year RTI Charge (FPS)",
-      "mainTrans": "4530",
-      "subTrans": "1000",
-      "taxPeriodFrom": "2022-02-06",
-      "taxPeriodTo": "2022-03-05",
-      "chargeReference": "XM000000000004",
-      "outstandingAmount": 12.56,
-      "dueDate": "<DUE_DATE>",
-      "interestStartDate": "2022-04-19",
-      "accruedInterest": 2.09
-    },
-    {
-      "chargeType": "In Year RTI Charge - Tax",
-      "mainType": "In Year RTI Charge (FPS)",
-      "mainTrans": "4530",
+      "mainTrans": "2000",
       "subTrans": "1000",
       "taxPeriodFrom": "2023-02-06",
       "taxPeriodTo": "2023-03-05",
       "chargeReference": "XM123456789812",
-      "outstandingAmount": -0.01,
-      "dueDate": "<DUE_DATE>",
+      "outstandingAmount": 1234.56,
+      "dueDate": "2022-08-04",
       "interestStartDate": "2022-03-19",
-      "accruedInterest": 1.00,
-      "ddInProgress": "true"
+      "accruedInterest": 2.09,
+      "locks": [
+        {
+          "lockType": "Dunning",
+          "lockReason": "Appeal"
+        },
+        {
+          "lockType": "Calculate Interest",
+          "lockReason": "Appeal"
+        }
+      ]
     }
   ]
 }
