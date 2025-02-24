@@ -1,0 +1,76 @@
+{
+  "processingDateTime": "2022-03-23T13:49:51Z",
+  "identification": [
+    {
+      "idType": "NINO",
+      "idValue": "SIMP123545"
+    },
+    {
+      "idType": "NINO",
+      "idValue": "SIMP123546"
+    }
+  ],
+  "addresses": [
+    {
+      "addressType": "PPOB",
+      "rls": false,
+      "emailAddress": "joe@snailmail.com",
+      "postcodeHistory": [
+        {
+          "addressPostcode": "BN127ER",
+          "postcodeDate": "2022-05-22"
+        },
+        {
+          "addressPostcode": "BN129ER",
+          "postcodeDate": "2022-02-28"
+        },
+        {
+          "addressPostcode": "BN119ER",
+          "postcodeDate": "2001-01-31"
+        }
+      ]
+    },
+    {
+      "addressType": "AGENT",
+      "rls": false,
+      "postcodeHistory": [
+        {
+          "addressPostcode": "BN164QR",
+          "postcodeDate": "2022-03-02"
+        }
+      ]
+    }
+  ],
+  "signals": [
+    {
+      "signalType": "RLS",
+      "signalValue": "false",
+      "signalDescription": "false"
+    }
+  ],
+  "charges": [
+    {
+      "chargeType": "In Year RTI Charge - Tax",
+      "mainType": "In Year RTI Charge (FPS)",
+      "mainTrans": "2000",
+      "subTrans": "1000",
+      "taxPeriodFrom": "2023-02-06",
+      "taxPeriodTo": "2023-03-05",
+      "chargeReference": "XM123456789812",
+      "outstandingAmount": 1234.56,
+      "dueDate": "2022-08-04",
+      "interestStartDate": "2022-03-19",
+      "accruedInterest": 2.09,
+      "locks": [
+        {
+          "lockType": "Dunning",
+          "lockReason": "Appeal"
+        },
+        {
+          "lockType": "Calculate Interest",
+          "lockReason": "Appeal"
+        }
+      ]
+    }
+  ]
+}

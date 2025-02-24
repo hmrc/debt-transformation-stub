@@ -32,9 +32,6 @@
     },
     {
       "addressType": "AGENT",
-      "addressLine1": "Worthing1",
-      "addressLine2": "Worthing2",
-      "countryCode": "GB",
       "rls": false,
       "postcodeHistory": [
         {
@@ -46,104 +43,49 @@
   ],
   "signals": [
     {
-      "signalType": "No Repayment Signal",
-      "signalValue": "001",
-      "signalDescription": "No Repayment"
-    },
-    {
       "signalType": "NRS - EIS",
-      "signalValue": "002",
-      "signalDescription": "No Repayment"
+      "signalValue": "true",
+      "signalDescription": "No Repayment Signal"
     },
     {
       "signalType": "NRS - PTOPs",
-      "signalValue": "010",
-      "signalDescription": "No Repayment"
+      "signalValue": "true",
+      "signalDescription": "No Repayment Signal"
     },
     {
       "signalType": "NRS - Debt Mgnt",
-      "signalValue": "036",
-      "signalDescription": "No Repayment"
+      "signalValue": "true",
+      "signalDescription": "No Repayment Signal"
     },
     {
       "signalType": "NRS - Remission",
-      "signalValue": "001",
-      "signalDescription": "No Repayment"
+      "signalValue": "true",
+      "signalDescription": "No Repayment Signal"
     },
     {
       "signalType": "NRS - ISBC",
-      "signalValue": "002",
-      "signalDescription": "No Repayment"
+      "signalValue": "true",
+      "signalDescription": "No Repayment Signal"
     },
     {
       "signalType": "NRS - WMBC",
-      "signalValue": "010",
-      "signalDescription": "No Repayment"
+      "signalValue": "true",
+      "signalDescription": "No Repayment Signal"
     },
     {
       "signalType": "NRS - LB",
-      "signalValue": "036",
-      "signalDescription": "No Repayment"
+      "signalValue": "true",
+      "signalDescription": "No Repayment Signal"
     },
     {
       "signalType": "NRS - CA",
-      "signalValue": "001",
-      "signalDescription": "No Repayment"
+      "signalValue": "true",
+      "signalDescription": "No Repayment Signal"
     },
     {
       "signalType": "NRS - RIS",
-      "signalValue": "002",
-      "signalDescription": "No Repayment"
-    },
-    {
-      "signalType": "No Repayment Reason",
-      "signalValue": "010",
-      "signalDescription": "No Repayment Reason"
-    },
-    {
-      "signalType": "Insolvent",
-      "signalValue": "036",
-      "signalDescription": "Solvency Status"
-    },
-    {
-      "signalType": "Deceased",
-      "signalValue": "001",
-      "signalDescription": "Deceased"
-    },
-    {
-      "signalType": "RLS",
-      "signalValue": "002",
-      "signalDescription": "RLS"
-    },
-    {
-      "signalType": "Additional Security Check",
-      "signalValue": "010",
-      "signalDescription": "Additional Security Check"
-    },
-    {
-      "signalType": "Welsh Language Signal",
-      "signalValue": "036",
-      "signalDescription": "Welsh Language Signal"
-    },
-    {
-      "signalType": "Agent",
-      "signalValue": "001",
-      "signalDescription": "Presence of an Agent "
-    },
-    {
-      "signalType": "ITSA Migrated",
-      "signalValue": "002",
-      "signalDescription": "Year of Migration"
-    },
-    {
-      "signalType": "Breathing Space",
-      "signalValue": "010",
-      "signalDescription": "Breathing Space"
-    },
-    {
-      "signalType": "RLS",
-      "signalValue": "false",
-      "signalDescription": "false"
+      "signalValue": "true",
+      "signalDescription": "No Repayment Signal"
     }
   ],
   "filing": [
