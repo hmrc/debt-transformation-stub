@@ -41,27 +41,27 @@
       ]
     }
   ],
+  "signals": [
+    {
+      "signalType": "Welsh Language Signal",
+      "signalValue": "true",
+      "signalDescription": "Welsh Language Signal"
+    }
+  ],
   "filing": [
     {
       "icrCategory": "ZR01",
-      "icrDescription": "RTI - VAT - Monthly Returns",
+      "icrDescription": "RTI - PAYE - Monthly Returns",
       "fromDate": "2022-03-06",
       "toDate": "2022-04-05",
-      "dueDate": "2022-04-22"
+      "dueDate": "<DUE_DATE_FOR_FUTURE>"
     },
     {
       "icrCategory": "ZR01",
       "icrDescription": "RTI - VAT - Monthly Returns",
       "fromDate": "2022-04-06",
       "toDate": "2022-05-05",
-      "dueDate": "2022-05-22"
-    }
-  ],
-  "signals": [
-    {
-      "signalType": "Welsh Language Signal",
-      "signalValue": "true",
-      "signalDescription": "Welsh Language Signal"
+      "dueDate": "<DUE_DATE_TODAY>"
     }
   ],
   "charges": [
