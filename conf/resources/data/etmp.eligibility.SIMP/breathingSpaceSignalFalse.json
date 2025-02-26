@@ -7,7 +7,7 @@
     },
     {
       "idType": "NINO",
-      "idValue": "SIMP123545"
+      "idValue": "SIMP123546"
     }
   ],
   "addresses": [
@@ -32,9 +32,6 @@
     },
     {
       "addressType": "AGENT",
-      "addressLine1": "Worthing1",
-      "addressLine2": "Worthing2",
-      "countryCode": "GB",
       "rls": false,
       "postcodeHistory": [
         {
@@ -51,28 +48,13 @@
       "signalDescription": "Breathing Space"
     }
   ],
-  "filing": [
-    {
-      "icrCategory": "ZR01",
-      "icrDescription": "RTI - VAT - Monthly Returns",
-      "fromDate": "2022-03-06",
-      "toDate": "2022-04-05",
-      "dueDate": "2022-04-22"
-    },
-    {
-      "icrCategory": "ZR01",
-      "icrDescription": "RTI - VAT - Monthly Returns",
-      "fromDate": "2022-04-06",
-      "toDate": "2022-05-05",
-      "dueDate": "2022-05-22"
-    }
-  ],
+
   "charges": [
     {
-      "chargeType": "VAT Mig Return Debit Charge",
-      "mainType": "VAT Mig Return Charge",
-      "mainTrans": "7700",
-      "subTrans": "1174",
+      "chargeType": "In Year RTI Charge - Tax",
+      "mainType": "In Year RTI Charge (FPS)",
+      "mainTrans": "4530",
+      "subTrans": "1000",
       "taxPeriodFrom": "2023-02-06",
       "taxPeriodTo": "2023-03-05",
       "chargeReference": "XM123456789812",
@@ -80,16 +62,7 @@
       "dueDate": "<DUE_DATE>",
       "interestStartDate": "2022-03-19",
       "accruedInterest": 1.00,
-      "locks": [
-        {
-          "lockType": "Dunning",
-          "lockReason": "Appeal"
-        },
-        {
-          "lockType": "Calculate Interest",
-          "lockReason": "Appeal"
-        }
-      ]
+      "ddInProgress": "true"
     }
   ]
 }

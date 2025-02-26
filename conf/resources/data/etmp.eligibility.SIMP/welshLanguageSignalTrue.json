@@ -7,7 +7,7 @@
     },
     {
       "idType": "NINO",
-      "idValue": "SIMP123545"
+      "idValue": "SIMP123546"
     }
   ],
   "addresses": [
@@ -41,13 +41,6 @@
       ]
     }
   ],
-  "signals": [
-    {
-      "signalType": "Welsh Language Signal",
-      "signalValue": "true",
-      "signalDescription": "Welsh Language Signal"
-    }
-  ],
   "filing": [
     {
       "icrCategory": "ZR01",
@@ -64,12 +57,19 @@
       "dueDate": "2022-05-22"
     }
   ],
+  "signals": [
+    {
+      "signalType": "Welsh Language Signal",
+      "signalValue": "true",
+      "signalDescription": "Welsh Language Signal"
+    }
+  ],
   "charges": [
     {
-      "chargeType": "VAT Mig Return Debit Charge",
-      "mainType": "VAT Mig Return Charge",
-      "mainTrans": "7700",
-      "subTrans": "1174",
+      "chargeType": "In Year RTI Charge - Tax",
+      "mainType": "In Year RTI Charge (FPS)",
+      "mainTrans": "4530",
+      "subTrans": "1000",
       "taxPeriodFrom": "2023-02-06",
       "taxPeriodTo": "2023-03-05",
       "chargeReference": "XM123456789812",
@@ -77,16 +77,7 @@
       "dueDate": "<DUE_DATE>",
       "interestStartDate": "2022-03-19",
       "accruedInterest": 1.00,
-      "locks": [
-        {
-          "lockType": "Dunning",
-          "lockReason": "Appeal"
-        },
-        {
-          "lockType": "Calculate Interest",
-          "lockReason": "Appeal"
-        }
-      ]
+      "ddInProgress": "true"
     }
   ]
 }
