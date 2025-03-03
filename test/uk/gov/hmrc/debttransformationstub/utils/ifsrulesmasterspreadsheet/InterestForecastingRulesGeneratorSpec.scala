@@ -373,11 +373,10 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
       }
 
       "as a TSV from stdin" in {
-        val stdin: Iterator[String] = {
+        val stdin: Iterator[String] =
           Iterator.from(Data.`Sample--2024-08-24--DTD-2418`.tsvInput().split("\n")) ++
             Iterator.single("END_INPUT") ++
             Iterator.continually(fail(s"Tried to read line after input terminator."))
-        }
 
         val runner = new InterestForecastingRulesGenerator(readFile = brokenReadFile)
 

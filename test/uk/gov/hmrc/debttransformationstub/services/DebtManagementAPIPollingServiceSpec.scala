@@ -36,32 +36,29 @@ class DebtManagementAPIPollingServiceSpec
   implicit lazy val ec: ExecutionContext = app.injector.instanceOf[ExecutionContext]
 
   "the DebtManagementAPIPollingService" should {
-    "not rewrite a URL for field collections charge, stripping path params" in {
+    "not rewrite a URL for field collections charge, stripping path params" in
       insertRequestFor(
         env = "qa",
         inputUri = "/individuals/debts/field-collections/param1/param2/charge",
         expectedUri = "/individuals/debts/field-collections/param1/param2/charge",
         isCharge = true
       )
-    }
 
-    "rewrite a URL to api platform for non local requests" in {
+    "rewrite a URL to api platform for non local requests" in
       insertRequestFor(
         env = "qa",
         inputUri = "/individuals/subcontractor/idms/wmfid/SomewmfId",
         expectedUri = "/individuals/subcontractor/idms/wmfid/SomewmfId",
         isCharge = false
       )
-    }
 
-    "not rewrite a URL to api platform for local requests" in {
+    "not rewrite a URL to api platform for local requests" in
       insertRequestFor(
         env = "localhost",
         inputUri = "/individuals/subcontractor/idms/wmfid/SomewmfId",
         expectedUri = "/individuals/subcontractor/idms/wmfid/SomewmfId",
         isCharge = false
       )
-    }
   }
 
   private def insertRequestFor(env: String, inputUri: String, expectedUri: String, isCharge: Boolean) = {
@@ -89,7 +86,7 @@ class DebtManagementAPIPollingServiceSpec
       .thenReturn(Future.successful(mockWriteResult))
     when(mockTTPRequestsRepository.getResponseByRequestId(any[String]))
       .thenReturn(Future.successful(Some(stubbedRequestDetail)))
-    val result = {
+    val result =
       if (isCharge) {
         pollingService.insertFCChargeRequestAndServeResponse(
           Json.obj(),
@@ -100,7 +97,6 @@ class DebtManagementAPIPollingServiceSpec
       } else {
         pollingService.insertRequestAndServeResponse(Json.obj(), inputUri)
       }
-    }
 
     val requestDetail = captor.getValue.asInstanceOf[RequestDetail]
 
