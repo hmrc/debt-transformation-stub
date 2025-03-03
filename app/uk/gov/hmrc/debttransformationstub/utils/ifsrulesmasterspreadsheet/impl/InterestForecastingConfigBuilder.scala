@@ -85,9 +85,9 @@ object InterestForecastingConfigBuilder {
           InterestRule(index = dataIndex, raw = s"""IF ${ifCondition: String} -> ${thenClauses: String}""")
         )
       }
-      .sortBy({ case (mainTrans, subTrans, _: InterestRule) =>
+      .sortBy { case (mainTrans, subTrans, _: InterestRule) =>
         (mainTrans, subTrans)
-      })
+      }
       .map(_._3)
 
   private final case class InterestRule(index: Int, raw: String)
