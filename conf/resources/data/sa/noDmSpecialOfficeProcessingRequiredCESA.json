@@ -7,7 +7,6 @@
         "firstName": "Ben",
         "lastName": "Thomas",
         "dateOfBirth": "2014-09-12",
-        "processingOfficeOrgUnitId": "Text",
         "identifications": [
           {
             "idType": 73,
@@ -67,7 +66,7 @@
         "firstName": "Ben",
         "lastName": "Thomas",
         "dateOfBirth": "2000-09-12",
-        "districtNumber": "206200",
+        "districtNumber": "206809",
         "identifications": [
           {
             "idType": 73,
