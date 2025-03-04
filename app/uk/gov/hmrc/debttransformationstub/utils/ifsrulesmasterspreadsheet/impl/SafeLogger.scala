@@ -17,7 +17,8 @@
 package uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet.impl
 
 /** For command-line tools following the POSIX standard of logging to stderr.
-  * @see https://pubs.opengroup.org/onlinepubs/9699919799/functions/stderr.html
+  * @see
+  *   https://pubs.opengroup.org/onlinepubs/9699919799/functions/stderr.html
   */
 trait SafeLogger {
   protected def printString(chars: String): Unit

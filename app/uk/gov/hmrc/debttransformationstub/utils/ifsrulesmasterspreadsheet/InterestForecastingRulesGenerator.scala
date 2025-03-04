@@ -25,8 +25,8 @@ import java.util.Locale
 import scala.io.Source
 import scala.util.Using
 
-/** This command-line application takes in a master spreadsheet with IFS rules and transforms it.
-  * See the unit tests for complete examples of how to use it.
+/** This command-line application takes in a master spreadsheet with IFS rules and transforms it. See the unit tests for
+  * complete examples of how to use it.
   *
   * See `README.md` for instructions.
   */
@@ -52,14 +52,14 @@ object InterestForecastingRulesGenerator {
             inputArgs match {
               case "--input-console-tsv"     => InputSettings.ConsoleTsv(inputTerminator = "END_INPUT")
               case s"--input-file=$filePath" => InputSettings.FromFile(filePath = filePath)
-              case wrongArgs                 => throw new IllegalArgumentException(s"Unknown input args: ${Json.toJson(wrongArgs)}")
+              case wrongArgs => throw new IllegalArgumentException(s"Unknown input args: ${Json.toJson(wrongArgs)}")
             }
 
           val outputSettings =
             outputArgs match {
               case "--output-console-conf"              => OutputSettings.ConsoleApplicationConf
               case "--output-console-production-config" => OutputSettings.ConsoleProductionConfig
-              case wrongArgs                            => throw new IllegalArgumentException(s"Unknown output args: ${Json.toJson(wrongArgs)}")
+              case wrongArgs => throw new IllegalArgumentException(s"Unknown output args: ${Json.toJson(wrongArgs)}")
             }
 
           ParsedArgs(inputSettings, outputSettings)
