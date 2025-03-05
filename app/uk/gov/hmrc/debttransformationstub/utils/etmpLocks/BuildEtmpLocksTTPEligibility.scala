@@ -18,10 +18,12 @@ package uk.gov.hmrc.debttransformationstub.utils.etmpLocks
 
 import kantan.csv._
 import kantan.csv.ops.toCsvInputOps
+import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
+import uk.gov.hmrc.http.HeaderCarrier
 
 import java.util.Base64
 import scala.io.Source
-import scala.util.{ Failure, Success, Try, Using }
+import scala.util.{Failure, Success, Try, Using}
 
 /** INSTRUCTIONS The business spreadsheet that you copy into a csv file and add to test/resources/disallowedSpreadsheets
   * in time-to-pay-eligibility, Add this same file to the file in this repo:
@@ -32,14 +34,16 @@ import scala.util.{ Failure, Success, Try, Using }
   */
 case class EtmpLock(
   lockReason: String,
-  disallowPAYE: Boolean,
-  disallowVAT: Boolean,
+  disallowPaye: Boolean,
+  disallowVat: Boolean,
   disallowSa: Boolean,
   disallowSimp: Boolean
 )
 case class LockTypeAndLock(lockType: String, etmpLock: EtmpLock)
 
 object BuildEtmpLocksTTPEligibility extends App {
+  private lazy val logger = new RequestAwareLogger(this.getClass)
+  implicit val hc: HeaderCarrier = HeaderCarrier()
 
   println(filterAndEncodeList(CsvData.expectedItems))
 
@@ -51,14 +55,27 @@ object BuildEtmpLocksTTPEligibility extends App {
   case object ClearingLocks extends LockTypes(businessLockName = "posting/clearing", configName = "clearingLocks")
   case object PaymentLocks extends LockTypes(businessLockName = "payments", configName = "paymentLocks")
 
-  def filterAndEncodeList(csvLocks: List[LockTypeAndLock]): String = {
+  def filterAndEncodeList(csvLocks: List[LockTypeAndLock])(implicit hc: HeaderCarrier): String = {
+
+    val shouldBeEmpty = csvLocks.filterNot{lock =>
+      lock.lockType.trim.toLowerCase.replaceAll(" ", "") == Dunning.businessLockName.trim.toLowerCase
+      .replaceAll(" ", "")}.filterNot{lock =>
+      lock.lockType.trim.toLowerCase.replaceAll(" ", "") == ClearingLocks.businessLockName.trim.toLowerCase
+        .replaceAll(" ", "")}.filterNot{lock =>
+      lock.lockType.trim.toLowerCase.replaceAll(" ", "") == PaymentLocks.businessLockName.trim.toLowerCase
+        .replaceAll(" ", "")}
+      .filterNot{lock =>
+        lock.lockType.trim.toLowerCase.replaceAll(" ", "") == CalculateInterest.businessLockName.trim.toLowerCase
+          .replaceAll(" ", "")}
+
+    if(shouldBeEmpty.nonEmpty) logger.info(s"LockType: ${shouldBeEmpty.map(_.lockType).distinct.mkString(",")} in csv spreadsheet not recognised")
 
     def encodeLock(lock: EtmpLock): String = {
       val encodedReason =
         lock.copy(lockReason = new String(Base64.getEncoder.encodeToString(lock.lockReason.getBytes())))
 
       s"{ lockReason = \"${encodedReason.lockReason}\", " +
-        s"disallowPaye = ${lock.disallowPAYE}, disallowVat = ${lock.disallowVAT}, " +
+        s"disallowPaye = ${lock.disallowPaye}, disallowVat = ${lock.disallowVat}, " +
         s"disallowSa = ${lock.disallowSa}, disallowSimp = ${lock.disallowSimp} }," +
         s" \n # lock reason = ${lock.lockReason}\n"
     }
@@ -85,10 +102,10 @@ object BuildEtmpLocksTTPEligibility extends App {
       encodeLock(lock)
     }.mkString
 
-    s"${Dunning.configName} = [\n $encodedDunningLocks]\n " +
-      s"${CalculateInterest.configName} = [\n $encodedCalculateInterestLocks]\n " +
-      s"${ClearingLocks.configName} = [\n $encodedClearingLocksLocks]\n " +
-      s"${PaymentLocks.configName} = [\n $encodedPaymentLocksLocks]\n"
+    s"${Dunning.configName} = [\n $encodedDunningLocks]\n" +
+      s"${CalculateInterest.configName} = [\n $encodedCalculateInterestLocks]\n" +
+      s"${ClearingLocks.configName} = [\n $encodedClearingLocksLocks]\n" +
+      s"${PaymentLocks.configName} = [\n $encodedPaymentLocksLocks]"
   }
 
 }
@@ -100,7 +117,7 @@ object CsvData {
       source.mkString
     }
 
-  val unprocessedRows: List[List[String]] = maybeCsvData match {
+  private val unprocessedRows: List[List[String]] = maybeCsvData match {
     case Failure(exception) => throw new IllegalStateException(s"Exception: $exception")
     case Success(csvData) =>
       csvData
