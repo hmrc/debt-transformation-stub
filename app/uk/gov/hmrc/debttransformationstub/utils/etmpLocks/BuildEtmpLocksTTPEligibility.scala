@@ -96,7 +96,7 @@ object BuildEtmpLocksTTPEligibility extends App {
 object CsvData {
   // update the csv file name for the locks here
   private val maybeCsvData: Try[String] =
-    Using(Source.fromFile("test/uk/gov/hmrc/debttransformationstub/utils/etmpLocks/etmpLocksV5.csv")) { source =>
+    Using(Source.fromFile("app/uk/gov/hmrc/debttransformationstub/utils/etmpLocks/etmpLocksV5.csv")) { source =>
       source.mkString
     }
 
