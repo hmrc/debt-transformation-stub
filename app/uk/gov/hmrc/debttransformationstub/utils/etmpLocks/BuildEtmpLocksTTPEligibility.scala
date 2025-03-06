@@ -25,12 +25,15 @@ import java.util.Base64
 import scala.io.Source
 import scala.util.{ Failure, Success, Try, Using }
 
-/** INSTRUCTIONS The business spreadsheet that you copy into a csv file and add to test/resources/disallowedSpreadsheets
-  * in time-to-pay-eligibility, Add this same file to the file in this repo:
-  * test/uk/gov/hmrc/debttransformationstub/utils/etmpLocks/etmpLocksV5.csv Then rename the file to reflect the version
-  * of the spreadsheet and update all the places it is referenced. Run BuildEtmpLocksTTPEligibility in this file. Copy
-  * the output into the application.conf file in time-to-pay-eligibility time-to-pay-eligibility -> application.conf ->
-  * etmpLocks { PASTE OUTPUT HERE }
+/** INSTRUCTIONS
+  * From the business spreadsheet you will have copied it into a csv file and added it to
+  * test/resources/disallowedSpreadsheets in time-to-pay-eligibility.
+  * Add this same file to this location in this repo, replacing the existing one:
+  * test/uk/gov/hmrc/debttransformationstub/utils/etmpLocks/etmpLocksV5.csv
+  * Rename the csv file to reflect the spreadsheet version and update the place it is referenced in this file.
+  * In this file run BuildEtmpLocksTTPEligibility object.
+  * Copy the output into the application.conf file in time-to-pay-eligibility
+  * time-to-pay-eligibility -> application.conf -> etmpLocks { PASTE OUTPUT HERE }
   */
 case class EtmpLock(
   lockReason: String,
