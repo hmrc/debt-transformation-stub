@@ -88,6 +88,10 @@
         {
           "lockType": "Calculate Interest",
           "lockReason": "Clerical Interest Signal"
+        },
+        {
+          "lockType": "Posting/Clearing",
+          "lockReason": "clear lock interest"
         }
       ]
     }
