@@ -23,7 +23,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 
 import java.util.Base64
 import scala.io.Source
-import scala.util.{Failure, Success, Try, Using}
+import scala.util.{ Failure, Success, Try, Using }
 
 /** INSTRUCTIONS The business spreadsheet that you copy into a csv file and add to test/resources/disallowedSpreadsheets
   * in time-to-pay-eligibility, Add this same file to the file in this repo:
@@ -57,18 +57,28 @@ object BuildEtmpLocksTTPEligibility extends App {
 
   def filterAndEncodeList(csvLocks: List[LockTypeAndLock])(implicit hc: HeaderCarrier): String = {
 
-    val shouldBeEmpty = csvLocks.filterNot{lock =>
-      lock.lockType.trim.toLowerCase.replaceAll(" ", "") == Dunning.businessLockName.trim.toLowerCase
-      .replaceAll(" ", "")}.filterNot{lock =>
-      lock.lockType.trim.toLowerCase.replaceAll(" ", "") == ClearingLocks.businessLockName.trim.toLowerCase
-        .replaceAll(" ", "")}.filterNot{lock =>
-      lock.lockType.trim.toLowerCase.replaceAll(" ", "") == PaymentLocks.businessLockName.trim.toLowerCase
-        .replaceAll(" ", "")}
-      .filterNot{lock =>
+    val shouldBeEmpty = csvLocks
+      .filterNot { lock =>
+        lock.lockType.trim.toLowerCase.replaceAll(" ", "") == Dunning.businessLockName.trim.toLowerCase
+          .replaceAll(" ", "")
+      }
+      .filterNot { lock =>
+        lock.lockType.trim.toLowerCase.replaceAll(" ", "") == ClearingLocks.businessLockName.trim.toLowerCase
+          .replaceAll(" ", "")
+      }
+      .filterNot { lock =>
+        lock.lockType.trim.toLowerCase.replaceAll(" ", "") == PaymentLocks.businessLockName.trim.toLowerCase
+          .replaceAll(" ", "")
+      }
+      .filterNot { lock =>
         lock.lockType.trim.toLowerCase.replaceAll(" ", "") == CalculateInterest.businessLockName.trim.toLowerCase
-          .replaceAll(" ", "")}
+          .replaceAll(" ", "")
+      }
 
-    if(shouldBeEmpty.nonEmpty) logger.info(s"LockType: ${shouldBeEmpty.map(_.lockType).distinct.mkString(",")} in csv spreadsheet not recognised")
+    if (shouldBeEmpty.nonEmpty)
+      logger.info(
+        s"LockType: ${shouldBeEmpty.map(_.lockType).distinct.mkString(",")} in csv spreadsheet not recognised"
+      )
 
     def encodeLock(lock: EtmpLock): String = {
       val encodedReason =
