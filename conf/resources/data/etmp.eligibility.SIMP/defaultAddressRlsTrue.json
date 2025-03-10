@@ -13,13 +13,20 @@
   "addresses": [
     {
       "addressType": "XXDEFAULT",
+      "addressLine1": "Worthing1",
+      "countryCode": "GB",
       "rls": true,
       "emailAddress": "joe@snailmail.com",
+      "telephoneNumber": "07823412345",
+      "postCode": "BN164QR",
+      "country": "GB",
       "postcodeHistory": []
     },
     {
       "addressType": "PPOB",
       "rls": false,
+      "addressLine1": "Worthing1",
+      "countryCode": "GB",
       "emailAddress": "joe@snailmail.com",
       "postcodeHistory": [
         {
@@ -39,6 +46,8 @@
     {
       "addressType": "AGENT",
       "rls": false,
+      "addressLine1": "Worthing1",
+      "countryCode": "GB",
       "postcodeHistory": [
         {
           "addressPostcode": "BN164QR",

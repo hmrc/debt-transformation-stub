@@ -14,6 +14,8 @@
     {
       "addressType": "PPOB",
       "rls": false,
+      "addressLine1": "Worthing1",
+      "countryCode": "GB",
       "emailAddress": "joe@snailmail.com",
       "postcodeHistory": [
         {
@@ -33,6 +35,8 @@
     {
       "addressType": "AGENT",
       "rls": false,
+      "addressLine1": "Worthing1",
+      "countryCode": "GB",
       "postcodeHistory": [
         {
           "addressPostcode": "BN164QR",
