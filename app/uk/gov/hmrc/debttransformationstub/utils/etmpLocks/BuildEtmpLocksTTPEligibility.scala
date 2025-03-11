@@ -25,18 +25,21 @@ import java.util.Base64
 import scala.io.Source
 import scala.util.{ Failure, Success, Try, Using }
 
-/** INSTRUCTIONS
-  * From the business spreadsheet you will have copied it into a csv file and added it to
-  * test/resources/disallowedSpreadsheets in time-to-pay-eligibility.
-  * Add this same file to this location in this repo, replacing the existing one:
-  * test/uk/gov/hmrc/debttransformationstub/utils/etmpLocks/etmpLocksV5.csv
-  * Rename the csv file to reflect the spreadsheet version and update the place it is referenced in this file.
-  * In this file run BuildEtmpLocksTTPEligibility object.
-  * Copy the output into the application.conf file in time-to-pay-eligibility
+/** INSTRUCTIONS From the business spreadsheet you will have copied it into a csv file and added it to
+  * test/resources/disallowedSpreadsheets in time-to-pay-eligibility. Add this same file to this location in this repo,
+  * replacing the existing one: test/uk/gov/hmrc/debttransformationstub/utils/etmpLocks/etmpLocksV5.csv Rename the csv
+  * file to reflect the spreadsheet version and update the place it is referenced in this file. In this file run
+  * BuildEtmpLocksTTPEligibility object. Copy the output into the application.conf file in time-to-pay-eligibility
   * time-to-pay-eligibility -> application.conf -> etmpLocks { PASTE OUTPUT HERE }
   */
 
-case class EtmpLock(lockReason: String, disallowPaye: Boolean, disallowVat: Boolean, disallowSa: Boolean, disallowSimp: Boolean)
+case class EtmpLock(
+  lockReason: String,
+  disallowPaye: Boolean,
+  disallowVat: Boolean,
+  disallowSa: Boolean,
+  disallowSimp: Boolean
+)
 case class LockTypeAndLock(lockType: String, etmpLock: EtmpLock)
 
 // If the business name (in the spreadsheet) or the config name for the locks change update them here
@@ -62,9 +65,8 @@ object BuildEtmpLocksTTPEligibility extends App {
   def filterAndEncodeList(csvLocks: List[LockTypeAndLock])(implicit hc: HeaderCarrier): String = {
     val validLockTypes = LockTypes.all.map(_.businessLockName.toLowerCase.replaceAll(" ", ""))
 
-    val unrecognizedLocks = csvLocks.filterNot(lock =>
-      validLockTypes.contains(lock.lockType.toLowerCase.replaceAll(" ", ""))
-    )
+    val unrecognizedLocks =
+      csvLocks.filterNot(lock => validLockTypes.contains(lock.lockType.toLowerCase.replaceAll(" ", "")))
 
     if (unrecognizedLocks.nonEmpty) {
       logger.info(s"Unrecognized LockTypes: ${unrecognizedLocks.map(_.lockType).distinct.mkString(", ")}")
@@ -76,16 +78,16 @@ object BuildEtmpLocksTTPEligibility extends App {
         s"disallowSa = ${lock.disallowSa}, disallowSimp = ${lock.disallowSimp} },\n" +
         s"  # lock reason = ${lock.lockReason}\n"
 
-
     def filteredAndEncodedLocks(lockType: LockTypes): String =
-      csvLocks.collect {
-        case LockTypeAndLock(lockTypeStr, lock) if LockTypes.fromName(lockTypeStr).contains(lockType) =>
-          encodeLock(lock)
-      }.sorted.mkString
+      csvLocks
+        .collect {
+          case LockTypeAndLock(lockTypeStr, lock) if LockTypes.fromName(lockTypeStr).contains(lockType) =>
+            encodeLock(lock)
+        }
+        .sorted
+        .mkString
 
-    LockTypes.all.map(lockType =>
-      s"${lockType.configName} = [\n${filteredAndEncodedLocks(lockType)}]\n"
-    ).mkString
+    LockTypes.all.map(lockType => s"${lockType.configName} = [\n${filteredAndEncodedLocks(lockType)}]\n").mkString
   }
 }
 
@@ -97,22 +99,28 @@ object CsvData {
   private val unprocessedRows: List[List[String]] = maybeCsvData match {
     case Failure(exception) => throw new IllegalStateException(s"Exception: $exception")
     case Success(csvData) =>
-      csvData.asCsvReader[List[String]](rfc.withHeader()).collect {
-        case Right(value) => value
-      }.toList
+      csvData
+        .asCsvReader[List[String]](rfc.withHeader())
+        .collect { case Right(value) =>
+          value
+        }
+        .toList
   }
 
   val expectedItems: List[LockTypeAndLock] = unprocessedRows.map(readCsvRowOrThrow)
 
   private def readCsvRowOrThrow(row: List[String]): LockTypeAndLock = row match {
     case lockType :: reason :: paye :: vat :: sa :: simp :: _ =>
-      LockTypeAndLock(lockType, EtmpLock(reason.trim, extractBoolean(paye), extractBoolean(vat), extractBoolean(sa), extractBoolean(simp)))
+      LockTypeAndLock(
+        lockType,
+        EtmpLock(reason.trim, extractBoolean(paye), extractBoolean(vat), extractBoolean(sa), extractBoolean(simp))
+      )
     case other => throw new IllegalStateException(s"Row does not match pattern: $other")
   }
 
   private def extractBoolean(value: String): Boolean = value.trim match {
-    case "yes" => true
-    case "no"  => false
+    case "yes"   => true
+    case "no"    => false
     case invalid => throw new IllegalStateException(s"Illegal value: $invalid")
   }
 }
