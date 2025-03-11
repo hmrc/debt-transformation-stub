@@ -144,9 +144,8 @@ class TimeToPayController @Inject() (
 
   def nddsEnactArrangement: Action[JsValue] = Action.async(parse.json) { implicit request =>
     val correlationId = getCorrelationIdHeader(request.headers)
-    withCustomJsonBody[NDDSRequest] { req =>
-      val requestChargeHodServices = req.paymentPlan.paymentPlanCharges.map(_.hodService)
-      if (requestChargeHodServices.contains("PAYE")) {
+    if (request.body.toString().contains("PAYE")) {
+      withCustomJsonBody[NDDSRequest] { req =>
         val brocsId = req.identification
           .find(_.idType.equalsIgnoreCase("BROCS"))
           .map(_.idValue)
@@ -155,7 +154,9 @@ class TimeToPayController @Inject() (
           _            <- enactStageRepository.addNDDSStage(correlationId, req)
           fileResponse <- findFile(s"/ndds.enactArrangement/", s"$brocsId.json")
         } yield fileResponse
-      } else if (requestChargeHodServices.contains("VAT")) {
+      }
+    } else if (request.body.toString().contains("VAT")) {
+      withCustomJsonBody[NDDSRequest] { req =>
         val vrnId = req.identification
           .find(_.idType.equalsIgnoreCase("VRN"))
           .map(_.idValue)
@@ -164,22 +165,22 @@ class TimeToPayController @Inject() (
           _            <- enactStageRepository.addNDDSStage(correlationId, req)
           fileResponse <- findFile(s"/ndds.enactArrangement/", s"$vrnId.json")
         } yield fileResponse
-      } else if (requestChargeHodServices.contains("SAFE")) {
-        val ninoBrocsId = req.identification
-          .find(id => id.idType.equalsIgnoreCase("NINO") || id.idType.equalsIgnoreCase("BROCS"))
+      }
+    } else if (request.body.toString().contains("SIMP")) {
+      withCustomJsonBody[NDDSRequest] { req =>
+        val vrnId = req.identification
+          .find(_.idType.equalsIgnoreCase("NINO"))
           .map(_.idValue)
-          .getOrElse(
-            throw new IllegalArgumentException("NINO or BROCS id is required for SIMP or PAYE NDDS enact arrangements")
-          )
+          .getOrElse(throw new IllegalArgumentException("NINO id is required for SIMP NDDS enact arrangement"))
         for {
           _            <- enactStageRepository.addNDDSStage(correlationId, req)
-          fileResponse <- findFile(s"/ndds.enactArrangement/", s"$ninoBrocsId.json")
+          fileResponse <- findFile(s"/ndds.enactArrangement/", s"$vrnId.json")
         } yield fileResponse
-      } else {
-        throw new IllegalArgumentException(
-          "Either BROCS, VRN, or SAFE id types are required for PAYE, VAT, or SIMP enact arrangements"
-        )
       }
+    } else {
+      throw new IllegalArgumentException(
+        "Either BROCS or VRN id type is required for PAYE and VAT an enact arrangement"
+      )
     }
   }
 
