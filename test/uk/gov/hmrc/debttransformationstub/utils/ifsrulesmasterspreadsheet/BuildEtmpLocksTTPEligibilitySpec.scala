@@ -16,11 +16,9 @@
 
 package uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet
 
-import org.mockito.MockitoSugar.mock
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers._
-import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
-import uk.gov.hmrc.debttransformationstub.utils.etmpLocks.{ BuildEtmpLocksTTPEligibility, EtmpLock, LockTypeAndLock }
+import uk.gov.hmrc.debttransformationstub.utils.etmpLocks.{BuildEtmpLocksTTPEligibility, EtmpLock, LockTypeAndLock}
 import uk.gov.hmrc.http.HeaderCarrier
 
 class BuildEtmpLocksTTPEligibilitySpec extends AnyFreeSpec {
@@ -66,21 +64,22 @@ class BuildEtmpLocksTTPEligibilitySpec extends AnyFreeSpec {
 
       BuildEtmpLocksTTPEligibility.filterAndEncodeList(locks) shouldBe
         "dunning = [\n" +
-        " { lockReason = \"Y29tcGxhaW50ICAobGV2ZWwgMSk=\", disallowPaye = false, disallowVat = true, disallowSa = true, disallowSimp = false }, " +
-        "\n # lock reason = complaint  (level 1)" +
-        "\n]\n" +
-        "calculateInterest = [\n" +
-        " { lockReason = \"YnJlYXRoaW5nIHNwYWNlIG1vcmF0b3JpdW0gYWN0\", disallowPaye = false, disallowVat = false, disallowSa = false, disallowSimp = false }, " +
-        "\n # lock reason = breathing space moratorium act" +
-        "\n]\n" +
-        "clearingLocks = [\n" +
-        " { lockReason = \"YXdhaXQgYXBwbGV2eSBjaGFyZ2U=\", disallowPaye = false, disallowVat = true, disallowSa = true, disallowSimp = false }, " +
-        "\n # lock reason = await applevy charge" +
-        "\n]\n" +
-        "paymentLocks = [\n" +
-        " { lockReason = \"YXVkaXQvY29tcGxpYW5jZQ==\", disallowPaye = false, disallowVat = true, disallowSa = true, disallowSimp = true }, " +
-        "\n # lock reason = audit/compliance" +
-        "\n]"
+          "  { lockReason = \"Y29tcGxhaW50ICAobGV2ZWwgMSk=\", " +
+          "disallowPaye = false, disallowVat = true, disallowSa = true, disallowSimp = false },\n" +
+          "  # lock reason = complaint  (level 1)\n" +
+          "]\n" +
+          "calculateInterest = [\n" +
+          "  { lockReason = \"YnJlYXRoaW5nIHNwYWNlIG1vcmF0b3JpdW0gYWN0\", disallowPaye = false, disallowVat = false, disallowSa = false, disallowSimp = false },\n" +
+          "  # lock reason = breathing space moratorium act\n" +
+          "]\n" +
+          "clearingLocks = [\n" +
+          "  { lockReason = \"YXdhaXQgYXBwbGV2eSBjaGFyZ2U=\", disallowPaye = false, disallowVat = true, disallowSa = true, disallowSimp = false },\n" +
+          "  # lock reason = await applevy charge\n" +
+          "]\n" +
+          "paymentLocks = [\n" +
+          "  { lockReason = \"YXVkaXQvY29tcGxpYW5jZQ==\", disallowPaye = false, disallowVat = true, disallowSa = true, disallowSimp = true },\n" +
+          "  # lock reason = audit/compliance\n" +
+          "]\n"
     }
 
     "given a list of LockTypeAndLock containing all 4 lock types with spaces and case differences should correctly encode them in a appropriate application.conf file format" in {
@@ -123,24 +122,25 @@ class BuildEtmpLocksTTPEligibilitySpec extends AnyFreeSpec {
 
       BuildEtmpLocksTTPEligibility.filterAndEncodeList(locks) shouldBe
         "dunning = [\n" +
-        " { lockReason = \"Y29tcGxhaW50ICAobGV2ZWwgMSk=\", disallowPaye = false, disallowVat = true, disallowSa = true, disallowSimp = false }, " +
-        "\n # lock reason = complaint  (level 1)" +
-        "\n]\n" +
+          "  { lockReason = \"Y29tcGxhaW50ICAobGV2ZWwgMSk=\", " +
+          "disallowPaye = false, disallowVat = true, disallowSa = true, disallowSimp = false },\n" +
+          "  # lock reason = complaint  (level 1)\n" +
+          "]\n" +
         "calculateInterest = [\n" +
-        " { lockReason = \"YnJlYXRoaW5nIHNwYWNlIG1vcmF0b3JpdW0gYWN0\", disallowPaye = false, disallowVat = false, disallowSa = false, disallowSimp = false }, " +
-        "\n # lock reason = breathing space moratorium act" +
-        "\n]\n" +
+        "  { lockReason = \"YnJlYXRoaW5nIHNwYWNlIG1vcmF0b3JpdW0gYWN0\", disallowPaye = false, disallowVat = false, disallowSa = false, disallowSimp = false },\n" +
+        "  # lock reason = breathing space moratorium act\n" +
+        "]\n" +
         "clearingLocks = [\n" +
-        " { lockReason = \"YXdhaXQgYXBwbGV2eSBjaGFyZ2U=\", disallowPaye = false, disallowVat = true, disallowSa = true, disallowSimp = false }, " +
-        "\n # lock reason = await applevy charge" +
-        "\n]\n" +
+        "  { lockReason = \"YXdhaXQgYXBwbGV2eSBjaGFyZ2U=\", disallowPaye = false, disallowVat = true, disallowSa = true, disallowSimp = false },\n" +
+        "  # lock reason = await applevy charge\n" +
+        "]\n" +
         "paymentLocks = [\n" +
-        " { lockReason = \"YXVkaXQvY29tcGxpYW5jZQ==\", disallowPaye = false, disallowVat = true, disallowSa = true, disallowSimp = true }, " +
-        "\n # lock reason = audit/compliance" +
-        "\n]"
+        "  { lockReason = \"YXVkaXQvY29tcGxpYW5jZQ==\", disallowPaye = false, disallowVat = true, disallowSa = true, disallowSimp = true },\n" +
+        "  # lock reason = audit/compliance\n" +
+        "]\n"
     }
 
-    "given a list of LockTypeAndLock containing some lock types should correctly encode them in a appropriate application.conf file format, leaving sections of other types empty" in {
+    "given a list of LockTypeAndLock containing some lock types and some unknown lockTypes, should correctly encode them in a appropriate application.conf file format, leaving empty known and unknown types empty" in {
       val locks = List(
         LockTypeAndLock(
           "dunning ",
@@ -176,15 +176,16 @@ class BuildEtmpLocksTTPEligibilitySpec extends AnyFreeSpec {
 
       BuildEtmpLocksTTPEligibility.filterAndEncodeList(locks) shouldBe
         "dunning = [\n" +
-        " { lockReason = \"Y29tcGxhaW50ICAobGV2ZWwgMSk=\", disallowPaye = false, disallowVat = true, disallowSa = true, disallowSimp = false }, " +
-        "\n # lock reason = complaint  (level 1)" +
-        "\n]\n" +
-        "calculateInterest = [\n ]\n" +
-        "clearingLocks = [\n" +
-        " { lockReason = \"YXdhaXQgYXBwbGV2eSBjaGFyZ2U=\", disallowPaye = false, disallowVat = true, disallowSa = true, disallowSimp = false }, " +
-        "\n # lock reason = await applevy charge" +
-        "\n]\n" +
-        "paymentLocks = [\n ]"
+          "  { lockReason = \"Y29tcGxhaW50ICAobGV2ZWwgMSk=\", " +
+          "disallowPaye = false, disallowVat = true, disallowSa = true, disallowSimp = false },\n" +
+          "  # lock reason = complaint  (level 1)\n" +
+          "]\n" +
+          "calculateInterest = [\n]\n" +
+          "clearingLocks = [\n" +
+          "  { lockReason = \"YXdhaXQgYXBwbGV2eSBjaGFyZ2U=\", disallowPaye = false, disallowVat = true, disallowSa = true, disallowSimp = false },\n" +
+          "  # lock reason = await applevy charge\n" +
+          "]\n" +
+          "paymentLocks = [\n]\n"
     }
 
   }
