@@ -72,7 +72,7 @@
       "taxPeriodTo": "2023-03-05",
       "chargeReference": "XM123456789812",
       "outstandingAmount": 19999.00,
-      "dueDate": "<DUE_DATE_FOR_FUTURE>",
+      "dueDate": "<DUE_DATE>",
       "interestStartDate": "2022-03-19",
       "accruedInterest": 1.00,
       "ddInProgress": "true"
@@ -85,8 +85,8 @@
       "taxPeriodFrom": "2022-02-06",
       "taxPeriodTo": "2022-03-05",
       "chargeReference": "XM000000000002",
-      "outstandingAmount": 123.56,
-      "dueDate": "<DUE_DATE>",
+      "outstandingAmount": 50001.56,
+      "dueDate": "<DUE_DATE_FOR_FUTURE>",
       "interestStartDate": "2022-03-19",
       "accruedInterest": 2.09
     }
