@@ -64,22 +64,6 @@
       "signalDescription": "gghsjsl"
     }
   ],
-  "filing": [
-    {
-      "icrCategory": "ZR01",
-      "icrDescription": "RTI - PAYE - Monthly Returns",
-      "fromDate": "2022-03-06",
-      "toDate": "2022-04-05",
-      "dueDate": "2022-04-22"
-    },
-    {
-      "icrCategory": "ZR01",
-      "icrDescription": "RTI - PAYE - Monthly Returns",
-      "fromDate": "2022-04-06",
-      "toDate": "2022-05-05",
-      "dueDate": "2022-05-22"
-    }
-  ],
   "charges": [
     {
       "chargeType": "In Year RTI Charge - Tax",
