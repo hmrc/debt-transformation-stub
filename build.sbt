@@ -1,4 +1,4 @@
-import uk.gov.hmrc.DefaultBuildSettings
+
 
 val appName = "debt-transformation-stub"
 
@@ -16,6 +16,7 @@ lazy val microservice = Project(appName, file("."))
     )
   )
   .settings(resolvers += Resolver.jcenterRepo)
+  .disablePlugins(JUnitXmlReportPlugin)
 
 lazy val it = project
   .enablePlugins(PlayScala)
