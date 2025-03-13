@@ -330,4 +330,4 @@ Main Trans,Sub Trans,Interest bearing,Interest key,Interest only Debt,Charge Ref
 4003,1060,Y,,N,UTR,SA SSTTP AND NOT into IFS and SoL,
 4003,1100,Y,,N,UTR,SA SSTTP AND NOT into IFS and SoL,
 4941,2090,N,,Y,N/A,SA SSTTP AND NOT into IFS and SoL,
-4530,1000,N,,N,Charge Ref,SIA,
+4530,3190,N,,N,Charge Ref,SIA,

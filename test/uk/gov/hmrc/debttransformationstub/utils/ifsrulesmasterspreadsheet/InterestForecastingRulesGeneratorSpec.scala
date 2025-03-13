@@ -86,7 +86,7 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
             "4910\t1005\tY\t\tN\tUTR\tperiodEnd\tCDCS",
             "4910\t1007\tY\t\tN\tN/A\tperiodEnd\tCDCS",
             "4910\t1007\tY\t\tN\tN/A\tperiodEnd\tCDCS",
-            "4530\t1000\tN\t\tN\tCharge Ref\tperiodEnd\tSIA"
+            "4530\t3190\tN\t\tN\tCharge Ref\tperiodEnd\tSIA"
           )
 
           def newStdin(): Iterator[String] =
@@ -111,8 +111,8 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
                 |"SUYgbWFpblRyYW5zID09ICcxNTI1JyBBTkQgc3ViVHJhbnMgPT0gJzEwMDAnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2U=",
                 |# IF mainTrans == '2000' AND subTrans == '1000' -> intRate = 4 AND interestOnlyDebt = false AND useChargeReference = false,
                 |"SUYgbWFpblRyYW5zID09ICcyMDAwJyBBTkQgc3ViVHJhbnMgPT0gJzEwMDAnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2UgQU5EIHVzZUNoYXJnZVJlZmVyZW5jZSA9IGZhbHNl",
-                |# IF mainTrans == '4530' AND subTrans == '1000' -> intRate = 0 AND interestOnlyDebt = false AND useChargeReference = true,
-                |"SUYgbWFpblRyYW5zID09ICc0NTMwJyBBTkQgc3ViVHJhbnMgPT0gJzEwMDAnIC0+IGludFJhdGUgPSAwIEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2UgQU5EIHVzZUNoYXJnZVJlZmVyZW5jZSA9IHRydWU=",
+                |# IF mainTrans == '4530' AND subTrans == '3190' -> intRate = 0 AND interestOnlyDebt = false AND useChargeReference = true,
+                |"SUYgbWFpblRyYW5zID09ICc0NTMwJyBBTkQgc3ViVHJhbnMgPT0gJzMxOTAnIC0+IGludFJhdGUgPSAwIEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2UgQU5EIHVzZUNoYXJnZVJlZmVyZW5jZSA9IHRydWU=",
                 |# IF mainTrans == '4620' AND subTrans == '1175' -> intRate = 0 AND interestOnlyDebt = true AND useChargeReference = true,
                 |"SUYgbWFpblRyYW5zID09ICc0NjIwJyBBTkQgc3ViVHJhbnMgPT0gJzExNzUnIC0+IGludFJhdGUgPSAwIEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gdHJ1ZSBBTkQgdXNlQ2hhcmdlUmVmZXJlbmNlID0gdHJ1ZQ==",
                 |# IF mainTrans == '4700' AND subTrans == '1174' -> intRate = 4 AND interestOnlyDebt = false AND useChargeReference = false,
@@ -145,8 +145,8 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
                 |service-config.rules.2: "SUYgbWFpblRyYW5zID09ICcxNTI1JyBBTkQgc3ViVHJhbnMgPT0gJzEwMDAnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2U="
                 |# IF mainTrans == '2000' AND subTrans == '1000' -> intRate = 4 AND interestOnlyDebt = false AND useChargeReference = false,
                 |service-config.rules.3: "SUYgbWFpblRyYW5zID09ICcyMDAwJyBBTkQgc3ViVHJhbnMgPT0gJzEwMDAnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2UgQU5EIHVzZUNoYXJnZVJlZmVyZW5jZSA9IGZhbHNl"
-                |# IF mainTrans == '4530' AND subTrans == '1000' -> intRate = 0 AND interestOnlyDebt = false AND useChargeReference = true,
-                |service-config.rules.4: "SUYgbWFpblRyYW5zID09ICc0NTMwJyBBTkQgc3ViVHJhbnMgPT0gJzEwMDAnIC0+IGludFJhdGUgPSAwIEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2UgQU5EIHVzZUNoYXJnZVJlZmVyZW5jZSA9IHRydWU="
+                |# IF mainTrans == '4530' AND subTrans == '3190' -> intRate = 0 AND interestOnlyDebt = false AND useChargeReference = true,
+                |service-config.rules.4: "SUYgbWFpblRyYW5zID09ICc0NTMwJyBBTkQgc3ViVHJhbnMgPT0gJzMxOTAnIC0+IGludFJhdGUgPSAwIEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2UgQU5EIHVzZUNoYXJnZVJlZmVyZW5jZSA9IHRydWU="
                 |# IF mainTrans == '4620' AND subTrans == '1175' -> intRate = 0 AND interestOnlyDebt = true AND useChargeReference = true,
                 |service-config.rules.5: "SUYgbWFpblRyYW5zID09ICc0NjIwJyBBTkQgc3ViVHJhbnMgPT0gJzExNzUnIC0+IGludFJhdGUgPSAwIEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gdHJ1ZSBBTkQgdXNlQ2hhcmdlUmVmZXJlbmNlID0gdHJ1ZQ=="
                 |# IF mainTrans == '4700' AND subTrans == '1174' -> intRate = 4 AND interestOnlyDebt = false AND useChargeReference = false,
@@ -185,9 +185,9 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
             "4910\t1005\tY\t\tN\tN/A\tsome description\tCDCS",
             "4910\t1005\tY\t\tN\tN/A\tsome description\tVAT",
             "4910\t1007\tY\t\tN\tN/A\tsome description\tCDCS",
-            "4530\t1000\tN\t\tN\tCharge Ref\tsome description\tSIA",
-            "4530\t1000\tN\t\tN\tCharge Ref\tsome description\tVAT",
-            "4530\t1000\tN\t\tN\tChArGe ReF\tsome description\tVAT"
+            "4530\t3190\tN\t\tN\tCharge Ref\tsome description\tSIA",
+            "4530\t3190\tN\t\tN\tCharge Ref\tsome description\tVAT",
+            "4530\t3190\tN\t\tN\tChArGe ReF\tsome description\tVAT"
           )
 
           def newStdin(): Iterator[String] =
@@ -212,8 +212,8 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
                 |"SUYgbWFpblRyYW5zID09ICcxNTI1JyBBTkQgc3ViVHJhbnMgPT0gJzEwMDAnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2U=",
                 |# IF mainTrans == '2000' AND subTrans == '1000' -> intRate = 4 AND interestOnlyDebt = false AND useChargeReference = false,
                 |"SUYgbWFpblRyYW5zID09ICcyMDAwJyBBTkQgc3ViVHJhbnMgPT0gJzEwMDAnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2UgQU5EIHVzZUNoYXJnZVJlZmVyZW5jZSA9IGZhbHNl",
-                |# IF mainTrans == '4530' AND subTrans == '1000' -> intRate = 0 AND interestOnlyDebt = false AND useChargeReference = true,
-                |"SUYgbWFpblRyYW5zID09ICc0NTMwJyBBTkQgc3ViVHJhbnMgPT0gJzEwMDAnIC0+IGludFJhdGUgPSAwIEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2UgQU5EIHVzZUNoYXJnZVJlZmVyZW5jZSA9IHRydWU=",
+                |# IF mainTrans == '4530' AND subTrans == '3190' -> intRate = 0 AND interestOnlyDebt = false AND useChargeReference = true,
+                |"SUYgbWFpblRyYW5zID09ICc0NTMwJyBBTkQgc3ViVHJhbnMgPT0gJzMxOTAnIC0+IGludFJhdGUgPSAwIEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2UgQU5EIHVzZUNoYXJnZVJlZmVyZW5jZSA9IHRydWU=",
                 |# IF mainTrans == '4620' AND subTrans == '1175' -> intRate = 0 AND interestOnlyDebt = true AND useChargeReference = true,
                 |"SUYgbWFpblRyYW5zID09ICc0NjIwJyBBTkQgc3ViVHJhbnMgPT0gJzExNzUnIC0+IGludFJhdGUgPSAwIEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gdHJ1ZSBBTkQgdXNlQ2hhcmdlUmVmZXJlbmNlID0gdHJ1ZQ==",
                 |# IF mainTrans == '4700' AND subTrans == '1174' -> intRate = 4 AND interestOnlyDebt = false AND useChargeReference = false,
@@ -246,8 +246,8 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
                 |service-config.rules.2: "SUYgbWFpblRyYW5zID09ICcxNTI1JyBBTkQgc3ViVHJhbnMgPT0gJzEwMDAnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2U="
                 |# IF mainTrans == '2000' AND subTrans == '1000' -> intRate = 4 AND interestOnlyDebt = false AND useChargeReference = false,
                 |service-config.rules.3: "SUYgbWFpblRyYW5zID09ICcyMDAwJyBBTkQgc3ViVHJhbnMgPT0gJzEwMDAnIC0+IGludFJhdGUgPSA0IEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2UgQU5EIHVzZUNoYXJnZVJlZmVyZW5jZSA9IGZhbHNl"
-                |# IF mainTrans == '4530' AND subTrans == '1000' -> intRate = 0 AND interestOnlyDebt = false AND useChargeReference = true,
-                |service-config.rules.4: "SUYgbWFpblRyYW5zID09ICc0NTMwJyBBTkQgc3ViVHJhbnMgPT0gJzEwMDAnIC0+IGludFJhdGUgPSAwIEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2UgQU5EIHVzZUNoYXJnZVJlZmVyZW5jZSA9IHRydWU="
+                |# IF mainTrans == '4530' AND subTrans == '3190' -> intRate = 0 AND interestOnlyDebt = false AND useChargeReference = true,
+                |service-config.rules.4: "SUYgbWFpblRyYW5zID09ICc0NTMwJyBBTkQgc3ViVHJhbnMgPT0gJzMxOTAnIC0+IGludFJhdGUgPSAwIEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gZmFsc2UgQU5EIHVzZUNoYXJnZVJlZmVyZW5jZSA9IHRydWU="
                 |# IF mainTrans == '4620' AND subTrans == '1175' -> intRate = 0 AND interestOnlyDebt = true AND useChargeReference = true,
                 |service-config.rules.5: "SUYgbWFpblRyYW5zID09ICc0NjIwJyBBTkQgc3ViVHJhbnMgPT0gJzExNzUnIC0+IGludFJhdGUgPSAwIEFORCBpbnRlcmVzdE9ubHlEZWJ0ID0gdHJ1ZSBBTkQgdXNlQ2hhcmdlUmVmZXJlbmNlID0gdHJ1ZQ=="
                 |# IF mainTrans == '4700' AND subTrans == '1174' -> intRate = 4 AND interestOnlyDebt = false AND useChargeReference = false,
@@ -296,8 +296,8 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
             "4910\t1007\tY\t\tN\tN/A",
             "SIA",
             "Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref",
-            "4530\t1000\tN\t\tN\tCharge Ref",
-            "4530\t1000\tN\t\tN\tCharge Ref"
+            "4530\t3190\tN\t\tN\tCharge Ref",
+            "4530\t3190\tN\t\tN\tCharge Ref"
           )
 
           def newStdin(): Iterator[String] =
