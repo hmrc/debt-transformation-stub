@@ -1,0 +1,84 @@
+LockType,LockReason,Disallows Paye,Disallows Vat,Disallows Sa,Disallows Simp
+dunning,under enquiry  (internally),yes,yes,yes,yes
+dunning,under enquiry  (externally),yes,yes,yes,yes
+dunning,under enquiry  (payment),yes,yes,yes,yes
+dunning,suspension (alleged appeal),no,yes,yes,yes
+dunning,complaint  (level 1),no,yes,yes,no
+dunning,complaint  (level 2),no,yes,yes,no
+dunning,rn ltd: review,no,yes,yes,no
+dunning,interest objection,no,yes,yes,yes
+dunning,miscellaneous,no,yes,yes,no
+dunning,coding out dunning lock,no,no,yes,yes
+dunning,accelerated payments - dunning lock,no,yes,yes,no
+dunning,payment in process - dunning lock,no,yes,yes,yes
+dunning,** to be used for idms cutover activity only **,no,yes,yes,no
+dunning,tc debt notification to dwp,no,yes,yes,yes
+dunning,tc debt notification to dwp non-universal credit,no,yes,yes,no
+dunning,covered by security deposit,yes,yes,yes,no
+dunning,individual guarantee dunning lock,no,yes,yes,no
+dunning,icr request dunning lock,no,yes,yes,no
+dunning,brocs migration dunning lock,no,yes,yes,no
+dunning,disputed c18 charge,no,yes,yes,no
+dunning,loan note,no,yes,yes,no
+dunning,inhibit mgd/gtr penalties,no,yes,yes,no
+dunning,moss ownership is with msi,no,yes,yes,no
+dunning,nps charge under appeal,no,yes,yes,yes
+dunning,paymt(s) held / receipt to be transferred,no,yes,yes,yes
+dunning,breathing space moratorium period active,yes,yes,yes,yes
+dunning,stand over order,yes,yes,yes,yes
+dunning,promise to pay,no,yes,yes,no
+dunning,uncollectible debt,no,yes,yes,yes
+dunning,vpp payment,no,yes,yes,no
+dunning,disputed debt,no,yes,yes,yes
+dunning,rls set,no,yes,yes,yes
+dunning,rls unset,no,yes,yes,no
+dunning,correspondence lock,no,yes,yes,no
+calculate interest,clerical interest signal,no,no,no,no
+calculate interest,manual interest calculated,no,no,no,no
+calculate interest,coding out interest lock,no,no,no,no
+calculate interest,harmonised interest exclusion,no,no,no,no
+calculate interest,c18 appeal in progress,no,no,no,no
+calculate interest,manual rpi signal,no,no,no,no
+calculate interest,breathing space moratorium act,no,no,no,no
+posting/clearing,accel. payment cred.,no,yes,yes,no
+posting/clearing,await applevy charge,no,yes,yes,no
+posting/clearing,await rti/cis charge,no,yes,yes,no
+posting/clearing,brocs migr clearing,no,yes,yes,no
+posting/clearing,card repaymnt reject,no,yes,yes,no
+posting/clearing,cashless sd,no,no,yes,no
+posting/clearing,cds auto-clearing,no,yes,yes,no
+posting/clearing,cis suffered charge,no,yes,yes,no
+posting/clearing,class1a nic payment,no,yes,yes,no
+posting/clearing,clear lock interest,no,yes,yes,no
+posting/clearing,coding out clearing,no,no,yes,yes
+posting/clearing,lisa clearing lock,no,yes,yes,no
+posting/clearing,no reallocation,yes,yes,yes,yes
+posting/clearing,tax credit payment,no,yes,yes,no
+posting/clearing,tc debt tranf to dwp,no,yes,yes,no
+payments,collected via ttp,yes,yes,yes,yes
+payments,coding out payment lock,no,no,yes,yes
+payments,operations lock,no,yes,yes,yes
+payments,risk/fraud,no,yes,yes,yes
+payments,audit/compliance,no,yes,yes,yes
+payments,down payment request lock,no,no,no,yes
+payments,eft failure,no,no,no,no
+payments,rso,no,no,no,no
+payments,set-off lock,no,no,no,yes
+payments,variation lock,no,no,no,no
+payments,vat- mtic,no,yes,no,no
+payments,vat- repayment fraud team,no,yes,no,no
+payments,no repayment signal,no,no,no,no
+payments,direct debit collection failed,no,no,no,no
+payments,missing address/bank details in bp,no,no,no,no
+payments,direct debit collection not allowed,no,no,no,no
+payments,bacs instructions,no,no,no,no
+payments,permanent cessation,no,no,no,no
+payments,bacs exception (collection mre thn 20mn),no,yes,no,no
+payments,re-check payment method - unsuccessful,no,no,no,no
+payments,repayment security check in process,no,no,no,no
+payments,insolvency repayment lock,no,no,no,no
+payments,direct debit re-present,yes,yes,no,no
+payments,vpp payment,no,no,no,no
+payments,government funded schemes (ra),no,no,no,no
+payments,moss-payment distributed to oms,no,no,no,no
+payments,moss-payment distributed to oms,no,no,no,no
