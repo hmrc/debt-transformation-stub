@@ -82,8 +82,8 @@
           "lockReason": "missing address/bank details in BP"
         },
         {
-          "lockType": "Payments",
-          "lockReason": "Made Up Lock Reason"
+          "lockType": "Dunning",
+          "lockReason": "Under Enquiry  (Payment)"
         },
         {
           "lockType": "Calculate Interest",
