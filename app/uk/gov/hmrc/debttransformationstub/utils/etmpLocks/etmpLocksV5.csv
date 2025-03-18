@@ -5,7 +5,7 @@ dunning,under enquiry  (payment),yes,yes,yes,yes
 dunning,suspension (alleged appeal),no,yes,yes,yes
 dunning,complaint  (level 1),no,yes,yes,no
 dunning,complaint  (level 2),no,yes,yes,no
-dunning,rn ltd: review,no,yes,yes,no
+dunning,rn ltd: review,no,yes,yes,yes
 dunning,interest objection,no,yes,yes,yes
 dunning,miscellaneous,no,yes,yes,no
 dunning,coding out dunning lock,no,no,yes,yes
