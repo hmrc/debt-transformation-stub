@@ -31,11 +31,11 @@ object Identity {
 case class CustomerDataRequest(
   showIds: Boolean,
   showAddresses: Boolean,
-  addressFromDate: Option[LocalDate],
   showSignals: Boolean,
   showFiling: Boolean,
   showCharges: Boolean,
   showAdditionalCustData: Boolean,
+  regimeType: String,
   identifications: Option[List[Identity]]
 )
 
