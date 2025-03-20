@@ -1,5 +1,4 @@
 {
-  "processingDateTime": "2022-03-23T13:49:51Z",
   "cesaData": {
     "customer": {
       "individual": {
@@ -11,7 +10,7 @@
         "dateOfDeath": "2014-09-12",
         "identifications": [
           {
-            "idType": 73,
+            "idType": "UTR",
             "idValue": "SA123545"
           }
         ]
@@ -29,7 +28,7 @@
         "country": "string"
       }
     ],
-    "filing": [
+    "filings": [
       {
         "icrCategory": "string",
         "icrDescription": "string",
@@ -58,7 +57,11 @@
         "outstandingAmount": 2000,
         "accruedInterest": 500
       }
-    ]
+    ],
+    "responseCode": {
+      "timestamp": "20240328T134356.235 GMT",
+      "httpCode": "200"
+    }
   },
   "etmpData": {
     "customer": {
@@ -70,7 +73,7 @@
         "dateOfDeath": "2014-09-12",
         "identifications": [
           {
-            "idType": 73,
+            "idType": "UTR",
             "idValue": "SA123545"
           }
         ]
@@ -113,6 +116,14 @@
         "accruedInterest": 500,
         "locks": []
       }
-    ]
+    ],
+    "responseCode": {
+      "timestamp": "20240328T134356.235 GMT",
+      "httpCode": "200"
+    }
+  },
+  "responseCode": {
+    "timestamp": "20240328T134356.235 GMT",
+    "httpCode": "200"
   }
 }

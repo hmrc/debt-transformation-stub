@@ -1,5 +1,4 @@
 {
-  "processingDateTime": "2022-03-23T13:49:51Z",
   "cesaData": {
     "customer": {
       "individual": {
@@ -10,7 +9,7 @@
         "dateOfDeath": "2014-09-12",
         "identifications": [
           {
-            "idType": 73,
+            "idType": "UTR",
             "idValue": "SA123545"
           }
         ]
@@ -26,12 +25,12 @@
         "postCode": "BNE3 7PY"
       }
     ],
-
-    "signals": [{
-      "signalType": "RLS",
-      "signalValue": "false",
-      "signalDescription": "thhe"
-    }
+    "signals": [
+      {
+        "signalType": "RLS",
+        "signalValue": "false",
+        "signalDescription": "thhe"
+      }
     ],
     "filings": [
       {
@@ -62,7 +61,11 @@
         "outstandingAmount": 3000.00,
         "accruedInterest": 500.00
       }
-    ]
+    ],
+    "responseCode": {
+      "timestamp": "20240328T134356.235 GMT",
+      "httpCode": "200"
+    }
   },
   "etmpData": {
     "customer": {
@@ -74,13 +77,12 @@
         "dateOfDeath": "2014-09-12",
         "identifications": [
           {
-            "idType": 73,
+            "idType": "UTR",
             "idValue": "SA123545"
           }
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "XXDefault",
@@ -91,7 +93,7 @@
         "country": "UK"
       }
     ],
-    "filing": [
+    "filings": [
       {
         "icrCategory": "ZR01",
         "icrDescription": "RTI - PAYE - Monthly Returns",
@@ -136,6 +138,14 @@
         "locks": [
         ]
       }
-    ]
+    ],
+    "responseCode": {
+      "timestamp": "20240328T134356.235 GMT",
+      "httpCode": "200"
+    }
+  },
+  "responseCode": {
+    "timestamp": "20240328T134356.235 GMT",
+    "httpCode": "200"
   }
 }

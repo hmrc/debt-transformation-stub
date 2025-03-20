@@ -1,5 +1,4 @@
 {
-  "processingDateTime": "2022-03-23T13:49:51Z",
   "cesaData": {
     "customer": {
       "individual": {
@@ -10,38 +9,43 @@
         "dateOfDeath": "2014-09-12",
         "identifications": [
           {
-            "idType": 73,
+            "idType": "UTR",
             "idValue": "SA123545"
           }
         ]
       }
     },
-
-    "addresses": [{
-      "addressType": "String",
-      "rls": false,
-      "emailAddress": "joe@snailmail.com",
-      "postcodeHistory": [{
-        "addressPostcode": "BN127ER",
-        "postcodeDate": "2022-05-22"
+    "addresses": [
+      {
+        "addressType": "String",
+        "rls": false,
+        "addressLine1": "City Park",
+        "emailAddress": "joe@snailmail.com",
+        "postcodeHistory": [
+          {
+            "addressPostcode": "BN127ER",
+            "postcodeDate": "2022-05-22"
+          },
+          {
+            "addressPostcode": "BN129ER",
+            "postcodeDate": "2022-02-28"
+          },
+          {
+            "addressPostcode": "BN119ER",
+            "postcodeDate": "2001-01-31"
+          }
+        ]
       },
-        {
-          "addressPostcode": "BN129ER",
-          "postcodeDate": "2022-02-28"
-        },
-        {
-          "addressPostcode": "BN119ER",
-          "postcodeDate": "2001-01-31"
-        }
-      ]
-    },
       {
         "addressType": "AGENT",
         "rls": false,
-        "postcodeHistory": [{
-          "addressPostcode": "BN164QR",
-          "postcodeDate": "2022-03-02"
-        }]
+        "addressLine1": "City Park",
+        "postcodeHistory": [
+          {
+            "addressPostcode": "BN164QR",
+            "postcodeDate": "2022-03-02"
+          }
+        ]
       }
     ],
     "filings": [
@@ -73,7 +77,11 @@
         "outstandingAmount": 3000.00,
         "accruedInterest": 500.00
       }
-    ]
+    ],
+    "responseCode": {
+      "timestamp": "20240328T134356.235 GMT",
+      "httpCode": "200"
+    }
   },
   "etmpData": {
     "customer": {
@@ -85,13 +93,12 @@
         "dateOfDeath": "2014-09-12",
         "identifications": [
           {
-            "idType": 73,
+            "idType": "UTR",
             "idValue": "SA123545"
           }
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "XXDefault",
@@ -102,7 +109,7 @@
         "country": "UK"
       }
     ],
-    "filing": [
+    "filings": [
       {
         "icrCategory": "ZR01",
         "icrDescription": "RTI - PAYE - Monthly Returns",
@@ -118,11 +125,12 @@
         "dueDate": "2022-05-22"
       }
     ],
-    "signals": [{
-      "signalType": "RLS",
-      "signalValue": "true",
-      "signalDescription": "thhe"
-    }
+    "signals": [
+      {
+        "signalType": "RLS",
+        "signalValue": "true",
+        "signalDescription": "thhe"
+      }
     ],
     "charges": [
       {
@@ -141,6 +149,14 @@
         "locks": [
         ]
       }
-    ]
+    ],
+    "responseCode": {
+      "timestamp": "20240328T134356.235 GMT",
+      "httpCode": "200"
+    }
+  },
+  "responseCode": {
+    "timestamp": "20240328T134356.235 GMT",
+    "httpCode": "200"
   }
 }
