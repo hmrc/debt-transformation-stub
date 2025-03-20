@@ -64,7 +64,11 @@
         "outstandingAmount": 3000.00,
         "accruedInterest": 500.00
       }
-    ]
+    ],
+    "responseCode": {
+      "timestamp": "2022-03-23T13:49:51Z",
+      "httpCode": "200"
+    }
   },
   "etmpData": {
     "customer": {
@@ -101,7 +105,7 @@
       "signalDescription": "Additional Security Signal Check"
     }
     ],
-    "filing": [
+    "filings": [
       {
         "icrCategory": "ZR01",
         "icrDescription": "RTI - PAYE - Monthly Returns",
@@ -134,6 +138,14 @@
         "locks": [
         ]
       }
-    ]
+    ],
+    "responseCode": {
+      "timestamp": "2022-03-23T13:49:51Z",
+      "httpCode": "200"
+    }
+  },
+  "responseCode": {
+    "timestamp": "2022-03-23T13:49:51Z",
+    "httpCode": "200"
   }
 }

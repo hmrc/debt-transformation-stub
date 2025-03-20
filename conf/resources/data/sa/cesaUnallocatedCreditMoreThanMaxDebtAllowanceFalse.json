@@ -29,7 +29,7 @@
         "country": "string"
       }
     ],
-    "filing": [
+    "filings": [
       {
         "icrCategory": "string",
         "icrDescription": "string",
@@ -58,7 +58,11 @@
         "outstandingAmount": 2000,
         "accruedInterest": 500
       }
-    ]
+    ],
+    "responseCode": {
+      "timestamp": "2022-03-23T13:49:51Z",
+      "httpCode": "200"
+    }
   },
   "etmpData": {
     "customer": {
@@ -113,6 +117,14 @@
         "accruedInterest": 500,
         "locks": []
       }
-    ]
+    ],
+    "responseCode": {
+      "timestamp": "2022-03-23T13:49:51Z",
+      "httpCode": "200"
+    }
+  },
+  "responseCode": {
+    "timestamp": "2022-03-23T13:49:51Z",
+    "httpCode": "200"
   }
 }

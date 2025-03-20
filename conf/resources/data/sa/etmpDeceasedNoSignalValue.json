@@ -21,6 +21,7 @@
       {
         "addressType": "PPOB",
         "rls": false,
+        "addressLine1": "string",
         "emailAddress": "joe@snailmail.com",
         "postcodeHistory": [
           {
@@ -40,6 +41,7 @@
       {
         "addressType": "AGENT",
         "rls": false,
+        "addressLine1": "string",
         "postcodeHistory": [
           {
             "addressPostcode": "BN164QR",
@@ -84,7 +86,11 @@
         "outstandingAmount": 25000.00 ,
         "accruedInterest": 500.00
       }
-    ]
+    ],
+    "responseCode": {
+      "timestamp": "2022-03-23T13:49:51Z",
+      "httpCode": "200"
+    }
   },
   "etmpData": {
     "customer": {
@@ -122,7 +128,7 @@
         "signalDescription": "Deceased Person"
       }
     ],
-    "filing": [
+    "filings": [
       {
         "icrCategory": "ZR01",
         "icrDescription": "RTI - PAYE - Monthly Returns",
@@ -152,6 +158,14 @@
           }
         ]
       }
-    ]
+    ],
+    "responseCode": {
+      "timestamp": "2022-03-23T13:49:51Z",
+      "httpCode": "200"
+    }
+  },
+  "responseCode": {
+    "timestamp": "2022-03-23T13:49:51Z",
+    "httpCode": "200"
   }
 }

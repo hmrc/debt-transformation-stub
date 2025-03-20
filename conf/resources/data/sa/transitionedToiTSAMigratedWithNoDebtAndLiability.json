@@ -21,6 +21,7 @@
       {
         "addressType": "PPOB",
         "rls": false,
+        "addressLine1": "string",
         "emailAddress": "joe@snailmail.com",
         "postcodeHistory": [
           {
@@ -40,6 +41,7 @@
       {
         "addressType": "AGENT",
         "rls": false,
+        "addressLine1": "string",
         "postcodeHistory": [
           {
             "addressPostcode": "BN164QR",
@@ -57,7 +59,11 @@
         "dueDate": "2014-09-12"
       }
     ],
-    "charges": []
+    "charges": [],
+    "responseCode": {
+      "timestamp": "2022-03-23T13:49:51Z",
+      "httpCode": "200"
+    }
   },
   "etmpData": {
     "customer": {
@@ -79,6 +85,7 @@
       {
         "addressType": "PPOB",
         "rls": false,
+        "addressLine1": "string",
         "emailAddress": "joe@snailmail.com",
         "postcodeHistory": [
           {
@@ -98,6 +105,7 @@
       {
         "addressType": "AGENT",
         "rls": false,
+        "addressLine1": "string",
         "postcodeHistory": [
           {
             "addressPostcode": "BN164QR",
@@ -127,7 +135,7 @@
         "signalDescription": "ETMP ITSA MigraTed signal type"
       }
     ],
-    "filing": [
+    "filings": [
       {
         "icrCategory": "ZR01",
         "icrDescription": "RTI - PAYE - Monthly Returns",
@@ -143,6 +151,14 @@
         "dueDate": "<DUE_DATE_FOR_FUTURE>"
       }
     ],
-    "charges": []
+    "charges": [],
+    "responseCode": {
+      "timestamp": "2022-03-23T13:49:51Z",
+      "httpCode": "200"
+    }
+  },
+  "responseCode": {
+    "timestamp": "2022-03-23T13:49:51Z",
+    "httpCode": "200"
   }
 }

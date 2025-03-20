@@ -20,6 +20,7 @@
     "addresses": [{
       "addressType": "String",
       "rls": false,
+      "addressLine1": "City Park",
       "emailAddress": "joe@snailmail.com",
       "postcodeHistory": [{
         "addressPostcode": "BN127ER",
@@ -38,6 +39,7 @@
       {
         "addressType": "AGENT",
         "rls": false,
+        "addressLine1": "City Park",
         "postcodeHistory": [{
           "addressPostcode": "BN164QR",
           "postcodeDate": "2022-03-02"
@@ -73,7 +75,11 @@
         "outstandingAmount": 3000.00,
         "accruedInterest": 500.00
       }
-    ]
+    ],
+    "responseCode": {
+      "timestamp": "2022-03-23T13:49:51Z",
+      "httpCode": "200"
+    }
   },
   "etmpData": {
     "customer": {
@@ -141,6 +147,14 @@
         "locks": [
         ]
       }
-    ]
+    ],
+    "responseCode": {
+      "timestamp": "2022-03-23T13:49:51Z",
+      "httpCode": "200"
+    }
+  },
+  "responseCode": {
+    "timestamp": "2022-03-23T13:49:51Z",
+    "httpCode": "200"
   }
 }
