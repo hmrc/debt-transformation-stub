@@ -15,7 +15,6 @@
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "string",
@@ -28,11 +27,12 @@
         "country": "string"
       }
     ],
-    "signals": [{
-      "signalType": "Additional Security Check",
-      "signalValue": "true",
-      "signalDescription": "CESA Additional Security Signal Check"
-    }
+    "signals": [
+      {
+        "signalType": "Additional Security Check",
+        "signalValue": "true",
+        "signalDescription": "CESA Additional Security Signal Check"
+      }
     ],
     "filings": [
       {
@@ -85,7 +85,6 @@
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "string",
@@ -98,11 +97,12 @@
         "country": "string"
       }
     ],
-    "signals": [{
-      "signalType": "Additional Security Check",
-      "signalValue": "false",
-      "signalDescription": "ETMP additional Security Signal Check"
-    }
+    "signals": [
+      {
+        "signalType": "Additional Security Check",
+        "signalValue": "false",
+        "signalDescription": "ETMP additional Security Signal Check"
+      }
     ],
     "filings": [
       {

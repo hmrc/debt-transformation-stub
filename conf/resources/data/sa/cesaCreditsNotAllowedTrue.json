@@ -118,7 +118,7 @@
         "chargeReference": "XM123456789813",
         "dueDate": "<DUE_DATE>",
         "interestStartDate": "2022-03-05",
-        "outstandingAmount":1000,
+        "outstandingAmount": 1000,
         "accruedInterest": 50,
         "locks": []
       }

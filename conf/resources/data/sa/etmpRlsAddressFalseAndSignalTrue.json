@@ -15,34 +15,37 @@
         ]
       }
     },
-
-    "addresses": [{
-      "addressType": "String",
-      "rls": false,
-      "addressLine1": "City Park",
-      "emailAddress": "joe@snailmail.com",
-      "postcodeHistory": [{
-        "addressPostcode": "BN127ER",
-        "postcodeDate": "2022-05-22"
+    "addresses": [
+      {
+        "addressType": "String",
+        "rls": false,
+        "addressLine1": "City Park",
+        "emailAddress": "joe@snailmail.com",
+        "postcodeHistory": [
+          {
+            "addressPostcode": "BN127ER",
+            "postcodeDate": "2022-05-22"
+          },
+          {
+            "addressPostcode": "BN129ER",
+            "postcodeDate": "2022-02-28"
+          },
+          {
+            "addressPostcode": "BN119ER",
+            "postcodeDate": "2001-01-31"
+          }
+        ]
       },
-        {
-          "addressPostcode": "BN129ER",
-          "postcodeDate": "2022-02-28"
-        },
-        {
-          "addressPostcode": "BN119ER",
-          "postcodeDate": "2001-01-31"
-        }
-      ]
-    },
       {
         "addressType": "AGENT",
         "rls": false,
         "addressLine1": "City Park",
-        "postcodeHistory": [{
-          "addressPostcode": "BN164QR",
-          "postcodeDate": "2022-03-02"
-        }]
+        "postcodeHistory": [
+          {
+            "addressPostcode": "BN164QR",
+            "postcodeDate": "2022-03-02"
+          }
+        ]
       }
     ],
     "filings": [
@@ -96,7 +99,6 @@
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "XXDefault",
@@ -123,11 +125,12 @@
         "dueDate": "2022-05-22"
       }
     ],
-    "signals": [{
-      "signalType": "RLS",
-      "signalValue": "true",
-      "signalDescription": "thhe"
-    }
+    "signals": [
+      {
+        "signalType": "RLS",
+        "signalValue": "true",
+        "signalDescription": "thhe"
+      }
     ],
     "charges": [
       {

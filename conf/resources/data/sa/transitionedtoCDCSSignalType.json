@@ -15,7 +15,6 @@
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "PPOB",
@@ -43,7 +42,7 @@
         "addressLine1": "string",
         "postcodeHistory": [
           {
-            "addressPostcode": "BN164QR", 
+            "addressPostcode": "BN164QR",
             "postcodeDate": "2022-03-02"
           }
         ]
@@ -69,7 +68,7 @@
       {
         "chargeType": "In Year RTI Charge - Tax",
         "mainType": "In Year RTI Charge (FPS)",
-         "mainTrans": "4000",
+        "mainTrans": "4000",
         "subTrans": "1005",
         "UTR": "73",
         "taxPeriodFrom": "2022-02-06",
@@ -167,7 +166,7 @@
       {
         "chargeType": "In Year RTI Charge - Tax",
         "mainType": "In Year RTI Charge (FPS)",
-         "mainTrans": "4000",
+        "mainTrans": "4000",
         "subTrans": "1005",
         "UTR": "73",
         "taxPeriodFrom": "2022-02-06",

@@ -15,7 +15,6 @@
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "BA",
@@ -34,14 +33,13 @@
         "postCode": "BNE3 7PY"
       }
     ],
-
-    "signals": [{
-      "signalType": "RLS",
-      "signalValue": "true",
-      "signalDescription": "thhe"
-    }
+    "signals": [
+      {
+        "signalType": "RLS",
+        "signalValue": "true",
+        "signalDescription": "thhe"
+      }
     ],
-
     "filings": [
       {
         "icrCategory": "string",
@@ -93,7 +91,6 @@
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "string",

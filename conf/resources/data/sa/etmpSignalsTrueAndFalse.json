@@ -25,12 +25,12 @@
         "postCode": "BNE3 7PY"
       }
     ],
-
-    "signals": [{
-      "signalType": "RLS",
-      "signalValue": "false",
-      "signalDescription": "thhe"
-    }
+    "signals": [
+      {
+        "signalType": "RLS",
+        "signalValue": "false",
+        "signalDescription": "thhe"
+      }
     ],
     "filings": [
       {
@@ -83,7 +83,6 @@
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "XXDefault",

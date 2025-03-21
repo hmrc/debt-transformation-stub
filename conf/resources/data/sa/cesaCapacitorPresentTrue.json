@@ -15,7 +15,6 @@
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "BA",
@@ -31,7 +30,8 @@
         "signalType": "Capacitor present",
         "signalValue": "True",
         "signalDescription": "customer with capacitor"
-      },{
+      },
+      {
         "signalType": "Capacitor Present",
         "signalValue": "true",
         "signalDescription": "customer with capacitor"
@@ -88,7 +88,6 @@
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "string",

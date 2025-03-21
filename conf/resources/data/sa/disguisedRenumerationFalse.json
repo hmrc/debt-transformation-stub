@@ -15,7 +15,6 @@
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "string",
@@ -86,7 +85,6 @@
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "string",

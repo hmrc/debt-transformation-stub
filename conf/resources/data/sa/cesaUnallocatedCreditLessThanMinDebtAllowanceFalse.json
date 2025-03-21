@@ -28,7 +28,6 @@
         "country": "string"
       }
     ],
-
     "filings": [
       {
         "icrCategory": "string",

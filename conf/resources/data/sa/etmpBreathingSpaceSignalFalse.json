@@ -15,7 +15,6 @@
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "string",
@@ -79,7 +78,6 @@
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "string",
@@ -92,11 +90,12 @@
         "country": "string"
       }
     ],
-    "signals": [{
-      "signalType": "Breathing Space",
-      "signalValue": "false",
-      "signalDescription": "Breathing Space signal type"
-    }
+    "signals": [
+      {
+        "signalType": "Breathing Space",
+        "signalValue": "false",
+        "signalDescription": "Breathing Space signal type"
+      }
     ],
     "filings": [
       {

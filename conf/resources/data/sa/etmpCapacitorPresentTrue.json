@@ -15,7 +15,6 @@
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "BA",
@@ -78,7 +77,6 @@
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "string",

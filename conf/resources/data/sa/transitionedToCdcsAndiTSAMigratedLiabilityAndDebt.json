@@ -57,7 +57,7 @@
       {
         "chargeType": "In Year RTI Charge - Tax",
         "mainType": "In Year RTI Charge (FPS)",
-         "mainTrans": "4000",
+        "mainTrans": "4000",
         "subTrans": "1005",
         "UTR": "73",
         "taxPeriodFrom": "2022-02-06",
@@ -117,12 +117,12 @@
         ]
       }
     ],
-  "signals": [
-        {
-          "signalType": "ITSA MigraTed",
-          "signalValue": "True",
-          "signalDescription": "ETMP ITSA MigraTed signal type"
-        }
+    "signals": [
+      {
+        "signalType": "ITSA MigraTed",
+        "signalValue": "True",
+        "signalDescription": "ETMP ITSA MigraTed signal type"
+      }
     ],
     "filings": [
       {

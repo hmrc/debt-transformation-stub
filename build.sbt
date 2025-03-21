@@ -1,5 +1,3 @@
-
-
 val appName = "debt-transformation-stub"
 
 ThisBuild / majorVersion := 0

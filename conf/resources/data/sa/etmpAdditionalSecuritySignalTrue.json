@@ -15,7 +15,6 @@
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "string",
@@ -79,7 +78,6 @@
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "string",
@@ -92,11 +90,12 @@
         "country": "string"
       }
     ],
-    "signals": [{
-      "signalType": "Additional Security Check",
-      "signalValue": "true",
-      "signalDescription": "Additional Security Signal Check"
-    }
+    "signals": [
+      {
+        "signalType": "Additional Security Check",
+        "signalValue": "true",
+        "signalDescription": "Additional Security Signal Check"
+      }
     ],
     "filings": [
       {

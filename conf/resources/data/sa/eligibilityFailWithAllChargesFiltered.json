@@ -15,7 +15,6 @@
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "PPOB",
@@ -82,7 +81,7 @@
         "originalChargeType": "string",
         "originalTieBreaker": "string",
         "chargeReference": "XM123456789811",
-        "outstandingAmount": 12000.00 ,
+        "outstandingAmount": 12000.00,
         "accruedInterest": 900.00
       },
       {
@@ -101,7 +100,7 @@
         "originalChargeType": "string",
         "originalTieBreaker": "string",
         "chargeReference": "XM123456789812",
-        "outstandingAmount": 4000.00 ,
+        "outstandingAmount": 4000.00,
         "accruedInterest": 100.00
       },
       {
@@ -120,7 +119,7 @@
         "originalChargeType": "string",
         "originalTieBreaker": "string",
         "chargeReference": "XM123456789813",
-        "outstandingAmount": 25000.00 ,
+        "outstandingAmount": 25000.00,
         "accruedInterest": 500.00
       }
     ],
@@ -145,7 +144,6 @@
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "string",
@@ -197,7 +195,7 @@
         "dueDate": "<DUE_DATE>",
         "interestStartDate": "2022-03-05",
         "outstandingAmount": 2000.00,
-        "accruedInterest": 30.00 ,
+        "accruedInterest": 30.00,
         "locks": [
           {
             "lockType": "Dunning",
@@ -217,7 +215,7 @@
         "dueDate": "<DUE_DATE>",
         "interestStartDate": "2022-03-05",
         "outstandingAmount": 9040.00,
-        "accruedInterest": 900.00 ,
+        "accruedInterest": 900.00,
         "locks": [
           {
             "lockType": "Dunning",
@@ -237,7 +235,7 @@
         "dueDate": "<DUE_DATE>",
         "interestStartDate": "2022-03-05",
         "outstandingAmount": 3000.00,
-        "accruedInterest": 880.00 ,
+        "accruedInterest": 880.00,
         "locks": [
           {
             "lockType": "Dunning",

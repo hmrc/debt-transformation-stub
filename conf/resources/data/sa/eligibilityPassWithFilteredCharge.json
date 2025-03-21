@@ -15,7 +15,6 @@
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "PPOB",
@@ -82,7 +81,7 @@
         "originalChargeType": "string",
         "originalTieBreaker": "string",
         "chargeReference": "XM123456789812",
-        "outstandingAmount": 25000.00 ,
+        "outstandingAmount": 25000.00,
         "accruedInterest": 500.00
       }
     ],
@@ -107,7 +106,6 @@
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "string",
@@ -150,7 +148,7 @@
       {
         "chargeType": "In Year RTI Charge - Tax",
         "mainType": "In Year RTI Charge (FPS)",
-         "mainTrans": "4000",
+        "mainTrans": "4000",
         "subTrans": "1005",
         "UTR": "73",
         "taxPeriodFrom": "2022-02-06",
@@ -159,7 +157,7 @@
         "dueDate": "<DUE_DATE>",
         "interestStartDate": "2022-03-05",
         "outstandingAmount": 5000.00,
-        "accruedInterest": 500.00 ,
+        "accruedInterest": 500.00,
         "locks": [
           {
             "lockType": "Calculate Interest",
