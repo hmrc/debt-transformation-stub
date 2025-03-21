@@ -90,7 +90,7 @@
         "country": "string"
       }
     ],
-    "filing": [
+    "filings": [
       {
         "icrCategory": "ZR01",
         "icrDescription": "RTI - PAYE - Monthly Returns",
