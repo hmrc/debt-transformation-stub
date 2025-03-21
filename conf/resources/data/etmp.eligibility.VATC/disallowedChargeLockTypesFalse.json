@@ -136,6 +136,10 @@
       "ddInProgress": "true",
       "locks": [
         {
+          "lockType": "Dunning",
+          "lockReason": "Time to Pay"
+        },
+        {
           "lockType": "Posting/Clearing",
           "lockReason": "cashless sd"
         }
