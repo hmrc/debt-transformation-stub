@@ -149,6 +149,10 @@
       "accruedInterest": 2.09,
       "locks": [
         {
+          "lockType": "Dunning",
+          "lockReason": "Time to Pay"
+        },
+        {
           "lockType": "Posting/Clearing",
           "lockReason": "cashless sd"
         }
