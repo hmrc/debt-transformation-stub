@@ -1,5 +1,4 @@
 {
-  "processingDateTime": "2022-03-23T13:49:51Z",
   "cesaData": {
     "customer": {
       "individual": {
@@ -16,7 +15,6 @@
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "string",
@@ -29,11 +27,12 @@
         "country": "string"
       }
     ],
-    "signals": [{
-      "signalType": "Additional Security Check",
-      "signalValue": "",
-      "signalDescription": "Additional Security Signal Check"
-    }
+    "signals": [
+      {
+        "signalType": "Additional Security Check",
+        "signalValue": "",
+        "signalDescription": "Additional Security Signal Check"
+      }
     ],
     "filings": [
       {
@@ -66,7 +65,7 @@
       }
     ],
     "responseCode": {
-      "timestamp": "2022-03-23T13:49:51Z",
+      "timestamp": "20240328T134356.235 GMT",
       "httpCode": "200"
     }
   },
@@ -86,7 +85,6 @@
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "string",
@@ -134,12 +132,12 @@
       }
     ],
     "responseCode": {
-      "timestamp": "2022-03-23T13:49:51Z",
+      "timestamp": "20240328T134356.235 GMT",
       "httpCode": "200"
     }
   },
   "responseCode": {
-    "timestamp": "2022-03-23T13:49:51Z",
+    "timestamp": "20240328T134356.235 GMT",
     "httpCode": "200"
   }
 }

@@ -1,5 +1,4 @@
 {
-  "processingDateTime": "2022-03-23T13:49:51Z",
   "cesaData": {
     "customer": {
       "individual": {
@@ -61,7 +60,7 @@
     ],
     "charges": [],
     "responseCode": {
-      "timestamp": "2022-03-23T13:49:51Z",
+      "timestamp": "20240328T134356.235 GMT",
       "httpCode": "200"
     }
   },
@@ -161,12 +160,12 @@
       }
     ],
     "responseCode": {
-      "timestamp": "2022-03-23T13:49:51Z",
+      "timestamp": "20240328T134356.235 GMT",
       "httpCode": "200"
     }
   },
   "responseCode": {
-    "timestamp": "2022-03-23T13:49:51Z",
+    "timestamp": "20240328T134356.235 GMT",
     "httpCode": "200"
   }
 }
