@@ -21,7 +21,7 @@ import play.api.libs.json.{ Json, OFormat }
 import java.time.LocalDate
 
 final case class Identity(
-  idType: Int,
+  idType: String,
   idValue: String
 )
 object Identity {

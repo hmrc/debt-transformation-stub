@@ -1,5 +1,4 @@
 {
-  "processingDateTime": "2022-03-23T13:49:51Z",
   "cesaData": {
     "customer": {
       "individual": {
@@ -10,17 +9,17 @@
         "dateOfDeath": "2023-09-12",
         "identifications": [
           {
-            "idType": 73,
+            "idType": "UTR",
             "idValue": "SA123545"
           }
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "PPOB",
         "rls": false,
+        "addressLine1": "string",
         "emailAddress": "joe@snailmail.com",
         "postcodeHistory": [
           {
@@ -40,6 +39,7 @@
       {
         "addressType": "AGENT",
         "rls": false,
+        "addressLine1": "string",
         "postcodeHistory": [
           {
             "addressPostcode": "BN164QR",
@@ -59,25 +59,25 @@
     ],
     "charges": [
       {
-        "chargeType": "In Year RTI Charge - Tax",
+        "taxPeriodFrom": "2022-02-06",
         "mainType": "In Year RTI Charge (FPS)",
-         "mainTrans": "4000",
+        "mainTrans": "4000",
         "subTrans": "1005",
         "UTR": "73",
-        "taxPeriodFrom": "2022-02-06",
-        "taxPeriodTo": "2022-03-05",
-        "dueDate": "<DUE_DATE>",
-        "interestStartDate": "2022-03-05",
+        "chargeType": "In Year RTI Charge - Tax",
         "tiebreaker": "string",
-        "creationDate": "2022-03-05",
+        "taxPeriodTo": "2022-03-05",
+        "outstandingAmount": 28000.00,
+        "dueDate": "<DUE_DATE>",
         "saTaxYearEnd": "2022-03-05",
-        "originalChargeType": "string",
-        "originalTieBreaker": "string",
-        "chargeReference": "XM123456789812",
-        "outstandingAmount": 28000.00 ,
-        "accruedInterest": 500.00
+        "creationDate": "2022-03-05",
+        "chargeReference": "XM123456789812"
       }
-    ]
+    ],
+    "responseCode": {
+      "timestamp": "20240328T134356.235 GMT",
+      "httpCode": "200"
+    }
   },
   "etmpData": {
     "customer": {
@@ -89,13 +89,12 @@
         "dateOfDeath": "2014-09-12",
         "identifications": [
           {
-            "idType": 73,
+            "idType": "UTR",
             "idValue": "SA123545"
           }
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "string",
@@ -103,7 +102,13 @@
         "addressLine2": "string",
         "addressLine3": "string",
         "addressLine4": "string",
-        "rls": false,
+        "rls": true,
+        "postCodeHistory": [
+          {
+            "addressPostcode": "string",
+            "postcodeDate": "2024-03-15"
+          }
+        ],
         "postCode": "string",
         "country": "string"
       }
@@ -121,16 +126,15 @@
       {
         "chargeType": "In Year RTI Charge - Tax",
         "mainType": "In Year RTI Charge (FPS)",
-         "mainTrans": "4000",
+        "mainTrans": "4000",
         "subTrans": "1005",
-        "UTR": "73",
         "taxPeriodFrom": "2022-02-06",
         "taxPeriodTo": "2022-03-05",
         "chargeReference": "XM123456789813",
         "dueDate": "<DUE_DATE>",
         "interestStartDate": "2022-03-05",
         "outstandingAmount": 1000.00,
-        "accruedInterest": 500.00 ,
+        "accruedInterest": 500.00,
         "locks": [
           {
             "lockType": "Payments",
@@ -138,6 +142,14 @@
           }
         ]
       }
-    ]
+    ],
+    "responseCode": {
+      "timestamp": "20240328T134356.235 GMT",
+      "httpCode": "200"
+    }
+  },
+  "responseCode": {
+    "timestamp": "20240328T134356.235 GMT",
+    "httpCode": "200"
   }
 }

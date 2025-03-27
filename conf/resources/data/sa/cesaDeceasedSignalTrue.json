@@ -1,5 +1,4 @@
 {
-  "processingDateTime": "2022-03-23T13:49:51Z",
   "cesaData": {
     "customer": {
       "individual": {
@@ -10,13 +9,12 @@
         "dateOfDeath": "2014-09-12",
         "identifications": [
           {
-            "idType": 73,
+            "idType": "UTR",
             "idValue": "SA123545"
           }
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "string",
@@ -29,11 +27,12 @@
         "country": "string"
       }
     ],
-    "signals": [{
-      "signalType": "Deceased",
-      "signalValue": "true",
-      "signalDescription": "Deceased person"
-    }
+    "signals": [
+      {
+        "signalType": "Deceased",
+        "signalValue": "true",
+        "signalDescription": "Deceased person"
+      }
     ],
     "filings": [
       {
@@ -64,7 +63,11 @@
         "outstandingAmount": 3000.00,
         "accruedInterest": 500.00
       }
-    ]
+    ],
+    "responseCode": {
+      "timestamp": "20240328T134356.235 GMT",
+      "httpCode": "200"
+    }
   },
   "etmpData": {
     "customer": {
@@ -76,13 +79,12 @@
         "dateOfDeath": "2014-09-12",
         "identifications": [
           {
-            "idType": 73,
+            "idType": "UTR",
             "idValue": "SA123545"
           }
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "string",
@@ -95,7 +97,7 @@
         "country": "string"
       }
     ],
-    "filing": [
+    "filings": [
       {
         "icrCategory": "ZR01",
         "icrDescription": "RTI - PAYE - Monthly Returns",
@@ -128,6 +130,14 @@
         "locks": [
         ]
       }
-    ]
+    ],
+    "responseCode": {
+      "timestamp": "20240328T134356.235 GMT",
+      "httpCode": "200"
+    }
+  },
+  "responseCode": {
+    "timestamp": "20240328T134356.235 GMT",
+    "httpCode": "200"
   }
 }

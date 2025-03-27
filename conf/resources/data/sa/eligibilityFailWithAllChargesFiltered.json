@@ -1,5 +1,4 @@
 {
-  "processingDateTime": "2022-03-23T13:49:51Z",
   "cesaData": {
     "customer": {
       "individual": {
@@ -10,16 +9,16 @@
         "dateOfDeath": "2023-09-12",
         "identifications": [
           {
-            "idType": 73,
+            "idType": "UTR",
             "idValue": "SA123545"
           }
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "PPOB",
+        "addressLine1": "string",
         "rls": false,
         "emailAddress": "joe@snailmail.com",
         "postcodeHistory": [
@@ -40,6 +39,7 @@
       {
         "addressType": "AGENT",
         "rls": false,
+        "addressLine1": "string",
         "postcodeHistory": [
           {
             "addressPostcode": "BN164QR",
@@ -81,7 +81,7 @@
         "originalChargeType": "string",
         "originalTieBreaker": "string",
         "chargeReference": "XM123456789811",
-        "outstandingAmount": 12000.00 ,
+        "outstandingAmount": 12000.00,
         "accruedInterest": 900.00
       },
       {
@@ -100,7 +100,7 @@
         "originalChargeType": "string",
         "originalTieBreaker": "string",
         "chargeReference": "XM123456789812",
-        "outstandingAmount": 4000.00 ,
+        "outstandingAmount": 4000.00,
         "accruedInterest": 100.00
       },
       {
@@ -119,10 +119,14 @@
         "originalChargeType": "string",
         "originalTieBreaker": "string",
         "chargeReference": "XM123456789813",
-        "outstandingAmount": 25000.00 ,
+        "outstandingAmount": 25000.00,
         "accruedInterest": 500.00
       }
-    ]
+    ],
+    "responseCode": {
+      "timestamp": "20240328T134356.235 GMT",
+      "httpCode": "200"
+    }
   },
   "etmpData": {
     "customer": {
@@ -134,13 +138,12 @@
         "dateOfDeath": "2014-09-12",
         "identifications": [
           {
-            "idType": 73,
+            "idType": "UTR",
             "idValue": "SA123545"
           }
         ]
       }
     },
-
     "addresses": [
       {
         "addressType": "string",
@@ -170,7 +173,7 @@
         "signalDescription": "gghsjsl"
       }
     ],
-    "filing": [
+    "filings": [
       {
         "icrCategory": "ZR01",
         "icrDescription": "RTI - PAYE - Monthly Returns",
@@ -192,7 +195,7 @@
         "dueDate": "<DUE_DATE>",
         "interestStartDate": "2022-03-05",
         "outstandingAmount": 2000.00,
-        "accruedInterest": 30.00 ,
+        "accruedInterest": 30.00,
         "locks": [
           {
             "lockType": "Dunning",
@@ -212,7 +215,7 @@
         "dueDate": "<DUE_DATE>",
         "interestStartDate": "2022-03-05",
         "outstandingAmount": 9040.00,
-        "accruedInterest": 900.00 ,
+        "accruedInterest": 900.00,
         "locks": [
           {
             "lockType": "Dunning",
@@ -232,7 +235,7 @@
         "dueDate": "<DUE_DATE>",
         "interestStartDate": "2022-03-05",
         "outstandingAmount": 3000.00,
-        "accruedInterest": 880.00 ,
+        "accruedInterest": 880.00,
         "locks": [
           {
             "lockType": "Dunning",
@@ -240,6 +243,14 @@
           }
         ]
       }
-    ]
+    ],
+    "responseCode": {
+      "timestamp": "20240328T134356.235 GMT",
+      "httpCode": "200"
+    }
+  },
+  "responseCode": {
+    "timestamp": "20240328T134356.235 GMT",
+    "httpCode": "200"
   }
 }
