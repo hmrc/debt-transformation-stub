@@ -82,13 +82,14 @@ final case class IfsRulesMasterData(
 
     def regimeUsage(index: Int): RegimeUsage =
       Lookup2D.regimeUsage(index).actual match {
-        case "CDCS"                              => RegimeUsage.Cdcs
-        case "PAYE"                              => RegimeUsage.Paye
-        case "VAT"                               => RegimeUsage.Vat
-        case "SA into IFS and SoL AND NOT SSTTP" => RegimeUsage.`SA into IFS and SoL AND NOT SSTTP`
-        case "SA SSTTP AND NOT into IFS and SoL" => RegimeUsage.`SA SSTTP AND NOT into IFS and SoL`
-        case "SA SSTTP AND into IFS and SoL"     => RegimeUsage.`SA SSTTP AND into IFS and SoL`
-        case "SIA"                               => RegimeUsage.Sia
+        case "CDCS"                                     => RegimeUsage.Cdcs
+        case "PAYE"                                     => RegimeUsage.Paye
+        case "VAT"                                      => RegimeUsage.Vat
+        case "SA into IFS and SoL AND NOT SSTTP"        => RegimeUsage.`SA into IFS and SoL AND NOT SSTTP`
+        case "SA SSTTP AND NOT into IFS and SoL"        => RegimeUsage.`SA SSTTP AND NOT into IFS and SoL`
+        case "SA SSTTP AND into IFS and SoL"            => RegimeUsage.`SA SSTTP AND into IFS and SoL`
+        case "SA SSTTP AND into IFS and SoL AND Op Led" => RegimeUsage.`SA SSTTP AND into IFS and SoL AND Op Led`
+        case "SIA"                                      => RegimeUsage.Sia
         case unknown =>
           val rowDisplay: JsValue = Json.toJson(tableData.dataRowAt(index).values.map(_.actual))
           throw new IllegalArgumentException(
@@ -166,6 +167,7 @@ object IfsRulesMasterData {
 
     /** Debts that can be used for both SSTTP and Operator led. */
     case object `SA SSTTP AND into IFS and SoL` extends RegimeUsage(isForSelfServe = true, isForIfs = true)
+    case object `SA SSTTP AND into IFS and SoL AND Op Led` extends RegimeUsage(isForSelfServe = true, isForIfs = true)
 
     override def values: IndexedSeq[RegimeUsage] = findValues
   }

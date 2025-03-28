@@ -68,8 +68,9 @@ sbt scalafmtCheckAll scalafmtSbtCheck
 
 Run the `main` method in `InterestForecastingRulesGenerator` with the appropriate arguments.
 
-### Argument `--input-file=/absolute/path/to/file.tsv`
+### Argument `--input-file=/absolute/path/to/file.tsv --output-console-conf`
 Tells the tool to read a TSV or CSV file representing the "master spreadsheet" with the interest forecasting rules.
+When modifying the run configuration the arguments need to include both the input and the output.
 
 The file can be `*.tsv` or `*.csv` and must have one of the following formats:
 ```CSV
