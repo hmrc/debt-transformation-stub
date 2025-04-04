@@ -9,5 +9,8 @@ addSbtPlugin("uk.gov.hmrc"       % "sbt-distributables" % "2.6.0")
 addSbtPlugin("org.playframework" % "sbt-plugin"         % "3.0.6")
 addSbtPlugin("org.scalameta"     % "sbt-scalafmt"       % "2.5.4")
 
+// To use this plugin, run: sbt dependencyUpdates
+addSbtPlugin("com.timushev.sbt"  % "sbt-updates"        % "0.6.4")
+
 /* Allows commands like `sbt dependencyBrowseGraph` to view the dependency graph locally. */
 addDependencyTreePlugin
