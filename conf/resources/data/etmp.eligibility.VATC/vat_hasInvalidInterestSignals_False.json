@@ -1,0 +1,83 @@
+{
+  "processingDateTime": "2022-03-23T13:49:51Z",
+  "identification": [
+    {
+      "idType": "EMPREF",
+      "idValue": ""
+    },
+    {
+      "idType": "VRN",
+      "idValue": "6381726332"
+    }
+  ],
+  "addresses": [
+    {
+      "addressType": "PPOB",
+      "addressLine1": "Worthing1",
+      "addressLine2": "Worthing2",
+      "countryCode": "GB",
+      "rls": false,
+      "emailAddress": "joe@snailmail.com",
+      "postcodeHistory": [
+        {
+          "addressPostcode": "BN127ER",
+          "postcodeDate": "2022-05-22"
+        },
+        {
+          "addressPostcode": "BN129ER",
+          "postcodeDate": "2022-02-28"
+        },
+        {
+          "addressPostcode": "BN119ER",
+          "postcodeDate": "2001-01-31"
+        }
+      ]
+    },
+    {
+      "addressType": "AGENT",
+      "addressLine1": "Worthing1",
+      "addressLine2": "Worthing2",
+      "countryCode": "GB",
+      "rls": false,
+      "postcodeHistory": [
+        {
+          "addressPostcode": "BN164QR",
+          "postcodeDate": "2022-03-02"
+        }
+      ]
+    }
+  ],
+  "signals": [
+    {
+      "signalType": "xxx",
+      "signalValue": "015",
+      "signalDescription": "false"
+    },
+    {
+      "signalType": "xxx",
+      "signalValue": "033",
+      "signalDescription": "false"
+    },
+    {
+      "signalType": "Payment Frequency",
+      "signalValue": "Monthly",
+      "signalDescription": "false"
+    }
+  ],
+  "charges": [
+    {
+      "chargeType": "VAT Mig Return Debit Charge",
+      "mainType": "VAT Mig Return Charge",
+      "mainTrans": "7700",
+      "subTrans": "1174",
+      "taxPeriodFrom": "2023-02-06",
+      "taxPeriodTo": "2023-03-05",
+      "chargeReference": "XM123456789812",
+      "outstandingAmount": 19999.00,
+      "dueDate": "<DUE_DATE>",
+      "interestStartDate": "2022-03-19",
+      "accruedInterest": 1.00,
+      "ddInProgress": "true"
+    }
+  ]
+}
