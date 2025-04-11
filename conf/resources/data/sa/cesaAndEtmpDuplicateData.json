@@ -9,8 +9,8 @@
         "dateOfDeath": "2014-09-12",
         "identifications": [
           {
-            "idType": "UTR",
-            "idValue": "9876543210"
+            "idType": "CRN",
+            "idValue": "12345678"
           }
         ]
       }

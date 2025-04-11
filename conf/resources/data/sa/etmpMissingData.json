@@ -4,7 +4,7 @@
       "individual": {
         "title": "Mr",
         "firstName": "Ben",
-        "lastName": "Thomas",
+        "lastName": "Thomas1",
         "dateOfBirth": "2014-09-12",
         "dateOfDeath": "2014-09-12",
         "identifications": [
@@ -68,10 +68,10 @@
   "etmpData": {
     "customer": {
       "individual": {
-        "title": "Mr",
-        "firstName": "Ben",
-        "lastName": "Thomas",
-        "dateOfBirth": "2014-09-12",
+        "title": "",
+        "firstName": "Chris",
+        "lastName": "Thomas2",
+        "dateOfBirth": "2014-08-12",
         "dateOfDeath": "2014-09-12",
         "identifications": [
           {
