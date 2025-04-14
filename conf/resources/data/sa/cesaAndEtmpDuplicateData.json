@@ -3,9 +3,9 @@
     "customer": {
       "individual": {
         "title": "Mr",
-        "firstName": "Ben",
-        "lastName": "Thomas",
-        "dateOfBirth": "2014-09-12",
+        "firstName": "Bob",
+        "lastName": "Smith",
+        "dateOfBirth": "1910-01-01",
         "dateOfDeath": "2014-09-12",
         "identifications": [
           {
@@ -69,9 +69,9 @@
     "customer": {
       "individual": {
         "title": "Mr",
-        "firstName": "Ben",
-        "lastName": "Thomas",
-        "dateOfBirth": "2014-09-12",
+        "firstName": "Bob",
+        "lastName": "Smith",
+        "dateOfBirth": "1910-01-01",
         "dateOfDeath": "2014-09-12",
         "identifications": [
           {
