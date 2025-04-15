@@ -21,7 +21,7 @@
     },
     "addresses": [
       {
-        "addressType": "PPOB_cesa",
+        "addressType": "PPOB",
         "addressLine1": "addressLine1_cesa",
         "addressLine2": "addressLine2_cesa",
         "addressLine3": "addressLine3_cesa",
@@ -99,7 +99,7 @@
     },
     "addresses": [
       {
-        "addressType": "PPOB_etmp",
+        "addressType": "PPOB",
         "addressLine1": "addressLine1_etmp",
         "addressLine2": "addressLine2_etmp",
         "addressLine3": "addressLine3_etmp",

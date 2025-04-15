@@ -4,7 +4,6 @@
       "individual": {
         "title": "Mr_cesa",
         "firstName": "Bob_cesa",
-        "lastName": "Smith_cesa",
         "dateOfBirth": "1910-01-01",
         "dateOfDeath": "2014-09-01",
         "identifications": [
@@ -21,7 +20,7 @@
     },
     "addresses": [
       {
-        "addressType": "PPOB_cesa",
+        "addressType": "PPOB",
         "addressLine1": "addressLine1_cesa",
         "addressLine2": "addressLine2_cesa",
         "addressLine3": "addressLine3_cesa",
@@ -99,7 +98,7 @@
     },
     "addresses": [
       {
-        "addressType": "PPOB_etmp",
+        "addressType": "PPOB",
         "addressLine1": "addressLine1_etmp",
         "addressLine2": "addressLine2_etmp",
         "addressLine3": "addressLine3_etmp",
@@ -117,8 +116,8 @@
           "mobile": "07984958691",
           "email": "agent1@gmail.com"
         },
-        "postCode": "ET4 MP4",
-        "country": "Country_etmp"
+        "postCode": "BN164QR",
+        "country": "GB"
       }
     ],
     "filings": [

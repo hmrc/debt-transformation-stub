@@ -21,7 +21,7 @@
     },
     "addresses": [
       {
-        "addressType": "PPOB_etmp",
+        "addressType": "PPOB",
         "addressLine1": "addressLine1_etmp",
         "addressLine2": "addressLine2_etmp",
         "addressLine3": "addressLine3_etmp",
@@ -105,7 +105,7 @@
     },
     "addresses": [
       {
-        "addressType": "PPOB_etmp",
+        "addressType": "PPOB",
         "addressLine1": "addressLine1_etmp",
         "addressLine2": "addressLine2_etmp",
         "addressLine3": "addressLine3_etmp",
