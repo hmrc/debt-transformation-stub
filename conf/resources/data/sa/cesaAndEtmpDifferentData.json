@@ -27,7 +27,7 @@
         "addressLine3": "addressLine3_cesa",
         "addressLine4": "addressLine4_cesa",
         "rls": true,
-        "postCodeHistory": [
+        "postcodeHistory": [
           {
             "addressPostcode": "CE1 SA1",
             "postcodeDate": "2024-03-15"
@@ -105,7 +105,7 @@
         "addressLine3": "addressLine3_etmp",
         "addressLine4": "addressLine4_etmp",
         "rls": true,
-        "postCodeHistory": [
+        "postcodeHistory": [
           {
             "addressPostcode": "ET3 MP3",
             "postcodeDate": "2024-03-15"
