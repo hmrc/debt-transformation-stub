@@ -45,4 +45,6 @@ object MainTransType extends Enum[MainTransType] with PlayJsonEnum[MainTransType
   case object TPSSContractSettlementINT extends MainTransType("1546")
   case object TCOGFee extends MainTransType("2421")
   case object NIDistraintCosts extends MainTransType("1441")
+  case object SAOpLed extends MainTransType("5210")
+  case object SAOpLedCreatePlan extends MainTransType("4980")
 }
