@@ -109,7 +109,7 @@
         "addressLine4": "string",
         "rls": false,
         "postCode": "string",
-        "postCodeHistory": [
+        "postcodeHistory": [
           {
             "addressPostcode": "string",
             "postcodeDate": "2024-03-15"

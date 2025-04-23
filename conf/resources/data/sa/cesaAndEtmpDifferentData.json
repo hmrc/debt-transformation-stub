@@ -2,27 +2,39 @@
   "cesaData": {
     "customer": {
       "individual": {
-        "title": "Mr",
-        "firstName": "Ben",
-        "lastName": "Thomas",
-        "dateOfBirth": "2014-09-12",
-        "dateOfDeath": "2014-09-12",
+        "title": "Mr_cesa",
+        "firstName": "Bob_cesa",
+        "lastName": "Smith_cesa",
+        "dateOfBirth": "1910-01-01",
+        "dateOfDeath": "2014-09-01",
         "identifications": [
           {
+            "idType": "CRN",
+            "idValue": "11111111"
+          },
+          {
             "idType": "UTR",
-            "idValue": "9876543210"
+            "idValue": "22222222"
           }
         ]
       }
     },
     "addresses": [
       {
-        "addressType": "string",
-        "addressLine1": "string",
-        "addressLine2": "string",
-        "addressLine3": "string",
-        "addressLine4": "string",
-        "rls": true
+        "addressType": "PPOB",
+        "addressLine1": "addressLine1_cesa",
+        "addressLine2": "addressLine2_cesa",
+        "addressLine3": "addressLine3_cesa",
+        "addressLine4": "addressLine4_cesa",
+        "rls": true,
+        "postcodeHistory": [
+          {
+            "addressPostcode": "CE1 SA1",
+            "postcodeDate": "2024-03-15"
+          }
+        ],
+        "postCode": "CE2 SA2",
+        "country": "Country_cesa"
       }
     ],
     "filings": [
@@ -68,30 +80,34 @@
   "etmpData": {
     "customer": {
       "individual": {
-        "title": "Mr",
-        "firstName": "Ben",
-        "lastName": "Thomas",
-        "dateOfBirth": "2014-09-12",
-        "dateOfDeath": "2014-09-12",
+        "title": "Mr_etmp",
+        "firstName": "Bob_etmp",
+        "lastName": "Smith_etmp",
+        "dateOfBirth": "1910-01-02",
+        "dateOfDeath": "2014-09-02",
         "identifications": [
           {
             "idType": "CRN",
-            "idValue": "12345678"
+            "idValue": "33333333"
+          },
+          {
+            "idType": "UTR",
+            "idValue": "44444444"
           }
         ]
       }
     },
     "addresses": [
       {
-        "addressType": "string",
-        "addressLine1": "string",
-        "addressLine2": "string",
-        "addressLine3": "string",
-        "addressLine4": "string",
+        "addressType": "PPOB",
+        "addressLine1": "addressLine1_etmp",
+        "addressLine2": "addressLine2_etmp",
+        "addressLine3": "addressLine3_etmp",
+        "addressLine4": "addressLine4_etmp",
         "rls": true,
         "postcodeHistory": [
           {
-            "addressPostcode": "string",
+            "addressPostcode": "ET3 MP3",
             "postcodeDate": "2024-03-15"
           }
         ],
@@ -101,8 +117,8 @@
           "mobile": "07984958691",
           "email": "agent1@gmail.com"
         },
-        "postCode": "string",
-        "country": "string"
+        "postCode": "ET4 MP4",
+        "country": "Country_etmp"
       }
     ],
     "filings": [
