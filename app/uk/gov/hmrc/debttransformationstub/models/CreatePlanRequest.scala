@@ -51,6 +51,7 @@ object PaymentMethod extends Enum[PaymentMethod] with PlayJsonEnum[PaymentMethod
   case object Bacs extends PaymentMethod("BACS")
   case object Cheque extends PaymentMethod("cheque")
   case object CardPayment extends PaymentMethod("cardPayment")
+  case object Bankpayments extends PaymentMethod("Bank payments")
 }
 
 final case class PlanToCreatePlan(
