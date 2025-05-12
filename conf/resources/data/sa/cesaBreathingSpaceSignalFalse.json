@@ -54,7 +54,7 @@
         "taxPeriodTo": "2022-03-05",
         "dueDate": "<DUE_DATE>",
         "interestStartDate": "2022-03-05",
-        "tiebreaker": "string",
+        "tieBreaker": "string",
         "creationDate": "2022-03-05",
         "saTaxYearEnd": "2022-03-05",
         "originalChargeType": "string",
@@ -66,7 +66,7 @@
     ],
     "responseCode": {
       "timestamp": "20240328T134356.235 GMT",
-      "httpCode": "200"
+      "httpCode": 200
     }
   },
   "etmpData": {
@@ -133,11 +133,11 @@
     ],
     "responseCode": {
       "timestamp": "20240328T134356.235 GMT",
-      "httpCode": "200"
+      "httpCode": 200
     }
   },
   "responseCode": {
     "timestamp": "20240328T134356.235 GMT",
-    "httpCode": "200"
+    "httpCode": 200
   }
 }
