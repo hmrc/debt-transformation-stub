@@ -67,7 +67,7 @@
     "charges": [],
     "responseCode": {
       "timestamp": "20240328T134356.235 GMT",
-      "httpCode": "200"
+      "httpCode": 200
     }
   },
   "etmpData": {
@@ -145,11 +145,11 @@
     "charges": [],
     "responseCode": {
       "timestamp": "20240328T134356.235 GMT",
-      "httpCode": "200"
+      "httpCode": 200
     }
   },
   "responseCode": {
     "timestamp": "20240328T134356.235 GMT",
-    "httpCode": "200"
+    "httpCode": 200
   }
 }

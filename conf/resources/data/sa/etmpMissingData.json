@@ -50,7 +50,7 @@
       {
         "chargeType": "In Year RTI Charge - Tax",
         "UTR": "73",
-        "tiebreaker": "string",
+        "tieBreaker": "string",
         "creationDate": "2022-03-05",
         "originalCreationDate": "2022-03-05",
         "saTaxYearEnd": "2022-03-05",
@@ -72,7 +72,7 @@
     ],
     "responseCode": {
       "timestamp": "20240228T114356.235 GMT",
-      "httpCode": "200",
+      "httpCode": 200,
       "reasonCode": "002",
       "description": "success"
     }
@@ -131,14 +131,14 @@
     ],
     "responseCode": {
       "timestamp": "20240228T114356.235 GMT",
-      "httpCode": "200",
+      "httpCode": 200,
       "reasonCode": "002",
       "description": "success"
     }
   },
   "responseCode": {
     "timestamp": "20240228T114356.235 GMT",
-    "httpCode": "200",
+    "httpCode": 200,
     "reasonCode": "003",
     "description": "Retrieved successfully"
   }
