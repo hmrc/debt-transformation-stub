@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.debttransformationstub.models
 
-import play.api.libs.json.{Json, OFormat, Writes}
+import play.api.libs.json.{ Json, OFormat }
 
 final case class IdmsRequestForSa(
   regimeType: String,
@@ -38,8 +38,3 @@ final case class IdmsSaChargeIdentifier(
   originalChargeType: Option[String],
   originalTieBreaker: Option[Int]
 )
-
-object IdmsSaChargeIdentifier {
-  implicit val format: OFormat[IdmsSaChargeIdentifier] = Json.format[IdmsSaChargeIdentifier]
-}
-
