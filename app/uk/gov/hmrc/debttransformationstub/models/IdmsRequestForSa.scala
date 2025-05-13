@@ -38,3 +38,7 @@ final case class IdmsSaChargeIdentifier(
   originalChargeType: Option[String],
   originalTieBreaker: Option[Int]
 )
+
+object IdmsSaChargeIdentifier {
+  implicit val format: OFormat[IdmsSaChargeIdentifier] = Json.format[IdmsSaChargeIdentifier]
+}
