@@ -65,7 +65,7 @@
         "subTrans": "1005",
         "UTR": "73",
         "chargeType": "In Year RTI Charge - Tax",
-        "tieBreaker": "string",
+        "tieBreaker": "4321",
         "taxPeriodTo": "2022-03-05",
         "outstandingAmount": 28000.00,
         "dueDate": "<DUE_DATE>",
