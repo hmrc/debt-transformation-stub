@@ -17,17 +17,17 @@
 package uk.gov.hmrc.debttransformationstub.controllers
 
 import play.api.Environment
-import play.api.libs.json.{JsValue, Json}
-import play.api.mvc.{Action, ControllerComponents, Request}
-import uk.gov.hmrc.debttransformationstub.models.{IdmsRequestForSa, PaymentPlanEligibilityDmRequest}
+import play.api.libs.json.{ JsValue, Json }
+import play.api.mvc.{ Action, ControllerComponents, Request }
 import uk.gov.hmrc.debttransformationstub.models.errors.NO_RESPONSE
+import uk.gov.hmrc.debttransformationstub.models.{ IdmsRequestForSa, PaymentPlanEligibilityDmRequest }
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.Inject
 import scala.concurrent.Future
 import scala.io.Source
-import scala.util.{Failure, Success, Try, Using}
+import scala.util.{ Failure, Success, Try, Using }
 
 class IDMSController @Inject() (environment: Environment, cc: ControllerComponents)
     extends BackendController(cc) with CustomBaseController {
