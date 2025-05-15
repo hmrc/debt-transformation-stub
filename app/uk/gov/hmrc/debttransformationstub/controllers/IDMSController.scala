@@ -19,8 +19,8 @@ package uk.gov.hmrc.debttransformationstub.controllers
 import play.api.Environment
 import play.api.libs.json.{ JsValue, Json }
 import play.api.mvc.{ Action, ControllerComponents, Request }
-import uk.gov.hmrc.debttransformationstub.models.PaymentPlanEligibilityDmRequest
 import uk.gov.hmrc.debttransformationstub.models.errors.NO_RESPONSE
+import uk.gov.hmrc.debttransformationstub.models.{ IdmsRequestForSa, PaymentPlanEligibilityDmRequest }
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
@@ -38,6 +38,36 @@ class IDMSController @Inject() (environment: Environment, cc: ControllerComponen
   def paymentPlanEligibilityDm(): Action[JsValue] = Action.async(parse.json) { implicit rawRequest: Request[JsValue] =>
     withCustomJsonBody[PaymentPlanEligibilityDmRequest] { request =>
       val fileName = s"$basePath.eligibilityDm/${request.idValue}.json"
+      environment.getExistingFile(fileName) match {
+        case _ if request.idValue.equals("idmsNoResultDebtAllowance") =>
+          Future.successful(GatewayTimeout(Json.parse(NO_RESPONSE.jsonErrorCause)))
+        case None =>
+          val message = s"file [$fileName] not found"
+          logger.error(s"Status $NOT_FOUND, message: $message")
+          Future successful NotFound(message)
+        case Some(file) =>
+          val maybeFileContent: Try[String] =
+            Using(Source.fromFile(file))(source => source.mkString)
+              .recoverWith { case ex: Throwable =>
+                // Explain which file failed to be read.
+                Failure(new RuntimeException(s"Failed to read file: ${file.getPath}", ex))
+              }
+
+          maybeFileContent match {
+            case Success(value) =>
+              // Might throw if parsing fails
+              Future.successful(Ok(Json.parse(value)))
+            case Failure(exception) =>
+              logger.error(s"Failed to parse the file $file", exception)
+              Future.successful(InternalServerError(s"Stub failed to parse file $file"))
+          }
+      }
+    }
+  }
+
+  def saEligibilityCheck(): Action[JsValue] = Action.async(parse.json) { implicit rawRequest: Request[JsValue] =>
+    withCustomJsonBody[IdmsRequestForSa] { request =>
+      val fileName = s"$basePath.saEligibilityCheck/${request.idValue}.json"
       environment.getExistingFile(fileName) match {
         case _ if request.idValue.equals("idmsNoResultDebtAllowance") =>
           Future.successful(GatewayTimeout(Json.parse(NO_RESPONSE.jsonErrorCause)))
