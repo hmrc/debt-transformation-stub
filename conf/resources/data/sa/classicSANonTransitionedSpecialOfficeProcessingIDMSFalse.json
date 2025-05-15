@@ -1,0 +1,189 @@
+{
+  "cesaData": {
+    "customer": {
+      "individual": {
+        "title": "Mr",
+        "firstName": "Ben",
+        "lastName": "Thomas",
+        "dateOfBirth": "2014-09-12",
+        "dateOfDeath": "2014-09-12",
+        "identifications": [
+          {
+            "idType": "UTR",
+            "idValue": "9876543210"
+          }
+        ]
+      }
+    },
+    "addresses": [
+      {
+        "addressType": "PPOB",
+        "rls": false,
+        "addressLine1": "string",
+        "emailAddress": "joe@snailmail.com",
+        "postcodeHistory": [
+          {
+            "addressPostcode": "BN127ER",
+            "postcodeDate": "2022-05-22"
+          },
+          {
+            "addressPostcode": "BN129ER",
+            "postcodeDate": "2022-02-28"
+          },
+          {
+            "addressPostcode": "BN119ER",
+            "postcodeDate": "2001-01-31"
+          }
+        ]
+      },
+      {
+        "addressType": "AGENT",
+        "rls": false,
+        "addressLine1": "string",
+        "postcodeHistory": [
+          {
+            "addressPostcode": "BN164QR",
+            "postcodeDate": "2022-03-02"
+          }
+        ]
+      }
+    ],
+    "filings": [
+      {
+        "icrCategory": "string",
+        "icrDescription": "string",
+        "fromDate": "2014-09-12",
+        "toDate": "2014-09-12",
+        "dueDate": "2014-09-12"
+      }
+    ],
+    "charges": [
+      {
+        "chargeType": "In Year RTI Charge - Tax",
+        "UTR": "73",
+        "tieBreaker": "1234",
+        "creationDate": "2022-03-05",
+        "originalCreationDate": "2022-03-05",
+        "saTaxYearEnd": "2022-03-05",
+        "originalChargeType": "string",
+        "originalTieBreaker": "1234",
+        "mainType": "In Year RTI Charge (FPS)",
+        "mainTrans": "4000",
+        "parentMainTrans": "4000",
+        "subTrans": "1005",
+        "taxPeriodFrom": "2022-02-06",
+        "taxPeriodTo": "2022-03-05",
+        "chargeReference": "XM123456789812",
+        "parentChargeReference": "XX123456789542",
+        "dueDate": "<DUE_DATE>",
+        "interestStartDate": "2022-03-05",
+        "outstandingAmount": 3000.00,
+        "accruedInterest": 500.00
+      }
+    ],
+    "responseCode": {
+      "timestamp": "20240228T114356.235 GMT",
+      "httpCode": 200,
+      "reasonCode": "002",
+      "description": "success"
+    }
+  },
+  "etmpData": {
+    "customer": {
+      "individual": {
+        "title": "Mr",
+        "firstName": "Ben",
+        "lastName": "Thomas",
+        "dateOfBirth": "2014-09-12",
+        "dateOfDeath": "2014-09-12",
+        "identifications": [
+          {
+            "idType": "CRN",
+            "idValue": "12345678"
+          }
+        ]
+      }
+    },
+    "addresses": [
+      {
+        "addressType": "PPOB",
+        "rls": false,
+        "addressLine1": "string",
+        "emailAddress": "joe@snailmail.com",
+        "postcodeHistory": [
+          {
+            "addressPostcode": "BN127ER",
+            "postcodeDate": "2022-05-22"
+          },
+          {
+            "addressPostcode": "BN129ER",
+            "postcodeDate": "2022-02-28"
+          },
+          {
+            "addressPostcode": "BN119ER",
+            "postcodeDate": "2001-01-31"
+          }
+        ]
+      },
+      {
+        "addressType": "AGENT",
+        "rls": false,
+        "addressLine1": "string",
+        "postcodeHistory": [
+          {
+            "addressPostcode": "BN164QR",
+            "postcodeDate": "2022-03-02"
+          }
+        ]
+      }
+    ],
+    "filings": [
+      {
+        "icrCategory": "ZR01",
+        "icrDescription": "RTI - PAYE - Monthly Returns",
+        "fromDate": "2022-03-06",
+        "toDate": "2022-04-05",
+        "dueDate": "2022-04-22"
+      },
+      {
+        "icrCategory": "ZR01",
+        "icrDescription": "RTI - PAYE - Monthly Returns",
+        "fromDate": "2022-04-06",
+        "toDate": "2022-05-05",
+        "dueDate": "2022-05-22"
+      }
+    ],
+    "charges": [
+      {
+        "chargeType": "In Year RTI Charge - Tax",
+        "ddInProgress": "false",
+        "mainType": "In Year RTI Charge (FPS)",
+        "mainTrans": "4000",
+        "ParentMainTrans": "2500",
+        "subTrans": "1005",
+        "taxPeriodFrom": "2022-02-06",
+        "taxPeriodTo": "2022-03-05",
+        "chargeReference": "XM123456789813",
+        "ParentChargeReference": "ParentChargeReference",
+        "dueDate": "<DUE_DATE>",
+        "interestStartDate": "2022-03-05",
+        "outstandingAmount": 1000.00,
+        "accruedInterest": 50.00,
+        "locks": [
+        ]
+      }
+    ],
+    "responseCode": {
+      "timestamp": "20240228T114356.235 GMT",
+      "httpCode": 200,
+      "reasonCode": "002",
+      "description": "success"
+    }
+  },
+  "responseCode": {
+    "timestamp": "20240228T114356.235 GMT",
+    "httpCode": 200,
+    "reasonCode": "003",
+    "description": "Retrieved successfully"
+  }
+}

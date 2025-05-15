@@ -57,11 +57,11 @@
         "taxPeriodTo": "2022-03-05",
         "dueDate": "<DUE_DATE>",
         "interestStartDate": "2022-03-05",
-        "tieBreaker": "string",
+        "tieBreaker": "4321",
         "creationDate": "2022-03-05",
         "saTaxYearEnd": "2022-03-05",
         "originalChargeType": "string",
-        "originalTieBreaker": "string",
+        "originalTieBreaker": "1234",
         "chargeReference": "XM123456789812",
         "outstandingAmount": 3000.00,
         "accruedInterest": 500.00
