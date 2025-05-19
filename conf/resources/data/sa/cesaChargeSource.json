@@ -66,7 +66,7 @@
         "UTR": "73",
         "taxPeriodFrom": "2022-02-06",
         "taxPeriodTo": "2022-03-05",
-        "dueDate": "<DUE_DATE_FOR_FUTURE>",
+        "dueDate": "<DUE_DATE>",
         "interestStartDate": "2022-03-05",
         "tiebreaker": "string",
         "creationDate": "2022-03-05",
@@ -74,7 +74,6 @@
         "originalChargeType": "string",
         "originalTieBreaker": "string",
         "chargeReference": "XM123456789812",
-        "chargeSource": "CESA",
         "outstandingAmount": 3000.00,
         "accruedInterest": 500.00
       }
@@ -146,30 +145,10 @@
         "icrDescription": "RTI - PAYE - Monthly Returns",
         "fromDate": "2022-04-06",
         "toDate": "2022-05-05",
-        "dueDate": "<DUE_DATE_FOR_FUTURE>"
+        "dueDate": "2022-05-22"
       }
     ],
-    "charges": [
-      {
-        "chargeType": "In Year RTI Charge - Tax",
-        "mainType": "In Year RTI Charge (FPS)",
-        "mainTrans": "4000",
-        "subTrans": "1005",
-        "UTR": "73",
-        "taxPeriodFrom": "2022-02-06",
-        "taxPeriodTo": "2022-03-05",
-        "dueDate": "<DUE_DATE_FOR_FUTURE>",
-        "interestStartDate": "2022-03-05",
-        "tiebreaker": "string",
-        "creationDate": "2022-03-05",
-        "saTaxYearEnd": "2022-03-05",
-        "originalChargeType": "string",
-        "originalTieBreaker": "string",
-        "chargeReference": "XM123456789812",
-        "outstandingAmount": 3000.00,
-        "accruedInterest": 500.00
-      }
-    ],
+    "charges": [],
     "responseCode": {
       "timestamp": "20240328T134356.235 GMT",
       "httpCode": "200"

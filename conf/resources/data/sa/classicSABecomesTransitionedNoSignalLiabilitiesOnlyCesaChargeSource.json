@@ -74,7 +74,6 @@
         "originalChargeType": "string",
         "originalTieBreaker": "string",
         "chargeReference": "XM123456789812",
-        "chargeSource": "CESA",
         "outstandingAmount": 3000.00,
         "accruedInterest": 500.00
       }

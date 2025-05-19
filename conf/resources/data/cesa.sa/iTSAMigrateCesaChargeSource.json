@@ -75,20 +75,19 @@
         "taxPeriodTo": "2022-03-05",
         "dueDate": "<DUE_DATE>",
         "interestStartDate": "2022-03-05",
-        "tiebreaker": "string",
+        "tieBreaker": "4321",
         "creationDate": "2022-03-05",
         "saTaxYearEnd": "2022-03-05",
         "originalChargeType": "string",
-        "originalTieBreaker": "string",
+        "originalTieBreaker": "1234",
         "chargeReference": "XM123456789812",
-        "chargeSource": "CESA",
         "outstandingAmount": 3000.00,
         "accruedInterest": 500.00
       }
     ],
     "responseCode": {
       "timestamp": "20240328T134356.235 GMT",
-      "httpCode": "200"
+      "httpCode": 200
     }
   },
   "etmpData": {
@@ -168,11 +167,11 @@
     ],
     "responseCode": {
       "timestamp": "20240328T134356.235 GMT",
-      "httpCode": "200"
+      "httpCode": 200
     }
   },
   "responseCode": {
     "timestamp": "20240328T134356.235 GMT",
-    "httpCode": "200"
+    "httpCode": 200
   }
 }
