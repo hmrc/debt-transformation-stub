@@ -20,7 +20,7 @@ import play.api.Environment
 import play.api.libs.json.{JsError, JsSuccess, JsValue, Json}
 import play.api.mvc.{Action, ControllerComponents, Request}
 import uk.gov.hmrc.debttransformationstub.models.errors.NO_RESPONSE
-import uk.gov.hmrc.debttransformationstub.models.{CustomerDataRequest, Identity, IdmsRequestForSa, PaymentPlanEligibilityDmRequest, cesaRequestForSa}
+import uk.gov.hmrc.debttransformationstub.models.{CustomerDataRequest, Identity, IdmsRequestForSa, PaymentPlanEligibilityDmRequest, CesaRequestForSa}
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
@@ -40,7 +40,7 @@ class CESAController @Inject() (environment: Environment, cc: ControllerComponen
 
 
   def cesaData(): Action[JsValue] = Action.async(parse.json) { implicit rawRequest: Request[JsValue] =>
-    withCustomJsonBody[cesaRequestForSa] { request =>
+    withCustomJsonBody[CesaRequestForSa] { request =>
       val fileName = s"$basePath.cesaDebitIdentifier/${request.idValue}.json"
       environment.getExistingFile(fileName) match {
         case _ if request.idValue.equals("chargeReferences") =>
@@ -52,6 +52,10 @@ class CESAController @Inject() (environment: Environment, cc: ControllerComponen
         case Some(file) =>
           val maybeFileContent: Try[String] =
             Using(Source.fromFile(file))(source => source.mkString)
+              .map { responseBody =>
+                logger.info(s"""Responding from CESA with body from file $file :\n$responseBody""")
+                responseBody
+              }
               .recoverWith { case ex: Throwable =>
                 // Explain which file failed to be read.
                 Failure(new RuntimeException(s"Failed to read file: ${file.getPath}", ex))
