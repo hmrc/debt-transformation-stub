@@ -39,6 +39,37 @@ class CESAController @Inject() (environment: Environment, cc: ControllerComponen
   private val basePath = "conf/resources/data/cesa"
   private val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
+  def getCESAdata(): Action[JsValue] = Action.async(parse.json) { implicit rawRequest: Request[JsValue] =>
+    withCustomJsonBody[CesaData] { request =>
+      logger.info(s"Request body is $request")
+      val fileName: String = request.debitIdentifiers.head.UTR
+      val relativePath = s"$basePath" + "/" + s"$fileName.json"
+      logger.info(s"Getting CESA data for UTR $fileName")
+      logger.info(s"Relative path is $relativePath")
+      environment.getExistingFile(relativePath) match {
+        case None =>
+          val message = s"file [$relativePath] not found"
+          logger.error(s"Status $NOT_FOUND, message: $message")
+          Future successful NotFound(message)
+        case Some(file) =>
+          val maybeFileContent: Try[String] =
+            Using(Source.fromFile(file))(source => source.mkString)
+              .recoverWith { case ex: Throwable =>
+                // Explain which file failed to be read.
+                Failure(new RuntimeException(s"Failed to read file: ${file.getPath}", ex))
+              }
+
+          maybeFileContent match {
+            case Success(value) =>
+              // Might throw if parsing fails
+              Future.successful(Ok(Json.parse(value)))
+            case Failure(exception) =>
+              logger.error(s"Failed to parse the file $file", exception)
+              Future.successful(InternalServerError(s"Stub failed to parse file $file"))
+          }
+      }
+    }
+  }
 
   def saCustomerData(): Action[JsValue] = Action(parse.json) { implicit request =>
     request.body.validate[CustomerDataRequest] match {

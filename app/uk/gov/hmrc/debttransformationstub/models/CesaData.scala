@@ -19,26 +19,26 @@ package uk.gov.hmrc.debttransformationstub.models
 import play.api.libs.json.{ Json, OFormat }
 
 final case class CesaData(
-                                   debitIdentifiers: List[CesaDebitIdentifier]
-                                 )
+  debitIdentifiers: List[CesaDebitIdentifier]
+)
 
 object CesaData {
   implicit val format: OFormat[CesaData] = Json.format[CesaData]
 }
 
 final case class CesaDebitIdentifier(
-                                         UTR: String,
-                                         saTaxYearEnd: Int,
-                                         creationDate: String,
-                                         chargeType: String,
-                                         tieBreaker: String,
-                                         originalCreationDate: String,
-                                         originalChargeType: Option[String],
-                                         originalTieBreaker: Option[String],
-                                         chargeReference: String,
-                                         parentChargeReference: String,
-                                         processingOutcome: String,
-                                       )
+  UTR: String,
+  saTaxYearEnd: Int,
+  creationDate: String,
+  chargeType: String,
+  tieBreaker: String,
+  originalCreationDate: Option[String],
+  originalChargeType: Option[String],
+  originalTieBreaker: Option[String],
+  chargeReference: Option[String],
+  parentChargeReference: Option[String],
+  processingOutcome: Option[String]
+)
 
 object CesaDebitIdentifier {
   implicit val format: OFormat[CesaDebitIdentifier] = Json.format[CesaDebitIdentifier]
