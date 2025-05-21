@@ -20,7 +20,7 @@ import play.api.Environment
 import play.api.libs.json.{JsError, JsSuccess, JsValue, Json}
 import play.api.mvc.{Action, ControllerComponents, Request}
 import uk.gov.hmrc.debttransformationstub.models.errors.NO_RESPONSE
-import uk.gov.hmrc.debttransformationstub.models.{CustomerDataRequest, Identity, IdmsRequestForSa, PaymentPlanEligibilityDmRequest, CesaRequestForSa}
+import uk.gov.hmrc.debttransformationstub.models.{CustomerDataRequest, Identity, IdmsRequestForSa, PaymentPlanEligibilityDmRequest, CesaData}
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
@@ -40,10 +40,10 @@ class CESAController @Inject() (environment: Environment, cc: ControllerComponen
 
 
   def cesaData(): Action[JsValue] = Action.async(parse.json) { implicit rawRequest: Request[JsValue] =>
-    withCustomJsonBody[CesaRequestForSa] { request =>
-      val fileName = s"$basePath.cesaDebitIdentifier/${request.idValue}.json"
+    withCustomJsonBody[CesaData] { request =>
+      val fileName = s"$basePath.cesaData/${request.debitIdentifiers}.json"
       environment.getExistingFile(fileName) match {
-        case _ if request.idValue.equals("chargeReferences") =>
+        case _ if request.debitIdentifiers.equals("cesaProvideChargeReferences") =>
           Future.successful(GatewayTimeout(Json.parse(NO_RESPONSE.jsonErrorCause)))
         case None =>
           val message = s"file [$fileName] not found"
