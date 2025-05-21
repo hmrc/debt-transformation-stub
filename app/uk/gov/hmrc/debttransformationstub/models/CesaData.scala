@@ -40,6 +40,6 @@ final case class CesaDebitIdentifier(
                                          processingOutcome: String,
                                        )
 
-object CesaData {
+object CesaDebitIdentifier {
   implicit val format: OFormat[CesaDebitIdentifier] = Json.format[CesaDebitIdentifier]
 }
