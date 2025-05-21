@@ -17,10 +17,10 @@
 package uk.gov.hmrc.debttransformationstub.controllers
 
 import play.api.Environment
-import play.api.libs.json.{JsError, JsSuccess, JsValue, Json}
-import play.api.mvc.{Action, ControllerComponents, Request}
+import play.api.libs.json.{ JsError, JsSuccess, JsValue, Json }
+import play.api.mvc.{ Action, ControllerComponents, Request }
 import uk.gov.hmrc.debttransformationstub.models.errors.NO_RESPONSE
-import uk.gov.hmrc.debttransformationstub.models.{CustomerDataRequest, Identity, IdmsRequestForSa, PaymentPlanEligibilityDmRequest, CesaData}
+import uk.gov.hmrc.debttransformationstub.models.{ CesaData, CustomerDataRequest, Identity }
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
@@ -30,10 +30,10 @@ import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 import scala.concurrent.Future
 import scala.io.Source
-import scala.util.{Failure, Success, Try, Using}
+import scala.util.{ Failure, Success, Try, Using }
 
 class CESAController @Inject() (environment: Environment, cc: ControllerComponents)
-  extends BackendController(cc) with CustomBaseController {
+    extends BackendController(cc) with CustomBaseController {
 
   private lazy val logger = new RequestAwareLogger(this.getClass)
   private val basePath = "conf/resources/data/cesa"
@@ -98,7 +98,6 @@ class CESAController @Inject() (environment: Environment, cc: ControllerComponen
     }
   }
 
-
   private def saCustomerDataString(file: File): String = {
     val currentDate = LocalDate.now()
 
@@ -127,7 +126,7 @@ class CESAController @Inject() (environment: Environment, cc: ControllerComponen
     result
   }
 
-def cesaData(): Action[JsValue] = Action.async(parse.json) { implicit rawRequest: Request[JsValue] =>
+  def cesaData(): Action[JsValue] = Action.async(parse.json) { implicit rawRequest: Request[JsValue] =>
     withCustomJsonBody[CesaData] { request =>
       val fileName = s"$basePath.cesaData/${request.debitIdentifiers}.json"
       environment.getExistingFile(fileName) match {
