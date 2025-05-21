@@ -41,11 +41,8 @@ class CESAController @Inject() (environment: Environment, cc: ControllerComponen
 
   def getCESAdata(): Action[JsValue] = Action.async(parse.json) { implicit rawRequest: Request[JsValue] =>
     withCustomJsonBody[CesaData] { request =>
-      logger.info(s"Request body is $request")
       val fileName: String = request.debitIdentifiers.head.UTR
       val relativePath = s"$basePath" + "/" + s"$fileName.json"
-      logger.info(s"Getting CESA data for UTR $fileName")
-      logger.info(s"Relative path is $relativePath")
       environment.getExistingFile(relativePath) match {
         case None =>
           val message = s"file [$relativePath] not found"
