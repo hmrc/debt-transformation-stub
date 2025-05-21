@@ -1,0 +1,30 @@
+{
+  "debitIdentifiers": [
+    {
+      "UTR": "cesaMissingChargeReferences",
+      "saTaxYearEnd": 2022,
+      "creationDate": "2022-03-05",
+      "chargeType": "In Year RTI Charge - Tax",
+      "tieBreaker": "4321",
+      "originalCreationDate": "2022-06-03",
+      "originalChargeType": "BCD",
+      "originalTieBreaker": "0001",
+      "chargeReference": "K0000000000003",
+      "parentChargeReference": "K0000000000002",
+      "processingOutcome": "E"
+    },
+    {
+      "UTR": "cesaMissingChargeReferences",
+      "saTaxYearEnd": 2022,
+      "creationDate": "2022-03-05",
+      "chargeType": "In Year RTI Charge - Tax",
+      "tieBreaker": "4321",
+      "originalCreationDate": "2022-06-03",
+      "originalChargeType": "BCD",
+      "originalTieBreaker": "0001",
+      "chargeReference": "K0000000000003",
+      "parentChargeReference": "K0000000000002",
+      "processingOutcome": "E"
+    }
+  ]
+}

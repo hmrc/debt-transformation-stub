@@ -56,4 +56,4 @@ GET           /enactStage/:correlationId                                        
 POST          /individuals/debts/essttp/eligibility-check                                            uk.gov.hmrc.debttransformationstub.controllers.IDMSController.paymentPlanEligibilityDm
 POST          /idms/essttp/v1/saeligibilitycheck                                                     uk.gov.hmrc.debttransformationstub.controllers.IDMSController.saEligibilityCheck()
 
-POST          /cesa/debt/providechargereferences                                                     uk.gov.hmrc.debttransformationstub.controllers.CESAController.cesaData
+POST          /cesa/debt/providechargereferences                                                     uk.gov.hmrc.debttransformationstub.controllers.CESAController.getCESAdata
