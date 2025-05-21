@@ -103,7 +103,7 @@ def cesaData(): Action[JsValue] = Action.async(parse.json) { implicit rawRequest
     withCustomJsonBody[CesaData] { request =>
       val fileName = s"$basePath.cesaData/${request.debitIdentifiers}.json"
       environment.getExistingFile(fileName) match {
-        case _ if request.debitIdentifiers.equals("cesaProvideChargeReferences") =>
+        case _ if request.debitIdentifiers.exists(_.chargeReference == "cesaProvideChargeReferences") =>
           Future.successful(GatewayTimeout(Json.parse(NO_RESPONSE.jsonErrorCause)))
         case None =>
           val message = s"file [$fileName] not found"
