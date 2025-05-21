@@ -68,7 +68,7 @@
       {
         "chargeType": "In Year RTI Charge - Tax",
         "mainType": "In Year RTI Charge (FPS)",
-        "mainTrans": "4000",
+        "mainTrans": "3880",
         "subTrans": "1005",
         "UTR": "73",
         "taxPeriodFrom": "2022-02-06",
@@ -148,7 +148,7 @@
       {
         "chargeType": "In Year RTI Charge - Tax",
         "mainType": "In Year RTI Charge (FPS)",
-        "mainTrans": "3880",
+        "mainTrans": "4000",
         "subTrans": "1005",
         "UTR": "73",
         "taxPeriodFrom": "2022-02-06",
