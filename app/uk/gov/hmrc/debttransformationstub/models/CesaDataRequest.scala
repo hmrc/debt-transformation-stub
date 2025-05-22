@@ -33,9 +33,6 @@ final case class DebitIdentifier(
   creationDate: String,
   chargeType: String,
   tieBreaker: String,
-  originalCreationDate: Option[String],
-  originalChargeType: Option[String],
-  originalTieBreaker: Option[String],
 )
 
 object DebitIdentifier {
