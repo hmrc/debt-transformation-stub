@@ -68,9 +68,67 @@ class CESAController @Inject() (environment: Environment, cc: ControllerComponen
     }
   }
 
+  def saCustomerData(): Action[JsValue] = Action(parse.json) { implicit request =>
+    request.body.validate[CustomerDataRequest] match {
+      case JsError(errors) =>
+        BadRequest(s"Unable to parse to CustomerDataRequest: $errors")
+      case JsSuccess(value, _) =>
+        val fileName: String = value.identifications
+          .getOrElse(List.empty[Identity])
+          .find { case Identity(idType, _) => idType == "UTR" }
+          .map(_.idValue)
+          .get
+
+        if (fileName.isEmpty) {
+          NotFound("IdValue for UTR not provided")
+        } else {
+          val relativePath = s"$basePath" + "/" + s"$fileName.json"
+          environment.getExistingFile(relativePath) match {
+            case Some(file) =>
+              Try(Json.parse(saCustomerDataString(file))) match {
+                case Success(value) => Ok(value)
+                case Failure(exception) =>
+                  logger.error(s"Failed to parse the file $relativePath", exception)
+                  InternalServerError(s"stub failed to parse file $relativePath")
+              }
+            case _ =>
+              NotFound("file not found")
+          }
+        }
+    }
+  }
+
+  private def saCustomerDataString(file: File): String = {
+    val currentDate = LocalDate.now()
+
+    val responseTemplate: String =
+      Using(Source.fromFile(file))(source => source.mkString).recoverWith { case ex: Throwable =>
+        // Explain which file failed to be read.
+        Failure(new RuntimeException(s"Failed to read file: ${file.getPath}", ex))
+      }.get // Can throw.
+
+    val dueDateInPast = currentDate.minusDays(24)
+    val dueDateToday = currentDate
+    val dueDateInFuture = currentDate.plusDays(24)
+
+    val result =
+      responseTemplate
+        .replaceAll("<DUE_DATE>", dueDateInPast.format(dateFormatter))
+        .replaceAll("<DUE_DATE_TODAY>", dueDateToday.format(dateFormatter))
+        .replaceAll("<DUE_DATE_FOR_FUTURE>", dueDateInFuture.format(dateFormatter))
+
+    println(
+      s"""====================
+         |$result
+         |====================
+         |""".stripMargin
+    )
+    result
+  }
+
   def cesaData(): Action[JsValue] = Action.async(parse.json) { implicit rawRequest: Request[JsValue] =>
     withCustomJsonBody[CesaDataResponse] { request =>
-      val fileName = s"$basePath.cesa/cesaMissingChargeReferences.json"
+      val fileName = s"$basePath.CesaDataResponse/${request.debitIdentifiers}.json"
       environment.getExistingFile(fileName) match {
         case None =>
           val message = s"file [$fileName] not found"
