@@ -1,0 +1,26 @@
+{
+  "debitIdentifiers": [
+    {
+      "UTR": "cesaMissingChargeReferences",
+      "saTaxYearEnd": 2023,
+      "creationDate": "2022-07-03",
+      "chargeType": "LPI",
+      "tieBreaker": "0002",
+      "originalCreationDate": "2022-06-03",
+      "originalChargeType": "BCD",
+      "originalTieBreaker": "0001",
+      "chargeReference": "K0000000000003",
+      "parentChargeReference": "K0000000000001",
+      "processingOutcome": "E"
+    },
+    {
+      "UTR": "cesaMissingChargeReferences",
+      "saTaxYearEnd": 2023,
+      "creationDate": "2023-04-03",
+      "chargeType": "SUR1",
+      "tieBreaker": "0003",
+      "chargeReference": "K1234567890123",
+      "processingOutcome": "N"
+    }
+  ]
+}
