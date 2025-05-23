@@ -37,7 +37,7 @@
     "charges": [
       {
         "chargeType": "In Year RTI Charge - Tax",
-        "UTR": "cesaMissingChargeReferences",
+        "UTR": "73",
         "tieBreaker": "4321",
         "creationDate": "2022-03-05",
         "originalCreationDate": "2022-03-05",
@@ -50,6 +50,7 @@
         "subTrans": "1005",
         "taxPeriodFrom": "2022-02-06",
         "taxPeriodTo": "2022-03-05",
+        "chargeReference": "XM123456789812",
         "parentChargeReference": "XX123456789542",
         "dueDate": "<DUE_DATE>",
         "interestStartDate": "2022-03-05",
