@@ -17,15 +17,12 @@
 package uk.gov.hmrc.debttransformationstub.controllers
 
 import play.api.Environment
-import play.api.libs.json.{ JsError, JsSuccess, JsValue, Json }
+import play.api.libs.json.{ JsValue, Json }
 import play.api.mvc.{ Action, ControllerComponents, Request }
-import uk.gov.hmrc.debttransformationstub.models.errors.NO_RESPONSE
-import uk.gov.hmrc.debttransformationstub.models.{ CesaDataRequest, CesaDataResponse, CustomerDataRequest, Identity }
+import uk.gov.hmrc.debttransformationstub.models.CesaDataRequest
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
-import java.io.File
-import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 import scala.concurrent.Future
