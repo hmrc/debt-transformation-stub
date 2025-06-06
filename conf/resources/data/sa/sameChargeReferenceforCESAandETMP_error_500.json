@@ -1,0 +1,173 @@
+{
+  "cesaData": {
+    "customer": {
+      "individual": {
+        "title": "Mr_cesa",
+        "firstName": "Bob_cesa",
+        "lastName": "Smith_cesa",
+        "dateOfBirth": "1910-01-01",
+        "dateOfDeath": "2014-09-01",
+        "identifications": [
+          {
+            "idType": "CRN",
+            "idValue": "11111111"
+          },
+          {
+            "idType": "UTR",
+            "idValue": "22222222"
+          }
+        ]
+      }
+    },
+    "addresses": [
+      {
+        "addressType": "PPOB",
+        "addressLine1": "addressLine1_cesa",
+        "addressLine2": "addressLine2_cesa",
+        "addressLine3": "addressLine3_cesa",
+        "addressLine4": "addressLine4_cesa",
+        "rls": true,
+        "postcodeHistory": [
+          {
+            "addressPostcode": "CE1 SA1",
+            "postcodeDate": "2024-03-15"
+          }
+        ],
+        "postCode": "CE2 SA2",
+        "country": "Country_cesa"
+      }
+    ],
+    "filings": [
+      {
+        "icrCategory": "string",
+        "icrDescription": "string",
+        "fromDate": "2014-09-12",
+        "toDate": "2014-09-12",
+        "dueDate": "2014-09-12"
+      }
+    ],
+    "charges": [
+      {
+        "chargeType": "In Year RTI Charge - Tax",
+        "UTR": "73",
+        "tieBreaker": "4321",
+        "creationDate": "2022-03-05",
+        "originalCreationDate": "2022-03-05",
+        "saTaxYearEnd": "2022-03-05",
+        "originalChargeType": "string",
+        "originalTieBreaker": "1234",
+        "mainType": "In Year RTI Charge (FPS)",
+        "mainTrans": "4000",
+        "parentMainTrans": "4000",
+        "subTrans": "1005",
+        "taxPeriodFrom": "2022-02-06",
+        "taxPeriodTo": "2022-03-05",
+        "chargeReference": "XM123456789812",
+        "parentChargeReference": "XX123456789542",
+        "dueDate": "<DUE_DATE>",
+        "interestStartDate": "2022-03-05",
+        "outstandingAmount": 3000.00,
+        "accruedInterest": 500.00
+      }
+    ],
+    "responseCode": {
+      "timestamp": "20240228T114356.235 GMT",
+      "httpCode": 200,
+      "reasonCode": "002",
+      "description": "success"
+    }
+  },
+  "etmpData": {
+    "customer": {
+      "individual": {
+        "title": "Mr_etmp",
+        "firstName": "Bob_etmp",
+        "lastName": "Smith_etmp",
+        "dateOfBirth": "1910-01-02",
+        "dateOfDeath": "2014-09-02",
+        "identifications": [
+          {
+            "idType": "CRN",
+            "idValue": "33333333"
+          },
+          {
+            "idType": "UTR",
+            "idValue": "44444444"
+          }
+        ]
+      }
+    },
+    "addresses": [
+      {
+        "addressType": "PPOB",
+        "addressLine1": "addressLine1_etmp",
+        "addressLine2": "addressLine2_etmp",
+        "addressLine3": "addressLine3_etmp",
+        "addressLine4": "addressLine4_etmp",
+        "rls": true,
+        "postcodeHistory": [
+          {
+            "addressPostcode": "ET3 MP3",
+            "postcodeDate": "2024-03-15"
+          }
+        ],
+        "contactDetails": {
+          "telephoneNumber": "0302 400 4859",
+          "fax": "0302 989 2453",
+          "mobile": "07984958691",
+          "email": "agent1@gmail.com"
+        },
+        "postCode": "ET4 MP4",
+        "country": "Country_etmp"
+      }
+    ],
+    "filings": [
+      {
+        "icrCategory": "ZR01",
+        "icrDescription": "RTI - PAYE - Monthly Returns",
+        "fromDate": "2022-03-06",
+        "toDate": "2022-04-05",
+        "dueDate": "2022-04-22"
+      },
+      {
+        "icrCategory": "ZR01",
+        "icrDescription": "RTI - PAYE - Monthly Returns",
+        "fromDate": "2022-04-06",
+        "toDate": "2022-05-05",
+        "dueDate": "2022-05-22"
+      }
+    ],
+    "charges": [
+      {
+        "chargeType": "In Year RTI Charge - Tax",
+        "ddInProgress": "false",
+        "mainType": "In Year RTI Charge (FPS)",
+        "mainTrans": "4000",
+        "ParentMainTrans": "2500",
+        "subTrans": "1005",
+        "taxPeriodFrom": "2022-02-06",
+        "taxPeriodTo": "2022-03-05",
+        "chargeReference": "XM123456789812",
+        "ParentChargeReference": "ParentChargeReference",
+        "dueDate": "<DUE_DATE>",
+        "interestStartDate": "2022-03-05",
+        "outstandingAmount": 1000.00,
+        "accruedInterest": 50.00,
+        "locks": [
+        ]
+      }
+    ],
+    "responseCode": {
+      "timestamp": "20240228T114356.235 GMT",
+      "httpCode": 200,
+      "reasonCode": "002",
+      "description": "success"
+    }
+  },
+  "responseCode": {
+    "timestamp": "20240228T114356.235 GMT",
+    "httpCode": 200,
+    "reasonCode": "003",
+    "description": "Retrieved successfully"
+  }
+}
