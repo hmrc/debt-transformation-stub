@@ -50,7 +50,7 @@
         "subTrans": "1005",
         "taxPeriodFrom": "2022-02-06",
         "taxPeriodTo": "2022-03-05",
-        "parentChargeReference": "K0000000000001",
+        "parentChargeReference": "XX123456789542",
         "dueDate": "<DUE_DATE>",
         "interestStartDate": "2022-03-05",
         "outstandingAmount": 3000.00,
