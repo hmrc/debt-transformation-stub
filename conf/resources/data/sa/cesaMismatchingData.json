@@ -42,7 +42,7 @@
         "creationDate": "2022-07-03",
         "originalCreationDate": "2022-06-03",
         "saTaxYearEnd": "2023-03-05",
-        "originalChargeType": "BCD",
+        "originalChargeType": "LPI",
         "originalTieBreaker": "0001",
         "mainType": "In Year RTI Charge (FPS)",
         "mainTrans": "4000",

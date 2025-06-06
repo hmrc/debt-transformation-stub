@@ -10,7 +10,7 @@
         "identifications": [
           {
             "idType": "UTR",
-            "idValue": "matchingCesaData"
+            "idValue": "cesaMissingChargeReferences"
           }
         ]
       }
@@ -37,11 +37,11 @@
     "charges": [
       {
         "chargeType": "LPI",
-        "UTR": "matchingCesaData",
+        "UTR": "cesaMissingChargeReferences",
         "tieBreaker": "0002",
         "creationDate": "2022-07-03",
         "originalCreationDate": "2022-06-03",
-        "saTaxYearEnd": "2023-03-05",
+        "saTaxYearEnd": "2022-03-05",
         "originalChargeType": "BCD",
         "originalTieBreaker": "0001",
         "mainType": "In Year RTI Charge (FPS)",
@@ -58,7 +58,7 @@
       },
       {
         "chargeType": "SUR1",
-        "UTR": "matchingCesaData",
+        "UTR": "cesaMissingChargeReferences",
         "tieBreaker": "0003",
         "creationDate": "2023-04-03",
         "saTaxYearEnd": "2023-03-05",
@@ -93,7 +93,7 @@
         "identifications": [
           {
             "idType": "UTR",
-            "idValue": "matchingCesaData"
+            "idValue": "cesaMissingChargeReferences"
           }
         ]
       }
