@@ -164,7 +164,7 @@
         "saTaxYearEnd": "2022-03-05",
         "originalChargeType": "string",
         "originalTieBreaker": "1234",
-        "chargeReference": "XM123456789812",
+        "chargeReference": "XM123456789813",
         "outstandingAmount": 3000.00,
         "accruedInterest": 500.00
       }
