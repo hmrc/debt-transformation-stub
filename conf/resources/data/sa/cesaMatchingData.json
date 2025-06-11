@@ -10,7 +10,7 @@
         "identifications": [
           {
             "idType": "UTR",
-            "idValue": "cesaMissingChargeReferences"
+            "idValue": "cesaMatchingData"
           }
         ]
       }
@@ -37,7 +37,7 @@
     "charges": [
       {
         "chargeType": "LPI",
-        "UTR": "cesaMissingChargeReferences",
+        "UTR": "cesaMatchingData",
         "tieBreaker": "0002",
         "creationDate": "2022-07-03",
         "originalCreationDate": "2022-06-03",
@@ -50,6 +50,7 @@
         "subTrans": "1005",
         "taxPeriodFrom": "2022-02-06",
         "taxPeriodTo": "2022-03-05",
+        "chargeReference": "XM123456789812",
         "parentChargeReference": "K0000000000001",
         "dueDate": "<DUE_DATE>",
         "interestStartDate": "2022-03-05",
@@ -58,7 +59,7 @@
       },
       {
         "chargeType": "SUR1",
-        "UTR": "cesaMissingChargeReferences",
+        "UTR": "cesaMatchingData",
         "tieBreaker": "0003",
         "creationDate": "2023-04-03",
         "saTaxYearEnd": "2023-03-05",
@@ -68,6 +69,7 @@
         "subTrans": "1005",
         "taxPeriodFrom": "2022-02-06",
         "taxPeriodTo": "2022-03-05",
+        "chargeReference": "XM123456789812",
         "parentChargeReference": "XX123456789542",
         "dueDate": "<DUE_DATE>",
         "interestStartDate": "2022-03-05",
@@ -93,7 +95,7 @@
         "identifications": [
           {
             "idType": "UTR",
-            "idValue": "cesaMissingChargeReferences"
+            "idValue": "cesaMatchingData"
           }
         ]
       }
