@@ -64,7 +64,47 @@
         "dueDate": "2014-09-12"
       }
     ],
-    "charges": [],
+    "charges": [
+      {
+        "chargeType": "LPI",
+        "UTR": "cesaMissingChargeReferences",
+        "tieBreaker": "0002",
+        "creationDate": "2022-07-03",
+        "originalCreationDate": "2022-06-03",
+        "saTaxYearEnd": "2023-03-05",
+        "originalChargeType": "BCD",
+        "originalTieBreaker": "0001",
+        "mainType": "In Year RTI Charge (FPS)",
+        "mainTrans": "4000",
+        "parentMainTrans": "4000",
+        "subTrans": "1005",
+        "taxPeriodFrom": "2022-02-06",
+        "taxPeriodTo": "2022-03-05",
+        "parentChargeReference": "K0000000000001",
+        "dueDate": "<DUE_DATE>",
+        "interestStartDate": "2022-03-05",
+        "outstandingAmount": 3000.00,
+        "accruedInterest": 500.00
+      },
+      {
+        "chargeType": "SUR1",
+        "UTR": "cesaMissingChargeReferences",
+        "tieBreaker": "0003",
+        "creationDate": "2023-04-03",
+        "saTaxYearEnd": "2023-03-05",
+        "mainType": "In Year RTI Charge (FPS)",
+        "mainTrans": "4000",
+        "parentMainTrans": "4000",
+        "subTrans": "1005",
+        "taxPeriodFrom": "2022-02-06",
+        "taxPeriodTo": "2022-03-05",
+        "parentChargeReference": "XX123456789542",
+        "dueDate": "<DUE_DATE>",
+        "interestStartDate": "2022-03-05",
+        "outstandingAmount": 3000.00,
+        "accruedInterest": 500.00
+      }
+    ],
     "responseCode": {
       "timestamp": "20240328T134356.235 GMT",
       "httpCode": 200
@@ -124,11 +164,6 @@
         "signalType": "Transitioned to CDCS",
         "signalValue": "True",
         "signalDescription": ""
-      },
-      {
-        "signalType": "Transitioned to CDCS",
-        "signalValue": "True",
-        "signalDescription": ""
       }
     ],
     "filings": [
@@ -148,22 +183,6 @@
       }
     ],
     "charges": [
-      {
-        "chargeType": "In Year RTI Charge - Tax",
-        "mainType": "In Year RTI Charge (FPS)",
-        "mainTrans": "4000",
-        "subTrans": "1005",
-        "UTR": "73",
-        "taxPeriodFrom": "2022-02-06",
-        "taxPeriodTo": "2022-03-05",
-        "chargeReference": "XM123456789813",
-        "dueDate": "<DUE_DATE_FOR_FUTURE>",
-        "interestStartDate": "2022-03-05",
-        "outstandingAmount": 1000.00,
-        "accruedInterest": 50.00,
-        "locks": [
-        ]
-      },
       {
         "chargeType": "In Year RTI Charge - Tax",
         "mainType": "In Year RTI Charge (FPS)",

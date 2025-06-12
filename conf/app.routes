@@ -33,7 +33,7 @@ POST          /individuals/debts/time-to-pay/quote/arrangement                  
 POST          /debts/time-to-pay/quote/arrangement                                                   uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.createPlan
 
 POST          /prweb/api/TTP/v1/create                                                               uk.gov.hmrc.debttransformationstub.controllers.CaseManagementController.createCase
-
+POST          /prweb/api/TTP/v1/Eligibility                                                          uk.gov.hmrc.debttransformationstub.controllers.CDCSController.cdcsData()
 #All of the below are related to the only repository - EnactStageRespository
 GET           /test-only/all-requests                                                                uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.getTTPRequests
 GET           /test-only/requests                                                                    uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.getUnprocessedRequests
