@@ -23,7 +23,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.Inject
-import scala.concurrent.{ ExecutionContext, Future }
+import scala.concurrent.Future
 import scala.io.Source
 import scala.util.{ Failure, Success, Using }
 
