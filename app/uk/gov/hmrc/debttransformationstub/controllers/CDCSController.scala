@@ -19,7 +19,7 @@ package uk.gov.hmrc.debttransformationstub.controllers
 import play.api.Environment
 import play.api.libs.json.{ JsValue, Json }
 import play.api.mvc.{ Action, ControllerComponents, Request }
-import uk.gov.hmrc.debttransformationstub.models.CesaDataRequest
+import uk.gov.hmrc.debttransformationstub.models.CdcsRequest
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
@@ -28,15 +28,15 @@ import scala.concurrent.Future
 import scala.io.Source
 import scala.util.{ Failure, Success, Try, Using }
 
-class CESAController @Inject() (environment: Environment, cc: ControllerComponents)
+class CDCSController @Inject() (environment: Environment, cc: ControllerComponents)
     extends BackendController(cc) with CustomBaseController {
 
   private lazy val logger = new RequestAwareLogger(this.getClass)
-  private val basePath = "conf/resources/data/cesa"
+  private val basePath = "conf/resources/data/cdcs"
 
-  def getCESAdata(): Action[JsValue] = Action.async(parse.json) { implicit rawRequest: Request[JsValue] =>
-    withCustomJsonBody[CesaDataRequest] { request =>
-      val fileName: String = request.debitIdentifiers.head.UTR
+  def cdcsData(): Action[JsValue] = Action.async(parse.json) { implicit rawRequest: Request[JsValue] =>
+    withCustomJsonBody[CdcsRequest] { request =>
+      val fileName: String = request.identifications.head.idValue
       val relativePath = s"$basePath" + "/" + s"$fileName.json"
       environment.getExistingFile(relativePath) match {
         case None =>
