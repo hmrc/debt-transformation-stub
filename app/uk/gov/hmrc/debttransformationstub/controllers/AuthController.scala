@@ -35,8 +35,10 @@ class AuthController @Inject() (environment: Environment, cc: ControllerComponen
   def getAccessToken(): Action[Map[String, Seq[String]]] = Action(parse.tolerantFormUrlEncoded).async {
     implicit request: Request[Map[String, Seq[String]]] =>
       val clientIdFileMapping = Map(
-        "scheduler-stub-client-id" -> "scheduled-bearer-token.json",
-        "stub-client-id"           -> "non-scheduled-bearer-token.json"
+        "scheduler-stub-client-id"     -> "scheduled-bearer-token.json",
+        "stub-client-id"               -> "non-scheduled-bearer-token.json",
+        "cdcs-check-stub-client-id"    -> "cdcs-check-bearer-token.json",
+        "customer-data-stub-client-id" -> "customer-data-bearer-token.json"
       )
 
       val maybeClientId = request.body.get("client_id").toList.flatten
