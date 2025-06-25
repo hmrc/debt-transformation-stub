@@ -175,8 +175,7 @@ class TimeToPayController @Inject() (
           _            <- enactStageRepository.addNDDSStage(correlationId, req)
           fileResponse <- findFile(s"/ndds.enactArrangement/", s"$ninoBrocsId.json")
         } yield fileResponse
-      }
-      else if (requestChargeHodServices.contains("CESA")) {
+      } else if (requestChargeHodServices.contains("CESA")) {
         val ninoUTRId = req.identification
           .find(id => id.idType.equalsIgnoreCase("NINO") || id.idType.equalsIgnoreCase("UTR"))
           .map(_.idValue)
