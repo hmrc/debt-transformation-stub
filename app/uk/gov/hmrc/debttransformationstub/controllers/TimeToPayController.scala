@@ -175,9 +175,20 @@ class TimeToPayController @Inject() (
           _            <- enactStageRepository.addNDDSStage(correlationId, req)
           fileResponse <- findFile(s"/ndds.enactArrangement/", s"$ninoBrocsId.json")
         } yield fileResponse
+      } else if (requestChargeHodServices.contains("CESA")) {
+        val ninoUTRId = req.identification
+          .find(id => id.idType.equalsIgnoreCase("NINO") || id.idType.equalsIgnoreCase("UTR"))
+          .map(_.idValue)
+          .getOrElse(
+            throw new IllegalArgumentException("NINO or UTR id is required for SA NDDS enact arrangements")
+          )
+        for {
+          _            <- enactStageRepository.addNDDSStage(correlationId, req)
+          fileResponse <- findFile(s"/ndds.enactArrangement/", s"$ninoUTRId.json")
+        } yield fileResponse
       } else {
         throw new IllegalArgumentException(
-          "Either BROCS, VRN, or SAFE id types are required for PAYE, VAT, or SIMP enact arrangements"
+          "Either BROCS, VRN, SAFE or UTR id types are required for PAYE, VAT, SIMP or SA enact arrangements"
         )
       }
     }
