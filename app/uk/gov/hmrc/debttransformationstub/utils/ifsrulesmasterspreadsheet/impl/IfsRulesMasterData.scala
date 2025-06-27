@@ -39,11 +39,14 @@ final case class IfsRulesMasterData(
 
     def subTrans(index: Int): String = Lookup2D.subTransAt(index).actual
 
-    def interestBearing(index: Int): Int =
+    def interestBearingId(index: Int): Int =
+      if (isInterestBearing(index)) 4 else 0
+
+    def isInterestBearing(index: Int): Boolean =
       Lookup2D.interestBearingAt(index).actual match {
-        case ""  => 0
-        case "N" => 0
-        case "Y" => 4
+        case ""  => false
+        case "N" => false
+        case "Y" => true
         case unknown =>
           val rowDisplay: JsValue = Json.toJson(tableData.dataRowAt(index).values.map(_.actual))
           throw new IllegalArgumentException(
