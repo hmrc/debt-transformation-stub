@@ -268,3 +268,12 @@ class TimeToPayController @Inject() (
     headers.get("correlationId").getOrElse(throw new Exception("Missing required correlationId header"))
 
 }
+  def cdcsCreateCase: Action[JsValue] = Action.async(parse.json) { implicit request =>
+  val correlationId = getCorrelationIdHeader(request.headers)
+  withCustomJsonBody[CdcsCreateCaseRequest] { req =>
+    for {
+      _            <- enactStageRepository.addCDCSStage(correlationId, req)
+      fileResponse <- findFile(s"/cdcs.createCase/create-case-response.json", s"${req.ddiReference}.json")
+    } yield fileResponse
+  }
+}
