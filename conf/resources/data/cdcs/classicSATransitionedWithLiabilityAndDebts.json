@@ -1,0 +1,109 @@
+{
+  "customer" : {
+    "individual" : {
+      "customerAddresses" : [
+        {
+          "addressLine1" : "66 Lichfield Street",
+          "addressLine2" : "Flat-2",
+          "addressLine3" : "Shakespeare House",
+          "addressLine4" : "Wolverhampton",
+          "addressType" : 1,
+          "contactDetails" : {
+            "email" : "agent1@gmail.com",
+            "telephoneNumber" : "0302 400 4859"
+          },
+          "postCode" : "WV1 1DG"
+        }
+      ],
+      "dateOfBirth" : "1990-09-30",
+      "identifications" : [
+        {
+          "idType" : 73,
+          "idValue" : "k1234567890123"
+        }
+      ],
+      "lastName" : "Wayne"
+    }
+  },
+  "plan" : {
+    "collectionInfo" : [
+      {
+        "initialCollection" : {
+          "amountDue" : 0,
+          "paymentDueDate" : "2025-06-06"
+        },
+        "regularCollections" : [
+          {
+            "amountDue" : 0,
+            "paymentDueDate" : "2025-06-06"
+          }
+        ]
+      }
+    ],
+    "duration" : 16,
+    "frequency" : "monthly",
+    "initialPaymentAmount" : 0,
+    "initialPaymentDate" : "2025-05-22",
+    "initialPaymentMethod" : "directDebit",
+    "initialPaymentReference" : "PREF001",
+    "instalmentAmount" : 100,
+    "instalmentStartDate" : "2025-05-22",
+    "instalments" : [
+      {
+        "amountDue" : 100,
+        "debtItemChargeId" : "DC00001",
+        "dueDate" : "2025-05-22",
+        "expectedPayment" : 100,
+        "instalmentBalance" : 0,
+        "instalmentInterestAccrued" : 2,
+        "instalmentNumber" : 2
+      }
+    ],
+    "interestAccrued" : 20,
+    "numberOfInstalments" : 2,
+    "payments" : [
+      {
+        "paymentMethod" : "directDebit",
+        "paymentReference" : "REF0001"
+      }
+    ],
+    "planInterest" : 2,
+    "totalDebtIncInt" : 220,
+    "totalInterest" : 20,
+    "totalLiabilityAmount" : 0,
+    "ttpArrangementId" : "A1"
+  },
+  "taxAccount" : {
+    "debtItems" : [
+      {
+        "amount" : 50000,
+        "chargeReference" : "CR123456789",
+        "charges" : [
+          {
+            "dueDate" : "2025-05-22",
+            "interestStartDate" : "2025-05-22",
+            "mainTrans" : "5100",
+            "outstandingAmount" : 100,
+            "parentMainTrans" : "1000",
+            "periodFrom" : "2025-05-22",
+            "periodTo" : "2025-05-22",
+            "source" : "CESA",
+            "subTrans" : "1553"
+          }
+        ],
+        "parentChargeReference" : "PC0001"
+      }
+    ],
+    "regimeType" : 36,
+    "taxAccountDetails" : {
+      "districtNumber" : "206809"
+    }
+  },
+  "upstreamErrors" : [
+    {
+      "sourceSystem" : "NDDS",
+      "upstreamErrorCode" : "404",
+      "upstreamErrorDescription" : "server available"
+    }
+  ]
+}
