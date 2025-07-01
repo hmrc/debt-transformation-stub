@@ -22,8 +22,7 @@ import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
 import uk.gov.hmrc.debttransformationstub.models._
-import uk.gov.hmrc.debttransformationstub.models.casemanagement.CreateCaseRequest
-import uk.gov.hmrc.debttransformationstub.repositories.{EnactStage, EnactStageRepository}
+import uk.gov.hmrc.debttransformationstub.repositories.{ EnactStage, EnactStageRepository }
 import uk.gov.hmrc.debttransformationstub.services.TTPPollingService
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.http.HeaderCarrier
@@ -268,21 +267,33 @@ class TimeToPayController @Inject() (
   def getCorrelationIdHeader(headers: Headers): String =
     headers.get("correlationId").getOrElse(throw new Exception("Missing required correlationId header"))
 
-}
 
-  def cdcsCreateCase: Action[JsValue] = Action.async(parse.json) { implicit request: Request[JsValue] =>
-  withCustomJsonBody[CdcsCreateCaseRequest] { CdcsCreateCaseRequest.scala =>
-    val fileMaybe: Option[File] = environment.getExistingFile(
-      s"$basePath/cdcs.createCase/cdcsCreateCaseResponse.json"
-    )
-
-    fileMaybe match {
-      case None =>
-        logger.error(s"Status $NOT_FOUND, message: file not found")
-        Future successful NotFound("file not found")
-      case Some(file) =>
-        val result = Source.fromFile(file).mkString.replaceAll("success", cdcsCreateCaseResponse.status.value).stripMargin
-        Future successful Ok(result)
+  def cdcsCreateCase: Action[JsValue] = Action.async(parse.json) { implicit request =>
+    val correlationId = getCorrelationIdHeader(request.headers)
+    withCustomJsonBody[CdcsCreateCaseRequest] { req =>
+      for {
+        _            <- enactStageRepository.addCDCSStage(correlationId, req)
+        fileResponse <- findFile(s"/cdcs.createCase/", s"${req.idValue}.json")
+      } yield fileResponse
     }
   }
+
+//  def cdcsCreateCase: Action[JsValue] = Action.async(parse.json) { implicit request: Request[JsValue] =>
+//    withCustomJsonBody[CdcsCreateCaseRequest] {
+//      CdcsCreateCaseRequest.scala
+//      =>
+//      val fileMaybe: Option[File] = environment.getExistingFile(
+//        s"$basePath/cdcs.createCase/cdcsCreateCaseResponse.json"
+//      )
+//
+//      fileMaybe match {
+//        case None =>
+//          logger.error(s"Status $NOT_FOUND, message: file not found")
+//          Future successful NotFound("file not found")
+//        case Some(file) =>
+//          val result = Source.fromFile(file).mkString.replaceAll("success", cdcsCreateCaseResponse.status.value).stripMargin
+//          Future successful Ok(result)
+//      }
+//    }
+//  }
 }

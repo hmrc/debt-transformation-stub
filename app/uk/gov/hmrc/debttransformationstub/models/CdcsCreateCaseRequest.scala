@@ -16,31 +16,30 @@
 
 package uk.gov.hmrc.debttransformationstub.models
 
-import enumeratum.{ Enum, EnumEntry, PlayJsonEnum }
-import play.api.libs.json.{ Format, Json, OFormat }
+import play.api.libs.json.{ Json, OFormat }
 
 import java.time.LocalDate
 
 final case class CdcsCreateCaseRequest(
-                             arrangementAgreedDate: LocalDate,
-                             paymentPlanStartDate: LocalDate,
-                             totalLiability: BigDecimal,
-                             initialPaymentDate: LocalDate,
-                             initialPaymentAmount: BigDecimal,
-                             paymentPlanCollectionAmount: BigDecimal,
-                             paymentPlanFrequency: String,
-                             arrangementReviewDate: LocalDate,
-                             regimeType: Integer,
-                             regimeDigitalCorrespondence: Boolean,
-                             emailAddress: String,
-                             emailSource: String,
-                             etmpChargesMarked: Boolean,
-                             ddiReference: String,
-                             idType: String,
-                             idValue: String,
-                             districtNumber: String,
-                             address: IdmsAddress,
-                             chargeReferences: List[IdmsChargeReference]
+  arrangementAgreedDate: LocalDate,
+  paymentPlanStartDate: LocalDate,
+  totalLiability: BigDecimal,
+  initialPaymentDate: LocalDate,
+  initialPaymentAmount: BigDecimal,
+  paymentPlanCollectionAmount: BigDecimal,
+  paymentPlanFrequency: String,
+  arrangementReviewDate: LocalDate,
+  regimeType: String,
+  regimeDigitalCorrespondence: Boolean,
+  emailAddress: String,
+  emailSource: String,
+  etmpChargesMarked: Boolean,
+  ddiReference: String,
+  idType: String,
+  idValue: String,
+  districtNumber: String,
+  address: IdmsAddress,
+  chargeReferences: List[IdmsChargeReference]
 )
 
 object CdcsCreateCaseRequest {
