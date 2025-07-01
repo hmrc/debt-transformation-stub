@@ -273,7 +273,7 @@ class TimeToPayController @Inject() (
   withCustomJsonBody[CdcsCreateCaseRequest] { req =>
     for {
       _            <- enactStageRepository.addCDCSStage(correlationId, req)
-      fileResponse <- findFile(s"/cdcs.createCase/create-case-response.json", s"${req.ddiReference}.json")
+      fileResponse <- findFile(s"/cdcs.createCase/CdcsCreateCaseResponse.json", s"${req.status}.json")
     } yield fileResponse
   }
 }

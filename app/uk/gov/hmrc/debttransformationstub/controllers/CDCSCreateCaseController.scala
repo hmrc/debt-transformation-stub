@@ -41,7 +41,8 @@ class CDCSCreateCaseController @Inject() (environment: Environment, cc: Controll
       val fileName: String = request.regimeType.head.idValue
       val relativePath = s"$basePath" + "/" + s"$fileName.json"
       environment.getExistingFile(relativePath) match {
-      )
+      ()
+      }
 
       fileMaybe match {
         case None =>
@@ -53,4 +54,4 @@ class CDCSCreateCaseController @Inject() (environment: Environment, cc: Controll
       }
       }
     }
-}
+  }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,32 +16,12 @@
 
 package uk.gov.hmrc.debttransformationstub.models
 
-import enumeratum.{ Enum, EnumEntry, PlayJsonEnum }
-import play.api.libs.json.{ Format, Json, OFormat }
+import play.api.libs.json.{ Json, OFormat }
 
-final case class CaseId(value: String) extends AnyVal
+final case class CdcsCreateCaseResponse(
+                              status: String,
+                            )
 
-object CaseId extends ValueTypeFormatter {
-  implicit val format: Format[CaseId] =
-    valueTypeFormatter(CaseId.apply, CaseId.unapply)
-}
-
-sealed abstract class PlanStatus(override val entryName: String) extends EnumEntry
-
-object PlanStatus extends Enum[PlanStatus] with PlayJsonEnum[PlanStatus] {
-  val values: scala.collection.immutable.IndexedSeq[PlanStatus] = findValues
-
-  case object Success extends PlanStatus("success")
-  case object Failure extends PlanStatus("failure")
-  case object Complete extends PlanStatus("complete")
-  case object Cancelled extends PlanStatus("cancelled")
-
-}
-
-final case class CdcsCreatePlanResponse(
- status: PlanStatus
-)
-
-object CdcsCreatePlanResponse {
-  implicit val format: OFormat[CdcsCreatePlanResponse] = Json.format[CdcsCreatePlanResponse]
+object CdcsCreateCaseResponse {
+  implicit val format: OFormat[CdcsCreateCaseResponse] = Json.format[CdcsCreateCaseResponse]
 }
