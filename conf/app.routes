@@ -57,4 +57,4 @@ POST          /individuals/debts/essttp/eligibility-check                       
 POST          /idms/essttp/v1/saeligibilitycheck                                                     uk.gov.hmrc.debttransformationstub.controllers.IDMSController.saEligibilityCheck()
 
 POST          /cesa/debt/providechargereferences                                                     uk.gov.hmrc.debttransformationstub.controllers.CESAController.getCESAdata()
-POST          /prweb/api/TTP/v1/CreateSSTTP                                                          uk.gov.hmrc.debttransformationstub.controllers.CDCSController.cdcsCreateCase(correlationId: String)
+POST          /prweb/api/TTP/v1/CreateSSTTP                                                          uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.cdcsCreateCase
