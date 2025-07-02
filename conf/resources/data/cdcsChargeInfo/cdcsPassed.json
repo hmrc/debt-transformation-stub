@@ -1,0 +1,74 @@
+{
+  "processingDateTime": "2022-03-23T13:49:51.141Z",
+  "identification": [
+    {
+      "idType": "UTR",
+      "idValue": "1234567890"
+    }
+  ],
+  "individualDetails": {
+    "title": "Mr",
+    "firstName": "John",
+    "lastName": "Doe",
+    "dateOfBirth": "2069-06-06",
+    "districtNumber": "xyz",
+    "customerType": "MTD(ITSA)",
+    "transitionToCDCS": true
+  },
+  "addresses": [
+    {
+      "addressType": "ppob",
+      "addressLine1": "999 Elm Street",
+      "addressLine2": "Suite 12C",
+      "addressLine3": "Northshire",
+      "addressLine4": "London",
+      "rls": true,
+      "contactDetails": {
+        "telephoneNumber": "+44 20 1234 5678",
+        "fax": "01234",
+        "mobile": "07123456789",
+        "emailAddress": "john@example.com",
+        "emailSource": "ETMP",
+        "altFormat": 123
+      },
+      "postCode": "W1A 1ZZ",
+      "country": "ZZ",
+      "postcodeHistory": [
+        {
+          "addressPostcode": "BN12 9ER",
+          "postcodeDate": "2022-04-30"
+        }
+      ]
+    }
+  ],
+  "chargeTypeAssessment": [
+    {
+      "debtTotalAmount": 148781,
+      "chargeReference": "XW006559808862",
+      "mainTrans": "4700",
+      "parentChargeReference": "XW006559808862",
+      "charges": [
+        {
+          "taxPeriodFrom": "2022-04-01",
+          "taxPeriodTo": "2022-06-30",
+          "chargeType": "VAT Return Debit Charge",
+          "mainType": "VAT Return charge",
+          "subTrans": "1174",
+          "outstandingAmount": 148781,
+          "dueDate": "2022-08-01",
+          "isInterestBearingCharge": true,
+          "interestStartDate": "2022-08-01",
+          "accruedInterest": 3,
+          "chargeSource": "CESA",
+          "parentMainTrans": "4700",
+          "originalCreationDate": "2022-08-01",
+          "tieBreaker": "xyz",
+          "originalTieBreaker": "xyz",
+          "saTaxYearEnd": "2022-08-01",
+          "creationDate": "2022-08-01",
+          "originalChargeType": "VAT Return Debit Charge"
+        }
+      ]
+    }
+  ]
+}
