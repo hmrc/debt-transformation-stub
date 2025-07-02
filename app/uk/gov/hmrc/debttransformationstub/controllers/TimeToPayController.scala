@@ -52,7 +52,7 @@ class TimeToPayController @Inject() (
       if (appConfig.isPollingEnv) {
         ttpPollingService.insertRequestAndServeResponse(Json.toJson(req), Some(request.uri)).map {
           case Some(v) => Status(v.status.getOrElse(200))(v.content)
-          case None    => ServiceUnavailable
+          case None => ServiceUnavailable
         }
       } else {
         val fileMaybe: Option[File] =
@@ -74,7 +74,7 @@ class TimeToPayController @Inject() (
     if (appConfig.isPollingEnv) {
       ttpPollingService.insertRequestAndServeResponse(Json.toJson(""), Some(request.uri)).map {
         case Some(v) => Status(v.status.getOrElse(200))(v.content)
-        case None    => ServiceUnavailable
+        case None => ServiceUnavailable
       }
     } else {
       environment.getExistingFile(s"$basePath/ttp.generateAffordabilityQuote/affordabilityQuoteResponse.json") match {
@@ -91,7 +91,7 @@ class TimeToPayController @Inject() (
       if (appConfig.isPollingEnv) {
         ttpPollingService.insertRequestAndServeResponse(Json.toJson(""), Some(request.uri)).map {
           case Some(v) => Status(v.status.getOrElse(200))(v.content)
-          case None    => ServiceUnavailable
+          case None => ServiceUnavailable
         }
       } else {
         environment.getExistingFile(s"$basePath/ttp.viewPlan/$pegaId.json") match {
@@ -107,7 +107,7 @@ class TimeToPayController @Inject() (
     if (appConfig.isPollingEnv) {
       ttpPollingService.insertRequestAndServeResponse(Json.toJson(""), Some(request.uri)).map {
         case Some(v) => Status(v.status.getOrElse(200))(v.content)
-        case None    => ServiceUnavailable
+        case None => ServiceUnavailable
       }
     } else {
       environment.getExistingFile(s"$basePath/ttp.updatePlan/$customerReference.json") match {
@@ -124,7 +124,7 @@ class TimeToPayController @Inject() (
       if (appConfig.isPollingEnv) {
         ttpPollingService.insertRequestAndServeResponse(Json.toJson(req), Some(request.uri)).map {
           case Some(v) => Status(v.status.getOrElse(200))(v.content)
-          case None    => ServiceUnavailable
+          case None => ServiceUnavailable
         }
       } else {
         val fileMaybe: Option[File] =
@@ -152,7 +152,7 @@ class TimeToPayController @Inject() (
           .map(_.idValue)
           .getOrElse(throw new IllegalArgumentException("BROCS id is required for PAYE NDDS enact arrangement"))
         for {
-          _            <- enactStageRepository.addNDDSStage(correlationId, req)
+          _ <- enactStageRepository.addNDDSStage(correlationId, req)
           fileResponse <- findFile(s"/ndds.enactArrangement/", s"$brocsId.json")
         } yield fileResponse
       } else if (requestChargeHodServices.contains("VAT")) {
@@ -161,7 +161,7 @@ class TimeToPayController @Inject() (
           .map(_.idValue)
           .getOrElse(throw new IllegalArgumentException("VRN id is required for VAT NDDS enact arrangement"))
         for {
-          _            <- enactStageRepository.addNDDSStage(correlationId, req)
+          _ <- enactStageRepository.addNDDSStage(correlationId, req)
           fileResponse <- findFile(s"/ndds.enactArrangement/", s"$vrnId.json")
         } yield fileResponse
       } else if (requestChargeHodServices.contains("SAFE")) {
@@ -172,7 +172,7 @@ class TimeToPayController @Inject() (
             throw new IllegalArgumentException("NINO or BROCS id is required for SIMP or PAYE NDDS enact arrangements")
           )
         for {
-          _            <- enactStageRepository.addNDDSStage(correlationId, req)
+          _ <- enactStageRepository.addNDDSStage(correlationId, req)
           fileResponse <- findFile(s"/ndds.enactArrangement/", s"$ninoBrocsId.json")
         } yield fileResponse
       } else if (requestChargeHodServices.contains("CESA")) {
@@ -183,7 +183,7 @@ class TimeToPayController @Inject() (
             throw new IllegalArgumentException("NINO or UTR id is required for SA NDDS enact arrangements")
           )
         for {
-          _            <- enactStageRepository.addNDDSStage(correlationId, req)
+          _ <- enactStageRepository.addNDDSStage(correlationId, req)
           fileResponse <- findFile(s"/ndds.enactArrangement/", s"$ninoUTRId.json")
         } yield fileResponse
       } else {
@@ -201,7 +201,7 @@ class TimeToPayController @Inject() (
       val correlationId = getCorrelationIdHeader(request.headers)
       withCustomJsonBody[UpdateCaseRequest] { req =>
         for {
-          _            <- enactStageRepository.addPegaStage(correlationId, req)
+          _ <- enactStageRepository.addPegaStage(correlationId, req)
           fileResponse <- findFile(s"/pega.updateCase/", s"$caseId.json")
         } yield fileResponse
       }
@@ -217,7 +217,7 @@ class TimeToPayController @Inject() (
     val correlationId = getCorrelationIdHeader(request.headers)
     withCustomJsonBody[PaymentLockRequest] { req =>
       for {
-        _            <- enactStageRepository.addETMPStage(correlationId, req)
+        _ <- enactStageRepository.addETMPStage(correlationId, req)
         fileResponse <- findFile(s"/etmp.executePaymentLock/", s"${req.idValue}.json")
       } yield fileResponse
     }
@@ -227,7 +227,7 @@ class TimeToPayController @Inject() (
     val correlationId = getCorrelationIdHeader(request.headers)
     withCustomJsonBody[CreateMonitoringCaseRequest] { req =>
       for {
-        _            <- enactStageRepository.addIDMSStage(correlationId, req)
+        _ <- enactStageRepository.addIDMSStage(correlationId, req)
         fileResponse <- findFile(s"/idms.createTTPMonitoringCase/", s"${req.ddiReference}.json")
       } yield fileResponse
     }
@@ -277,23 +277,4 @@ class TimeToPayController @Inject() (
       } yield fileResponse
     }
   }
-
-//  def cdcsCreateCase: Action[JsValue] = Action.async(parse.json) { implicit request: Request[JsValue] =>
-//    withCustomJsonBody[CdcsCreateCaseRequest] {
-//      CdcsCreateCaseRequest.scala
-//      =>
-//      val fileMaybe: Option[File] = environment.getExistingFile(
-//        s"$basePath/cdcs.createCase/cdcsCreateCaseResponse.json"
-//      )
-//
-//      fileMaybe match {
-//        case None =>
-//          logger.error(s"Status $NOT_FOUND, message: file not found")
-//          Future successful NotFound("file not found")
-//        case Some(file) =>
-//          val result = Source.fromFile(file).mkString.replaceAll("success", cdcsCreateCaseResponse.status.value).stripMargin
-//          Future successful Ok(result)
-//      }
-//    }
-//  }
 }

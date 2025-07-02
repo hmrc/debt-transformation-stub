@@ -3,16 +3,16 @@
     "individual" : {
       "customerAddresses" : [
         {
-          "addressLine1" : "66 Lichfield Street",
-          "addressLine2" : "Flat-2",
-          "addressLine3" : "Shakespeare House",
-          "addressLine4" : "Wolverhampton",
+          "addressLine1" : "10 Stroud Street",
+          "addressLine2" : "Oaktree Hill",
+          "addressLine3" : "Biggleswade",
+          "addressLine4" : "Beds",
           "addressType" : 1,
           "contactDetails" : {
             "email" : "agent1@gmail.com",
             "telephoneNumber" : "0302 400 4859"
           },
-          "postCode" : "WV1 1DG"
+          "postCode" : "DL6 6FQ"
         }
       ],
       "dateOfBirth" : "1990-09-30",
