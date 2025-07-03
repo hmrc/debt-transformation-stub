@@ -272,7 +272,7 @@ class TimeToPayController @Inject() (
     val correlationId = getCorrelationIdHeader(request.headers)
     withCustomJsonBody[CdcsCreateCaseRequest] { req =>
       for {
-        _            <- enactStageRepository.addCDCSStage(correlationId, req)
+        _ <- enactStageRepository.addCDCSStage(correlationId, req)
         fileResponse <- findFile(s"/cdcs.createCase/", s"${req.idValue}.json")
       } yield fileResponse
     }
