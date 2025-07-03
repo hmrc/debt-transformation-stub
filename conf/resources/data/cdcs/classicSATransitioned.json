@@ -1,109 +1,157 @@
 {
-  "customer" : {
-    "individual" : {
-      "customerAddresses" : [
-        {
-          "addressLine1" : "10 Stroud Street",
-          "addressLine2" : "Oaktree Hill",
-          "addressLine3" : "Biggleswade",
-          "addressLine4" : "Beds",
-          "addressType" : 1,
-          "contactDetails" : {
-            "email" : "agent1@gmail.com",
-            "telephoneNumber" : "0302 400 4859"
-          },
-          "postCode" : "DL6 6FQ"
-        }
-      ],
-      "dateOfBirth" : "1990-09-30",
-      "identifications" : [
-        {
-          "idType" : 73,
-          "idValue" : "k1234567890123"
-        }
-      ],
-      "lastName" : "Wayne"
-    }
-  },
-  "plan" : {
-    "collectionInfo" : [
-      {
-        "initialCollection" : {
-          "amountDue" : 0,
-          "paymentDueDate" : "2025-06-06"
-        },
-        "regularCollections" : [
+  "cesaData": {
+    "customer": {
+      "individual": {
+        "title": "Mr",
+        "firstName": "Ben",
+        "lastName": "Thomas",
+        "dateOfBirth": "2014-09-12",
+        "dateOfDeath": "2014-09-12",
+        "identifications": [
           {
-            "amountDue" : 0,
-            "paymentDueDate" : "2025-06-06"
+            "idType": "UTR",
+            "idValue": "9876543210"
           }
         ]
       }
-    ],
-    "duration" : 16,
-    "frequency" : "monthly",
-    "initialPaymentAmount" : 0,
-    "initialPaymentDate" : "2025-05-22",
-    "initialPaymentMethod" : "directDebit",
-    "initialPaymentReference" : "PREF001",
-    "instalmentAmount" : 100,
-    "instalmentStartDate" : "2025-05-22",
-    "instalments" : [
+    },
+    "addresses": [
       {
-        "amountDue" : 100,
-        "debtItemChargeId" : "DC00001",
-        "dueDate" : "2025-05-22",
-        "expectedPayment" : 100,
-        "instalmentBalance" : 0,
-        "instalmentInterestAccrued" : 2,
-        "instalmentNumber" : 2
+        "addressType": "string",
+        "addressLine1": "string",
+        "addressLine2": "string",
+        "addressLine3": "string",
+        "addressLine4": "string",
+        "rls": true
       }
     ],
-    "interestAccrued" : 20,
-    "numberOfInstalments" : 2,
-    "payments" : [
+    "filings": [
       {
-        "paymentMethod" : "directDebit",
-        "paymentReference" : "REF0001"
+        "icrCategory": "string",
+        "icrDescription": "string",
+        "fromDate": "2014-09-12",
+        "toDate": "2014-09-12",
+        "dueDate": "2014-09-12"
       }
     ],
-    "planInterest" : 2,
-    "totalDebtIncInt" : 220,
-    "totalInterest" : 20,
-    "totalLiabilityAmount" : 0,
-    "ttpArrangementId" : "A1"
+    "charges": [
+      {
+        "chargeType": "In Year RTI Charge - Tax",
+        "UTR": "73",
+        "tieBreaker": "4321",
+        "creationDate": "2022-03-05",
+        "originalCreationDate": "2022-03-05",
+        "saTaxYearEnd": "2022-03-05",
+        "originalChargeType": "string",
+        "originalTieBreaker": "1234",
+        "mainType": "In Year RTI Charge (FPS)",
+        "mainTrans": "4000",
+        "parentMainTrans": "4000",
+        "subTrans": "1005",
+        "taxPeriodFrom": "2022-02-06",
+        "taxPeriodTo": "2022-03-05",
+        "chargeReference": "XM123456789812",
+        "parentChargeReference": "XX123456789542",
+        "dueDate": "<DUE_DATE>",
+        "interestStartDate": "2022-03-05",
+        "outstandingAmount": 3000.00,
+        "accruedInterest": 500.00
+      }
+    ],
+    "responseCode": {
+      "timestamp": "20240228T114356.235 GMT",
+      "httpCode": 200,
+      "reasonCode": "002",
+      "description": "success"
+    }
   },
-  "taxAccount" : {
-    "debtItems" : [
-      {
-        "amount" : 50000,
-        "chargeReference" : "CR123456789",
-        "charges" : [
+  "etmpData": {
+    "customer": {
+      "individual": {
+        "title": "Mr",
+        "firstName": "Ben",
+        "lastName": "Thomas",
+        "dateOfBirth": "2014-09-12",
+        "dateOfDeath": "2014-09-12",
+        "identifications": [
           {
-            "dueDate" : "2025-05-22",
-            "interestStartDate" : "2025-05-22",
-            "mainTrans" : "5100",
-            "outstandingAmount" : 100,
-            "parentMainTrans" : "1000",
-            "periodFrom" : "2025-05-22",
-            "periodTo" : "2025-05-22",
-            "source" : "CESA",
-            "subTrans" : "1553"
+            "idType": "CRN",
+            "idValue": "12345678"
+          }
+        ]
+      }
+    },
+    "addresses": [
+      {
+        "addressType": "string",
+        "addressLine1": "string",
+        "addressLine2": "string",
+        "addressLine3": "string",
+        "addressLine4": "string",
+        "rls": true,
+        "postcodeHistory": [
+          {
+            "addressPostcode": "string",
+            "postcodeDate": "2024-03-15"
           }
         ],
-        "parentChargeReference" : "PC0001"
+        "contactDetails": {
+          "telephoneNumber": "0302 400 4859",
+          "fax": "0302 989 2453",
+          "mobile": "07984958691",
+          "email": "agent1@gmail.com"
+        },
+        "postCode": "string",
+        "country": "string"
       }
     ],
-    "regimeType" : 36,
-    "taxAccountDetails" : {
-      "districtNumber" : "206809"
+    "filings": [
+      {
+        "icrCategory": "ZR01",
+        "icrDescription": "RTI - PAYE - Monthly Returns",
+        "fromDate": "2022-03-06",
+        "toDate": "2022-04-05",
+        "dueDate": "2022-04-22"
+      },
+      {
+        "icrCategory": "ZR01",
+        "icrDescription": "RTI - PAYE - Monthly Returns",
+        "fromDate": "2022-04-06",
+        "toDate": "2022-05-05",
+        "dueDate": "2022-05-22"
+      }
+    ],
+    "charges": [
+      {
+        "chargeType": "In Year RTI Charge - Tax",
+        "ddInProgress": "false",
+        "mainType": "In Year RTI Charge (FPS)",
+        "mainTrans": "4000",
+        "ParentMainTrans": "2500",
+        "subTrans": "1005",
+        "taxPeriodFrom": "2022-02-06",
+        "taxPeriodTo": "2022-03-05",
+        "chargeReference": "XM123456789813",
+        "ParentChargeReference": "ParentChargeReference",
+        "dueDate": "<DUE_DATE>",
+        "interestStartDate": "2022-03-05",
+        "outstandingAmount": 1000.00,
+        "accruedInterest": 50.00,
+        "locks": [
+        ]
+      }
+    ],
+    "responseCode": {
+      "timestamp": "20240228T114356.235 GMT",
+      "httpCode": 200,
+      "reasonCode": "002",
+      "description": "success"
     }
   },
-  "upstreamErrors" : [
-    {
-      "sourceSystem" : "NDDS",
-      "upstreamErrorCode" : "404",
-      "upstreamErrorDescription" : "server available"
-    }
-  ]
+  "responseCode": {
+    "timestamp": "20240228T114356.235 GMT",
+    "httpCode": 200,
+    "reasonCode": "003",
+    "description": "Retrieved successfully"
+  }
 }
