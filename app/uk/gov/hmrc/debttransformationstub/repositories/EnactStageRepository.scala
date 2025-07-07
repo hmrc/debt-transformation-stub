@@ -37,7 +37,7 @@ case class EnactStage(
   pegaRequest: Option[UpdateCaseRequest] = None,
   etmpRequest: Option[PaymentLockRequest] = None,
   idmsRequest: Option[CreateMonitoringCaseRequest] = None,
-  cdcsRequest: Option[CdcsCreateCaseRequest] = None,
+  cdcsRequest: Option[CdcsRequest] = None,
   nddsAttempts: Option[Int] = None,
   pegaAttempts: Option[Int] = None,
   etmpAttempts: Option[Int] = None,
@@ -108,7 +108,7 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
       )
       .toFuture()
   }
-  def addCDCSStage(correlationId: String, request: CdcsCreateCaseRequest): Future[EnactStage] = {
+  def addCDCSStage(correlationId: String, request: CdcsRequest): Future[EnactStage] = {
     logger.warn(s"Recording CDCS stage request $correlationId")
     collection
       .findOneAndUpdate(

@@ -16,12 +16,17 @@
 
 package uk.gov.hmrc.debttransformationstub.models
 
-import play.api.libs.json.{ Json, OFormat }
+import play.api.libs.json.{Json, OFormat}
+
+import java.time.LocalDate
 
 final case class CdcsRequest(
   regimeType: Int,
   identifications: List[CdcsIdentification],
-  chargeReferences: List[CdcsChargeReference]
+  chargeReferences: List[CdcsChargeReference],
+  debtItem: List[CdcsDebtItem],
+  customerType: String,
+  address: CdcsAddress
 )
 
 object CdcsRequest {
@@ -39,4 +44,31 @@ final case class CdcsChargeReference(
 )
 object CdcsChargeReference {
   implicit val format: OFormat[CdcsChargeReference] = Json.format[CdcsChargeReference]
+}
+
+final case class CdcsDebtItem(
+                                        outstandingDebtAmount: String,
+                                        debtItemChargeId: DebtItemChargeId,
+                                        debtItemOriginalDueDate: Option[LocalDate],
+                                        accruedInterest: BigDecimal,
+                                        isInterestBearingCharge: Boolean,
+                                        originalDebtAmount: BigDecimal,
+                                        interestStartDate: Option[LocalDate],
+                                        paymentHistory: Seq[Payment]
+                                      )
+object CdcsDebtItem {
+  implicit val format: OFormat[CdcsDebtItem] = Json.format[CdcsDebtItem]
+}
+
+final case class CdcsAddress(
+                              addressType: String,
+                              addressLine1: String,
+                              addressLine2: Option[String],
+                              addressLine3: Option[String],
+                              addressLine4: Option[String],
+                              postCode: Option[String]
+                            )
+
+object CdcsAddress {
+  implicit val format: OFormat[CdcsAddress] = Json.format[CdcsAddress]
 }

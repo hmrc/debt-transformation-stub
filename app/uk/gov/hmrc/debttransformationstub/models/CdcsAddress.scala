@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +18,15 @@ package uk.gov.hmrc.debttransformationstub.models
 
 import play.api.libs.json.{ Json, OFormat }
 
-final case class CdcsCreateCaseResponse(
-                              status: String,
-                            )
+final case class CdcsAddress(
+  addressType: String,
+  addressLine1: String,
+  addressLine2: Option[String],
+  addressLine3: Option[String],
+  addressLine4: Option[String],
+  postCode: Option[String]
+)
 
-object CdcsCreateCaseResponse {
-  implicit val format: OFormat[CdcsCreateCaseResponse] = Json.format[CdcsCreateCaseResponse]
+object CdcsAddress {
+  implicit val format: OFormat[CdcsAddress] = Json.format[CdcsAddress]
 }

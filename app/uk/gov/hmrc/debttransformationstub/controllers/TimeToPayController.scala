@@ -270,10 +270,10 @@ class TimeToPayController @Inject() (
 
   def cdcsCreateCase: Action[JsValue] = Action.async(parse.json) { implicit request =>
     val correlationId = getCorrelationIdHeader(request.headers)
-    withCustomJsonBody[CdcsCreateCaseRequest] { req =>
+    withCustomJsonBody[CdcsRequest] { req =>
       for {
         _ <- enactStageRepository.addCDCSStage(correlationId, req)
-        fileResponse <- findFile(s"/cdcs.createCase/", s"${req.idValue}.json")
+        fileResponse <- findFile("/cdcs.createCase/", "cdcsCreateCaseSuccessResponse.json")
       } yield fileResponse
     }
   }
