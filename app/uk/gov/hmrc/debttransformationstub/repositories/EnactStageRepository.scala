@@ -20,17 +20,17 @@ import com.mongodb.client.model.FindOneAndUpdateOptions
 import org.mongodb.scala.bson.Document
 import org.mongodb.scala.model.Filters._
 import org.mongodb.scala.model.Updates._
-import org.mongodb.scala.model.{ IndexModel, ReturnDocument }
+import org.mongodb.scala.model.{IndexModel, ReturnDocument}
 import org.mongodb.scala.result.DeleteResult
 import play.api.Logger
 import uk.gov.hmrc.debttransformationstub.models._
 import uk.gov.hmrc.mongo.MongoComponent
-import uk.gov.hmrc.mongo.play.json.{ Codecs, PlayMongoRepository }
-import play.api.libs.json.{ Json, OFormat }
+import uk.gov.hmrc.mongo.play.json.{Codecs, PlayMongoRepository}
+import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.mongo.play.json.Codecs.logger
 
-import javax.inject.{ Inject, Singleton }
-import scala.concurrent.{ ExecutionContext, Future }
+import javax.inject.{Inject, Singleton}
+import scala.concurrent.{ExecutionContext, Future}
 
 case class EnactStage(
   correlationId: String,
@@ -110,20 +110,20 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
       .toFuture()
   }
 
+  def addCDCSStage(correlationId: String, request: CreateMonitoringCaseRequest): Future[EnactStage] = {
+    logger.warn(s"Recording CDCS stage request $correlationId")
+    collection
+      .findOneAndUpdate(
+        equal("correlationId", correlationId),
+        combine(set("cdcsRequest", Codecs.toBson(request)), inc("cdcsAttempts", 1)),
+        new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
+      )
+      .toFuture()
+  }
+
   def findByCorrelationId(correlationId: String): Future[Option[EnactStage]] =
     collection.find(equal("correlationId", correlationId)).headOption()
 
   def deleteAll(): Future[DeleteResult] = collection.deleteMany(Document()).toFuture()
 
-}
-
-def addCDCSStage(correlationId: String, request: CdcsRequest): Future[EnactStage] = {
-  logger.warn(s"Recording CDCS stage request $correlationId")
-  collection
-    .findOneAndUpdate(
-      equal("correlationId", correlationId),
-      combine(set("cdcsRequest", Codecs.toBson(request)), inc("cdcsAttempts", 1)),
-      new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
-    )
-    .toFuture()
 }
