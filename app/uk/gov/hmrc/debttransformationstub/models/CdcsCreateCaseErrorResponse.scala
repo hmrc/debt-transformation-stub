@@ -16,27 +16,17 @@
 
 package uk.gov.hmrc.debttransformationstub.models
 
-import play.api.libs.json.{ Json, OFormat }
+import play.api.libs.json.{Json, OFormat}
 
-case class CdcsRequest(
-  regimeType: Int,
-  identifications: List[CdcsIdentification],
-  chargeReferences: List[CdcsChargeReference]
-)
+final case class UpstreamError(code: String, description: String)
 
-object CdcsRequest {
-  implicit val format: OFormat[CdcsRequest] = Json.format[CdcsRequest]
+object UpstreamError {
+  implicit val format: OFormat[UpstreamError] = Json.format[UpstreamError]
 }
 
-case class CdcsIdentification(idType: Int, idValue: String)
+final case class CdcsCreateCaseErrorResponse(upstreamErrors: UpstreamError)
 
-object CdcsIdentification {
-  implicit val format: OFormat[CdcsIdentification] = Json.format[CdcsIdentification]
-}
-
-case class CdcsChargeReference(
-  chargeReference: String
-)
-object CdcsChargeReference {
-  implicit val format: OFormat[CdcsChargeReference] = Json.format[CdcsChargeReference]
+object CdcsCreateCaseErrorResponse {
+  implicit val format: OFormat[CdcsCreateCaseErrorResponse] =
+    Json.format[CdcsCreateCaseErrorResponse]
 }

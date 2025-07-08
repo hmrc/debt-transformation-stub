@@ -233,6 +233,21 @@ class TimeToPayController @Inject() (
     }
   }
 
+  def cdcsCreateCase(): Action[JsValue] = Action.async(parse.json) { implicit request =>
+    val correlationId = getCorrelationIdHeader(request.headers)
+    withCustomJsonBody[CdcsCreateCaseRequest] { req =>
+      val file  = if(req.customer.individual.lastName.value == "STUB_FAILURE_400_422") {
+        "cdcsFailure400_422.json"
+      } else if(req.customer.individual.lastName.value == "STUB_FAILURE_500") "cdcs500.json"
+      else {"cdcsCreateCaseSuccessResponse.json"}
+
+      for {
+        _            <- enactStageRepository.addCDCSStage(correlationId, req)
+        fileResponse <- findFile(s"/cdcs.createCase/", file)
+      } yield fileResponse
+    }
+  }
+
   def enactStage(correlationId: String): Action[AnyContent] = Action.async { request =>
     enactStageRepository.findByCorrelationId(correlationId).map { stage: Option[EnactStage] =>
       Ok(Json.toJson(stage))
