@@ -18,12 +18,10 @@ package uk.gov.hmrc.debttransformationstub.models
 
 import play.api.libs.json.{ Json, OFormat }
 
-import java.time.LocalDate
-
 case class CdcsRequest(
   regimeType: Int,
   identifications: List[CdcsIdentification],
-  chargeReferences: List[CdcsChargeReference],
+  chargeReferences: List[CdcsChargeReference]
 )
 
 object CdcsRequest {
