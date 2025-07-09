@@ -75,8 +75,8 @@
         "dateOfDeath": "2014-09-12",
         "identifications": [
           {
-            "idType": "CRN",
-            "idValue": "12345678"
+            "idType": "NINO",
+            "idValue": "AB123456C"
           }
         ]
       }
