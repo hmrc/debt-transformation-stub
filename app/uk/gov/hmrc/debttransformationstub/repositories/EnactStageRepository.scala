@@ -38,7 +38,7 @@ case class EnactStage(
   pegaRequest: Option[UpdateCaseRequest] = None,
   etmpRequest: Option[PaymentLockRequest] = None,
   idmsRequest: Option[CreateMonitoringCaseRequest] = None,
-  cdcsRequest: Option[CdcsRequest] = None,
+  cdcsRequest: Option[CdcsCreateCaseRequest] = None,
   nddsAttempts: Option[Int] = None,
   pegaAttempts: Option[Int] = None,
   etmpAttempts: Option[Int] = None,
