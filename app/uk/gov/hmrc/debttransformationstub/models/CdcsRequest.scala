@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,36 +16,40 @@
 
 package uk.gov.hmrc.debttransformationstub.models
 
-import play._
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.json.{ Json, OFormat }
 
 import java.time.LocalDate
 
 case class CdcsRequest(
-                                              channelIdentifier: String,
-                                              arrangementAgreedDate: LocalDate,
-                                              paymentPlanStartDate: LocalDate,
-                                              totalLiability: BigDecimal,
-                                              initialPaymentDate: LocalDate,
-                                              initialPaymentAmount: BigDecimal,
-                                              paymentPlanCollectionAmount: BigDecimal,
-                                              paymentPlanFrequency: String,
-                                              arrangementReviewDate: LocalDate,
-                                              regimeType: String,
-                                              regimeDigitalCorrespondence: Boolean,
-                                              emailAddress: String,
-                                              emailSource: String,
-                                              etmpChargesMarked: Boolean,
-                                              ddiReference: String,
-                                              idType: String,
-                                              idValue: String,
-                                              districtNumber: String,
-                                              address: CdcsAddress,
-                                              chargeReferences: CdcsChargeReference
-                                            )
+  regimeType: Int,
+  identifications: List[CdcsIdentification],
+  chargeReferences: List[CdcsChargeReference],
+  channelIdentifier: String,
+  arrangementAgreedDate: LocalDate,
+  paymentPlanStartDate: LocalDate,
+  totalLiability: BigDecimal,
+  initialPaymentDate: LocalDate,
+  initialPaymentAmount: BigDecimal,
+  paymentPlanCollectionAmount: BigDecimal,
+  paymentPlanFrequency: String,
+  arrangementReviewDate: LocalDate,
+  regimeDigitalCorrespondence: Boolean,
+  emailAddress: String,
+  emailSource: String,
+  etmpChargesMarked: Boolean,
+  ddiReference: String,
+  districtNumber: String,
+  address: IdmsAddress
+)
 
 object CdcsRequest {
   implicit val format: OFormat[CdcsRequest] = Json.format[CdcsRequest]
+}
+
+case class CdcsIdentification(idType: Int, idValue: String)
+
+object CdcsIdentification {
+  implicit val format: OFormat[CdcsIdentification] = Json.format[CdcsIdentification]
 }
 
 case class CdcsChargeReference(
@@ -53,16 +57,4 @@ case class CdcsChargeReference(
 )
 object CdcsChargeReference {
   implicit val format: OFormat[CdcsChargeReference] = Json.format[CdcsChargeReference]
-}
-
-case class CdcsAddress(
-                        addressType: String,
-                        addressLine1: String,
-                        addressLine2: Option[String],
-                        addressLine3: Option[String],
-                        addressLine4: Option[String],
-                        postCode: Option[String]
-                              )
-object CdcsAddress {
-  implicit val format: OFormat[CdcsAddress] = Json.format[CdcsAddress]
 }
