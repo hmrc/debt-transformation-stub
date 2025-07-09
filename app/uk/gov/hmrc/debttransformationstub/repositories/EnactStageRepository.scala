@@ -110,7 +110,7 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
       .toFuture()
   }
 
-  def addCDCSStage(correlationId: String, request: CreateMonitoringCaseRequest): Future[EnactStage] = {
+  def addCDCSStage(correlationId: String, request: CdcsRequest): Future[EnactStage] = {
     logger.warn(s"Recording CDCS stage request $correlationId")
     collection
       .findOneAndUpdate(

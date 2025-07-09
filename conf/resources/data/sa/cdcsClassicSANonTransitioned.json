@@ -83,7 +83,7 @@
     },
     "addresses": [
       {
-        "addressType": "string",
+        "addressType": "XXDEFAULT",
         "addressLine1": "string",
         "addressLine2": "string",
         "addressLine3": "string",

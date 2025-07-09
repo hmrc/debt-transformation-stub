@@ -24,22 +24,6 @@ case class CdcsRequest(
   regimeType: Int,
   identifications: List[CdcsIdentification],
   chargeReferences: List[CdcsChargeReference],
-  channelIdentifier: String,
-  arrangementAgreedDate: LocalDate,
-  paymentPlanStartDate: LocalDate,
-  totalLiability: BigDecimal,
-  initialPaymentDate: LocalDate,
-  initialPaymentAmount: BigDecimal,
-  paymentPlanCollectionAmount: BigDecimal,
-  paymentPlanFrequency: String,
-  arrangementReviewDate: LocalDate,
-  regimeDigitalCorrespondence: Boolean,
-  emailAddress: String,
-  emailSource: String,
-  etmpChargesMarked: Boolean,
-  ddiReference: String,
-  districtNumber: String,
-  address: IdmsAddress
 )
 
 object CdcsRequest {
