@@ -25,7 +25,6 @@ import play.api.libs.json.{ Format, Json, OFormat }
 import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequest._
 import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes._
 
-
 case class CdcsCreateCaseRequest(
   plan: CdcsCreateCaseRequestPlan,
   customer: CdcsCreateCaseRequestCustomer,

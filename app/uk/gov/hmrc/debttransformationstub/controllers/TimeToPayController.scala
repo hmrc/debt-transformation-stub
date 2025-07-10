@@ -21,6 +21,7 @@ import play.api.Environment
 import play.api.libs.json.{ JsValue, Json }
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
+import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.CdcsCreateCaseRequestLastName
 import uk.gov.hmrc.debttransformationstub.models._
 import uk.gov.hmrc.debttransformationstub.repositories.{ EnactStage, EnactStageRepository }
 import uk.gov.hmrc.debttransformationstub.services.TTPPollingService
@@ -153,7 +154,7 @@ class TimeToPayController @Inject() (
           .getOrElse(throw new IllegalArgumentException("BROCS id is required for PAYE NDDS enact arrangement"))
         for {
           _            <- enactStageRepository.addNDDSStage(correlationId, req)
-          fileResponse <- findFile(s"/ndds.enactArrangement/", s"$brocsId.json")
+          fileResponse <- constructResponse(s"/ndds.enactArrangement/", s"$brocsId.json")
         } yield fileResponse
       } else if (requestChargeHodServices.contains("VAT")) {
         val vrnId = req.identification
@@ -162,7 +163,7 @@ class TimeToPayController @Inject() (
           .getOrElse(throw new IllegalArgumentException("VRN id is required for VAT NDDS enact arrangement"))
         for {
           _            <- enactStageRepository.addNDDSStage(correlationId, req)
-          fileResponse <- findFile(s"/ndds.enactArrangement/", s"$vrnId.json")
+          fileResponse <- constructResponse(s"/ndds.enactArrangement/", s"$vrnId.json")
         } yield fileResponse
       } else if (requestChargeHodServices.contains("SAFE")) {
         val ninoBrocsId = req.identification
@@ -173,7 +174,7 @@ class TimeToPayController @Inject() (
           )
         for {
           _            <- enactStageRepository.addNDDSStage(correlationId, req)
-          fileResponse <- findFile(s"/ndds.enactArrangement/", s"$ninoBrocsId.json")
+          fileResponse <- constructResponse(s"/ndds.enactArrangement/", s"$ninoBrocsId.json")
         } yield fileResponse
       } else if (requestChargeHodServices.contains("CESA")) {
         val ninoUTRId = req.identification
@@ -184,7 +185,7 @@ class TimeToPayController @Inject() (
           )
         for {
           _            <- enactStageRepository.addNDDSStage(correlationId, req)
-          fileResponse <- findFile(s"/ndds.enactArrangement/", s"$ninoUTRId.json")
+          fileResponse <- constructResponse(s"/ndds.enactArrangement/", s"$ninoUTRId.json")
         } yield fileResponse
       } else {
         throw new IllegalArgumentException(
@@ -202,7 +203,7 @@ class TimeToPayController @Inject() (
       withCustomJsonBody[UpdateCaseRequest] { req =>
         for {
           _            <- enactStageRepository.addPegaStage(correlationId, req)
-          fileResponse <- findFile(s"/pega.updateCase/", s"$caseId.json")
+          fileResponse <- constructResponse(s"/pega.updateCase/", s"$caseId.json")
         } yield fileResponse
       }
     } else {
@@ -218,7 +219,7 @@ class TimeToPayController @Inject() (
     withCustomJsonBody[PaymentLockRequest] { req =>
       for {
         _            <- enactStageRepository.addETMPStage(correlationId, req)
-        fileResponse <- findFile(s"/etmp.executePaymentLock/", s"${req.idValue}.json")
+        fileResponse <- constructResponse(s"/etmp.executePaymentLock/", s"${req.idValue}.json")
       } yield fileResponse
     }
   }
@@ -228,23 +229,34 @@ class TimeToPayController @Inject() (
     withCustomJsonBody[CreateMonitoringCaseRequest] { req =>
       for {
         _            <- enactStageRepository.addIDMSStage(correlationId, req)
-        fileResponse <- findFile(s"/idms.createTTPMonitoringCase/", s"${req.ddiReference}.json")
+        fileResponse <- constructResponse(s"/idms.createTTPMonitoringCase/", s"${req.ddiReference}.json")
       } yield fileResponse
     }
   }
 
   def cdcsCreateCase(): Action[JsValue] = Action.async(parse.json) { implicit request =>
-    val correlationId = getCorrelationIdHeader(request.headers)
-    withCustomJsonBody[CdcsCreateCaseRequest] { req =>
-      val file  = if(req.customer.individual.lastName.value == "STUB_FAILURE_400_422") {
-        "cdcsFailure400_422.json"
-      } else if(req.customer.individual.lastName.value == "STUB_FAILURE_500") "cdcs500.json"
-      else {"cdcsCreateCaseSuccessResponse.json"}
+    def buildResponse(responseStatus: Status, fileName: String) =
+      findFile(s"/cdcs.createCase/", fileName) match {
+        case Some(file) =>
+          val fileString = FileUtils.readFileToString(file, Charset.defaultCharset())
+          Try(Json.parse(fileString)).toOption match {
+            case Some(jsValue) => responseStatus(jsValue)
+            case None          => InternalServerError(s"failing stub cannot parse file $fileName")
+          }
+        case None => NotFound("file not found")
+      }
 
-      for {
-        _            <- enactStageRepository.addCDCSStage(correlationId, req)
-        fileResponse <- findFile(s"/cdcs.createCase/", file)
-      } yield fileResponse
+    withCustomJsonBody[CdcsCreateCaseRequest] { req =>
+      enactStageRepository.addCDCSStage(getCorrelationIdHeader(request.headers), req).map { _ =>
+        req.customer.individual.lastName match {
+          case CdcsCreateCaseRequestLastName("STUB_FAILURE_500") => new Status(INTERNAL_SERVER_ERROR)
+          case CdcsCreateCaseRequestLastName("STUB_FAILURE_400") =>
+            buildResponse(BadRequest, "cdcsCreateCaseFailure_400.json")
+          case CdcsCreateCaseRequestLastName("STUB_FAILURE_422") =>
+            buildResponse(UnprocessableEntity, "cdcsCreateCaseFailure_422.json")
+          case _ => buildResponse(Ok, "cdcsCreateCaseSuccessResponse.json")
+        }
+      }
     }
   }
 
@@ -254,9 +266,11 @@ class TimeToPayController @Inject() (
     }
   }
 
-  private def findFile(path: String, fileName: String)(implicit hc: HeaderCarrier): Future[Result] = {
-    val fileMaybe: Option[File] =
-      environment.getExistingFile(s"$basePath$path$fileName")
+  private def findFile(path: String, fileName: String): Option[File] =
+    environment.getExistingFile(s"$basePath$path$fileName")
+
+  private def constructResponse(path: String, fileName: String)(implicit hc: HeaderCarrier): Future[Result] = {
+    val fileMaybe: Option[File] = findFile(path, fileName)
 
     fileMaybe match {
       case None if fileName.toUpperCase().startsWith("PA400") =>

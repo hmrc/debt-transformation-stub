@@ -31,8 +31,7 @@ trait CustomBaseController {
 
   def withCustomJsonBody[T](
     f: T => Future[Result]
-  )(implicit request: Request[JsValue], m: Manifest[T], reads: Reads[T], hc: HeaderCarrier): Future[Result] = {
-    println(request.body.toString())
+  )(implicit request: Request[JsValue], m: Manifest[T], reads: Reads[T], hc: HeaderCarrier): Future[Result] =
     Try(request.body.validate[T]) match {
       case Success(JsSuccess(payload, _)) => f(payload)
       case Success(JsError(errs)) =>
@@ -51,7 +50,6 @@ trait CustomBaseController {
         logger.error(s"Status $BAD_REQUEST, message: ${e.getMessage}")
         Future.successful(BadRequest(s"Could not parse body due to ${e.getMessage}"))
     }
-  }
 
   private def invalidJsonMessage(path: JsPath) = s"Field at path '$path' missing or invalid"
 }
