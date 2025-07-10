@@ -1,11 +1,6 @@
 {
-  "processingDateTime": "20240228T114356.235 GMT",
-  "eligibilityCheckStatus": "failed",
-  "customerStatus": "found",
-  "eligibilityFailures": [
-    {
-      "code": "ELB001",
-      "description": "TTP in place - to be manually reviewed"
-    }
-  ]
+  "upstreamErrors": {
+    "code": "TTP003",
+    "description": "UTR value is missing"
+  }
 }
