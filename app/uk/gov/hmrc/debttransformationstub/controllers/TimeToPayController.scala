@@ -18,11 +18,12 @@ package uk.gov.hmrc.debttransformationstub.controllers
 
 import org.apache.commons.io.FileUtils
 import play.api.Environment
-import play.api.libs.json.{ JsValue, Json }
+import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
+import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.CdcsCreateCaseRequestLastName
 import uk.gov.hmrc.debttransformationstub.models._
-import uk.gov.hmrc.debttransformationstub.repositories.{ EnactStage, EnactStageRepository }
+import uk.gov.hmrc.debttransformationstub.repositories.{EnactStage, EnactStageRepository}
 import uk.gov.hmrc.debttransformationstub.services.TTPPollingService
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.http.HeaderCarrier
@@ -31,7 +32,7 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import java.io.File
 import java.nio.charset.Charset
 import javax.inject.Inject
-import scala.concurrent.{ ExecutionContext, Future }
+import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Source
 import scala.util.Try
 
@@ -229,6 +230,23 @@ class TimeToPayController @Inject() (
       for {
         _            <- enactStageRepository.addIDMSStage(correlationId, req)
         fileResponse <- findFile(s"/idms.createTTPMonitoringCase/", s"${req.ddiReference}.json")
+      } yield fileResponse
+    }
+  }
+
+  def cdcsCreateCase(): Action[JsValue] = Action.async(parse.json) { implicit request =>
+    val correlationId = getCorrelationIdHeader(request.headers)
+    withCustomJsonBody[CdcsCreateCaseRequest] { req =>
+
+      val responseFile = req.customer.individual.lastName match {
+        case CdcsCreateCaseRequestLastName("STUB_FAILURE_500") => "cdcsFailure_500.json"
+        case CdcsCreateCaseRequestLastName("STUB_FAILURE_400_422") => "cdcsFailure400_422.json"
+        case _ => "cdcsCreateCaseSuccessResponse.json"
+      }
+
+      for {
+        _            <- enactStageRepository.addCDCSStage(correlationId, req)
+        fileResponse <- findFile(s"/cdcs.createCase/", responseFile)
       } yield fileResponse
     }
   }
