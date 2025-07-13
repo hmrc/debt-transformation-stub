@@ -51,6 +51,7 @@ POST          /individuals/debts/essttp/payment-plans/ddi                       
 POST          /prweb/api/payments/v1/updatecase/:caseId                                              uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.pegaUpdateCase(caseId: String)
 POST          /individuals/debts/essttp/payment-lock                                                 uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.etmpExecutePaymentLock
 POST          /individuals/debts/essttp/monitoring-case                                              uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.idmsCreateTTPMonitoringCase
+POST          /idms/essttp/v1/samonitoringcase                                                       uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.idmsCreateSAMonitoringCase
 GET           /enactStage/:correlationId                                                             uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.enactStage(correlationId: String)
 
 POST          /individuals/debts/essttp/eligibility-check                                            uk.gov.hmrc.debttransformationstub.controllers.IDMSController.paymentPlanEligibilityDm
