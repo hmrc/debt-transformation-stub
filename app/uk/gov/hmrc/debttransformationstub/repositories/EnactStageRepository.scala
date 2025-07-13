@@ -23,10 +23,10 @@ import org.mongodb.scala.model.Updates._
 import org.mongodb.scala.model.{ IndexModel, ReturnDocument }
 import org.mongodb.scala.result.DeleteResult
 import play.api.Logger
+import play.api.libs.json.{ Json, OFormat }
 import uk.gov.hmrc.debttransformationstub.models._
 import uk.gov.hmrc.mongo.MongoComponent
 import uk.gov.hmrc.mongo.play.json.{ Codecs, PlayMongoRepository }
-import play.api.libs.json.{ Json, OFormat }
 
 import javax.inject.{ Inject, Singleton }
 import scala.concurrent.{ ExecutionContext, Future }
@@ -36,11 +36,13 @@ case class EnactStage(
   nddsRequest: Option[NDDSRequest] = None,
   pegaRequest: Option[UpdateCaseRequest] = None,
   etmpRequest: Option[PaymentLockRequest] = None,
-  idmsRequest: Option[CreateMonitoringCaseRequest] = None,
+  idmsRequest: Option[CreateIDMSMonitoringCaseRequest] = None,
+  idmsRequestSA: Option[CreateIDMSMonitoringCaseRequestSA] = None,
   nddsAttempts: Option[Int] = None,
   pegaAttempts: Option[Int] = None,
   etmpAttempts: Option[Int] = None,
-  idmsAttempts: Option[Int] = None
+  idmsAttempts: Option[Int] = None,
+  cdcsAttempts: Option[Int] = None
 )
 
 object EnactStage {
@@ -96,12 +98,23 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
       .toFuture()
   }
 
-  def addIDMSStage(correlationId: String, request: CreateMonitoringCaseRequest): Future[EnactStage] = {
+  def addIDMSStage(correlationId: String, request: CreateIDMSMonitoringCaseRequest): Future[EnactStage] = {
     logger.warn(s"Recording IDMS stage request $correlationId")
     collection
       .findOneAndUpdate(
         equal("correlationId", correlationId),
         combine(set("idmsRequest", Codecs.toBson(request)), inc("idmsAttempts", 1)),
+        new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
+      )
+      .toFuture()
+  }
+
+  def addIDMSStageSA(correlationId: String, request: CreateIDMSMonitoringCaseRequestSA): Future[EnactStage] = {
+    logger.warn(s"Recording IDMS stage request $correlationId")
+    collection
+      .findOneAndUpdate(
+        equal("correlationId", correlationId),
+        combine(set("idmsRequestSA", Codecs.toBson(request)), inc("idmsAttemptsSA", 1)),
         new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
       )
       .toFuture()
