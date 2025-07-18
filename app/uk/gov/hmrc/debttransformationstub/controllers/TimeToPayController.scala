@@ -222,36 +222,25 @@ class TimeToPayController @Inject() (
       } yield fileResponse
     }
   }
-
   def idmsCreateTTPMonitoringCase: Action[JsValue] = Action.async(parse.json) { implicit request =>
     val correlationId = getCorrelationIdHeader(request.headers)
+    withCustomJsonBody[CreateIDMSMonitoringCaseRequest] { req =>
+      for {
+        _            <- enactStageRepository.addIDMSStage(correlationId, req)
+        fileResponse <- findFile(s"/idms.createTTPMonitoringCase/", s"${req.ddiReference}.json")
+      } yield fileResponse
+    }
+  }
 
-    (request.body \ "regimeType").validate[String] match {
-
-      case JsSuccess("SA", _) =>
-        logger.info(s"******SA regime type***** " + request.body)
-        withCustomJsonBody[CreateIDMSMonitoringCaseRequestSA] { saRequest =>
-          Future.successful(Ok(s"Handled SA: $saRequest"))
-          for {
-            _            <- enactStageRepository.addIDMSStageSA(correlationId, saRequest)
-            fileResponse <- findFile(s"/idms.createTTPMonitoringCaseSA/", s"${saRequest.idValue}.json")
-          } yield fileResponse
-        }
-
-      case JsSuccess(_, _) =>
-        logger.info(s"******NON SA regime type***** " + request.body)
-
-        withCustomJsonBody[CreateIDMSMonitoringCaseRequest] { nonSaRequest =>
-          logger.info(s"******address line 1 is ***** " + nonSaRequest.address.addressLine1.toString)
-          Future.successful(Ok(s"Handled other regime: $nonSaRequest"))
-          for {
-            _            <- enactStageRepository.addIDMSStage(correlationId, nonSaRequest)
-            fileResponse <- findFile(s"/idms.createTTPMonitoringCase/", s"${nonSaRequest.address.addressLine1}.json")
-          } yield fileResponse
-        }
-
-      case JsError(errors) =>
-        Future.successful(BadRequest(s"Invalid regimeType: $errors"))
+  def idmsCreateSAMonitoringCase: Action[JsValue] = Action.async(parse.json) { implicit request =>
+    logger.info("Request body for idmsCreateSAMonitoringCase: " + request.body)
+    logger.info("Request headers for idmsCreateSAMonitoringCase: " + request.headers)
+    val correlationId = getCorrelationIdHeader(request.headers)
+    withCustomJsonBody[CreateIDMSMonitoringCaseRequestSA] { req =>
+      for {
+        _            <- enactStageRepository.addIDMSStageSA(correlationId, req)
+        fileResponse <- findFile(s"/idms.createSAMonitoringCase/", s"${req.idValue}.json")
+      } yield fileResponse
     }
   }
 

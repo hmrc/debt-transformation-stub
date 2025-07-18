@@ -110,11 +110,11 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
   }
 
   def addIDMSStageSA(correlationId: String, request: CreateIDMSMonitoringCaseRequestSA): Future[EnactStage] = {
-    logger.warn(s"Recording IDMS stage request $correlationId")
+    logger.warn(s"Recording SA IDMS stage request $correlationId")
     collection
       .findOneAndUpdate(
         equal("correlationId", correlationId),
-        combine(set("idmsRequestSA", Codecs.toBson(request)), inc("idmsAttemptsSA", 1)),
+        combine(set("idmsRequest", Codecs.toBson(request)), inc("idmsAttempts", 1)),
         new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
       )
       .toFuture()
