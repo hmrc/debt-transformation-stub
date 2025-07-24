@@ -55,7 +55,7 @@
       }
     ],
     "responseCode": {
-      "timestamp": "20240228T114356.235 GMT",
+      "timestamp": "2024-02-28T11:43:56.235Z",
       "httpCode": 200,
       "reasonCode": "002",
       "description": "success"
@@ -138,14 +138,14 @@
       }
     ],
     "responseCode": {
-      "timestamp": "20240228T114356.235 GMT",
+      "timestamp": "2024-02-28T11:43:56.235Z",
       "httpCode": 200,
       "reasonCode": "002",
       "description": "success"
     }
   },
   "responseCode": {
-    "timestamp": "20240228T114356.235 GMT",
+    "timestamp": "2024-02-28T11:43:56.235Z",
     "httpCode": 200,
     "reasonCode": "003",
     "description": "Retrieved successfully"
