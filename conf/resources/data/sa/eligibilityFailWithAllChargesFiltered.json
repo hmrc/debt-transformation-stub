@@ -124,7 +124,7 @@
       }
     ],
     "responseCode": {
-      "timestamp": "20240328T134356.235 GMT",
+      "timestamp": "2024-03-28T13:43:56.235Z",
       "httpCode": 200
     }
   },
@@ -245,12 +245,12 @@
       }
     ],
     "responseCode": {
-      "timestamp": "20240328T134356.235 GMT",
+      "timestamp": "2024-03-28T13:43:56.235Z",
       "httpCode": 200
     }
   },
   "responseCode": {
-    "timestamp": "20240328T134356.235 GMT",
+    "timestamp": "2024-03-28T13:43:56.235Z",
     "httpCode": 200
   }
 }
