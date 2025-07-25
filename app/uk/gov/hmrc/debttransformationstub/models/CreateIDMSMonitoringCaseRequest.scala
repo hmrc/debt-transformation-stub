@@ -20,7 +20,7 @@ import play.api.libs.json.{ Json, OFormat }
 
 import java.time.LocalDate
 
-final case class CreateMonitoringCaseRequest(
+final case class CreateIDMSMonitoringCaseRequest(
   channelIdentifier: String,
   arrangementAgreedDate: LocalDate,
   paymentPlanStartDate: LocalDate,
@@ -43,6 +43,6 @@ final case class CreateMonitoringCaseRequest(
   chargeReferences: List[IdmsChargeReference]
 )
 
-object CreateMonitoringCaseRequest {
-  implicit val format: OFormat[CreateMonitoringCaseRequest] = Json.format[CreateMonitoringCaseRequest]
+object CreateIDMSMonitoringCaseRequest {
+  implicit val format: OFormat[CreateIDMSMonitoringCaseRequest] = Json.format[CreateIDMSMonitoringCaseRequest]
 }

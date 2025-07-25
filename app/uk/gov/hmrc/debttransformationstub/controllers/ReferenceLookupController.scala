@@ -49,7 +49,7 @@ class ReferenceLookupController @Inject() (
 
           case Some(file) => Ok(Source.fromFile(file).mkString)
           case _ =>
-            logger.error(s"Status $NOT_FOUND, message: file not found")
+            logger.error(s"Status $NOT_FOUND, message: reference data file not found")
             NotFound("file not found")
         }
       }
@@ -66,7 +66,7 @@ class ReferenceLookupController @Inject() (
         }
 
         if (files.isEmpty) {
-          logger.error(s"Status $NOT_FOUND, message: file not found")
+          logger.error(s"Status $NOT_FOUND, message: reference data lookup file not found")
           Future successful NotFound("file not found")
         } else {
           val result = files
