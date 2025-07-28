@@ -18,7 +18,7 @@ package uk.gov.hmrc.debttransformationstub.controllers
 
 import org.apache.commons.io.FileUtils
 import play.api.Environment
-import play.api.libs.json.{ JsError, JsSuccess, JsValue, Json }
+import play.api.libs.json.{ JsValue, Json }
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
 import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.CdcsCreateCaseRequestLastName
@@ -239,10 +239,12 @@ class TimeToPayController @Inject() (
     logger.info("Request headers for idmsCreateSAMonitoringCase: " + request.headers)
     val correlationId = getCorrelationIdHeader(request.headers)
     withCustomJsonBody[CreateIDMSMonitoringCaseRequestSA] { req =>
-      logger.info(s"Received request to create SA monitoring case with correlationId: $correlationId and idValue: ${req.idValue}")
+      logger.info(
+        s"Received request to create SA monitoring case with correlationId: $correlationId and idValue: ${req.idValue}"
+      )
       for {
         _            <- enactStageRepository.addIDMSStageSA(correlationId, req)
-        fileResponse <- findFile(s"/idms.createSAMonitoringCase/", s"${req.idValue}.json")
+        fileResponse <- constructResponse(s"/idms.createSAMonitoringCase/", s"${req.idValue}.json")
       } yield fileResponse
     }
   }
