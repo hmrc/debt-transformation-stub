@@ -44,10 +44,10 @@ final case class ChargeIdentifier(
   saTaxYearEnd: Int,
   creationDate: String,
   chargeType: String,
-  tieBreaker: Int,
+  tieBreaker: String,
   originalChargeCreationDate: Option[String] = None,
   originalChargeType: Option[String] = None,
-  originalTieBreaker: Option[Int] = None
+  originalTieBreaker: Option[String] = None
 )
 
 object CreateIDMSMonitoringCaseRequestSA {
