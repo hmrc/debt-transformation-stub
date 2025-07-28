@@ -69,7 +69,7 @@ object InputOutput {
   */
 object RealTerminalInputOutput extends InputOutput {
   def readFile(filename: String): IterableOnce[String] =
-    Using(Source.fromFile(filename))(source => source.getLines()).get
+    Using(Source.fromFile(filename))(source => source.getLines().toList).get
 
   def stdin: Iterator[String] = scala.io.Source.stdin.getLines()
 
