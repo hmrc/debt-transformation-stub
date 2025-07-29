@@ -81,7 +81,7 @@
       }
     ],
     "responseCode": {
-      "timestamp": "20240228T114356.235 GMT",
+      "timestamp": "2024-02-28T11:43:56.235Z",
       "httpCode": 200,
       "reasonCode": "002",
       "description": "success"
@@ -95,7 +95,7 @@
         "lastName": "Thomas",
         "dateOfBirth": "2024-03-15",
         "dateOfDeath": "2024-03-15",
-        "districtNumber": 206809,
+        "districtNumber": "206809",
         "identifications": [
           {
             "idType": "UTR",
@@ -161,23 +161,23 @@
         "accruedInterest": 50000,
         "locks": [
           {
-            "lockType": "string",
+            "lockType": "Dunning",
             "lockReason": "string"
           }
         ]
       }
     ],
     "responseCode": {
-      "timestamp": "20240228T114356.235 GMT",
+      "timestamp": "2024-02-28T11:43:56.235Z",
       "httpCode": 200,
       "reasonCode": "003",
       "description": "success"
     }
   },
   "responseCode": {
-    "timestamp": "20240228T114356.235 GMT",
-    "httpCode": 404,
+    "timestamp": "2024-02-28T11:43:56.235Z",
+    "httpCode": 422,
     "reasonCode": "",
-    "description": "Record not found"
+    "description": "eligibility service does not determine eligibility"
   }
 }
