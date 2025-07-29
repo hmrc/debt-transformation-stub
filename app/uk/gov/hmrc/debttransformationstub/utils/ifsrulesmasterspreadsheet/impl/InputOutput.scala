@@ -20,7 +20,17 @@ import scala.io.Source
 import scala.util.Using
 
 trait FileInput {
-  def readFile(filename: String): IterableOnce[String]
+  def readFile(filename: String): String
+
+  final def readFileLines(filename: String): Vector[String] = {
+    val normalisedContent: String = readFile(filename).replaceAll("\r\n", "\n")
+
+    // The `.split` method doesn't work for multiple empty lines.
+    (0 until normalisedContent.length).foldLeft(Vector("")) {
+      case (nonEmptyLines, index) if normalisedContent(index) == '\n' => nonEmptyLines :+ ""
+      case (nonEmptyLines, index) => nonEmptyLines.dropRight(1) :+ (nonEmptyLines.last + normalisedContent(index))
+    }
+  }
 }
 
 trait ConsoleInput {
@@ -41,7 +51,7 @@ trait ApplicationInput extends FileInput with ConsoleInput
 object ApplicationInput {
   def apply(fileInput: FileInput, consoleInput: ConsoleInput): ApplicationInput =
     new ApplicationInput {
-      def readFile(filename: String): IterableOnce[String] = fileInput.readFile(filename)
+      def readFile(filename: String): String = fileInput.readFile(filename)
       def stdin: Iterator[String] = consoleInput.stdin
     }
 }
@@ -56,7 +66,7 @@ object InputOutput {
     debugOutput: DebugOutput
   ): InputOutput =
     new InputOutput {
-      def readFile(filename: String): IterableOnce[String] = fileInput.readFile(filename)
+      def readFile(filename: String): String = fileInput.readFile(filename)
       def stdin: Iterator[String] = consoleInput.stdin
       def stdoutWrite(text: String): Unit = consoleOutput.stdoutWrite(text)
       def debugWriteln(text: String): Unit = debugOutput.debugWriteln(text)
@@ -68,8 +78,8 @@ object InputOutput {
   *   https://pubs.opengroup.org/onlinepubs/9699919799/functions/stderr.html
   */
 object RealTerminalInputOutput extends InputOutput {
-  def readFile(filename: String): IterableOnce[String] =
-    Using(Source.fromFile(filename))(source => source.getLines().toList).get
+  def readFile(filename: String): String =
+    Using(Source.fromFile(filename))(source => source.mkString).get
 
   def stdin: Iterator[String] = scala.io.Source.stdin.getLines()
 

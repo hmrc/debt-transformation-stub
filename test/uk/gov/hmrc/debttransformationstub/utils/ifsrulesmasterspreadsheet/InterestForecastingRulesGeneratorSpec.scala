@@ -39,7 +39,7 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
             Iterator.continually(s"Test does not allow reading file more than once: ${Json.toJson(filename)}")
 
         (file: String) =>
-          if (file == filename) wholeInputEachTimeMutable.next().split("\n").iterator
+          if (file == filename) wholeInputEachTimeMutable.next()
           else fail(s"Test does not allow reading from file ${Json.toJson(file)}. Expected ${Json.toJson(filename)}.")
       }
     }

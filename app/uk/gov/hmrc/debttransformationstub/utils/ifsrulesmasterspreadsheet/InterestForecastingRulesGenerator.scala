@@ -122,7 +122,7 @@ final class InterestForecastingRulesGenerator(implicit io: InputOutput) {
         IfsRulesMasterData.fromMasterSpreadsheetTsv(tsv)
 
       case InputSettings.FromFile(filePath) =>
-        lazy val fileLines: Vector[String] = io.readFile(filePath).iterator.toVector
+        lazy val fileLines: Vector[String] = io.readFileLines(filePath)
 
         io.debugWriteln(s"Reading from CSV/TSV file: ${JsString(filePath)}")
 
