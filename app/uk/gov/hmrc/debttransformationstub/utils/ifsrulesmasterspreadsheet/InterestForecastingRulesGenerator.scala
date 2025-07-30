@@ -18,12 +18,10 @@ package uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet
 
 import play.api.libs.json.{ JsString, Json }
 import uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet.InterestForecastingRulesGenerator.ParsedArgs
-import uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet.InterestForecastingRulesGenerator.ParsedArgs.{ InputSettings, OutputSettings }
-import uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet.impl.{ IfsRulesMasterData, InterestForecastingConfigBuilder, SafeLogger }
+import uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet.InterestForecastingRulesGenerator.ParsedArgs.{ InputSettings, OutputFormat }
+import uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet.impl.{ IfsRulesMasterData, InputOutput, InterestForecastingConfigBuilder, RealTerminalInputOutput }
 
 import java.util.Locale
-import scala.io.Source
-import scala.util.Using
 
 /** This command-line application takes in a master spreadsheet with IFS rules and transforms it. See the unit tests for
   * complete examples of how to use it.
@@ -32,37 +30,46 @@ import scala.util.Using
   */
 object InterestForecastingRulesGenerator {
   def main(args: Array[String]): Unit = {
-    implicit val logger: SafeLogger = SafeLogger.stderr
+    implicit val inputOutput: RealTerminalInputOutput.type = RealTerminalInputOutput
 
-    val generator =
-      new InterestForecastingRulesGenerator(
-        readFile = (filename: String) => Using.resource(Source.fromFile(name = filename))(_.getLines().toVector)
-      )
+    val generator = new InterestForecastingRulesGenerator
 
-    val result = generator.execute(args.toVector, stdin = Source.stdin.getLines())
-    System.out.println(result.iterator.mkString("\n"): String)
+    generator.execute(args.toVector)
   }
 
-  final case class ParsedArgs(inputSettings: ParsedArgs.InputSettings, outputSettings: ParsedArgs.OutputSettings)
+  final case class ParsedArgs(
+    inputSettings: ParsedArgs.InputSettings,
+    outputFormat: ParsedArgs.OutputFormat,
+    outputLocation: ParsedArgs.OutputLocation
+  )
   object ParsedArgs {
     def parse(args: Vector[String]): ParsedArgs =
       args.sorted match {
-        case Vector(inputArgs @ s"--input-$_", outputArgs @ s"--output-$_") =>
+        case Vector(inputArg @ s"--input-$_", formatArg @ s"--output-format=$_", outputLocArg @ s"--output=$_") =>
           val inputSettings =
-            inputArgs match {
+            inputArg match {
               case "--input-console-tsv"     => InputSettings.ConsoleTsv(inputTerminator = "END_INPUT")
               case s"--input-file=$filePath" => InputSettings.FromFile(filePath = filePath)
               case wrongArgs => throw new IllegalArgumentException(s"Unknown input args: ${Json.toJson(wrongArgs)}")
             }
 
-          val outputSettings =
-            outputArgs match {
-              case "--output-console-conf"              => OutputSettings.ConsoleApplicationConf
-              case "--output-console-production-config" => OutputSettings.ConsoleProductionConfig
-              case wrongArgs => throw new IllegalArgumentException(s"Unknown output args: ${Json.toJson(wrongArgs)}")
+          val outputFormat =
+            formatArg match {
+              case "--output-format=ifs-scala-config"  => OutputFormat.IfsScalaConfig
+              case "--output-format=application-conf"  => OutputFormat.ApplicationConf
+              case "--output-format=production-config" => OutputFormat.ProductionConfig
+              case wrongArgs =>
+                throw new IllegalArgumentException(s"Unknown output format args: ${Json.toJson(wrongArgs)}")
             }
 
-          ParsedArgs(inputSettings, outputSettings)
+          val outputLocation =
+            outputLocArg match {
+              case "--output=console" => OutputLocation.Console
+              case wrongArgs =>
+                throw new IllegalArgumentException(s"Unknown output location args: ${Json.toJson(wrongArgs)}")
+            }
+
+          ParsedArgs(inputSettings, outputFormat, outputLocation)
 
         case wrongArgs => throw new IllegalArgumentException(s"Unknown args: ${Json.toJson(wrongArgs)}")
       }
@@ -73,40 +80,51 @@ object InterestForecastingRulesGenerator {
       final case class FromFile(filePath: String) extends InputSettings
     }
 
-    sealed trait OutputSettings
-    object OutputSettings {
-      case object ConsoleApplicationConf extends OutputSettings
-      case object ConsoleProductionConfig extends OutputSettings
+    sealed trait OutputFormat
+    object OutputFormat {
+      case object IfsScalaConfig extends OutputFormat
+      case object ApplicationConf extends OutputFormat
+      case object ProductionConfig extends OutputFormat
+    }
+
+    sealed trait OutputLocation
+    object OutputLocation {
+      case object Console extends OutputLocation
     }
   }
 }
 
-final class InterestForecastingRulesGenerator(readFile: String => IterableOnce[String])(implicit logger: SafeLogger) {
+final class InterestForecastingRulesGenerator(implicit io: InputOutput) {
 
-  def execute(args: Vector[String], stdin: Iterator[String]): IterableOnce[String] = {
+  def execute(args: Vector[String]): Unit = {
     val parsedArgs = ParsedArgs.parse(args)
-    executeWithParsedArgs(parsedArgs, stdin)
+    executeWithParsedArgs(parsedArgs)
   }
 
-  private def executeWithParsedArgs(args: ParsedArgs, stdin: Iterator[String]): IterableOnce[String] = {
-    val ParsedArgs(inputSettings, outputSettings) = args
+  private def executeWithParsedArgs(args: ParsedArgs): Unit = {
+    val ParsedArgs(inputSettings, outputFormat, outputLocation) = args
 
-    val parsedMasterData = readRulesMasterData(inputSettings, stdin)
+    val parsedMasterData = readRulesMasterData(inputSettings)
 
-    generateIfsRules(outputSettings, parsedMasterData)
+    val result = generateIfsRules(outputFormat, parsedMasterData)
+
+    outputLocation match {
+      case ParsedArgs.OutputLocation.Console =>
+        io.stdoutWriteln(result.iterator.mkString("\n"): String)
+    }
   }
 
-  private def readRulesMasterData(inputSettings: InputSettings, stdin: Iterator[String]): IfsRulesMasterData = {
+  private def readRulesMasterData(inputSettings: InputSettings): IfsRulesMasterData = {
     val result = inputSettings match {
       case InputSettings.ConsoleTsv(terminatorLine) =>
-        logger.log(s"Paste the TSV and end the input with ${JsString(terminatorLine)} on one line.")
-        val tsv: Seq[String] = stdin.takeWhile(_ != terminatorLine).toVector
+        io.debugWriteln(s"Paste the TSV and end the input with ${JsString(terminatorLine)} on one line.")
+        val tsv: Seq[String] = io.stdin.takeWhile(_ != terminatorLine).toVector
         IfsRulesMasterData.fromMasterSpreadsheetTsv(tsv)
 
       case InputSettings.FromFile(filePath) =>
-        lazy val fileLines: Vector[String] = readFile(filePath).iterator.toVector
+        lazy val fileLines: Vector[String] = io.readFileLines(filePath)
 
-        logger.log(s"Reading from CSV/TSV file: ${JsString(filePath)}")
+        io.debugWriteln(s"Reading from CSV/TSV file: ${JsString(filePath)}")
 
         val filename = filePath.split("/").last
         val fileExtension = filename.split("\\.").drop(1).last
@@ -122,16 +140,18 @@ final class InterestForecastingRulesGenerator(readFile: String => IterableOnce[S
         }
     }
 
-    logger.log(s"Parsed master IFS data: $result")
+    io.debugWriteln(s"Parsed master IFS data: $result")
 
     result
   }
 
-  private def generateIfsRules(outputSettings: OutputSettings, data: IfsRulesMasterData): Seq[String] =
-    outputSettings match {
-      case OutputSettings.ConsoleApplicationConf =>
-        InterestForecastingConfigBuilder.buildAppConfig(data)
-      case OutputSettings.ConsoleProductionConfig =>
-        InterestForecastingConfigBuilder.buildProductionConfig(data)
+  private def generateIfsRules(outputFormat: OutputFormat, data: IfsRulesMasterData): Seq[String] =
+    outputFormat match {
+      case OutputFormat.IfsScalaConfig =>
+        InterestForecastingConfigBuilder.OutputGenerators.ifsScalaConfig(data)
+      case OutputFormat.ApplicationConf =>
+        InterestForecastingConfigBuilder.OutputGenerators.ifsApplicationConf(data)
+      case OutputFormat.ProductionConfig =>
+        InterestForecastingConfigBuilder.OutputGenerators.ifsProductionConfigOverride(data)
     }
 }

@@ -68,65 +68,38 @@ sbt scalafmtCheckAll scalafmtSbtCheck
 
 Run the `main` method in `InterestForecastingRulesGenerator` with the appropriate arguments.
 
-### Argument `--input-file=/absolute/path/to/file.tsv --output-console-conf`
-Tells the tool to read a TSV or CSV file representing the "master spreadsheet" with the interest forecasting rules.
 When modifying the run configuration the arguments need to include both the input and the output.
+
+### Input Arguments
+
+One of the following input arguments must be provided to specify the source of the interest forecasting rules.
+This is expected to be a variant of what we call the "master spreadsheet" of interest forecasting rules.
+
+#### Input Argument `--input-file=/absolute/path/to/file.tsv`
+Tells the tool to read a TSV or CSV file representing the "master spreadsheet" with the interest forecasting rules.
 
 The file can be `*.tsv` or `*.csv` and must have one of the following formats:
 ```CSV
-Main Trans,Sub Trans,Interest bearing,Interest key,Interest only Debt,Charge Ref,Period End
-1545,1090,Y,4,N,N/A,Tax Yr (6/4/yyyy - 5/4/yyyy)
-3997,2091,N,N/A,Y,N/A,
-,,,,,,
-PAYE,,,,,,
-Main Trans,Sub Trans,Interest bearing,Interest key,Interest only Debt,Charge Ref,
-2090,1350,Y,,,ASN,
-2095,2020,N,,Y,Charge ref,
-,,,,,,
-VAT,,,,,,
-Main Trans,Sub Trans,Interest bearing,Interest key,Interest only Debt,Charge Ref,
-4700,1174,Y,,,VRN,
-4620,1175,,,Y,VRN,
-4703,1090,Y,,,VRN,
-```
-
-```CSV
-Main Trans,Sub Trans,Interest bearing,Interest key,Interest only Debt,Charge Ref,Period End
-1545,1090,Y,4,N,N/A,Tax Yr (6/4/yyyy - 5/4/yyyy)
-3997,2091,N,N/A,Y,N/A,
-
-PAYE
-Main Trans,Sub Trans,Interest bearing,Interest key,Interest only Debt,Charge Ref,
-2090,1350,Y,,,ASN,
-2095,2020,N,,Y,Charge ref,
-
-VAT
-Main Trans,Sub Trans,Interest bearing,Interest key,Interest only Debt,Charge Ref,
-4700,1174,Y,,,VRN,
-4620,1175,,,Y,VRN,
-4703,1090,Y,,,VRN,
+Main Trans,Sub Trans,Interest bearing,Interest key,Interest only Debt,Charge Ref,Regime Usage,Period End
+5330,7006,N,N/A,N,N/A,CDCS,
+5330,7010,N,N/A,N,N/A,CDCS,
+1525,1000,Y,4,N,N/A,CDCS,charged per quarter. Info passed will be quarter + year. E.g. 01 2004 (01/01/yyyy - 31/03/yyyy)
+2030,1350,Y,,,ASN,PAYE,
+2045,2000,N,,Y,Charge ref,PAYE,
+2045,2100,N,,Y,Charge ref,PAYE,
 ```
 
 ```TSV
-Main Trans	Sub Trans	Interest bearing	Interest key	Interest only Debt	Charge Ref	Period End
-1545	1090	Y	4	N	N/A	Tax Yr (6/4/yyyy - 5/4/yyyy)
-1441	1150	N	N/A	N	N/A
-
-PAYE
-Main Trans	Sub Trans	Interest bearing	Interest key	Interest only Debt	Charge Ref
-2000	1100	Y			ASN
-2005	2000	N		Y	Charge ref
-2590	1090	Y			Charge ref
-2595	2090	N		Y	Charge ref
-
-VAT
-Main Trans	Sub Trans	Interest bearing	Interest key	Interest only Debt	Charge Ref
-4793	1090	Y			VRN
-4794	1175			Y	VRN
-4711	1174				VRN
+Main Trans	Sub Trans	Interest bearing	Interest key	Interest only Debt	Charge Ref	Regime Usage	Period End
+5330	7006	N	N/A	N	N/A	CDCS
+5330	7010	N	N/A	N	N/A	CDCS
+1525	1000	Y	4	N	N/A	CDCS	charged per quarter. Info passed will be quarter + year. E.g. 01 2004 (01/01/yyyy - 31/03/yyyy)
+2030	1350	Y			ASN	PAYE
+2045	2000	N		Y	Charge ref	PAYE
+2045	2100	N		Y	Charge ref	PAYE
 ```
 
-### Argument `--input-console-tsv`
+#### Input Argument `--input-console-tsv`
 
 Specified instead of `--input-file=...` to allow users to copy the data straight from Excel and paste it
 directly into the terminal.
@@ -135,28 +108,38 @@ You'll be given a string to add after your pasted content, to signal the end of 
 
 The pasted content must have the following format:
 ```TSV
-Main Trans	Sub Trans	Interest bearing	Interest key	Interest only Debt	Charge Ref	Period End
-1545	1090	Y	4	N	N/A	Tax Yr (6/4/yyyy - 5/4/yyyy)
-1441	1150	N	N/A	N	N/A
-
-PAYE
-Main Trans	Sub Trans	Interest bearing	Interest key	Interest only Debt	Charge Ref
-2000	1100	Y			ASN
-2005	2000	N		Y	Charge ref
-2590	1090	Y			Charge ref
-2595	2090	N		Y	Charge ref
-
-VAT
-Main Trans	Sub Trans	Interest bearing	Interest key	Interest only Debt	Charge Ref
-4793	1090	Y			VRN
-4794	1175			Y	VRN
-4711	1174				VRN
+Main Trans	Sub Trans	Interest bearing	Interest key	Interest only Debt	Charge Ref	Regime Usage	Period End
+5330	7006	N	N/A	N	N/A	CDCS
+5330	7010	N	N/A	N	N/A	CDCS
+1525	1000	Y	4	N	N/A	CDCS	charged per quarter. Info passed will be quarter + year. E.g. 01 2004 (01/01/yyyy - 31/03/yyyy)
+2030	1350	Y			ASN	PAYE
+2045	2000	N		Y	Charge ref	PAYE
+2045	2100	N		Y	Charge ref	PAYE
 ```
 
-### Argument `--output-console-conf`
+### Output Format Arguments (`--output-format=*`)
+
+You must provide one of the following output format arguemnts to specify the desired output format.
+
+#### Output Format Argument `--output-format=ifs-scala-config`
+
+Provided if the desired output is the Scala-based rules config of `interest-forecasting`. Supported after `DTD-3573`.
+
+Generates the entire expected Scala file `BusinessRulesConfiguration.scala`. Look for it in `interest-forecasting`.
+
+#### Output Format Argument `--output-format=application-conf`
 
 Provided if the desired output is the `rules` section in the `application.conf` of `interest-forecasting`.
 
-### Argument `--output-console-production-config`
+#### Output Format Argument `--output-format=production-config`
 
 Provided if the desired output is the `service-config.rules` entries in the production config of `interest-forecasting`.
+
+### Output Location Arguments (`--output=*`)
+
+Determines where the output will be written.
+Only one supported value exists at the moment, but we may one day allow the tool to write directly to the desired file.
+
+#### Output Location Argument `--output=console`
+
+Provided if the desired output is to be printed to the console.
