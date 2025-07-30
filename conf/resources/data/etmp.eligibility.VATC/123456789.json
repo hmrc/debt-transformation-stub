@@ -1,0 +1,147 @@
+{
+  "processingDateTime": "2022-03-23T13:49:51",
+  "identification": [
+    {
+      "idType": "VRN",
+      "idValue": "123456789"
+    }
+  ],
+  "customerPostcodes": [
+    {
+      "addressPostcode": "BN127ER",
+      "postcodeDate": "2022-05-22"
+    },
+    {
+      "addressPostcode": "BN129ER",
+      "postcodeDate": "2022-02-28"
+    },
+    {
+      "addressPostcode": "BN119ER",
+      "postcodeDate": "2001-01-31"
+    },
+    {
+      "addressPostcode": "BN164QR",
+      "postcodeDate": "2022-03-02"
+    }
+  ],
+  "customerDetails": [
+    {
+      "emailAddress": "joe@snailmail.com",
+      "emailSource": "ETMP"
+    }
+  ],
+  "individualDetails": {
+    "title": "Mr",
+    "firstName": "Bob",
+    "lastName": "Smith",
+    "dateOfBirth": "1910-01-01",
+    "districtNumber": "001",
+    "customerType": "MTD(ITSA)",
+    "transitionToCDCS": true
+  },
+  "addresses": [
+    {
+      "addressType": "ZVAT1",
+      "addressLine1": "Worthing1",
+      "addressLine2": "Worthing2",
+      "addressLine3": "Worthing3",
+      "addressLine4": "Worthing4",
+      "countryCode": "GB",
+      "rls": false,
+      "contactDetails": {
+        "telephoneNumber": "07823412345",
+        "fax": "07823412345",
+        "mobile": "07823412345",
+        "emailAddress": "joe@snailmail.com",
+        "emailSource": "ETMP",
+        "altFormat": "123"
+      },
+      "postCode": "BN164QR",
+      "country": "GB",
+      "postcodeHistory": [
+        {
+          "addressPostcode": "BN127ER",
+          "postcodeDate": "2022-05-22"
+        },
+        {
+          "addressPostcode": "BN129ER",
+          "postcodeDate": "2022-02-28"
+        },
+        {
+          "addressPostcode": "BN119ER",
+          "postcodeDate": "2001-01-31"
+        }
+      ]
+    },
+    {
+      "addressType": "AGENT",
+      "addressLine1": "Worthing1",
+      "addressLine2": "Worthing2",
+      "addressLine3": "Worthing3",
+      "addressLine4": "Worthing4",
+      "countryCode": "GB",
+      "rls": false,
+      "contactDetails": {
+        "telephoneNumber": "07823412345",
+        "fax": "07823412345",
+        "mobile": "07823412345",
+        "emailAddress": "joe@snailmail.com",
+        "emailSource": "ETMP",
+        "altFormat": "123"
+      },
+      "postCode": "BN164QR",
+      "country": "GB",
+      "postcodeHistory": [
+        {
+          "addressPostcode": "BN164QR",
+          "postcodeDate": "2022-03-02"
+        }
+      ]
+    }
+  ],
+  "signals": [
+    {
+      "signalType": "RLS",
+      "signalValue": "false",
+      "signalDescription": "gghsjsl"
+    },
+    {
+      "signalType": "Insolvent",
+      "signalValue": "false",
+      "signalDescription": "gghsjsl"
+    },
+    {
+      "signalType": "Payment Frequency",
+      "signalValue": "Monthly",
+      "signalDescription": "gghsjsl"
+    }
+  ],
+  "charges": [
+    {
+      "chargeType": "VAT Mig Return Debit Charge",
+      "mainType": "VAT Mig Return Charge",
+      "mainTrans": "7700",
+      "subTrans": "1174",
+      "taxPeriodFrom": "2023-02-06",
+      "taxPeriodTo": "2023-03-05",
+      "chargeReference": "ABCDEF12345678",
+      "outstandingAmount": 19999.00,
+      "dueDate": "<DUE_DATE>",
+      "interestStartDate": "2022-03-19",
+      "accruedInterest": 1.00,
+      "ddInProgress": "true"
+    }
+  ],
+  "additionalCustData": {
+    "orgName": "Abc Ltd",
+    "title": "Mr",
+    "firstName": "Bob",
+    "middleName": "K",
+    "lastName": "Smith",
+    "dateOfBirth": "1910-01-01",
+    "dateOfDeath": "2000-01-01",
+    "districtNumber": "001"
+  }
+}
+
+

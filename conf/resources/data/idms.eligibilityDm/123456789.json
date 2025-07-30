@@ -1,0 +1,8 @@
+{
+  "specialOfficeProcessingRequired": true,
+  "processingDateTime": "2020-08-13T09:30:00",
+  "reason": {
+    "code": 10,
+    "text": "Special office processing required due to a match found on a special office OU"
+  }
+}
