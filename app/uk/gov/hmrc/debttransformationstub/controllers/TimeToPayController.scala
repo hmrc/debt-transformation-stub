@@ -295,12 +295,12 @@ class TimeToPayController @Inject() (
       enactStageRepository.addCESAStage(getCorrelationIdHeader(request.headers), req).map { _ =>
         startDate match {
           case Some("2019-06-08") =>
-            buildResponse(BadGateway, "2019-06-08.json")
+            buildResponse(BadGateway, "cesaCreateRequestFailure_502.json")
           case Some("2020-06-08") =>
-            buildResponse(BadRequest, "2020-06-08.json")
+            buildResponse(BadRequest, "cesaCreateRequestFailure_400.json")
           case Some("2021-06-08") =>
-            buildResponse(Conflict, "2021-06-08.json")
-          case _ => buildResponse(Ok, "2022-06-08.json")
+            buildResponse(Conflict, "cesaCreateRequestFailure_409.json")
+          case _ => buildResponse(Ok, "cesaCreateRequestSuccessResponse.json")
         }
       }
     }
