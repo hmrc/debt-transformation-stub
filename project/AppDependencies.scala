@@ -6,11 +6,13 @@ object AppDependencies {
   val hmrcMongoPlay = "2.6.0"
 
   val compile: Seq[ModuleID] = Seq(
-    "uk.gov.hmrc"       %% "bootstrap-backend-play-30" % bootstrapPlay,
-    "uk.gov.hmrc.mongo" %% "hmrc-mongo-play-30"        % hmrcMongoPlay,
-    "com.beachape"      %% "enumeratum-play-json"      % "1.8.2",
-    "commons-io"         % "commons-io"                % "2.19.0",
-    "com.nrinaudo"      %% "kantan.csv"                % "0.8.0"
+    // This is necessary until the HMRC/Play dependencies bring in the version of Jackson that is not insecure.
+    "com.fasterxml.jackson.core" % "jackson-core"              % "2.19.2",
+    "uk.gov.hmrc"               %% "bootstrap-backend-play-30" % bootstrapPlay,
+    "uk.gov.hmrc.mongo"         %% "hmrc-mongo-play-30"        % hmrcMongoPlay,
+    "com.beachape"              %% "enumeratum-play-json"      % "1.8.2",
+    "commons-io"                 % "commons-io"                % "2.19.0",
+    "com.nrinaudo"              %% "kantan.csv"                % "0.8.0"
   )
 
   val test: Seq[ModuleID] = Seq(
