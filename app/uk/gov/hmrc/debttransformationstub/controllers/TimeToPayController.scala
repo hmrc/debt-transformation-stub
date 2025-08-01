@@ -226,10 +226,25 @@ class TimeToPayController @Inject() (
 
   def idmsCreateTTPMonitoringCase: Action[JsValue] = Action.async(parse.json) { implicit request =>
     val correlationId = getCorrelationIdHeader(request.headers)
-    withCustomJsonBody[CreateMonitoringCaseRequest] { req =>
+    withCustomJsonBody[CreateIDMSMonitoringCaseRequest] { req =>
       for {
         _            <- enactStageRepository.addIDMSStage(correlationId, req)
         fileResponse <- constructResponse(s"/idms.createTTPMonitoringCase/", s"${req.ddiReference}.json")
+      } yield fileResponse
+    }
+  }
+
+  def idmsCreateSAMonitoringCase: Action[JsValue] = Action.async(parse.json) { implicit request =>
+    logger.info("Request body for idmsCreateSAMonitoringCase: " + request.body)
+    logger.info("Request headers for idmsCreateSAMonitoringCase: " + request.headers)
+    val correlationId = getCorrelationIdHeader(request.headers)
+    withCustomJsonBody[CreateIDMSMonitoringCaseRequestSA] { req =>
+      logger.info(
+        s"Received request to create SA monitoring case with correlationId: $correlationId and idValue: ${req.idValue}"
+      )
+      for {
+        _            <- enactStageRepository.addIDMSStageSA(correlationId, req)
+        fileResponse <- constructResponse(s"/idms.createSAMonitoringCase/", s"${req.idValue}.json")
       } yield fileResponse
     }
   }
@@ -282,8 +297,8 @@ class TimeToPayController @Inject() (
         logger.error(s"Status $UNPROCESSABLE_ENTITY, message: $msg")
         Future successful UnprocessableEntity(msg)
       case None =>
-        logger.error(s"Status $NOT_FOUND, message: file not found")
-        Future successful NotFound("file not found")
+        logger.error(s"Status $NOT_FOUND, message: file not found $path FileName: $fileName")
+        Future successful NotFound(s"file not found Path: $path FileName: $fileName")
       case Some(file) =>
         val fileString = FileUtils.readFileToString(file, Charset.defaultCharset())
         val result = Try(Json.parse(fileString)).toOption
