@@ -177,7 +177,7 @@
   "responseCode": {
     "timestamp": "2024-02-28T11:43:56.235Z",
     "httpCode": 500,
-    "reasonCode": "",
+    "reasonCode": "005",
     "description": "eligibility service does not determine eligibility"
   }
 }
