@@ -21,6 +21,7 @@ import play.api.Environment
 import play.api.libs.json.{ JsValue, Json }
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
+import uk.gov.hmrc.debttransformationstub.models
 import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.CdcsCreateCaseRequestLastName
 import uk.gov.hmrc.debttransformationstub.models._
 import uk.gov.hmrc.debttransformationstub.repositories.{ EnactStage, EnactStageRepository }
@@ -30,7 +31,9 @@ import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import java.io.File
+import java.lang.System.Logger
 import java.nio.charset.Charset
+import java.time.LocalDate
 import javax.inject.Inject
 import scala.concurrent.{ ExecutionContext, Future }
 import scala.io.Source
@@ -270,6 +273,34 @@ class TimeToPayController @Inject() (
           case CdcsCreateCaseRequestLastName("STUB_FAILURE_422") =>
             buildResponse(UnprocessableEntity, "cdcsCreateCaseFailure_422.json")
           case _ => buildResponse(Ok, "cdcsCreateCaseSuccessResponse.json")
+        }
+      }
+    }
+  }
+
+  def cesaCreateRequest(): Action[JsValue] = Action.async(parse.json) { implicit request =>
+    def buildResponse(responseStatus: Status, fileName: String) =
+      findFile(s"/cesa.createRequest/", fileName) match {
+        case Some(file) =>
+          val fileString = FileUtils.readFileToString(file, Charset.defaultCharset())
+          Try(Json.parse(fileString)).toOption match {
+            case Some(jsValue) => responseStatus(jsValue)
+            case None          => InternalServerError(s"failing stub cannot parse file $fileName")
+          }
+        case None => NotFound("file not found")
+      }
+
+    withCustomJsonBody[CesaCreateRequest] { req =>
+      val startDate = req.ttpStartDate
+      enactStageRepository.addCESAStage(getCorrelationIdHeader(request.headers), req).map { _ =>
+        startDate match {
+          case Some("2019-06-08") =>
+            buildResponse(BadGateway, "cesaCreateRequestFailure_502.json")
+          case Some("2020-06-08") =>
+            buildResponse(BadRequest, "cesaCreateRequestFailure_400.json")
+          case Some("2021-06-08") =>
+            buildResponse(Conflict, "cesaCreateRequestFailure_409.json")
+          case _ => buildResponse(Ok, "cesaCreateRequestSuccessResponse.json")
         }
       }
     }

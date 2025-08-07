@@ -39,11 +39,13 @@ case class EnactStage(
   idmsRequest: Option[CreateIDMSMonitoringCaseRequest] = None,
   idmsRequestSA: Option[CreateIDMSMonitoringCaseRequestSA] = None,
   cdcsRequest: Option[CdcsCreateCaseRequest] = None,
+  cesaRequest: Option[CesaCreateRequest] = None,
   nddsAttempts: Option[Int] = None,
   pegaAttempts: Option[Int] = None,
   etmpAttempts: Option[Int] = None,
   idmsAttempts: Option[Int] = None,
-  cdcsAttempts: Option[Int] = None
+  cdcsAttempts: Option[Int] = None,
+  cesaAttempts: Option[Int] = None
 )
 
 object EnactStage {
@@ -127,6 +129,17 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
       .findOneAndUpdate(
         equal("correlationId", correlationId),
         combine(set("cdcsRequest", Codecs.toBson(request)), inc("cdcsAttempts", 1)),
+        new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
+      )
+      .toFuture()
+  }
+
+  def addCESAStage(correlationId: String, request: CesaCreateRequest): Future[EnactStage] = {
+    logger.warn(s"Recording CESA stage request $correlationId")
+    collection
+      .findOneAndUpdate(
+        equal("correlationId", correlationId),
+        combine(set("cesaRequest", Codecs.toBson(request)), inc("cesaAttempts", 1)),
         new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
       )
       .toFuture()
