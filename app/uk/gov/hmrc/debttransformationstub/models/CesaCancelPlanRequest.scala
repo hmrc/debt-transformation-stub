@@ -9,19 +9,19 @@ object Identification {
 }
 
 case class CesaCancelPlanRequest(
-                                  identifications: List[Identification],
-                                  noteLines: List[String],
-                                  transitionedIndicator: Option[Boolean],
-                                  ttpStartDate: Option[String],
-                                  ttpEndDate: Option[String],
-                                  ttpFirstPaymentDate: Option[String],
-                                  ttpFirstPaymentAmt: Option[BigDecimal],
-                                  ttpRegularPaymentAmt: Option[BigDecimal],
-                                  ttpPaymentFrequency: Option[Int],
-                                  ttpReviewDate: Option[String],
-                                  ttpInitials: Option[String],
-                                  ttpEnfActToTake: Option[String]
-                                )
+  identifications: List[Identification],
+  noteLines: List[String],
+  transitionedIndicator: Option[Boolean],
+  ttpStartDate: Option[String],
+  ttpEndDate: Option[String],
+  ttpFirstPaymentDate: Option[String],
+  ttpFirstPaymentAmt: Option[BigDecimal],
+  ttpRegularPaymentAmt: Option[BigDecimal],
+  ttpPaymentFrequency: Option[Int],
+  ttpReviewDate: Option[String],
+  ttpInitials: Option[String],
+  ttpEnfActToTake: Option[String]
+)
 
 object CesaCancelPlanRequest {
   implicit val format: OFormat[CesaCancelPlanRequest] = Json.format[CesaCancelPlanRequest]
