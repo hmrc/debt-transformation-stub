@@ -59,3 +59,4 @@ POST          /idms/essttp/v1/saeligibilitycheck                                
 
 POST          /cesa/debt/providechargereferences                                                     uk.gov.hmrc.debttransformationstub.controllers.CESAController.getCESAdata()
 POST          /prweb/api/TTP/v1/CreateSSTTP                                                          uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.cdcsCreateCase()
+POST          /debt/ttp/cancel                                                                       uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.cesaCancelCase()
