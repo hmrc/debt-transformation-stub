@@ -252,6 +252,36 @@ class TimeToPayController @Inject() (
     }
   }
 
+  def cesaCancelCase(): Action[JsValue] = Action.async(parse.json) { implicit request =>
+    def buildResponse(responseStatus: Status, fileName: String) =
+      findFile(s"/cesa.cancelCase/", fileName) match {
+        case Some(file) =>
+          val fileString = FileUtils.readFileToString(file, Charset.defaultCharset())
+          Try(Json.parse(fileString)).toOption match {
+            case Some(jsValue) => responseStatus(jsValue)
+            case None          => InternalServerError(s"failing stub cannot parse file $fileName")
+          }
+        case None => NotFound("file not found")
+      }
+
+    withCustomJsonBody[CesaCancelPlanRequest] { req =>
+      enactStageRepository.addCESACancelStage(getCorrelationIdHeader(request.headers), req).map { _ =>
+        req.identifications.map(_.idValue) match {
+          case "cesaCancelPlan_error_502" => new Status(BAD_GATEWAY)
+          case "cesaCancelPlan_error_400" =>
+            buildResponse(BadRequest, "cesaCancelPlan_error_400.json")
+          case "cesaCancelPlan_error_404" =>
+            buildResponse(NotFound, "cesaCancelPlan_error_404.json")
+          case "cesaCancelPlan_error_409" =>
+            buildResponse(Conflict, "cesaCancelPlan_error_409.json")
+          case "cesaCancelPlan_error_502" =>
+            buildResponse(BadGateway, "cesaCancelPlan_error_502.json")
+          case _ => buildResponse(Ok, "cdcsCreateCaseSuccessResponse.json")
+        }
+      }
+    }
+  }
+
   def cdcsCreateCase(): Action[JsValue] = Action.async(parse.json) { implicit request =>
     def buildResponse(responseStatus: Status, fileName: String) =
       findFile(s"/cdcs.createCase/", fileName) match {
