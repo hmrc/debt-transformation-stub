@@ -133,17 +133,17 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
       .toFuture()
   }
 
-  def addCESACancelStage(correlationId: String, request: CesaCancelPlanRequest): Future[EnactStage] = {
-    logger.warn(s"Recording CESA stage request $correlationId")
-    collection
-      .findOneAndUpdate(
-        equal("correlationId", correlationId),
-        combine(set("cesaCancelRequest", Codecs.toBson(request)), inc("cesaCancelAttempts", 1)),
-        new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
-      )
-      .toFuture()
-  }
-
+//  def addCESACancelStage(correlationId: String, request: CesaCancelPlanRequest): Future[EnactStage] = {
+//    logger.warn(s"Recording CESA stage request $correlationId")
+//    collection
+//      .findOneAndUpdate(
+//        equal("correlationId", correlationId),
+//        combine(set("cesaCancelRequest", Codecs.toBson(request)), inc("cesaCancelAttempts", 1)),
+//        new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
+//      )
+//      .toFuture()
+//  }
+//
   def findByCorrelationId(correlationId: String): Future[Option[EnactStage]] =
     collection.find(equal("correlationId", correlationId)).headOption()
 
