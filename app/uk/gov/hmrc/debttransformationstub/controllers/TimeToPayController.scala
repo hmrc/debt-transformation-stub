@@ -266,9 +266,7 @@ class TimeToPayController @Inject() (
       }
 
     withCustomJsonBody[CesaCancelPlanRequest] { req =>
-      enactStageRepository.addCESACancelStage(getCorrelationIdHeader(request.headers), req).map { _ =>
-        req.identifications.map(_.idValue).head match {
-          case "cesaCancelPlan_error_502" => new Status(BAD_GATEWAY)
+        val response = req.identifications.map(_.idValue).head match {
           case "cesaCancelPlan_error_400" =>
             buildResponse(BadRequest, "cesaCancelPlan_error_400.json")
           case "cesaCancelPlan_error_404" =>
@@ -277,9 +275,9 @@ class TimeToPayController @Inject() (
             buildResponse(Conflict, "cesaCancelPlan_error_409.json")
           case "cesaCancelPlan_error_502" =>
             buildResponse(BadGateway, "cesaCancelPlan_error_502.json")
-          case _ => buildResponse(Ok, "cdcsCreateCaseSuccessResponse.json")
+          case _ => buildResponse(Ok, "cesaCancelPlanSuccess.json")
         }
-      }
+      Future.successful(response)
     }
   }
 
