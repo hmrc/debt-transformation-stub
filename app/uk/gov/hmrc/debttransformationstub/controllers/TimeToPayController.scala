@@ -18,13 +18,14 @@ package uk.gov.hmrc.debttransformationstub.controllers
 
 import org.apache.commons.io.FileUtils
 import play.api.Environment
-import play.api.libs.json.{ JsValue, Json }
+import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
 import uk.gov.hmrc.debttransformationstub.models
 import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.CdcsCreateCaseRequestLastName
 import uk.gov.hmrc.debttransformationstub.models._
-import uk.gov.hmrc.debttransformationstub.repositories.{ EnactStage, EnactStageRepository }
+import uk.gov.hmrc.debttransformationstub.models.errors.NO_RESPONSE
+import uk.gov.hmrc.debttransformationstub.repositories.{EnactStage, EnactStageRepository}
 import uk.gov.hmrc.debttransformationstub.services.TTPPollingService
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.http.HeaderCarrier
@@ -35,7 +36,7 @@ import java.lang.System.Logger
 import java.nio.charset.Charset
 import java.time.LocalDate
 import javax.inject.Inject
-import scala.concurrent.{ ExecutionContext, Future }
+import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Source
 import scala.util.Try
 
@@ -266,7 +267,7 @@ class TimeToPayController @Inject() (
 
     withCustomJsonBody[CesaCancelPlanRequest] { req =>
       enactStageRepository.addCESACancelStage(getCorrelationIdHeader(request.headers), req).map { _ =>
-        req.identifications.map(_.idValue) match {
+        req.identifications.map(_.idValue).head match {
           case "cesaCancelPlan_error_502" => new Status(BAD_GATEWAY)
           case "cesaCancelPlan_error_400" =>
             buildResponse(BadRequest, "cesaCancelPlan_error_400.json")
