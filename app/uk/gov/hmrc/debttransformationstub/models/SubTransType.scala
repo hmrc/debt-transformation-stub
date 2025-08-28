@@ -41,4 +41,12 @@ object SubTransType extends Enum[SubTransType] with PlayJsonEnum[SubTransType] {
   case object TakingControlFee extends SubTransType("1150")
   case object SAOpLed extends SubTransType("1553")
   case object SAOpLedCreatePlan extends SubTransType("1090")
+  case object PenaltyReformCharge1611 extends SubTransType("1611")
+  case object PenaltyReformCharge2090 extends SubTransType("2090")
+  case object PenaltyReformCharge2095 extends SubTransType("2095")
+  case object PenaltyReformCharge2096 extends SubTransType("2096")
+  case object PenaltyReformCharge1080 extends SubTransType("1080")
+  case object PenaltyReformCharge1085 extends SubTransType("1085")
+  case object PenaltyReformCharge1090 extends SubTransType("1090")
+  case object PenaltyReformCharge1095 extends SubTransType("1095")
 }
