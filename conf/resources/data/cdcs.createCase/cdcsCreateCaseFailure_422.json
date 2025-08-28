@@ -1,7 +1,6 @@
 {
   "upstreamErrors": {
-    "upstreamErrorCode": "TTP003",
-    "upstreamErrorDescription": "UTR value is missing",
-    "sourceSystem": "NDDS"
+    "code": "TTP003",
+    "description": "UTR value is missing"
   }
 }

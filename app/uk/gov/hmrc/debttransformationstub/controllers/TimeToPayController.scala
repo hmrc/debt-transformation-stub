@@ -295,14 +295,20 @@ class TimeToPayController @Inject() (
 
     withCustomJsonBody[CdcsCreateCaseRequest] { req =>
       enactStageRepository.addCDCSStage(getCorrelationIdHeader(request.headers), req).map { _ =>
-        req.customer.individual.lastName match {
+        val lastName = req.customer.individual.lastName
+        val result = lastName match {
           case CdcsCreateCaseRequestLastName("STUB_FAILURE_500") => new Status(INTERNAL_SERVER_ERROR)
           case CdcsCreateCaseRequestLastName("STUB_FAILURE_400") =>
             buildResponse(BadRequest, "cdcsCreateCaseFailure_400.json")
           case CdcsCreateCaseRequestLastName("STUB_FAILURE_422") =>
             buildResponse(UnprocessableEntity, "cdcsCreateCaseFailure_422.json")
+          case CdcsCreateCaseRequestLastName("UPSTREAM_ERROR_422") =>
+            buildResponse(UnprocessableEntity, "cdcshttpCodeResponseTopLevel_error_422.json")
           case _ => buildResponse(Ok, "cdcsCreateCaseSuccessResponse.json")
         }
+
+        println(s"meow $lastName $result")
+        result
       }
     }
   }
