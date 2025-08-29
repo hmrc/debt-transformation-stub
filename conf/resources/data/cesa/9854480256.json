@@ -1,0 +1,31 @@
+{
+  "debitIdentifiers": [
+    {
+      "UTR": "9854480256",
+      "saTaxYearEnd": 2023,
+      "creationDate": "2025-04-12",
+      "chargeType": "BCD",
+      "tieBreaker": "1292",
+      "chargeReference": "K9854480256001",
+      "processingOutcome": "E"
+    },
+    {
+      "UTR": "9854480256",
+      "saTaxYearEnd": 2024,
+      "creationDate": "2025-04-12",
+      "chargeType": "IN1",
+      "tieBreaker": "1290",
+      "chargeReference": "K9854480256002",
+      "processingOutcome": "E"
+    },
+    {
+      "UTR": "9854480256",
+      "saTaxYearEnd": 2024,
+      "creationDate": "2025-04-12",
+      "chargeType": "IN2",
+      "tieBreaker": "1291",
+      "chargeReference": "K9854480256003",
+      "processingOutcome": "E"
+    }
+  ]
+}
