@@ -21,59 +21,58 @@ package uk.gov.hmrc.debttransformationstub.models
  *
  */
 
-import play.api.libs.json.{ Json, OFormat }
+import play.api.libs.json.{Format, Json, OFormat}
 import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequest._
-import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes._
+
+import java.time.LocalDate
 
 case class CdcsCreateCaseRequest(
-  plan: CdcsCreateCaseRequestPlan,
-  customer: CdcsCreateCaseRequestCustomer,
-  taxAccount: CdcsCreateCaseRequestTaxAccount,
-  upstreamErrors: Option[List[CdcsCreateCaseRequestUpstreamError]]
-)
+                                  plan: CdcsCreateCaseRequestPlan,
+                                  customer: CdcsCreateCaseRequestCustomer,
+                                  taxAccount: CdcsCreateCaseRequestTaxAccount,
+                                  upstreamErrors: List[CdcsUpstreamErrors]
+                                )
 
 object CdcsCreateCaseRequest {
 
   implicit val format: OFormat[CdcsCreateCaseRequest] = Json.format[CdcsCreateCaseRequest]
 
   case class CdcsCreateCaseRequestPlan(
-    frequency: CdcsCreateCaseRequestPlanFrequency,
-    payments: List[CdcsCreateCaseRequestPayment],
-    instalments: List[CdcsCreateCaseRequestInstalment],
-    instalmentStartDate: CdcsCreateCaseRequestInstalmentStartDate,
-    instalmentAmount: CdcsCreateCaseRequestInstalmentAmount,
-    numberOfInstalments: CdcsCreateCaseRequestNumberOfInstalments,
-    planInterest: CdcsCreateCaseRequestPlanInterest,
-    totalInterest: CdcsCreateCaseRequestTotalInterest,
-    totalDebtIncInt: CdcsCreateCaseRequestTotalDebtIncInt,
-    interestAccrued: CdcsCreateCaseRequestInterestAccrued,
-    ttpArrangementId: Option[CdcsCreateCaseRequestTtpArrangementId],
-    AAId: Option[CdcsCreateCaseRequestAAId],
-    duration: Option[CdcsCreateCaseRequestPlanDuration],
-    initialPaymentMethod: Option[CdcsCreateCaseRequestPaymentMethod],
-    initialPaymentReference: Option[CdcsCreateCaseRequestInitialPaymentReference],
-    totalLiabilityAmount: Option[CdcsCreateCaseRequestTotalLiabilityAmount],
-    initialPaymentAmount: Option[CdcsCreateCaseRequestInitialPaymentAmount],
-    initialPaymentDate: Option[CdcsCreateCaseRequestInitialPaymentDate],
-    paymentPlanType: Option[CdcsCreateCaseRequestPaymentPlanType],
-    collectionInfo: Option[List[CdcsCreateCaseRequestCollectionInfo]]
-  )
+                                        frequency: String,
+                                        payments: List[CdcsCreateCaseRequestPayment],
+                                        instalments: List[CdcsCreateCaseRequestInstalment],
+                                        instalmentStartDate: LocalDate,
+                                        instalmentAmount: BigInt,
+                                        numberOfInstalments: Int,
+                                        planInterest: BigInt,
+                                        totalInterest: BigInt,
+                                        totalDebtIncInt: BigInt,
+                                        interestAccrued: BigInt,
+                                        ttpArrangementId: Option[String],
+                                        AAId: Option[String],
+                                        duration: Option[Int],
+                                        initialPaymentMethod: Option[String],
+                                        initialPaymentReference: Option[String],
+                                        totalLiabilityAmount: Option[BigInt],
+                                        initialPaymentAmount: Option[BigInt],
+                                        initialPaymentDate: Option[LocalDate],
+                                        paymentPlanType: Option[String],
+                                        collectionInfo: Option[List[CdcsCreateCaseRequestCollectionInfo]]
+                                      )
 
   object CdcsCreateCaseRequestPlan {
     implicit val format: OFormat[CdcsCreateCaseRequestPlan] = Json.format[CdcsCreateCaseRequestPlan]
   }
 
   case class CdcsCreateCaseRequestInstalment(
-    debtItemChargeId: CdcsCreateCaseRequestDebtItemChargeId,
-    dueDate: CdcsCreateCaseRequestInstalmentDueDate,
-    amountDue: CdcsCreateCaseRequestInstalmentAmountDue,
-    expectedPayment: Option[
-      CdcsCreateCaseRequestInstalmentExpectedPayment
-    ], // breaks schema but required in order for us to not to potentially trigger a customer impacting process
-    instalmentNumber: CdcsCreateCaseRequestInstalmentNumber,
-    instalmentInterestAccrued: CdcsCreateCaseRequestInstalmentInterestAccrued,
-    instalmentBalance: CdcsCreateCaseRequestInstalmentBalance
-  )
+                                              debtItemChargeId: String,
+                                              dueDate: LocalDate,
+                                              amountDue: BigInt,
+                                              expectedPayment: BigInt,
+                                              instalmentNumber: Int,
+                                              instalmentInterestAccrued: BigInt,
+                                              instalmentBalance: BigInt
+                                            )
 
   object CdcsCreateCaseRequestInstalment {
     implicit val format: OFormat[CdcsCreateCaseRequestInstalment] = Json.format[CdcsCreateCaseRequestInstalment]
@@ -81,18 +80,18 @@ object CdcsCreateCaseRequest {
   }
 
   case class CdcsCreateCaseRequestPayment(
-    paymentMethod: Option[CdcsCreateCaseRequestPaymentMethod],
-    paymentReference: Option[CdcsCreateCaseRequestPaymentReference]
-  )
+                                           paymentMethod: Option[String],
+                                           paymentReference: Option[String]
+                                         )
 
   object CdcsCreateCaseRequestPayment {
     implicit val format: OFormat[CdcsCreateCaseRequestPayment] = Json.format[CdcsCreateCaseRequestPayment]
   }
 
   case class CdcsCreateCaseRequestCollectionInfo(
-    initialCollection: Option[CdcsCreateCaseRequestCollection],
-    regularCollections: List[CdcsCreateCaseRequestCollection]
-  )
+                                                  initialCollection: Option[CdcsCreateCaseRequestCollection],
+                                                  regularCollections: List[CdcsCreateCaseRequestCollection]
+                                                )
 
   object CdcsCreateCaseRequestCollectionInfo {
     implicit val format: OFormat[CdcsCreateCaseRequestCollectionInfo] = Json.format[CdcsCreateCaseRequestCollectionInfo]
@@ -100,23 +99,33 @@ object CdcsCreateCaseRequest {
   }
 
   case class CdcsCreateCaseRequestCollection(
-    amountDue: CdcsCreateCaseRequestAmountDue,
-    paymentDueDate: CdcsCreateCaseRequestPaymentDueDate
-  )
+                                              amountDue: BigInt,
+                                              paymentDueDate: LocalDate
+                                            )
 
   object CdcsCreateCaseRequestCollection {
     implicit val format: OFormat[CdcsCreateCaseRequestCollection] = Json.format[CdcsCreateCaseRequestCollection]
   }
 
   case class CdcsCreateCaseRequestUpstreamError(
-    sourceSystem: CdcsCreateCaseRequestSourceSystem,
-    upstreamErrorCode: Option[CdcsCreateCaseRequestUpstreamErrorCode],
-    upstreamErrorDescription: Option[CdcsCreateCaseRequestUpstreamErrorDescription]
-  )
+                                                 sourceSystem: String,
+                                                 upstreamErrorCode: Option[String],
+                                                 upstreamErrorDescription: Option[String]
+                                               )
 
   object CdcsCreateCaseRequestUpstreamError {
 
     implicit val format: OFormat[CdcsCreateCaseRequestUpstreamError] = Json.format[CdcsCreateCaseRequestUpstreamError]
+  }
+
+  case class CdcsUpstreamErrors(
+                                 code: String,
+                                 description: String
+                               )
+
+  object CdcsUpstreamErrors {
+
+    implicit val format: OFormat[CdcsUpstreamErrors] = Json.format[CdcsUpstreamErrors]
   }
 
   case class CdcsCreateCaseRequestCustomer(individual: CdcsCreateCaseRequestIndividual)
@@ -125,33 +134,15 @@ object CdcsCreateCaseRequest {
     implicit val format: OFormat[CdcsCreateCaseRequestCustomer] = Json.format[CdcsCreateCaseRequestCustomer]
   }
 
-  case class CdcsCreateCaseRequestIndividual(
-    lastName: CdcsCreateCaseRequestLastName,
-    customerAddresses: List[CdcsCreateCaseRequestCustomerAddress],
-    identifications: List[CdcsCreateCaseRequestIdentification],
-    title: Option[CdcsCreateCaseRequestTitle],
-    initials: Option[CdcsCreateCaseRequestInitials],
-    firstName: Option[CdcsCreateCaseRequestFirstName],
-    middleName: Option[CdcsCreateCaseRequestMiddleName],
-    dateOfBirth: Option[CdcsCreateCaseRequestDateOfBirth]
-  )
-
-  object CdcsCreateCaseRequestIndividual {
-
-    implicit val format: OFormat[CdcsCreateCaseRequestIndividual] = Json.format[CdcsCreateCaseRequestIndividual]
-  }
-
   case class CdcsCreateCaseRequestCustomerAddress(
-    addressType: Option[
-      CdcsCreateCaseRequestAddressTypeReference
-    ], // breaks schema but required in order for us to not to potentially trigger a customer impacting process
-    addressLine1: CdcsCreateCaseRequestAddressLine,
-    addressLine2: Option[CdcsCreateCaseRequestAddressLine],
-    addressLine3: Option[CdcsCreateCaseRequestAddressLine],
-    addressLine4: Option[CdcsCreateCaseRequestAddressLine],
-    postCode: Option[CdcsCreateCaseRequestPostCode],
-    contactDetails: Option[CdcsCreateCaseRequestContactDetails]
-  )
+                                                   addressType: Int,
+                                                   addressLine1: String,
+                                                   addressLine2: Option[String],
+                                                   addressLine3: Option[String],
+                                                   addressLine4: Option[String],
+                                                   postCode: Option[String],
+                                                   contactDetails: Option[CdcsCreateCaseRequestContactDetails]
+                                                 )
 
   object CdcsCreateCaseRequestCustomerAddress {
 
@@ -160,30 +151,28 @@ object CdcsCreateCaseRequest {
   }
 
   case class CdcsCreateCaseRequestContactDetails(
-    telephoneNumber: CdcsCreateCaseRequestTelephoneNumber,
-    email: CdcsCreateCaseRequestEmail
-  )
+                                                  telephoneNumber: String,
+                                                  email: String
+                                                )
 
   object CdcsCreateCaseRequestContactDetails {
     implicit val format: OFormat[CdcsCreateCaseRequestContactDetails] = Json.format[CdcsCreateCaseRequestContactDetails]
   }
 
   case class CdcsCreateCaseRequestIdentification(
-    idType: CdcsCreateCaseRequestIdTypeReference,
-    idValue: CdcsCreateCaseRequestIdValue
-  )
+                                                  idType: String,
+                                                  idValue: String
+                                                )
 
   object CdcsCreateCaseRequestIdentification {
     implicit val format: OFormat[CdcsCreateCaseRequestIdentification] = Json.format[CdcsCreateCaseRequestIdentification]
   }
 
   case class CdcsCreateCaseRequestTaxAccount(
-    regimeType: CdcsCreateCaseRequestRegimeTypeReference,
-    debtItems: Option[
-      List[CdcsCreateCaseRequestDebtItem]
-    ], // breaks schema but required in order for us to not to potentially trigger a customer impacting process .
-    taxAccountDetails: Option[CdcsCreateCaseRequestTaxAccountDetails]
-  )
+                                              regimeType: Int,
+                                              taxAccountDetails: Option[CdcsCreateCaseRequestTaxAccountDetails],
+                                              debtItems: List[CdcsCreateCaseRequestDebtItem]
+                                            )
 
   object CdcsCreateCaseRequestTaxAccount {
 
@@ -191,11 +180,11 @@ object CdcsCreateCaseRequest {
   }
 
   case class CdcsCreateCaseRequestDebtItem(
-    chargeReference: CdcsCreateCaseRequestChargeReference,
-    amount: CdcsCreateCaseRequestDebtItemAmount,
-    charges: List[CdcsCreateCaseRequestCharge],
-    parentChargeReference: Option[CdcsCreateCaseRequestParentChargeReference]
-  )
+                                            chargeReference: String,
+                                            amount: BigDecimal,
+                                            charges: List[CdcsCreateCaseRequestCharge],
+                                            parentChargeReference: Option[String]
+                                          )
 
   object CdcsCreateCaseRequestDebtItem {
     implicit val format: OFormat[CdcsCreateCaseRequestDebtItem] = Json.format[CdcsCreateCaseRequestDebtItem]
@@ -203,26 +192,49 @@ object CdcsCreateCaseRequest {
   }
 
   case class CdcsCreateCaseRequestCharge(
-    mainTrans: CdcsCreateCaseRequestMainTrans,
-    subTrans: CdcsCreateCaseRequestSubTrans,
-    outstandingAmount: CdcsCreateCaseRequestOutstandingAmount,
-    dueDate: CdcsCreateCaseRequestChargeDueDate,
-    source: Option[CdcsCreateCaseRequestChargeSource],
-    parentMainTrans: Option[CdcsCreateCaseRequestParentMainTrans],
-    periodFrom: Option[CdcsCreateCaseRequestTaxPeriodFrom],
-    periodTo: Option[CdcsCreateCaseRequestTaxPeriodTo],
-    interestStartDate: Option[CdcsCreateCaseRequestInterestStartDate]
-  )
+                                          mainTrans: String,
+                                          subTrans: String,
+                                          outstandingAmount: BigInt,
+                                          dueDate: String,
+                                          source: Option[String],
+                                          parentMainTrans: Option[String],
+                                          periodFrom: Option[String],
+                                          periodTo: Option[String],
+                                          interestStartDate: Option[String]
+                                        )
 
   object CdcsCreateCaseRequestCharge {
     implicit val format: OFormat[CdcsCreateCaseRequestCharge] = Json.format[CdcsCreateCaseRequestCharge]
   }
 
-  case class CdcsCreateCaseRequestTaxAccountDetails(districtNumber: Option[CdcsCreateCaseRequestDistrictNumber])
+  case class CdcsCreateCaseRequestTaxAccountDetails(districtNumber: Option[String])
 
   object CdcsCreateCaseRequestTaxAccountDetails {
     implicit val format: OFormat[CdcsCreateCaseRequestTaxAccountDetails] =
       Json.format[CdcsCreateCaseRequestTaxAccountDetails]
 
   }
+}
+
+
+case class CdcsCreateCaseRequestIndividual(
+                                            lastName: CdcsCreateCaseRequestLastName,
+                                            customerAddresses: List[CdcsCreateCaseRequestCustomerAddress],
+                                            identifications: List[CdcsCreateCaseRequestIdentification],
+                                            title: Option[CdcsCreateCaseRequestTitle],
+                                            initials: Option[CdcsCreateCaseRequestInitials],
+                                            firstName: Option[CdcsCreateCaseRequestFirstName],
+                                            middleName: Option[CdcsCreateCaseRequestMiddleName],
+                                            dateOfBirth: Option[CdcsCreateCaseRequestDateOfBirth]
+                                          )
+
+object CdcsCreateCaseRequestIndividual {
+
+  implicit val format: OFormat[CdcsCreateCaseRequestIndividual] = Json.format[CdcsCreateCaseRequestIndividual]
+}
+
+final case class CdcsCreateCaseRequestLastName(value: String)
+object CdcsCreateCaseRequestLastName {
+  def empty: CdcsCreateCaseRequestLastName = CdcsCreateCaseRequestLastName("")
+  implicit val format: Format[CdcsCreateCaseRequestLastName] = Json.valueFormat[CdcsCreateCaseRequestLastName]
 }
