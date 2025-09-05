@@ -308,9 +308,11 @@ class TimeToPayController @Inject() (
   }
 
   def cesaCreateRequest(): Action[JsValue] = Action.async(parse.json) { implicit request =>
+    logger.info(s"cesaCreateRequest. Request is....%%%%%% $request")
     def buildResponse(responseStatus: Status, fileName: String) =
       findFile(s"/cesa.createRequest/", fileName) match {
         case Some(file) =>
+          logger.info(s"FileName is.....@@@@@@@ $fileName")
           val fileString = FileUtils.readFileToString(file, Charset.defaultCharset())
           Try(Json.parse(fileString)).toOption match {
             case Some(jsValue) => responseStatus(jsValue)
@@ -321,6 +323,9 @@ class TimeToPayController @Inject() (
 
     withCustomJsonBody[CesaCreateRequest] { req =>
       val startDate = req.ttpStartDate
+
+      logger.info(s"StartDate FileName is.....******** $startDate")
+
       enactStageRepository.addCESAStage(getCorrelationIdHeader(request.headers), req).map { _ =>
         startDate match {
           case Some("2019-06-08") =>
