@@ -19,9 +19,26 @@ package uk.gov.hmrc.debttransformationstub.models
 import play.api.libs.json.{ Json, OFormat }
 
 case class CesaAmendPlanRequest(
-  identifications: List[CesaCancelPlanRequestIdentification]
+  identifications: List[CesaAmendPlanRequestIdentification],
+  noteLines: List[String],
+  transitionedIndicator: Option[Boolean],
+  ttpStartDate: Option[String],
+  ttpEndDate: Option[String],
+  ttpFirstPaymentDate: Option[String],
+  ttpFirstPaymentAmt: Option[BigDecimal],
+  ttpRegularPaymentAmt: Option[BigDecimal],
+  ttpPaymentFrequency: Option[Int],
+  ttpReviewDate: Option[String],
+  ttpInitials: Option[String],
+  ttpEnfActToTake: Option[String]
 )
 
 object CesaAmendPlanRequest {
   implicit val format: OFormat[CesaAmendPlanRequest] = Json.format[CesaAmendPlanRequest]
+}
+
+case class CesaAmendPlanRequestIdentification(idType: String, idValue: String)
+
+object CesaAmendPlanRequestIdentification {
+  implicit val format: OFormat[CesaAmendPlanRequestIdentification] = Json.format[CesaAmendPlanRequestIdentification]
 }

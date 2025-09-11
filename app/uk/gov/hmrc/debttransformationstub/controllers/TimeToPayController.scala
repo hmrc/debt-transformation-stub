@@ -293,7 +293,7 @@ class TimeToPayController @Inject() (
         case None => NotFound("file not found")
       }
 
-    withCustomJsonBody[CesaCancelPlanRequest] { req =>
+    withCustomJsonBody[CesaAmendPlanRequest] { req =>
       val response = req.identifications.map(_.idValue).head match {
         case "cesaAmendPlan_error_400" =>
           buildResponse(BadRequest, "cesaAmendPlan_error_400.json")
