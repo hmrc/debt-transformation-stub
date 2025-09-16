@@ -281,34 +281,6 @@ class TimeToPayController @Inject() (
     }
   }
 
-  def cesaAmendCase(): Action[JsValue] = Action.async(parse.json) { implicit request =>
-    def buildResponse(responseStatus: Status, fileName: String) =
-      findFile(s"/cesa.amendCase/", fileName) match {
-        case Some(file) =>
-          val fileString = FileUtils.readFileToString(file, Charset.defaultCharset())
-          Try(Json.parse(fileString)).toOption match {
-            case Some(jsValue) => responseStatus(jsValue)
-            case None          => InternalServerError(s"failing stub cannot parse file $fileName")
-          }
-        case None => NotFound("file not found")
-      }
-
-    withCustomJsonBody[CesaAmendPlanRequest] { req =>
-      val response = req.identifications.map(_.idValue).head match {
-        case "cesaAmendPlan_error_400" =>
-          buildResponse(BadRequest, "cesaAmendPlan_error_400.json")
-        case "cesaAmendPlan_error_404" =>
-          buildResponse(NotFound, "cesaAmendPlan_error_404.json")
-        case "cesaAmendPlan_error_409" =>
-          buildResponse(Conflict, "cesaAmendPlan_error_409.json")
-        case "cesaAmendPlan_error_502" =>
-          buildResponse(BadGateway, "cesaAmendPlan_error_502.json")
-        case _ => buildResponse(Ok, "cesaAmendPlanSuccess.json")
-      }
-      Future.successful(response)
-    }
-  }
-
   def cdcsCreateCase(): Action[JsValue] = Action.async(parse.json) { implicit request =>
     def buildResponse(responseStatus: Status, fileName: String) =
       findFile(s"/cdcs.createCase/", fileName) match {
@@ -357,6 +329,8 @@ class TimeToPayController @Inject() (
             buildResponse(BadRequest, "cesaCreateRequestFailure_400.json")
           case Some("2021-06-08") =>
             buildResponse(Conflict, "cesaCreateRequestFailure_409.json")
+          case Some("2025-06-01") =>
+            buildResponse(NotFound, "cesaCreateRequestFailure_404.json")
           case _ => buildResponse(Ok, "cesaCreateRequestSuccessResponse.json")
         }
       }

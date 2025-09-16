@@ -61,4 +61,3 @@ POST          /cesa/debt/providechargereferences                                
 POST          /prweb/api/TTP/v1/CreateSSTTP                                                          uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.cdcsCreateCase()
 POST          /cesa/debt/ttp/cancel                                                                  uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.cesaCancelCase()
 POST          /cesa/debt/ttp/create                                                                  uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.cesaCreateRequest()
-POST          /cesa/debt/ttp/amend                                                                   uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.cesaAmendCase()
