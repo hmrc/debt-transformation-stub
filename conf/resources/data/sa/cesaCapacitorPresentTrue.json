@@ -27,12 +27,7 @@
     ],
     "signals": [
       {
-        "signalType": "Capacitor present",
-        "signalValue": "True",
-        "signalDescription": "customer with capacitor"
-      },
-      {
-        "signalType": "Capacitor Present",
+        "signalType": "Capacitor",
         "signalValue": "true",
         "signalDescription": "customer with capacitor"
       }
