@@ -329,6 +329,8 @@ class TimeToPayController @Inject() (
             buildResponse(BadRequest, "cesaCreateRequestFailure_400.json")
           case Some("2021-06-08") =>
             buildResponse(Conflict, "cesaCreateRequestFailure_409.json")
+          case Some("2025-06-01") =>
+            buildResponse(NotFound, "cesaCreateRequestFailure_404.json")
           case _ => buildResponse(Ok, "cesaCreateRequestSuccessResponse.json")
         }
       }
