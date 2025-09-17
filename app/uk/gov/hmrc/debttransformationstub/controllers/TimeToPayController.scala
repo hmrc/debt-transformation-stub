@@ -21,8 +21,10 @@ import play.api.Environment
 import play.api.libs.json.{ JsValue, Json }
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
+import uk.gov.hmrc.debttransformationstub.models
 import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.CdcsCreateCaseRequestLastName
 import uk.gov.hmrc.debttransformationstub.models._
+import uk.gov.hmrc.debttransformationstub.models.errors.NO_RESPONSE
 import uk.gov.hmrc.debttransformationstub.repositories.{ EnactStage, EnactStageRepository }
 import uk.gov.hmrc.debttransformationstub.services.TTPPollingService
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
@@ -30,7 +32,9 @@ import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import java.io.File
+import java.lang.System.Logger
 import java.nio.charset.Charset
+import java.time.LocalDate
 import javax.inject.Inject
 import scala.concurrent.{ ExecutionContext, Future }
 import scala.io.Source
@@ -304,11 +308,9 @@ class TimeToPayController @Inject() (
   }
 
   def cesaCreateRequest(): Action[JsValue] = Action.async(parse.json) { implicit request =>
-    logger.info(s"cesaCreateRequest. Request is....%%%%%% $request")
     def buildResponse(responseStatus: Status, fileName: String) =
       findFile(s"/cesa.createRequest/", fileName) match {
         case Some(file) =>
-          logger.info(s"FileName is.....@@@@@@@ $fileName")
           val fileString = FileUtils.readFileToString(file, Charset.defaultCharset())
           Try(Json.parse(fileString)).toOption match {
             case Some(jsValue) => responseStatus(jsValue)
@@ -319,9 +321,6 @@ class TimeToPayController @Inject() (
 
     withCustomJsonBody[CesaCreateRequest] { req =>
       val startDate = req.ttpStartDate
-
-      logger.info(s"StartDate FileName is.....******** $startDate")
-
       enactStageRepository.addCESAStage(getCorrelationIdHeader(request.headers), req).map { _ =>
         startDate match {
           case Some("2019-06-08") =>
