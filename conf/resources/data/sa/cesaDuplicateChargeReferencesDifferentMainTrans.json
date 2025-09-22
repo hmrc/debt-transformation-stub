@@ -78,6 +78,28 @@
         "interestStartDate": "2024-03-15",
         "outstandingAmount": 50000,
         "accruedInterest": 50000
+      },
+      {
+        "chargeType": "AbC1",
+        "UTR": "7529526482",
+        "tieBreaker": "1234",
+        "creationDate": "2024-03-15",
+        "originalCreationDate": "2024-03-15",
+        "saTaxYearEnd": "2024-03-15",
+        "originalChargeType": "Ab23",
+        "originalTieBreaker": "1234",
+        "mainType": "string",
+        "parentMainTrans": "4000",
+        "mainTrans": "1525",
+        "subTrans": "1005",
+        "taxPeriodFrom": "2024-03-15",
+        "taxPeriodTo": "2024-03-15",
+        "chargeReference": "7QIT8",
+        "parentChargeReference": "7QIT9",
+        "dueDate": "2024-03-15",
+        "interestStartDate": "2024-03-15",
+        "outstandingAmount": 50000,
+        "accruedInterest": 50000
       }
     ],
     "responseCode": {
