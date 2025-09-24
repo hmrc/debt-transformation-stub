@@ -78,28 +78,6 @@
         "interestStartDate": "2024-03-15",
         "outstandingAmount": 50000,
         "accruedInterest": 50000
-      },
-      {
-        "chargeType": "AbC1",
-        "UTR": "7529526482",
-        "tieBreaker": "1234",
-        "creationDate": "2024-03-15",
-        "originalCreationDate": "2024-03-15",
-        "saTaxYearEnd": "2024-03-15",
-        "originalChargeType": "Ab23",
-        "originalTieBreaker": "1234",
-        "mainType": "string",
-        "parentMainTrans": "4000",
-        "mainTrans": "4910",
-        "subTrans": "1553",
-        "taxPeriodFrom": "2024-03-15",
-        "taxPeriodTo": "2024-03-15",
-        "chargeReference": "7QIT8",
-        "parentChargeReference": "7QIT9",
-        "dueDate": "2024-03-15",
-        "interestStartDate": "2024-03-15",
-        "outstandingAmount": 50000,
-        "accruedInterest": 50000
       }
     ],
     "responseCode": {
@@ -167,26 +145,26 @@
     ],
     "charges": [
       {
-        "chargeType": "In Year RTI Charge - Tax",
-        "ddInProgress": "true",
+        "chargeType": "AbC1",
+        "UTR": "7529526482",
+        "tieBreaker": "1234",
+        "creationDate": "2024-03-15",
+        "originalCreationDate": "2024-03-15",
+        "saTaxYearEnd": "2024-03-15",
+        "originalChargeType": "Ab23",
+        "originalTieBreaker": "1234",
         "mainType": "string",
-        "mainTrans": "5200",
-        "parentMainTrans": "Kk9Y",
-        "subTrans": "1553",
+        "parentMainTrans": "4000",
+        "mainTrans": "4003",
+        "subTrans": "1046",
         "taxPeriodFrom": "2024-03-15",
         "taxPeriodTo": "2024-03-15",
-        "chargeReference": "EtmpCR",
-        "parentChargeReference": "628BxY",
+        "chargeReference": "7QIT8",
+        "parentChargeReference": "7QIT9",
         "dueDate": "2024-03-15",
         "interestStartDate": "2024-03-15",
-        "outstandingAmount": 999999999.99,
-        "accruedInterest": 50000,
-        "locks": [
-          {
-            "lockType": "Dunning",
-            "lockReason": "string"
-          }
-        ]
+        "outstandingAmount": 50000,
+        "accruedInterest": 50000
       }
     ],
     "responseCode": {
