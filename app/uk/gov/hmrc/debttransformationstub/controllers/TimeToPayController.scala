@@ -22,7 +22,7 @@ import play.api.libs.json.{ JsValue, Json }
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
 import uk.gov.hmrc.debttransformationstub.models
-import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.CdcsCreateCaseRequestLastName
+import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.{ CdcsCreateCaseRequestIdTypeReference, CdcsCreateCaseRequestLastName }
 import uk.gov.hmrc.debttransformationstub.models._
 import uk.gov.hmrc.debttransformationstub.models.errors.NO_RESPONSE
 import uk.gov.hmrc.debttransformationstub.repositories.{ EnactStage, EnactStageRepository }
@@ -254,88 +254,100 @@ class TimeToPayController @Inject() (
   }
 
   def cesaCancelCase(): Action[JsValue] = Action.async(parse.json) { implicit request =>
-    def buildResponse(responseStatus: Status, fileName: String) =
-      findFile(s"/cesa.cancelCase/", fileName) match {
-        case Some(file) =>
-          val fileString = FileUtils.readFileToString(file, Charset.defaultCharset())
-          Try(Json.parse(fileString)).toOption match {
-            case Some(jsValue) => responseStatus(jsValue)
-            case None          => InternalServerError(s"failing stub cannot parse file $fileName")
-          }
-        case None => NotFound("file not found")
-      }
-
     withCustomJsonBody[CesaCancelPlanRequest] { req =>
-      val response = req.identifications.map(_.idValue).head match {
-        case "cesaCancelPlan_error_400" =>
-          buildResponse(BadRequest, "cesaCancelPlan_error_400.json")
-        case "cesaCancelPlan_error_404" =>
-          buildResponse(NotFound, "cesaCancelPlan_error_404.json")
-        case "cesaCancelPlan_error_409" =>
-          buildResponse(Conflict, "cesaCancelPlan_error_409.json")
-        case "cesaCancelPlan_error_502" =>
-          buildResponse(BadGateway, "cesaCancelPlan_error_502.json")
-        case _ => buildResponse(Ok, "cesaCancelPlanSuccess.json")
-      }
+      val testDataPackage = "/cesa.cancelCase/"
+
+      val firstIdentifierOrUtr: Option[String] =
+        if (req.identifications.length == 1) {
+          req.identifications.map(_.idValue).headOption
+        } else {
+          req.identifications.find(_.idType == "UTR").map(_.idValue)
+        }
+
+      val response =
+        firstIdentifierOrUtr
+          .flatMap {
+            case "cesaCancelPlan_error_400" =>
+              buildResponseFromFileAndStatus(testDataPackage, BadRequest, "cesaCancelPlan_error_400.json")
+            case "cesaCancelPlan_error_404" =>
+              buildResponseFromFileAndStatus(testDataPackage, NotFound, "cesaCancelPlan_error_404.json")
+            case "cesaCancelPlan_error_409" =>
+              buildResponseFromFileAndStatus(testDataPackage, Conflict, "cesaCancelPlan_error_409.json")
+            case "cesaCancelPlan_error_502" =>
+              buildResponseFromFileAndStatus(testDataPackage, BadGateway, "cesaCancelPlan_error_502.json")
+            case _ => buildResponseFromFileAndStatus(testDataPackage, Ok, "cesaCancelPlanSuccess.json")
+          }
+          .getOrElse(NotFound("file not found"))
+
       Future.successful(response)
     }
   }
 
   def cdcsCreateCase(): Action[JsValue] = Action.async(parse.json) { implicit request =>
-    def buildResponse(responseStatus: Status, fileName: String) =
-      findFile(s"/cdcs.createCase/", fileName) match {
-        case Some(file) =>
-          val fileString = FileUtils.readFileToString(file, Charset.defaultCharset())
-          Try(Json.parse(fileString)).toOption match {
-            case Some(jsValue) => responseStatus(jsValue)
-            case None          => InternalServerError(s"failing stub cannot parse file $fileName")
-          }
-        case None => NotFound("file not found")
-      }
-
     withCustomJsonBody[CdcsCreateCaseRequest] { req =>
+      val testDataPackage = "/cdcs.createCase/"
+
+      val maybeUtrIdentifier = req.customer.individual.identifications
+        .find(_.idType == CdcsCreateCaseRequestIdTypeReference.UTR)
+        .map(_.idValue)
+      val lastName = req.customer.individual.lastName
+
       enactStageRepository.addCDCSStage(getCorrelationIdHeader(request.headers), req).map { _ =>
-        req.customer.individual.lastName match {
-          case CdcsCreateCaseRequestLastName("STUB_FAILURE_500") => new Status(INTERNAL_SERVER_ERROR)
-          case CdcsCreateCaseRequestLastName("STUB_FAILURE_400") =>
-            buildResponse(BadRequest, "cdcsCreateCaseFailure_400.json")
-          case CdcsCreateCaseRequestLastName("STUB_FAILURE_422") =>
-            buildResponse(UnprocessableEntity, "cdcsCreateCaseFailure_422.json")
-          case _ => buildResponse(Ok, "cdcsCreateCaseSuccessResponse.json")
-        }
+        maybeUtrIdentifier
+          .flatMap(utr => buildResponseFromFileAndStatus(testDataPackage, Ok, s"$utr.json"))
+          .orElse {
+            lastName match {
+              case CdcsCreateCaseRequestLastName("STUB_FAILURE_500") => new Some(Status(INTERNAL_SERVER_ERROR))
+              case CdcsCreateCaseRequestLastName("STUB_FAILURE_400") =>
+                buildResponseFromFileAndStatus(testDataPackage, BadRequest, "cdcsCreateCaseFailure_400.json")
+              case CdcsCreateCaseRequestLastName("STUB_FAILURE_422") =>
+                buildResponseFromFileAndStatus(testDataPackage, UnprocessableEntity, "cdcsCreateCaseFailure_422.json")
+              case _ => buildResponseFromFileAndStatus(testDataPackage, Ok, "cdcsCreateCaseSuccessResponse.json")
+            }
+          }
+          .getOrElse(NotFound("file not found"))
       }
     }
   }
 
   def cesaCreateRequest(): Action[JsValue] = Action.async(parse.json) { implicit request =>
-    def buildResponse(responseStatus: Status, fileName: String) =
-      findFile(s"/cesa.createRequest/", fileName) match {
-        case Some(file) =>
-          val fileString = FileUtils.readFileToString(file, Charset.defaultCharset())
-          Try(Json.parse(fileString)).toOption match {
-            case Some(jsValue) => responseStatus(jsValue)
-            case None          => InternalServerError(s"failing stub cannot parse file $fileName")
-          }
-        case None => NotFound("file not found")
-      }
-
     withCustomJsonBody[CesaCreateRequest] { req =>
+      val testDataPackage = "/cesa.createRequest/"
+
+      val maybeUtrIdentifier = req.identifications.find(_.idType == "UTR").map(_.idValue)
       val startDate = req.ttpStartDate
+
       enactStageRepository.addCESAStage(getCorrelationIdHeader(request.headers), req).map { _ =>
-        startDate match {
-          case Some("2019-06-08") =>
-            buildResponse(BadGateway, "cesaCreateRequestFailure_502.json")
-          case Some("2020-06-08") =>
-            buildResponse(BadRequest, "cesaCreateRequestFailure_400.json")
-          case Some("2021-06-08") =>
-            buildResponse(Conflict, "cesaCreateRequestFailure_409.json")
-          case Some("2025-06-01") =>
-            buildResponse(NotFound, "cesaCreateRequestFailure_404.json")
-          case _ => buildResponse(Ok, "cesaCreateRequestSuccessResponse.json")
-        }
+        maybeUtrIdentifier
+          .flatMap(utr => buildResponseFromFileAndStatus(testDataPackage, Ok, s"$utr.json"))
+          .orElse {
+            startDate match {
+              case Some("2019-06-08") =>
+                buildResponseFromFileAndStatus(testDataPackage, BadGateway, "cesaCreateRequestFailure_502.json")
+              case Some("2020-06-08") =>
+                buildResponseFromFileAndStatus(testDataPackage, BadRequest, "cesaCreateRequestFailure_400.json")
+              case Some("2021-06-08") =>
+                buildResponseFromFileAndStatus(testDataPackage, Conflict, "cesaCreateRequestFailure_409.json")
+              case Some("2025-06-01") =>
+                buildResponseFromFileAndStatus(testDataPackage, NotFound, "cesaCreateRequestFailure_404.json")
+              case _ => buildResponseFromFileAndStatus(testDataPackage, Ok, "cesaCreateRequestSuccessResponse.json")
+            }
+          }
+          .getOrElse(NotFound("file not found"))
       }
     }
   }
+
+  private def buildResponseFromFileAndStatus(testDataPackage: String, responseStatus: Status, fileName: String) =
+    findFile(testDataPackage, fileName) match {
+      case Some(file) =>
+        val fileString = FileUtils.readFileToString(file, Charset.defaultCharset())
+        Try(Json.parse(fileString)).toOption match {
+          case Some(jsValue) => Some(responseStatus(jsValue))
+          case None          => Some(InternalServerError(s"failing stub cannot parse file $fileName"))
+        }
+      case None => None
+    }
 
   def enactStage(correlationId: String): Action[AnyContent] = Action.async { request =>
     enactStageRepository.findByCorrelationId(correlationId).map { stage: Option[EnactStage] =>
