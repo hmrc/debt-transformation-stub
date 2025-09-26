@@ -18,13 +18,13 @@ package uk.gov.hmrc.debttransformationstub.controllers
 
 import play.api.http.Status.BAD_REQUEST
 import play.api.libs.json._
-import play.api.mvc.Results.BadRequest
-import play.api.mvc.{ Request, Result }
+import play.api.mvc.Results._
+import play.api.mvc.{Request, Result}
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.http.HeaderCarrier
 
 import scala.concurrent.Future
-import scala.util.{ Failure, Success, Try }
+import scala.util.{Failure, Success, Try}
 
 trait CustomBaseController {
   private lazy val logger = new RequestAwareLogger(this.getClass)
@@ -52,4 +52,16 @@ trait CustomBaseController {
     }
 
   private def invalidJsonMessage(path: JsPath) = s"Field at path '$path' missing or invalid"
+}
+
+object CustomBaseController {
+  def returnStatusBasedOnIdValue(prefix: String, idValue: String): Option[Result] = idValue.trim match {
+    case s if s == prefix + "400" => Some(BadRequest)
+    case s if s == prefix + "401" => Some(Unauthorized)
+    case s if s == prefix + "403" => Some(Forbidden)
+    case s if s == prefix + "404" => Some(NotFound)
+    case s if s == prefix + "500" => Some(InternalServerError)
+    case s if s == prefix + "503" => Some(ServiceUnavailable)
+    case _ => None
+  }
 }

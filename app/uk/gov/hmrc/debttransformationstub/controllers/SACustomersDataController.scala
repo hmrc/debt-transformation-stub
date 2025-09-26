@@ -17,17 +17,18 @@
 package uk.gov.hmrc.debttransformationstub.controllers
 import play.api.Environment
 import play.api.libs.json._
-import play.api.mvc.{ Action, ControllerComponents }
-import uk.gov.hmrc.debttransformationstub.models.{ CustomerDataRequest, Identity }
+import play.api.mvc.{Action, ControllerComponents}
+import uk.gov.hmrc.debttransformationstub.models.{CustomerDataRequest, Identity}
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
+import uk.gov.hmrc.debttransformationstub.controllers.CustomBaseController.returnStatusBasedOnIdValue
 
 import java.io.File
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 import scala.io.Source
-import scala.util.{ Failure, Success, Try, Using }
+import scala.util.{Failure, Success, Try, Using}
 class SACustomersDataController @Inject() (environment: Environment, cc: ControllerComponents)
     extends BackendController(cc) {
 
@@ -40,28 +41,36 @@ class SACustomersDataController @Inject() (environment: Environment, cc: Control
     request.body.validate[CustomerDataRequest] match {
       case JsError(errors) =>
         BadRequest(s"Unable to parse to CustomerDataRequest: $errors")
-      case JsSuccess(value, _) =>
-        val fileName: String = value.identifications
-          .getOrElse(List.empty[Identity])
-          .find { case Identity(idType, _) => idType == "UTR" }
-          .map(_.idValue)
-          .get
 
-        if (fileName.isEmpty) {
-          NotFound("IdValue for UTR not provided")
-        } else {
-          val relativePath = s"$basePath" + "/" + s"$fileName.json"
-          environment.getExistingFile(relativePath) match {
-            case Some(file) =>
-              Try(Json.parse(saCustomerDataString(file))) match {
-                case Success(value) => Ok(value)
-                case Failure(exception) =>
-                  logger.error(s"Failed to parse the file $relativePath", exception)
-                  InternalServerError(s"stub failed to parse file $relativePath")
+      case JsSuccess(req, _) =>
+        // Safely extract the UTR idValue (first UTR in the identifications)
+        val utrOpt: Option[String] =
+          req.identifications
+            .getOrElse(Nil)
+            .collectFirst { case Identity("UTR", idValue) => idValue }
+
+        utrOpt match {
+          case None =>
+            NotFound("IdValue for UTR not provided")
+
+          case Some(s) if s.trim.isEmpty =>
+            NotFound("IdValue for UTR not provided")
+
+          case Some(idValue) =>
+            returnStatusBasedOnIdValue("saCustomerData_error_", idValue).getOrElse {
+              val relativePath = s"$basePath/$idValue.json"
+              environment.getExistingFile(relativePath) match {
+                case Some(file) =>
+                  Try(Json.parse(saCustomerDataString(file))) match {
+                    case Success(js) => Ok(js)
+                    case Failure(ex) =>
+                      logger.error(s"Failed to parse the file $relativePath", ex)
+                      InternalServerError(s"stub failed to parse file $relativePath")
+                  }
+                case None =>
+                  NotFound("file not found")
               }
-            case _ =>
-              NotFound("file not found")
-          }
+            }
         }
     }
   }
