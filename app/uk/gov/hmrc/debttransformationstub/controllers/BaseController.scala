@@ -19,12 +19,12 @@ package uk.gov.hmrc.debttransformationstub.controllers
 import play.api.http.Status.BAD_REQUEST
 import play.api.libs.json._
 import play.api.mvc.Results._
-import play.api.mvc.{Request, Result}
+import play.api.mvc.{ Request, Result }
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.http.HeaderCarrier
 
 import scala.concurrent.Future
-import scala.util.{Failure, Success, Try}
+import scala.util.{ Failure, Success, Try }
 
 trait CustomBaseController {
   private lazy val logger = new RequestAwareLogger(this.getClass)
@@ -63,6 +63,6 @@ object CustomBaseController {
     case s if s == prefix + "422" => Some(Status(422))
     case s if s == prefix + "500" => Some(Status(500))
     case s if s == prefix + "503" => Some(Status(503))
-    case _ => None
+    case _                        => None
   }
 }
