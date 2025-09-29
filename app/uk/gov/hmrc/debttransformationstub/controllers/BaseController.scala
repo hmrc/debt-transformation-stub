@@ -18,7 +18,7 @@ package uk.gov.hmrc.debttransformationstub.controllers
 
 import play.api.http.Status.BAD_REQUEST
 import play.api.libs.json._
-import play.api.mvc.Results.BadRequest
+import play.api.mvc.Results._
 import play.api.mvc.{ Request, Result }
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.http.HeaderCarrier
@@ -52,4 +52,17 @@ trait CustomBaseController {
     }
 
   private def invalidJsonMessage(path: JsPath) = s"Field at path '$path' missing or invalid"
+}
+
+object CustomBaseController {
+  def returnStatusBasedOnIdValue(prefix: String, idValue: String): Option[Status] = idValue.trim match {
+    case s if s == prefix + "400" => Some(Status(400))
+    case s if s == prefix + "401" => Some(Status(401))
+    case s if s == prefix + "403" => Some(Status(403))
+    case s if s == prefix + "404" => Some(Status(404))
+    case s if s == prefix + "422" => Some(Status(422))
+    case s if s == prefix + "500" => Some(Status(500))
+    case s if s == prefix + "503" => Some(Status(503))
+    case _                        => None
+  }
 }
