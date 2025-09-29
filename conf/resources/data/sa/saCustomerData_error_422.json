@@ -1,0 +1,24 @@
+{
+  "cesaData": {
+    "responseCode": {
+      "timestamp": "2024-02-28T11:43:56Z",
+      "httpCode": 404,
+      "reasonCode": null,
+      "description": "Record not found"
+    }
+  },
+  "etmpData": {
+    "responseCode": {
+      "timestamp": "2024-02-28T11:43:56Z",
+      "httpCode": 422,
+      "reasonCode": "002",
+      "description": "Unprocessable data"
+    }
+  },
+  "responseCode": {
+    "timestamp": "2024-02-28T11:43:56Z",
+    "httpCode": 422,
+    "reasonCode": "",
+    "description": "Customer Not Found"
+  }
+}

@@ -55,13 +55,14 @@ trait CustomBaseController {
 }
 
 object CustomBaseController {
-  def returnStatusBasedOnIdValue(prefix: String, idValue: String): Option[Result] = idValue.trim match {
-    case s if s == prefix + "400" => Some(BadRequest)
-    case s if s == prefix + "401" => Some(Unauthorized)
-    case s if s == prefix + "403" => Some(Forbidden)
-    case s if s == prefix + "404" => Some(NotFound)
-    case s if s == prefix + "500" => Some(InternalServerError)
-    case s if s == prefix + "503" => Some(ServiceUnavailable)
+  def returnStatusBasedOnIdValue(prefix: String, idValue: String): Option[Status] = idValue.trim match {
+    case s if s == prefix + "400" => Some(Status(400))
+    case s if s == prefix + "401" => Some(Status(401))
+    case s if s == prefix + "403" => Some(Status(403))
+    case s if s == prefix + "404" => Some(Status(404))
+    case s if s == prefix + "422" => Some(Status(422))
+    case s if s == prefix + "500" => Some(Status(500))
+    case s if s == prefix + "503" => Some(Status(503))
     case _ => None
   }
 }

@@ -57,19 +57,33 @@ class SACustomersDataController @Inject() (environment: Environment, cc: Control
             NotFound("IdValue for UTR not provided")
 
           case Some(idValue) =>
-            returnStatusBasedOnIdValue("saCustomerData_error_", idValue).getOrElse {
-              val relativePath = s"$basePath/$idValue.json"
-              environment.getExistingFile(relativePath) match {
-                case Some(file) =>
-                  Try(Json.parse(saCustomerDataString(file))) match {
-                    case Success(js) => Ok(js)
-                    case Failure(ex) =>
-                      logger.error(s"Failed to parse the file $relativePath", ex)
-                      InternalServerError(s"stub failed to parse file $relativePath")
-                  }
-                case None =>
-                  NotFound("file not found")
-              }
+            returnStatusBasedOnIdValue("saCustomerData_error_", idValue) match {
+              case Some(status) =>
+                val relativePath = s"$basePath/$idValue.json"
+                environment.getExistingFile(relativePath) match {
+                  case Some(file) =>
+                    Try(Json.parse(saCustomerDataString(file))) match {
+                      case Success(js) => status(js)
+                      case Failure(ex) =>
+                        logger.error(s"Failed to parse the file $relativePath", ex)
+                        status(Json.obj("error" -> s"stub failed to parse file $relativePath"))
+                    }
+                  case None =>
+                    status(Json.obj("error" -> s"file not found: $relativePath"))
+                }
+              case None =>
+                val relativePath = s"$basePath/$idValue.json"
+                environment.getExistingFile(relativePath) match {
+                  case Some(file) =>
+                    Try(Json.parse(saCustomerDataString(file))) match {
+                      case Success(js) => Ok(js)
+                      case Failure(ex) =>
+                        logger.error(s"Failed to parse the file $relativePath")
+                        InternalServerError(s"stub failed to parse file $relativePath")
+                    }
+                  case None =>
+                    NotFound("file not found")
+                }
             }
         }
     }
