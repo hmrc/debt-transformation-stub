@@ -67,13 +67,13 @@
         "originalChargeType": "Ab23",
         "originalTieBreaker": "1234",
         "mainType": "string",
+        "parentMainTrans": "4000",
         "mainTrans": "4910",
-        "parentMainTrans": "YnAS",
         "subTrans": "1553",
         "taxPeriodFrom": "2024-03-15",
         "taxPeriodTo": "2024-03-15",
         "chargeReference": "7QIT8",
-        "parentChargeReference": "7QIT8",
+        "parentChargeReference": "7QIT9",
         "dueDate": "2024-03-15",
         "interestStartDate": "2024-03-15",
         "outstandingAmount": 50000,
@@ -145,26 +145,26 @@
     ],
     "charges": [
       {
-        "chargeType": "In Year RTI Charge - Tax",
-        "ddInProgress": "true",
+        "chargeType": "AbC1",
+        "UTR": "7529526482",
+        "tieBreaker": "1234",
+        "creationDate": "2024-03-15",
+        "originalCreationDate": "2024-03-15",
+        "saTaxYearEnd": "2024-03-15",
+        "originalChargeType": "Ab23",
+        "originalTieBreaker": "1234",
         "mainType": "string",
-        "mainTrans": "5100",
-        "parentMainTrans": "Kk9Y",
+        "parentMainTrans": "4000",
+        "mainTrans": "4910",
         "subTrans": "1553",
         "taxPeriodFrom": "2024-03-15",
         "taxPeriodTo": "2024-03-15",
-        "chargeReference": "628BxY",
-        "parentChargeReference": "628BxY",
+        "chargeReference": "7QIT8",
+        "parentChargeReference": "7QIT10",
         "dueDate": "2024-03-15",
         "interestStartDate": "2024-03-15",
-        "outstandingAmount": 999999999.99,
-        "accruedInterest": 50000,
-        "locks": [
-          {
-            "lockType": "Dunning",
-            "lockReason": "string"
-          }
-        ]
+        "outstandingAmount": 50000,
+        "accruedInterest": 50000
       }
     ],
     "responseCode": {
@@ -176,8 +176,8 @@
   },
   "responseCode": {
     "timestamp": "2024-02-28T11:43:56.235Z",
-    "httpCode": 400,
-    "reasonCode": "004",
-    "description": "eligibility service does not determine eligibility"
+    "httpCode": 200,
+    "reasonCode": "002",
+    "description": "success"
   }
 }
