@@ -1,0 +1,5 @@
+{
+  "code": 422,
+  "details": "Charges with the same charge reference do not share the same data",
+  "processingDateTime": "2025-01-22T14:35:00Z"
+}

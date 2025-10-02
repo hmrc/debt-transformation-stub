@@ -18,25 +18,21 @@ package uk.gov.hmrc.debttransformationstub.controllers
 
 import org.apache.commons.io.FileUtils
 import play.api.Environment
-import play.api.libs.json.{ JsValue, Json }
+import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
-import uk.gov.hmrc.debttransformationstub.models
-import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.{ CdcsCreateCaseRequestIdTypeReference, CdcsCreateCaseRequestLastName }
+import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.{CdcsCreateCaseRequestIdTypeReference, CdcsCreateCaseRequestIdValue, CdcsCreateCaseRequestLastName}
 import uk.gov.hmrc.debttransformationstub.models._
-import uk.gov.hmrc.debttransformationstub.models.errors.NO_RESPONSE
-import uk.gov.hmrc.debttransformationstub.repositories.{ EnactStage, EnactStageRepository }
+import uk.gov.hmrc.debttransformationstub.repositories.{EnactStage, EnactStageRepository}
 import uk.gov.hmrc.debttransformationstub.services.TTPPollingService
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import java.io.File
-import java.lang.System.Logger
 import java.nio.charset.Charset
-import java.time.LocalDate
 import javax.inject.Inject
-import scala.concurrent.{ ExecutionContext, Future }
+import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Source
 import scala.util.Try
 
@@ -182,7 +178,7 @@ class TimeToPayController @Inject() (
         } yield fileResponse
       } else if (requestChargeHodServices.contains("CESA")) {
         val ninoUTRId = req.identification
-          .find(id => id.idType.equalsIgnoreCase("NINO") || id.idType.equalsIgnoreCase("UTR"))
+          .find(id => id.idType.equalsIgnoreCase("UTR"))
           .map(_.idValue)
           .getOrElse(
             throw new IllegalArgumentException("NINO or UTR id is required for SA NDDS enact arrangements")
@@ -273,6 +269,8 @@ class TimeToPayController @Inject() (
               buildResponseFromFileAndStatus(testDataPackage, NotFound, "cesaCancelPlan_error_404.json")
             case "cesaCancelPlan_error_409" =>
               buildResponseFromFileAndStatus(testDataPackage, Conflict, "cesaCancelPlan_error_409.json")
+            case "6642083101" =>
+              buildResponseFromFileAndStatus(testDataPackage, InternalServerError, "cesaCancelPlan_error_500.json")
             case "cesaCancelPlan_error_502" =>
               buildResponseFromFileAndStatus(testDataPackage, BadGateway, "cesaCancelPlan_error_502.json")
             case _ => buildResponseFromFileAndStatus(testDataPackage, Ok, "cesaCancelPlanSuccess.json")
@@ -286,11 +284,11 @@ class TimeToPayController @Inject() (
   def cdcsCreateCase(): Action[JsValue] = Action.async(parse.json) { implicit request =>
     withCustomJsonBody[CdcsCreateCaseRequest] { req =>
       val testDataPackage = "/cdcs.createCase/"
-
       val maybeUtrIdentifier = req.customer.individual.identifications
         .find(_.idType == CdcsCreateCaseRequestIdTypeReference.UTR)
         .map(_.idValue)
       val lastName = req.customer.individual.lastName
+      logger.info("CDCS create case UTR is: " + maybeUtrIdentifier)
 
       enactStageRepository.addCDCSStage(getCorrelationIdHeader(request.headers), req).map { _ =>
         maybeUtrIdentifier
@@ -320,6 +318,18 @@ class TimeToPayController @Inject() (
       enactStageRepository.addCESAStage(getCorrelationIdHeader(request.headers), req).map { _ =>
         maybeUtrIdentifier
           .flatMap(utr => buildResponseFromFileAndStatus(testDataPackage, Ok, s"$utr.json"))
+          .orElse {
+            maybeUtrIdentifier match {
+              case Some("1062431399") =>
+                buildResponseFromFileAndStatus(
+                  testDataPackage,
+                  InternalServerError,
+                  "cesaCreateRequestFailure_400.json"
+                )
+              case Some("3193095982") =>
+                buildResponseFromFileAndStatus(testDataPackage, BadRequest, "cesaCreateRequestFailure_400.json")
+            }
+          }
           .orElse {
             startDate match {
               case Some("2019-06-08") =>
