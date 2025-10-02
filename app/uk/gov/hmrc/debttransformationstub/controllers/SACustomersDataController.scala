@@ -57,9 +57,14 @@ class SACustomersDataController @Inject() (environment: Environment, cc: Control
             NotFound("IdValue for UTR not provided")
 
           case Some(idValue) =>
-            returnStatusBasedOnIdValue("saCustomerData_error_", idValue) match {
+            val possibleE2ETestIdValue = idValue match {
+              case "2208274718" => "saCustomerData_error_500"
+              case _ => idValue
+            }
+
+            returnStatusBasedOnIdValue("saCustomerData_error_", possibleE2ETestIdValue) match {
               case Some(status) =>
-                val relativePath = s"$basePath/$idValue.json"
+                val relativePath = s"$basePath/$possibleE2ETestIdValue.json"
                 environment.getExistingFile(relativePath) match {
                   case Some(file) =>
                     Try(Json.parse(saCustomerDataString(file))) match {
@@ -72,7 +77,7 @@ class SACustomersDataController @Inject() (environment: Environment, cc: Control
                     status(Json.obj("error" -> s"file not found: $relativePath"))
                 }
               case None =>
-                val relativePath = s"$basePath/$idValue.json"
+                val relativePath = s"$basePath/$possibleE2ETestIdValue.json"
                 environment.getExistingFile(relativePath) match {
                   case Some(file) =>
                     Try(Json.parse(saCustomerDataString(file))) match {
