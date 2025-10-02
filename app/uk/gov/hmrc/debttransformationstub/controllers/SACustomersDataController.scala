@@ -59,7 +59,7 @@ class SACustomersDataController @Inject() (environment: Environment, cc: Control
           case Some(idValue) =>
             val possibleE2ETestIdValue = idValue match {
               case "2208274718" => "saCustomerData_error_500"
-              case _ => idValue
+              case _            => idValue
             }
 
             returnStatusBasedOnIdValue("saCustomerData_error_", possibleE2ETestIdValue) match {
