@@ -143,3 +143,9 @@ Only one supported value exists at the moment, but we may one day allow the tool
 #### Output Location Argument `--output=console`
 
 Provided if the desired output is to be printed to the console.
+
+## SA E2E Stub Data added as part of DTD-3877
+
+| Microservice | UTR        | API Call                 | Response | Test Thread |
+|--------------|------------|--------------------------|----------|-------------|
+| Eligibility  | 2208274718 | SA Customer Data Service | 500      | DMBP-1408   |
