@@ -1,4 +1,1 @@
-{
-  "wmfId": "0000000000005242024V100001PX0099",
-  "processingDateTime": "2023-07-10T18:04:03.367678Z"
-}
+// this file is desined to throw error 500 since it is invalid json

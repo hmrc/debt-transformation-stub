@@ -17,13 +17,14 @@
 package uk.gov.hmrc.debttransformationstub.controllers
 
 import org.apache.commons.io.FileUtils
+import org.apache.pekko.stream.Materializer
 import play.api.Environment
-import play.api.libs.json.{ JsValue, Json }
+import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
-import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.{ CdcsCreateCaseRequestIdTypeReference, CdcsCreateCaseRequestLastName }
+import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.{CdcsCreateCaseRequestIdTypeReference, CdcsCreateCaseRequestLastName}
 import uk.gov.hmrc.debttransformationstub.models._
-import uk.gov.hmrc.debttransformationstub.repositories.{ EnactStage, EnactStageRepository }
+import uk.gov.hmrc.debttransformationstub.repositories.{EnactStage, EnactStageRepository}
 import uk.gov.hmrc.debttransformationstub.services.TTPPollingService
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.http.HeaderCarrier
@@ -32,7 +33,7 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import java.io.File
 import java.nio.charset.Charset
 import javax.inject.Inject
-import scala.concurrent.{ ExecutionContext, Future }
+import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Source
 import scala.util.Try
 
@@ -42,7 +43,7 @@ class TimeToPayController @Inject() (
   appConfig: AppConfig,
   ttpPollingService: TTPPollingService,
   enactStageRepository: EnactStageRepository
-)(implicit ec: ExecutionContext)
+)(implicit ec: ExecutionContext, materializer: Materializer)
     extends BackendController(cc) with CustomBaseController {
 
   private lazy val logger = new RequestAwareLogger(this.getClass)
@@ -178,7 +179,7 @@ class TimeToPayController @Inject() (
         } yield fileResponse
       } else if (requestChargeHodServices.contains("CESA")) {
         val ninoUTRId = req.identification
-          .find(id => id.idType.equalsIgnoreCase("NINO") || id.idType.equalsIgnoreCase("UTR"))
+          .find(id => id.idType.equalsIgnoreCase("UTR"))
           .map(_.idValue)
           .getOrElse(
             throw new IllegalArgumentException("NINO or UTR id is required for SA NDDS enact arrangements")
@@ -220,6 +221,17 @@ class TimeToPayController @Inject() (
       for {
         _            <- enactStageRepository.addETMPStage(correlationId, req)
         fileResponse <- constructResponse(s"/etmp.executePaymentLock/", s"${req.idValue}.json")
+        responseEntity <- fileResponse.body.consumeData.map(_.utf8String)
+        _ = logger.info(
+          s"""Returning ETMP response:
+             |=====================
+             |${fileResponse.header.status} ${fileResponse.header.reasonPhrase}
+             |${fileResponse.header.headers}
+             |
+             |$responseEntity
+             |=====================
+             |""".stripMargin)
+
       } yield fileResponse
     }
   }
@@ -227,6 +239,9 @@ class TimeToPayController @Inject() (
   def idmsCreateTTPMonitoringCase: Action[JsValue] = Action.async(parse.json) { implicit request =>
     val correlationId = getCorrelationIdHeader(request.headers)
     withCustomJsonBody[CreateIDMSMonitoringCaseRequest] { req =>
+      logger.info(
+        s"Received request to create IDMS monitoring case with correlationId: $correlationId and ddiReference: ${req.ddiReference}"
+      )
       for {
         _            <- enactStageRepository.addIDMSStage(correlationId, req)
         fileResponse <- constructResponse(s"/idms.createTTPMonitoringCase/", s"${req.ddiReference}.json")
@@ -240,7 +255,7 @@ class TimeToPayController @Inject() (
     val correlationId = getCorrelationIdHeader(request.headers)
     withCustomJsonBody[CreateIDMSMonitoringCaseRequestSA] { req =>
       logger.info(
-        s"Received request to create SA monitoring case with correlationId: $correlationId and idValue: ${req.idValue}"
+        s"Received request to create SA IDMS monitoring case with correlationId: $correlationId and idValue: ${req.idValue}"
       )
       for {
         _            <- enactStageRepository.addIDMSStageSA(correlationId, req)
