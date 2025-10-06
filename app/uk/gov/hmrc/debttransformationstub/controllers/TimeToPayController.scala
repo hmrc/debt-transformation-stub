@@ -18,15 +18,16 @@ package uk.gov.hmrc.debttransformationstub.controllers
 
 import org.apache.commons.io.FileUtils
 import play.api.Environment
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.{ JsValue, Json }
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
 import uk.gov.hmrc.debttransformationstub.controllers.CustomBaseController.returnStatusBasedOnIdValue
-import uk.gov.hmrc.debttransformationstub.models
 import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequest.CdcsCreateCaseRequestIdentification
+import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.{ CdcsCreateCaseRequestIdTypeReference, CdcsCreateCaseRequestLastName }
 import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.{CdcsCreateCaseRequestIdTypeReference, CdcsCreateCaseRequestLastName}
 import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.{ CdcsCreateCaseRequestIdTypeReference, CdcsCreateCaseRequestLastName }
 import uk.gov.hmrc.debttransformationstub.models._
+import uk.gov.hmrc.debttransformationstub.repositories.{ EnactStage, EnactStageRepository }
 import uk.gov.hmrc.debttransformationstub.models.errors.NO_RESPONSE
 import uk.gov.hmrc.debttransformationstub.repositories.{EnactStage, EnactStageRepository}
 import uk.gov.hmrc.debttransformationstub.repositories.{ EnactStage, EnactStageRepository }
@@ -38,7 +39,7 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import java.io.File
 import java.nio.charset.Charset
 import javax.inject.Inject
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{ ExecutionContext, Future }
 import scala.io.Source
 import scala.util.Try
 
@@ -294,20 +295,15 @@ class TimeToPayController @Inject() (
     withCustomJsonBody[CdcsCreateCaseRequest] { req =>
       val testDataPackage = "/cdcs.createCase/"
 
-//      val maybeUtrIdentifier = req.customer.individual.identifications
-//        .find(_.idType == CdcsCreateCaseRequestIdTypeReference.UTR)
-//        .map(_.idValue)
-
       val preferredSubstring = "cdcs"
-
       val maybeUtrIdentifier: Option[String] = {
         val utrValues: List[String] =
           req.customer.individual.identifications.collect {
             case CdcsCreateCaseRequestIdentification(CdcsCreateCaseRequestIdTypeReference.UTR, idVal) => idVal.value
           }
-
-        utrValues.find(_.contains(preferredSubstring))    // prefer the one that contains the text
-          .orElse(utrValues.lift(1))                      // else: second UTR (original behaviour)
+        utrValues
+          .find(_.contains(preferredSubstring))
+          .orElse(utrValues.lift(1))
       }
 
       val lastName = req.customer.individual.lastName
@@ -319,32 +315,28 @@ class TimeToPayController @Inject() (
             logger.info(s"UTR candidate = $utr")
             returnStatusBasedOnIdValue("cdcsResponse_error_", utr) match {
               case Some(forcedStatus) =>
-                // Forced status branch: if file exists, return its JSON with the forced status.
-                // If file is missing or unparsable, return the forced status with an empty body.
                 val fileName = s"$utr.json"
                 findFile(testDataPackage, fileName) match {
                   case Some(file) =>
                     val fileString = FileUtils.readFileToString(file, Charset.defaultCharset())
                     scala.util.Try(Json.parse(fileString)).toOption match {
-                      case Some(js) => Some(forcedStatus(js)) // e.g. 401 + JSON body
-                      case None     =>
+                      case Some(js) => Some(forcedStatus(js))
+                      case None =>
                         logger.error(s"failing stub cannot parse file $testDataPackage$fileName")
-                        Some(forcedStatus("")) // forced status, empty body
+                        Some(forcedStatus(""))
                     }
                   case None =>
                     logger.error(s"file not found $testDataPackage$fileName")
-                    Some(forcedStatus("")) // forced status, empty body
+                    Some(forcedStatus(""))
                 }
               case None =>
-                // Default path: 200 OK with UTR-named file using your helper
-                buildResponseFromFileAndStatus(testDataPackage, Ok, s"$utr.json") // Option[Result]
+                buildResponseFromFileAndStatus(testDataPackage, Ok, s"$utr.json")
             }
           }
         responseFromUtr
           .orElse {
             lastName match {
-              case CdcsCreateCaseRequestLastName("STUB_FAILURE_500") => new
-                  Some(Status(INTERNAL_SERVER_ERROR))
+              case CdcsCreateCaseRequestLastName("STUB_FAILURE_500") => Some(Status(INTERNAL_SERVER_ERROR))
               case CdcsCreateCaseRequestLastName("STUB_FAILURE_400") =>
                 buildResponseFromFileAndStatus(testDataPackage, BadRequest, "cdcsCreateCaseFailure_400.json")
               case CdcsCreateCaseRequestLastName("STUB_FAILURE_422") =>
