@@ -21,10 +21,8 @@ import play.api.Environment
 import play.api.libs.json.{ JsValue, Json }
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
-import uk.gov.hmrc.debttransformationstub.models
 import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.{ CdcsCreateCaseRequestIdTypeReference, CdcsCreateCaseRequestLastName }
 import uk.gov.hmrc.debttransformationstub.models._
-import uk.gov.hmrc.debttransformationstub.models.errors.NO_RESPONSE
 import uk.gov.hmrc.debttransformationstub.repositories.{ EnactStage, EnactStageRepository }
 import uk.gov.hmrc.debttransformationstub.services.TTPPollingService
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
@@ -32,9 +30,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import java.io.File
-import java.lang.System.Logger
 import java.nio.charset.Charset
-import java.time.LocalDate
 import javax.inject.Inject
 import scala.concurrent.{ ExecutionContext, Future }
 import scala.io.Source
@@ -182,7 +178,7 @@ class TimeToPayController @Inject() (
         } yield fileResponse
       } else if (requestChargeHodServices.contains("CESA")) {
         val ninoUTRId = req.identification
-          .find(id => id.idType.equalsIgnoreCase("NINO") || id.idType.equalsIgnoreCase("UTR"))
+          .find(id => id.idType.equalsIgnoreCase("UTR"))
           .map(_.idValue)
           .getOrElse(
             throw new IllegalArgumentException("NINO or UTR id is required for SA NDDS enact arrangements")
@@ -231,6 +227,9 @@ class TimeToPayController @Inject() (
   def idmsCreateTTPMonitoringCase: Action[JsValue] = Action.async(parse.json) { implicit request =>
     val correlationId = getCorrelationIdHeader(request.headers)
     withCustomJsonBody[CreateIDMSMonitoringCaseRequest] { req =>
+      logger.info(
+        s"Received request to create IDMS monitoring case with correlationId: $correlationId and ddiReference: ${req.ddiReference}"
+      )
       for {
         _            <- enactStageRepository.addIDMSStage(correlationId, req)
         fileResponse <- constructResponse(s"/idms.createTTPMonitoringCase/", s"${req.ddiReference}.json")
@@ -244,7 +243,7 @@ class TimeToPayController @Inject() (
     val correlationId = getCorrelationIdHeader(request.headers)
     withCustomJsonBody[CreateIDMSMonitoringCaseRequestSA] { req =>
       logger.info(
-        s"Received request to create SA monitoring case with correlationId: $correlationId and idValue: ${req.idValue}"
+        s"Received request to create SA IDMS monitoring case with correlationId: $correlationId and idValue: ${req.idValue}"
       )
       for {
         _            <- enactStageRepository.addIDMSStageSA(correlationId, req)
@@ -273,6 +272,8 @@ class TimeToPayController @Inject() (
               buildResponseFromFileAndStatus(testDataPackage, NotFound, "cesaCancelPlan_error_404.json")
             case "cesaCancelPlan_error_409" =>
               buildResponseFromFileAndStatus(testDataPackage, Conflict, "cesaCancelPlan_error_409.json")
+            case "6642083101" =>
+              buildResponseFromFileAndStatus(testDataPackage, InternalServerError, "cesaCancelPlan_error_500.json")
             case "cesaCancelPlan_error_502" =>
               buildResponseFromFileAndStatus(testDataPackage, BadGateway, "cesaCancelPlan_error_502.json")
             case _ => buildResponseFromFileAndStatus(testDataPackage, Ok, "cesaCancelPlanSuccess.json")
@@ -287,14 +288,25 @@ class TimeToPayController @Inject() (
     withCustomJsonBody[CdcsCreateCaseRequest] { req =>
       val testDataPackage = "/cdcs.createCase/"
 
-      val maybeUtrIdentifier = req.customer.individual.identifications
-        .find(_.idType == CdcsCreateCaseRequestIdTypeReference.UTR)
-        .map(_.idValue)
+      val identifiers = req.customer.individual.identifications
+        .filter(_.idType == CdcsCreateCaseRequestIdTypeReference.UTR)
+        .map(_.idValue.value)
+
       val lastName = req.customer.individual.lastName
+      logger.info("CDCS create case identifiers are: " + identifiers)
 
       enactStageRepository.addCDCSStage(getCorrelationIdHeader(request.headers), req).map { _ =>
-        maybeUtrIdentifier
-          .flatMap(utr => buildResponseFromFileAndStatus(testDataPackage, Ok, s"$utr.json"))
+        identifiers
+          .foldLeft(None: Option[Status])((x, identifier) =>
+            if (x.isDefined) {
+              x
+            } else {
+              identifier match {
+                case "3145760528" => Some(Status(INTERNAL_SERVER_ERROR))
+                case _            => None
+              }
+            }
+          )
           .orElse {
             lastName match {
               case CdcsCreateCaseRequestLastName("STUB_FAILURE_500") => new Some(Status(INTERNAL_SERVER_ERROR))
@@ -320,6 +332,19 @@ class TimeToPayController @Inject() (
       enactStageRepository.addCESAStage(getCorrelationIdHeader(request.headers), req).map { _ =>
         maybeUtrIdentifier
           .flatMap(utr => buildResponseFromFileAndStatus(testDataPackage, Ok, s"$utr.json"))
+          .orElse {
+            maybeUtrIdentifier match {
+              case Some("1062431399") =>
+                buildResponseFromFileAndStatus(
+                  testDataPackage,
+                  InternalServerError,
+                  "cesaCreateRequestFailure_400.json"
+                )
+              case Some("3193095982") =>
+                buildResponseFromFileAndStatus(testDataPackage, BadRequest, "cesaCreateRequestFailure_400.json")
+              case _ => None
+            }
+          }
           .orElse {
             startDate match {
               case Some("2019-06-08") =>
