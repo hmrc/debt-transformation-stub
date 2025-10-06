@@ -124,12 +124,12 @@
         "signalDescription": "ETMP Transitioned to CDCS signal type"
       },
       {
-        "signalType": "ITSA MigraTed",
+        "signalType": "YEAR OF MIGRATION",
         "signalValue": "2024",
         "signalDescription": "ETMP ITSA MigraTed signal type"
       },
       {
-        "signalType": "ITSA MigraTed",
+        "signalType": "YEAR OF MIGRATION",
         "signalValue": "2024",
         "signalDescription": "ETMP ITSA MigraTed signal type"
       }

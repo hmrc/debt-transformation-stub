@@ -134,7 +134,7 @@
     ],
     "signals": [
       {
-        "signalType": "ITSA MigraTed",
+        "signalType": "YEAR OF MIGRATION",
         "signalValue": "True",
         "signalDescription": "ETMP ITSA MigraTed signal type"
       }
