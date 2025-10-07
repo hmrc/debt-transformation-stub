@@ -24,12 +24,12 @@ import uk.gov.hmrc.debttransformationstub.config.AppConfig
 import uk.gov.hmrc.debttransformationstub.controllers.CustomBaseController.returnStatusBasedOnIdValue
 import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequest.CdcsCreateCaseRequestIdentification
 import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.{ CdcsCreateCaseRequestIdTypeReference, CdcsCreateCaseRequestLastName }
-import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.{CdcsCreateCaseRequestIdTypeReference, CdcsCreateCaseRequestLastName}
+import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.{ CdcsCreateCaseRequestIdTypeReference, CdcsCreateCaseRequestLastName }
 import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.{ CdcsCreateCaseRequestIdTypeReference, CdcsCreateCaseRequestLastName }
 import uk.gov.hmrc.debttransformationstub.models._
 import uk.gov.hmrc.debttransformationstub.repositories.{ EnactStage, EnactStageRepository }
 import uk.gov.hmrc.debttransformationstub.models.errors.NO_RESPONSE
-import uk.gov.hmrc.debttransformationstub.repositories.{EnactStage, EnactStageRepository}
+import uk.gov.hmrc.debttransformationstub.repositories.{ EnactStage, EnactStageRepository }
 import uk.gov.hmrc.debttransformationstub.repositories.{ EnactStage, EnactStageRepository }
 import uk.gov.hmrc.debttransformationstub.services.TTPPollingService
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
@@ -296,7 +296,7 @@ class TimeToPayController @Inject() (
       val testDataPackage = "/cdcs.createCase/"
 
       val preferredSubstring = "cdcs"
-      val maybeUtrIdentifier: Option[String] = {
+      val utrIdentifier: Option[String] = {
         val utrValues: List[String] =
           req.customer.individual.identifications.collect {
             case CdcsCreateCaseRequestIdentification(CdcsCreateCaseRequestIdTypeReference.UTR, idVal) => idVal.value
@@ -307,31 +307,34 @@ class TimeToPayController @Inject() (
       }
 
       val lastName = req.customer.individual.lastName
-      logger.info(s"maybeUtrIdentifier*******: $maybeUtrIdentifier")
+      logger.info(s"utrIdentifier*******: $utrIdentifier")
 
       enactStageRepository.addCDCSStage(getCorrelationIdHeader(request.headers), req).map { _ =>
         val responseFromUtr: Option[Result] =
-          maybeUtrIdentifier.flatMap { utr =>
-            logger.info(s"UTR candidate = $utr")
-            returnStatusBasedOnIdValue("cdcsResponse_error_", utr) match {
-              case Some(forcedStatus) =>
-                val fileName = s"$utr.json"
-                findFile(testDataPackage, fileName) match {
-                  case Some(file) =>
-                    val fileString = FileUtils.readFileToString(file, Charset.defaultCharset())
-                    scala.util.Try(Json.parse(fileString)).toOption match {
-                      case Some(js) => Some(forcedStatus(js))
-                      case None =>
-                        logger.error(s"failing stub cannot parse file $testDataPackage$fileName")
-                        Some(forcedStatus(""))
-                    }
-                  case None =>
-                    logger.error(s"file not found $testDataPackage$fileName")
-                    Some(forcedStatus(""))
-                }
-              case None =>
-                buildResponseFromFileAndStatus(testDataPackage, Ok, s"$utr.json")
-            }
+          utrIdentifier.flatMap {
+            case "3145760528" =>
+              Some(InternalServerError)
+            case other =>
+              logger.info(s"UTR candidate = $other")
+              returnStatusBasedOnIdValue("cdcsResponse_error_", other) match {
+                case Some(forcedStatus) =>
+                  val fileName = s"$other.json"
+                  findFile(testDataPackage, fileName) match {
+                    case Some(file) =>
+                      val fileString = FileUtils.readFileToString(file, Charset.defaultCharset())
+                      scala.util.Try(Json.parse(fileString)).toOption match {
+                        case Some(js) => Some(forcedStatus(js))
+                        case None =>
+                          logger.error(s"failing stub cannot parse file $testDataPackage$fileName")
+                          Some(forcedStatus(""))
+                      }
+                    case None =>
+                      logger.error(s"file not found $testDataPackage$fileName")
+                      Some(forcedStatus(""))
+                  }
+                case None =>
+                  buildResponseFromFileAndStatus(testDataPackage, Ok, s"$other.json")
+              }
           }
         responseFromUtr
           .orElse {
