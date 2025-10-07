@@ -55,6 +55,8 @@ class TimeToPayController @Inject() (
   private lazy val logger = new RequestAwareLogger(this.getClass)
   private val basePath = "conf/resources/data"
 
+  private val fastStopCorrelations = scala.collection.concurrent.TrieMap.empty[String, Unit]
+
   def generateQuote: Action[JsValue] = Action.async(parse.json) { implicit request: Request[JsValue] =>
     withCustomJsonBody[GenerateQuoteRequest] { req =>
       if (appConfig.isPollingEnv) {
@@ -154,24 +156,25 @@ class TimeToPayController @Inject() (
     val correlationId = getCorrelationIdHeader(request.headers)
     withCustomJsonBody[NDDSRequest] { req =>
       val requestChargeHodServices = req.paymentPlan.paymentPlanCharges.map(_.hodService)
+
+      def checkIdentifier(id: String): Future[Result] =
+        for {
+          _   <- enactStageRepository.addNDDSStage(correlationId, req)
+          fileResponse <- constructResponse(s"/ndds.enactArrangement/", s"$id.json")
+        } yield fileResponse
+
       if (requestChargeHodServices.contains("PAYE")) {
         val brocsId = req.identification
           .find(_.idType.equalsIgnoreCase("BROCS"))
           .map(_.idValue)
           .getOrElse(throw new IllegalArgumentException("BROCS id is required for PAYE NDDS enact arrangement"))
-        for {
-          _            <- enactStageRepository.addNDDSStage(correlationId, req)
-          fileResponse <- constructResponse(s"/ndds.enactArrangement/", s"$brocsId.json")
-        } yield fileResponse
+        checkIdentifier(brocsId)
       } else if (requestChargeHodServices.contains("VAT")) {
         val vrnId = req.identification
           .find(_.idType.equalsIgnoreCase("VRN"))
           .map(_.idValue)
           .getOrElse(throw new IllegalArgumentException("VRN id is required for VAT NDDS enact arrangement"))
-        for {
-          _            <- enactStageRepository.addNDDSStage(correlationId, req)
-          fileResponse <- constructResponse(s"/ndds.enactArrangement/", s"$vrnId.json")
-        } yield fileResponse
+        checkIdentifier(vrnId)
       } else if (requestChargeHodServices.contains("SAFE")) {
         val ninoBrocsId = req.identification
           .find(id => id.idType.equalsIgnoreCase("NINO") || id.idType.equalsIgnoreCase("BROCS"))
@@ -179,21 +182,26 @@ class TimeToPayController @Inject() (
           .getOrElse(
             throw new IllegalArgumentException("NINO or BROCS id is required for SIMP or PAYE NDDS enact arrangements")
           )
-        for {
-          _            <- enactStageRepository.addNDDSStage(correlationId, req)
-          fileResponse <- constructResponse(s"/ndds.enactArrangement/", s"$ninoBrocsId.json")
-        } yield fileResponse
+        checkIdentifier(ninoBrocsId)
       } else if (requestChargeHodServices.contains("CESA")) {
-        val ninoUTRId = req.identification
+        val ninoUtrId = req.identification
           .find(id => id.idType.equalsIgnoreCase("UTR"))
           .map(_.idValue)
-          .getOrElse(
-            throw new IllegalArgumentException("NINO or UTR id is required for SA NDDS enact arrangements")
-          )
-        for {
-          _            <- enactStageRepository.addNDDSStage(correlationId, req)
-          fileResponse <- constructResponse(s"/ndds.enactArrangement/", s"$ninoUTRId.json")
-        } yield fileResponse
+          .getOrElse(throw new IllegalArgumentException("NINO or UTR id is required for SA NDDS enact arrangements"))
+
+        if (ninoUtrId.startsWith("cdcsResponse_error_") || fastStopCorrelations.contains(correlationId)) {
+          // Fast path: always 200, no file I/O, optional stage recording
+          // Option A: skip stage recording (fastest)
+//           Future.successful(Ok(""))
+
+          // Option B: keep stage recording but still return 200
+          for {
+            _ <- enactStageRepository.addNDDSStage(correlationId, req)
+          } yield Ok("") // 200 with empty body
+        } else {
+            checkIdentifier(ninoUtrId)
+        }
+
       } else {
         throw new IllegalArgumentException(
           "Either BROCS, VRN, SAFE or UTR id types are required for PAYE, VAT, SIMP or SA enact arrangements"
@@ -322,15 +330,14 @@ class TimeToPayController @Inject() (
                   findFile(testDataPackage, fileName) match {
                     case Some(file) =>
                       val fileString = FileUtils.readFileToString(file, Charset.defaultCharset())
-                      scala.util.Try(Json.parse(fileString)).toOption match {
-                        case Some(js) => Some(forcedStatus(js))
-                        case None =>
-                          logger.error(s"failing stub cannot parse file $testDataPackage$fileName")
-                          Some(forcedStatus(""))
-                      }
+                      scala.util.Try(Json.parse(fileString)).toOption
+                        .map(js => forcedStatus(js))
+                        .orElse(Some(forcedStatus(""))) // unparsable -> empty body
                     case None =>
-                      logger.error(s"file not found $testDataPackage$fileName")
-                      Some(forcedStatus(""))
+                      val correlationId = getCorrelationIdHeader(request.headers)
+                      // ... inside case Some(forcedStatus) for cdcsResponse_error_*:
+                      fastStopCorrelations.put(correlationId, ())
+                      Some(forcedStatus("")) // no log on missing file
                   }
                 case None =>
                   buildResponseFromFileAndStatus(testDataPackage, Ok, s"$other.json")
@@ -425,6 +432,12 @@ class TimeToPayController @Inject() (
         val msg = "intentional stubbed unprocessable entity"
         logger.error(s"Status $UNPROCESSABLE_ENTITY, message: $msg")
         Future successful UnprocessableEntity(msg)
+//      case None if fileName.startsWith("cdcsResponse_error_") =>
+//        val codeStr = fileName.stripPrefix("cdcsResponse_error_").take(3)
+//        val status = scala.util.Try(codeStr.toInt).toOption
+//          .map(play.api.mvc.Results.Status)
+//          .getOrElse(Ok)
+//        Future.successful(status(""))
       case None =>
         logger.error(s"Status $NOT_FOUND, message: file not found $path FileName: $fileName")
         Future successful NotFound(s"file not found Path: $path FileName: $fileName")
