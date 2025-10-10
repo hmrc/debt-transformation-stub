@@ -306,7 +306,7 @@ class TimeToPayController @Inject() (
                 case s if s.startsWith("cdcsResponse_error_") =>
                   val code = s.stripPrefix("cdcsResponse_error_").takeWhile(_.isDigit)
                   Some(Status(code.toInt))
-                case _            => None
+                case _ => None
               }
             }
           )
