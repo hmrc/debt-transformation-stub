@@ -400,6 +400,13 @@ class TimeToPayController @Inject() (
       case None =>
         logger.error(s"Status $NOT_FOUND, message: file not found $path FileName: $fileName")
         Future successful NotFound(s"file not found Path: $path FileName: $fileName")
+      case Some(file) if fileName.toUpperCase().startsWith("200") =>
+        val fileString = FileUtils.readFileToString(file, Charset.defaultCharset())
+        val jsonResult = Try(Json.parse(fileString)).toOption
+        val result = jsonResult
+          .map(Ok(_))
+          .getOrElse(Ok(fileString))
+        Future.successful(result)
       case Some(file) =>
         val fileString = FileUtils.readFileToString(file, Charset.defaultCharset())
         val result = Try(Json.parse(fileString)).toOption
