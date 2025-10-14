@@ -334,19 +334,18 @@ class TimeToPayController @Inject() (
 
       enactStageRepository.addCESAStage(getCorrelationIdHeader(request.headers), req).map { _ =>
         maybeUtrIdentifier
-          .flatMap(utr => buildResponseFromFileAndStatus(testDataPackage, Ok, s"$utr.json"))
-          .orElse {
-            maybeUtrIdentifier match {
-              case Some("1062431399") =>
-                buildResponseFromFileAndStatus(
-                  testDataPackage,
-                  InternalServerError,
-                  "cesaCreateRequestFailure_400.json"
-                )
-              case Some("3193095982") =>
-                buildResponseFromFileAndStatus(testDataPackage, BadRequest, "cesaCreateRequestFailure_400.json")
-              case _ => None
-            }
+          .flatMap {
+            case "1062431399" =>
+              buildResponseFromFileAndStatus(
+                testDataPackage,
+                InternalServerError,
+                "cesaCreateRequestFailure_400.json"
+              )
+            case "3193095982" =>
+              buildResponseFromFileAndStatus(testDataPackage, BadRequest, "cesaCreateRequestFailure_400.json")
+            case "8625159625" =>
+              buildResponseFromFileAndStatus(testDataPackage, UnprocessableEntity, "8625159625.json")
+            case utr => buildResponseFromFileAndStatus(testDataPackage, Ok, s"$utr.json")
           }
           .orElse {
             startDate match {
