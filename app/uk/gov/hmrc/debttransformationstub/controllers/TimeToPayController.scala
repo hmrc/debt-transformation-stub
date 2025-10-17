@@ -213,7 +213,7 @@ class TimeToPayController @Inject() (
         .map { _ =>
           constructResponse("/etmp.executePaymentLock/", s"${req.idValue}.json")
             .getOrElse(NotFound(s"file not found: /etmp.executePaymentLock/${req.idValue}.json"))
-        } // Future[Result]
+        }
     }
   }
 
@@ -250,7 +250,7 @@ class TimeToPayController @Inject() (
         .map { _ =>
           constructResponse("/idms.createSAMonitoringCase/", s"${req.idValue}.json")
             .getOrElse(NotFound(s"file not found: /idms.createSAMonitoringCase/${req.idValue}.json"))
-        } // Future[Result]
+        }
     }
   }
 
@@ -370,7 +370,8 @@ class TimeToPayController @Inject() (
           case "2001234567" => respond("2001234567.json", Results.Ok)
           case utr          => respond(s"$utr.json", Results.Ok)
         }
-        // 🧠 Only check startDate if there was **no UTR match**
+
+        // 🧠 Only check startDate if there were no UTR matches
         val finalResult: Option[Result] =
           if (byUtr.isDefined) byUtr
           else {
@@ -397,6 +398,7 @@ class TimeToPayController @Inject() (
     environment.getExistingFile(s"$basePath$path$fileName")
 
   private def constructResponse(path: String, fileName: String)(implicit hc: HeaderCarrier): Option[Result] = {
+
     // 🧠 Check prefixes before attempting to find or read the file
     if (fileName.startsWith("PA400")) {
       val msg = "intentional stubbed bad request"
@@ -418,13 +420,14 @@ class TimeToPayController @Inject() (
       logger.error(s"Status $NOT_FOUND, message: $msg")
       return Some(Results.NotFound(msg))
     }
+
     // Look for the file if it didn’t match any special prefixes above
     findFile(path, fileName).map { file =>
       val fileString = FileUtils.readFileToString(file, Charset.defaultCharset())
       logger.info(s"constructResponse() → Reading file: $path$fileName, content:\n$fileString")
 
       if (fileName.startsWith("200")) {
-        // 200* files for DTD-3883: OK with JSON if parsable, else OK with raw text
+        // 200 files for DTD-3883: OK with JSON if parsable, else OK with raw text
         Try(Json.parse(fileString)).toOption.map(Results.Ok(_)).getOrElse(Results.Ok(fileString))
       } else {
         // Others: OK with JSON if parsable, else 500
