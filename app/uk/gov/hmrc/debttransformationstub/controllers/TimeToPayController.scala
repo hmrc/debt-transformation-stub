@@ -276,6 +276,8 @@ class TimeToPayController @Inject() (
               buildResponseFromFileAndStatus(testDataPackage, InternalServerError, "cesaCancelPlan_error_500.json")
             case "cesaCancelPlan_error_502" =>
               buildResponseFromFileAndStatus(testDataPackage, BadGateway, "cesaCancelPlan_error_502.json")
+            case "cesaSuccessNonJSON" =>
+              buildResponseFromFileAndStatus(testDataPackage, Ok, "cesaSuccessNonJSON.json")
             case _ => buildResponseFromFileAndStatus(testDataPackage, Ok, "cesaCancelPlanSuccess.json")
           }
           .getOrElse(NotFound("file not found"))
@@ -342,31 +344,54 @@ class TimeToPayController @Inject() (
                 "cesaCreateRequestFailure_400.json"
               )
             case "3193095982" =>
-              buildResponseFromFileAndStatus(testDataPackage, BadRequest, "cesaCreateRequestFailure_400.json")
+              buildResponseFromFileAndStatus(
+                testDataPackage,
+                BadRequest,
+                "cesaCreateRequestFailure_400.json"
+              )
             case "8625159625" =>
               buildResponseFromFileAndStatus(testDataPackage, UnprocessableEntity, "8625159625.json")
-            case utr => buildResponseFromFileAndStatus(testDataPackage, Ok, s"$utr.json")
+            case utr =>
+              buildResponseFromFileAndStatus(testDataPackage, Ok, s"$utr.json")
+                .flatMap(utr => buildResponseFromFileAndStatus(testDataPackage, Ok, s"$utr.json"))
+                .orElse {
+                  maybeUtrIdentifier match {
+                    case Some("1062431399") =>
+                      buildResponseFromFileAndStatus(
+                        testDataPackage,
+                        InternalServerError,
+                        "cesaCreateRequestFailure_400.json"
+                      )
+                    case Some("3193095982") =>
+                      buildResponseFromFileAndStatus(testDataPackage, BadRequest, "cesaCreateRequestFailure_400.json")
+                    case Some("cesaSuccessNonJSON") =>
+                      buildResponseFromFileAndStatus(testDataPackage, Ok, "cesaSuccessNonJSON.json")
+                    case _ => None
+                  }
+                }
+                .orElse {
+                  startDate match {
+                    case Some("2019-06-08") =>
+                      buildResponseFromFileAndStatus(testDataPackage, BadGateway, "cesaCreateRequestFailure_502.json")
+                    case Some("2020-06-08") =>
+                      buildResponseFromFileAndStatus(testDataPackage, BadRequest, "cesaCreateRequestFailure_400.json")
+                    case Some("2021-06-08") =>
+                      buildResponseFromFileAndStatus(testDataPackage, Conflict, "cesaCreateRequestFailure_409.json")
+                    case Some("2025-06-01") =>
+                      buildResponseFromFileAndStatus(testDataPackage, NotFound, "cesaCreateRequestFailure_404.json")
+                    case _ =>
+                      buildResponseFromFileAndStatus(testDataPackage, Ok, "cesaCreateRequestSuccessResponse.json")
+                  }
+                }
+                .getOrElse(NotFound("file not found"))
           }
-          .orElse {
-            startDate match {
-              case Some("2019-06-08") =>
-                buildResponseFromFileAndStatus(testDataPackage, BadGateway, "cesaCreateRequestFailure_502.json")
-              case Some("2020-06-08") =>
-                buildResponseFromFileAndStatus(testDataPackage, BadRequest, "cesaCreateRequestFailure_400.json")
-              case Some("2021-06-08") =>
-                buildResponseFromFileAndStatus(testDataPackage, Conflict, "cesaCreateRequestFailure_409.json")
-              case Some("2025-06-01") =>
-                buildResponseFromFileAndStatus(testDataPackage, NotFound, "cesaCreateRequestFailure_404.json")
-              case _ => buildResponseFromFileAndStatus(testDataPackage, Ok, "cesaCreateRequestSuccessResponse.json")
-            }
-          }
-          .getOrElse(NotFound("file not found"))
       }
     }
   }
 
   private def buildResponseFromFileAndStatus(testDataPackage: String, responseStatus: Status, fileName: String) =
     findFile(testDataPackage, fileName) match {
+      case Some(file) if file.getName == "cesaSuccessNonJSON.json" => Some(Status(200))
       case Some(file) =>
         val fileString = FileUtils.readFileToString(file, Charset.defaultCharset())
         Try(Json.parse(fileString)).toOption match {
