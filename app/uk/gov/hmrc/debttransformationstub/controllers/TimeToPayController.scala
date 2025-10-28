@@ -52,7 +52,7 @@ class TimeToPayController @Inject() (
     withCustomJsonBody[GenerateQuoteRequest] { req =>
       if (appConfig.isPollingEnv) {
         ttpPollingService.insertRequestAndServeResponse(Json.toJson(req), Some(request.uri)).map {
-          case Some(v) => Status(v.status.getOrElse(200))(v.content)
+          case Some(v) => Status(v.status.getOrElse(201))(v.content)
           case None    => ServiceUnavailable
         }
       } else {
@@ -65,7 +65,7 @@ class TimeToPayController @Inject() (
             Future successful NotFound("file not found")
           case Some(file) =>
             val result = Source.fromFile(file).mkString.stripMargin
-            Future successful Ok(result)
+            Future successful Created(result)
         }
       }
     }
@@ -124,7 +124,7 @@ class TimeToPayController @Inject() (
     withCustomJsonBody[CreatePlanRequest] { req =>
       if (appConfig.isPollingEnv) {
         ttpPollingService.insertRequestAndServeResponse(Json.toJson(req), Some(request.uri)).map {
-          case Some(v) => Status(v.status.getOrElse(200))(v.content)
+          case Some(v) => Status(v.status.getOrElse(201))(v.content)
           case None    => ServiceUnavailable
         }
       } else {
@@ -137,7 +137,7 @@ class TimeToPayController @Inject() (
             Future successful NotFound("file not found")
           case Some(file) =>
             val result = Source.fromFile(file).mkString.stripMargin
-            Future successful Ok(result)
+            Future successful Created(result)
         }
       }
     }
