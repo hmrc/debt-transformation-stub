@@ -276,6 +276,8 @@ class TimeToPayController @Inject() (
               buildResponseFromFileAndStatus(testDataPackage, InternalServerError, "cesaCancelPlan_error_500.json")
             case "cesaCancelPlan_error_502" =>
               buildResponseFromFileAndStatus(testDataPackage, BadGateway, "cesaCancelPlan_error_502.json")
+            case "cesaSuccessNonJSON" =>
+              buildResponseFromFileAndStatus(testDataPackage, Ok, "cesaSuccessNonJSON.json")
             case _ => buildResponseFromFileAndStatus(testDataPackage, Ok, "cesaCancelPlanSuccess.json")
           }
           .getOrElse(NotFound("file not found"))
@@ -345,6 +347,8 @@ class TimeToPayController @Inject() (
               buildResponseFromFileAndStatus(testDataPackage, BadRequest, "cesaCreateRequestFailure_400.json")
             case "8625159625" =>
               buildResponseFromFileAndStatus(testDataPackage, UnprocessableEntity, "8625159625.json")
+            case "cesaSuccessNonJSON" =>
+              buildResponseFromFileAndStatus(testDataPackage, Ok, "cesaSuccessNonJSON.json")
             case utr => buildResponseFromFileAndStatus(testDataPackage, Ok, s"$utr.json")
           }
           .orElse {
@@ -367,6 +371,7 @@ class TimeToPayController @Inject() (
 
   private def buildResponseFromFileAndStatus(testDataPackage: String, responseStatus: Status, fileName: String) =
     findFile(testDataPackage, fileName) match {
+      case Some(file) if file.getName == "cesaSuccessNonJSON.json" => Some(Status(200))
       case Some(file) =>
         val fileString = FileUtils.readFileToString(file, Charset.defaultCharset())
         Try(Json.parse(fileString)).toOption match {
