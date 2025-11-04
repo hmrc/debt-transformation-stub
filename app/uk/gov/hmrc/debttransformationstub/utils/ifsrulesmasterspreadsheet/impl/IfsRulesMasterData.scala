@@ -69,8 +69,14 @@ final case class IfsRulesMasterData(
     def useChargeReference(index: Int): Option[Boolean] = {
       val chargeReference: String = Lookup2D.chargeReferenceAt(index).actual
 
+      val saRegimeList = List(
+        RegimeUsage.`SA SSTTP AND NOT into IFS and SoL`,
+        RegimeUsage.`SA SSTTP AND into IFS and SoL`,
+        RegimeUsage.`SA SSTTP AND into IFS and SoL AND Op Led`
+      )
+
       chargeReference.toLowerCase match {
-        case "n/a"        => None
+        case "n/a"        => if (saRegimeList.contains(regimeUsage(index))) Some(false) else None
         case "charge ref" => Some(true)
         case "asn"        => Some(false)
         case "vrn"        => Some(false)
