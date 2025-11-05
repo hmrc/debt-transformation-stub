@@ -492,7 +492,7 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
       }
     }
 
-    "for the use case on 2025-07-01 for DTD-3522" - {
+    "for the use case on 2025-11-05 for DTD-3398" - {
       final case class InputCase(name: String, inputArg: String, appInput: () => ApplicationInput)
       final case class OutputFormatCase(name: String, formatArg: String, expectedOutput: () => String)
       final case class TestCase(inputCase: InputCase, outputFormat: OutputFormatCase)(implicit val pos: Position)
@@ -503,7 +503,7 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
         () =>
           ApplicationInputs.oneFileAtMostOnce(
             filename = "/some/file/path/master-ifs-data-august-2024.tsv",
-            fileContent = Data.`Sample--2025-07-01--DTD-3522`.tsvInput()
+            fileContent = Data.`Sample--2025-11-05--DTD-3398`.tsvInput()
           )
       )
       val inputCaseFromCleanCsvFile = InputCase(
@@ -512,7 +512,7 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
         () =>
           ApplicationInputs.oneFileAtMostOnce(
             filename = "/some/file/path/master-ifs-data-august-2024.csv",
-            fileContent = Data.`Sample--2025-07-01--DTD-3522`.csvInputWithCleanHeadings()
+            fileContent = Data.`Sample--2025-11-05--DTD-3398`.csvInputWithCleanHeadings()
           )
       )
       val inputCaseFromMessyCsvFile = InputCase(
@@ -521,7 +521,7 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
         () =>
           ApplicationInputs.oneFileAtMostOnce(
             filename = "/some/file/path/master-ifs-data-august-2024.csv",
-            fileContent = Data.`Sample--2025-07-01--DTD-3522`.csvInputWithMessyHeadings()
+            fileContent = Data.`Sample--2025-11-05--DTD-3398`.csvInputWithMessyHeadings()
           )
       )
       val inputCaseFromTsvConsole = InputCase(
@@ -529,19 +529,19 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
         inputArg = "--input-console-tsv",
         () =>
           ApplicationInputs.consoleFromExactString(
-            stdinContent = Data.`Sample--2025-07-01--DTD-3522`.tsvInput() + "\nEND_INPUT"
+            stdinContent = Data.`Sample--2025-11-05--DTD-3398`.tsvInput() + "\nEND_INPUT"
           )
       )
 
       val outputCaseAsIfsScala = OutputFormatCase(
         name = "outputted as an IFS Scala config",
         formatArg = "--output-format=ifs-scala-config",
-        expectedOutput = () => Data.`Sample--2025-07-01--DTD-3522`.outputScalaIfsConf()
+        expectedOutput = () => Data.`Sample--2025-11-05--DTD-3398`.outputScalaIfsConf()
       )
       val outputCaseAsApplicationConf = OutputFormatCase(
         name = "outputted as an application.conf",
         formatArg = "--output-format=application-conf",
-        expectedOutput = () => Data.`Sample--2025-07-01--DTD-3522`.outputApplicationConf()
+        expectedOutput = () => Data.`Sample--2025-11-05--DTD-3398`.outputApplicationConf()
       )
 
       val testCases: List[TestCase] = List(
@@ -594,34 +594,34 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
 
 object InterestForecastingRulesGeneratorSpec {
   private object Data {
-    object `Sample--2025-07-01--DTD-3522` {
+    object `Sample--2025-11-05--DTD-3398` {
       def tsvInput(): String = {
         val path =
-          "test/resources/InterestForecastingRulesGenerator/samples/2025-07-01--DTD-3522/input-with-clean-headings.tsv"
+          "test/resources/InterestForecastingRulesGenerator/samples/2025-11-05--DTD-3398/input-with-clean-headings.tsv"
         Using(scala.io.Source.fromFile(path))(_.mkString).get
       }
 
       def csvInputWithCleanHeadings(): String = {
         val path =
-          "test/resources/InterestForecastingRulesGenerator/samples/2025-07-01--DTD-3522/input-with-clean-headings.csv"
+          "test/resources/InterestForecastingRulesGenerator/samples/2025-11-05--DTD-3398/input-with-clean-headings.csv"
         Using(scala.io.Source.fromFile(path))(_.mkString).get
       }
 
       def csvInputWithMessyHeadings(): String = {
         val path =
-          "test/resources/InterestForecastingRulesGenerator/samples/2025-07-01--DTD-3522/input-with-messy-headings.csv"
+          "test/resources/InterestForecastingRulesGenerator/samples/2025-11-05--DTD-3398/input-with-messy-headings.csv"
         Using(scala.io.Source.fromFile(path))(_.mkString).get
       }
 
       def outputApplicationConf(): String = {
         val path =
-          "test/resources/InterestForecastingRulesGenerator/samples/2025-07-01--DTD-3522/output-application-conf-array.txt"
+          "test/resources/InterestForecastingRulesGenerator/samples/2025-11-05--DTD-3398/output-application-conf-array.txt"
         Using(scala.io.Source.fromFile(path))(_.mkString).get
       }
 
       def outputScalaIfsConf(): String = {
         val path =
-          "test/resources/InterestForecastingRulesGenerator/samples/2025-07-01--DTD-3522/output-ifs-scala-config.txt"
+          "test/resources/InterestForecastingRulesGenerator/samples/2025-11-05--DTD-3398/output-ifs-scala-config.txt"
         Using(scala.io.Source.fromFile(path))(_.mkString).get
       }
     }

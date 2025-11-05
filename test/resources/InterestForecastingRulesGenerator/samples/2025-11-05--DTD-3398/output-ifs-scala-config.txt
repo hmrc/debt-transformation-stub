@@ -661,67 +661,67 @@ object BusinessRulesConfiguration {
       ),
       DebtRule(
         DebtIdentifier(MainTransType("4027"), SubTransType("1080")),
-        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false)
+        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false, useChargeReference = false)
       ),
       DebtRule(
         DebtIdentifier(MainTransType("4028"), SubTransType("1085")),
-        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false)
+        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false, useChargeReference = false)
       ),
       DebtRule(
         DebtIdentifier(MainTransType("4028"), SubTransType("1090")),
-        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false)
+        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false, useChargeReference = false)
       ),
       DebtRule(
         DebtIdentifier(MainTransType("4028"), SubTransType("1095")),
-        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false)
+        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false, useChargeReference = false)
       ),
       DebtRule(
         DebtIdentifier(MainTransType("4029"), SubTransType("1085")),
-        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false)
+        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false, useChargeReference = false)
       ),
       DebtRule(
         DebtIdentifier(MainTransType("4029"), SubTransType("1090")),
-        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false)
+        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false, useChargeReference = false)
       ),
       DebtRule(
         DebtIdentifier(MainTransType("4029"), SubTransType("1095")),
-        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false)
+        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false, useChargeReference = false)
       ),
       DebtRule(
         DebtIdentifier(MainTransType("4031"), SubTransType("1085")),
-        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false)
+        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false, useChargeReference = false)
       ),
       DebtRule(
         DebtIdentifier(MainTransType("4031"), SubTransType("1090")),
-        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false)
+        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false, useChargeReference = false)
       ),
       DebtRule(
         DebtIdentifier(MainTransType("4031"), SubTransType("1095")),
-        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false)
+        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false, useChargeReference = false)
       ),
       DebtRule(
         DebtIdentifier(MainTransType("4032"), SubTransType("1085")),
-        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false)
+        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false, useChargeReference = false)
       ),
       DebtRule(
         DebtIdentifier(MainTransType("4032"), SubTransType("1090")),
-        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false)
+        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false, useChargeReference = false)
       ),
       DebtRule(
         DebtIdentifier(MainTransType("4032"), SubTransType("1095")),
-        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false)
+        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false, useChargeReference = false)
       ),
       DebtRule(
         DebtIdentifier(MainTransType("4033"), SubTransType("1085")),
-        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false)
+        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false, useChargeReference = false)
       ),
       DebtRule(
         DebtIdentifier(MainTransType("4033"), SubTransType("1090")),
-        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false)
+        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false, useChargeReference = false)
       ),
       DebtRule(
         DebtIdentifier(MainTransType("4033"), SubTransType("1095")),
-        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false)
+        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false, useChargeReference = false)
       ),
       DebtRule(
         DebtIdentifier(MainTransType("4530"), SubTransType("3190")),
@@ -1189,7 +1189,7 @@ object BusinessRulesConfiguration {
       ),
       DebtRule(
         DebtIdentifier(MainTransType("4941"), SubTransType("2090")),
-        DebtRuleProperties(InterestRateRef.zero, interestOnlyDebt = true)
+        DebtRuleProperties(InterestRateRef.zero, interestOnlyDebt = true, useChargeReference = false)
       ),
       DebtRule(
         DebtIdentifier(MainTransType("4950"), SubTransType("1090")),
@@ -1265,7 +1265,7 @@ object BusinessRulesConfiguration {
       ),
       DebtRule(
         DebtIdentifier(MainTransType("5050"), SubTransType("1553")),
-        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false)
+        DebtRuleProperties(InterestRateRef.standard, interestOnlyDebt = false, useChargeReference = false)
       ),
       DebtRule(
         DebtIdentifier(MainTransType("5055"), SubTransType("1554")),
@@ -1485,7 +1485,7 @@ object BusinessRulesConfiguration {
       ),
       DebtRule(
         DebtIdentifier(MainTransType("6010"), SubTransType("1611")),
-        DebtRuleProperties(InterestRateRef.zero, interestOnlyDebt = true)
+        DebtRuleProperties(InterestRateRef.zero, interestOnlyDebt = true, useChargeReference = false)
       ),
       DebtRule(
         DebtIdentifier(MainTransType("6010"), SubTransType("1680")),
@@ -1497,15 +1497,15 @@ object BusinessRulesConfiguration {
       ),
       DebtRule(
         DebtIdentifier(MainTransType("6010"), SubTransType("2090")),
-        DebtRuleProperties(InterestRateRef.zero, interestOnlyDebt = true)
+        DebtRuleProperties(InterestRateRef.zero, interestOnlyDebt = true, useChargeReference = false)
       ),
       DebtRule(
         DebtIdentifier(MainTransType("6010"), SubTransType("2095")),
-        DebtRuleProperties(InterestRateRef.zero, interestOnlyDebt = true)
+        DebtRuleProperties(InterestRateRef.zero, interestOnlyDebt = true, useChargeReference = false)
       ),
       DebtRule(
         DebtIdentifier(MainTransType("6010"), SubTransType("2096")),
-        DebtRuleProperties(InterestRateRef.zero, interestOnlyDebt = true)
+        DebtRuleProperties(InterestRateRef.zero, interestOnlyDebt = true, useChargeReference = false)
       ),
       DebtRule(
         DebtIdentifier(MainTransType("7700"), SubTransType("1174")),
