@@ -258,40 +258,40 @@ class TimeToPayController @Inject() (
     withCustomJsonBody[CesaCancelPlanRequest] { req =>
       val testDataPackage = "/cesa.cancelCase/"
 
-      val firstIdentifierOrUtr: Option[String] =
+      // Identify the UTR or single identifier
+      val maybeUtrIdentifier: Option[String] =
         if (req.identifications.length == 1)
-          req.identifications.map(_.idValue).headOption
+          req.identifications.headOption.map(_.idValue)
         else
           req.identifications.find(_.idType == "UTR").map(_.idValue)
 
-      val response: Result = firstIdentifierOrUtr
-        .flatMap {
-          case "cesaCancelPlan_error_400" =>
-            constructResponse(testDataPackage, "cesaCancelPlan_error_400.json")
-              .map(res => res.copy(header = res.header.copy(status = BAD_REQUEST)))
-          case "cesaCancelPlan_error_404" =>
-            constructResponse(testDataPackage, "cesaCancelPlan_error_404.json")
-              .map(res => res.copy(header = res.header.copy(status = NOT_FOUND)))
-          case "cesaCancelPlan_error_409" =>
-            constructResponse(testDataPackage, "cesaCancelPlan_error_409.json")
-              .map(res => res.copy(header = res.header.copy(status = CONFLICT)))
-          case "6642083101" =>
-            constructResponse(testDataPackage, "cesaCancelPlan_error_500.json")
-              .map(res => res.copy(header = res.header.copy(status = INTERNAL_SERVER_ERROR)))
-          case "cesaCancelPlan_error_502" =>
-            constructResponse(testDataPackage, "cesaCancelPlan_error_502.json")
-              .map(res => res.copy(header = res.header.copy(status = BAD_GATEWAY)))
-          case "cesaSuccessNonJSON" =>
-            constructResponse(testDataPackage, "cesaSuccessNonJSON.json")
-              .map(res => res.copy(header = res.header.copy(status = BAD_GATEWAY)))
-
-          case _ =>
-            constructResponse(testDataPackage, "cesaCancelPlanSuccess.json")
-              .map(res => res.copy(header = res.header.copy(status = OK)))
+      // Build the response with the desired status
+      def respond(fileName: String, status: ResultStatus): Option[Result] = {
+        logger.info(s"Preparing cancel response for file: $fileName with status: ${status.header.status}")
+        constructResponse(testDataPackage, fileName).map { baseResult =>
+          val requestedCode = status.header.status
+          baseResult.copy(header = baseResult.header.copy(status = requestedCode))
         }
-        .getOrElse(NotFound("file not found"))
+      }
 
-      Future.successful(response)
+      // Apply desired response status based on UTR
+      val byUtr: Option[Result] = maybeUtrIdentifier.flatMap {
+        case "cesaCancelPlan_error_400" =>
+          respond("cesaCancelPlan_error_400.json", Results.BadRequest)
+        case "cesaCancelPlan_error_404" =>
+          respond("cesaCancelPlan_error_404.json", Results.NotFound)
+        case "cesaCancelPlan_error_409" =>
+          respond("cesaCancelPlan_error_409.json", Results.Conflict)
+        case "6642083101" =>
+          respond("cesaCancelPlan_error_500.json", Results.InternalServerError)
+        case "cesaCancelPlan_error_502" =>
+          respond("cesaCancelPlan_error_502.json", Results.BadGateway)
+        case utr =>
+          respond(s"$utr.json", Results.Ok)
+      }
+
+      // Return the appropriate stubbed response
+      Future.successful(byUtr.getOrElse(Results.NotFound("file not found")))
     }
   }
 
@@ -362,19 +362,20 @@ class TimeToPayController @Inject() (
       val maybeUtrIdentifier = req.identifications.find(_.idType == "UTR").map(_.idValue)
       val startDate = req.ttpStartDate
 
-      def respond(fileName: String, status: ResultStatus): Option[Result] =
-        constructResponse(testDataPackage, fileName).map { res =>
-          val code = status.header.status
-          if (code == OK) res else res.copy(header = res.header.copy(status = code))
+      def respond(fileName: String, status: ResultStatus): Option[Result] = {
+        logger.info(s"Preparing response for file: $fileName with status: ${status.header.status}")
+        constructResponse(testDataPackage, fileName).map { baseResult =>
+          val requestedCode = status.header.status
+          baseResult.copy(header = baseResult.header.copy(status = requestedCode))
         }
+      }
 
       enactStageRepository.addCESAStage(getCorrelationIdHeader(request.headers), req).map { _ =>
+        // Match on UTRs
         val byUtr: Option[Result] = maybeUtrIdentifier.flatMap {
           case "1062431399" => respond("cesaCreateRequestFailure_400.json", Results.InternalServerError)
           case "3193095982" => respond("cesaCreateRequestFailure_400.json", Results.BadRequest)
           case "8625159625" => respond("8625159625.json", Results.UnprocessableEntity)
-          case "2001234567" => respond("2001234567.json", Results.Ok)
-          case "cesaSuccessNonJSON" => respond("cesaSuccessNonJSON.json", Results.Ok)
           case utr          => respond(s"$utr.json", Results.Ok)
         }
 
@@ -405,25 +406,22 @@ class TimeToPayController @Inject() (
     environment.getExistingFile(s"$basePath$path$fileName")
 
   private def constructResponse(path: String, fileName: String)(implicit hc: HeaderCarrier): Option[Result] = {
-
+    logger.info(s"constructResponse++++++() → Looking for file: $path$fileName")
     // 🧠 Check prefixes before attempting to find or read the file
     if (fileName.startsWith("PA400")) {
-      val msg = "intentional stubbed bad request"
-      logger.info(s"constructResponse() → fileName starts with PA400, returning 400 Bad Request")
+      val msg = "FileName starts with PA400, returning 400 Bad Request"
       logger.error(s"Status $BAD_REQUEST, message: $msg")
       return Some(Results.BadRequest(msg))
     }
 
     if (fileName.startsWith("PA422")) {
-      val msg = "intentional stubbed unprocessable entity"
-      logger.info(s"constructResponse() → fileName starts with PA422, returning 422 Unprocessable Entity")
+      val msg = "FileName starts with PA422, returning 422 Unprocessable Entity"
       logger.error(s"Status $UNPROCESSABLE_ENTITY, message: $msg")
       return Some(Results.UnprocessableEntity(msg))
     }
 
     if (fileName.startsWith("PA404")) {
-      val msg = "intentional stubbed not found"
-      logger.info(s"constructResponse() → fileName starts with PA404, returning 404 Not Found")
+      val msg = "FileName starts with PA404, returning 404 Not Found"
       logger.error(s"Status $NOT_FOUND, message: $msg")
       return Some(Results.NotFound(msg))
     }
@@ -434,10 +432,12 @@ class TimeToPayController @Inject() (
       logger.info(s"constructResponse() → Reading file: $path$fileName, content:\n$fileString")
 
       if (fileName.startsWith("200")) {
-        // 200 files for DTD-3883: OK with JSON if parsable, else OK with raw text
+        // 200 files: OK with JSON if parsable, else OK with raw text
+        logger.info(s"constructResponse() → FileName starts with 200, attempting to parse JSON")
         Try(Json.parse(fileString)).toOption.map(Results.Ok(_)).getOrElse(Results.Ok(fileString))
       } else {
         // Others: OK with JSON if parsable, else 500
+        logger.info(s"constructResponse() → Attempting to parse JSON")
         Try(Json.parse(fileString)).toOption
           .map(Results.Ok(_))
           .getOrElse(Results.InternalServerError(s"stub failed to parse file $path$fileName"))
