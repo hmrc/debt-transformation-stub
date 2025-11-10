@@ -19,6 +19,7 @@ package uk.gov.hmrc.debttransformationstub.controllers
 import org.apache.commons.io.FileUtils
 import play.api.Environment
 import play.api.libs.json.{ JsValue, Json }
+import play.api.mvc.Results.{ Status => ResultStatus }
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
 import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.{ CdcsCreateCaseRequestIdTypeReference, CdcsCreateCaseRequestLastName }
@@ -145,52 +146,40 @@ class TimeToPayController @Inject() (
 
   def nddsEnactArrangement: Action[JsValue] = Action.async(parse.json) { implicit request =>
     val correlationId = getCorrelationIdHeader(request.headers)
+
     withCustomJsonBody[NDDSRequest] { req =>
-      val requestChargeHodServices = req.paymentPlan.paymentPlanCharges.map(_.hodService)
-      if (requestChargeHodServices.contains("PAYE")) {
-        val brocsId = req.identification
-          .find(_.idType.equalsIgnoreCase("BROCS"))
-          .map(_.idValue)
-          .getOrElse(throw new IllegalArgumentException("BROCS id is required for PAYE NDDS enact arrangement"))
-        for {
-          _            <- enactStageRepository.addNDDSStage(correlationId, req)
-          fileResponse <- constructResponse(s"/ndds.enactArrangement/", s"$brocsId.json")
-        } yield fileResponse
-      } else if (requestChargeHodServices.contains("VAT")) {
-        val vrnId = req.identification
-          .find(_.idType.equalsIgnoreCase("VRN"))
-          .map(_.idValue)
-          .getOrElse(throw new IllegalArgumentException("VRN id is required for VAT NDDS enact arrangement"))
-        for {
-          _            <- enactStageRepository.addNDDSStage(correlationId, req)
-          fileResponse <- constructResponse(s"/ndds.enactArrangement/", s"$vrnId.json")
-        } yield fileResponse
-      } else if (requestChargeHodServices.contains("SAFE")) {
-        val ninoBrocsId = req.identification
-          .find(id => id.idType.equalsIgnoreCase("NINO") || id.idType.equalsIgnoreCase("BROCS"))
-          .map(_.idValue)
-          .getOrElse(
-            throw new IllegalArgumentException("NINO or BROCS id is required for SIMP or PAYE NDDS enact arrangements")
+      val services = req.paymentPlan.paymentPlanCharges.map(_.hodService).toSet
+
+      def needId(pred: Identification => Boolean, missingMsg: String): Either[Result, String] =
+        req.identification.find(pred).map(_.idValue).toRight(BadRequest(missingMsg))
+
+      def fileResponse(id: String): Result =
+        constructResponse("/ndds.enactArrangement/", s"$id.json")
+          .getOrElse(NotFound(s"file not found: /ndds.enactArrangement/$id.json"))
+
+      val idEither: Either[Result, String] =
+        if (services.contains("PAYE"))
+          needId(_.idType.equalsIgnoreCase("BROCS"), "BROCS id is required for PAYE NDDS enact arrangement")
+        else if (services.contains("VAT"))
+          needId(_.idType.equalsIgnoreCase("VRN"), "VRN id is required for VAT NDDS enact arrangement")
+        else if (services.contains("SAFE"))
+          needId(
+            id => id.idType.equalsIgnoreCase("NINO") || id.idType.equalsIgnoreCase("BROCS"),
+            "NINO or BROCS id is required for SIMP or PAYE NDDS enact arrangements"
           )
-        for {
-          _            <- enactStageRepository.addNDDSStage(correlationId, req)
-          fileResponse <- constructResponse(s"/ndds.enactArrangement/", s"$ninoBrocsId.json")
-        } yield fileResponse
-      } else if (requestChargeHodServices.contains("CESA")) {
-        val ninoUTRId = req.identification
-          .find(id => id.idType.equalsIgnoreCase("UTR"))
-          .map(_.idValue)
-          .getOrElse(
-            throw new IllegalArgumentException("NINO or UTR id is required for SA NDDS enact arrangements")
+        else if (services.contains("CESA"))
+          needId(_.idType.equalsIgnoreCase("UTR"), "NINO or UTR id is required for SA NDDS enact arrangements")
+        else
+          Left(
+            BadRequest(
+              "Either BROCS, VRN, SAFE or UTR id types are required for PAYE, VAT, SIMP or SA enact arrangements"
+            )
           )
-        for {
-          _            <- enactStageRepository.addNDDSStage(correlationId, req)
-          fileResponse <- constructResponse(s"/ndds.enactArrangement/", s"$ninoUTRId.json")
-        } yield fileResponse
-      } else {
-        throw new IllegalArgumentException(
-          "Either BROCS, VRN, SAFE or UTR id types are required for PAYE, VAT, SIMP or SA enact arrangements"
-        )
+
+      idEither match {
+        case Left(errorResult) => Future.successful(errorResult)
+        case Right(id) =>
+          enactStageRepository.addNDDSStage(correlationId, req).map(_ => fileResponse(id))
       }
     }
   }
@@ -201,54 +190,67 @@ class TimeToPayController @Inject() (
     if (isSchedulerCall) {
       val correlationId = getCorrelationIdHeader(request.headers)
       withCustomJsonBody[UpdateCaseRequest] { req =>
-        for {
-          _            <- enactStageRepository.addPegaStage(correlationId, req)
-          fileResponse <- constructResponse(s"/pega.updateCase/", s"$caseId.json")
-        } yield fileResponse
+        enactStageRepository
+          .addPegaStage(correlationId, req) // Future[Unit]
+          .map { _ =>
+            constructResponse("/pega.updateCase/", s"$caseId.json")
+              .getOrElse(NotFound(s"file not found: /pega.updateCase/$caseId.json"))
+          }
       }
     } else {
       val errorMessage = s"expected token to be 'Bearer scheduled-pega-access-token', got $maybeAuthToken"
       logger.error(errorMessage)
       Future successful UnprocessableEntity(errorMessage)
     }
-
   }
 
   def etmpExecutePaymentLock: Action[JsValue] = Action.async(parse.json) { implicit request =>
     val correlationId = getCorrelationIdHeader(request.headers)
+
     withCustomJsonBody[PaymentLockRequest] { req =>
-      for {
-        _            <- enactStageRepository.addETMPStage(correlationId, req)
-        fileResponse <- constructResponse(s"/etmp.executePaymentLock/", s"${req.idValue}.json")
-      } yield fileResponse
+      enactStageRepository
+        .addETMPStage(correlationId, req) // Future[Unit]
+        .map { _ =>
+          constructResponse("/etmp.executePaymentLock/", s"${req.idValue}.json")
+            .getOrElse(NotFound(s"file not found: /etmp.executePaymentLock/${req.idValue}.json"))
+        }
     }
   }
 
   def idmsCreateTTPMonitoringCase: Action[JsValue] = Action.async(parse.json) { implicit request =>
     val correlationId = getCorrelationIdHeader(request.headers)
+
     withCustomJsonBody[CreateIDMSMonitoringCaseRequest] { req =>
       logger.info(
         s"Received request to create IDMS monitoring case with correlationId: $correlationId and ddiReference: ${req.ddiReference}"
       )
-      for {
-        _            <- enactStageRepository.addIDMSStage(correlationId, req)
-        fileResponse <- constructResponse(s"/idms.createTTPMonitoringCase/", s"${req.ddiReference}.json")
-      } yield fileResponse
+
+      enactStageRepository
+        .addIDMSStage(correlationId, req) // Future[Unit]
+        .map { _ =>
+          constructResponse("/idms.createTTPMonitoringCase/", s"${req.ddiReference}.json")
+            .getOrElse(NotFound(s"file not found: /idms.createTTPMonitoringCase/${req.ddiReference}.json"))
+        }
     }
   }
 
   def idmsCreateSAMonitoringCase: Action[JsValue] = Action.async(parse.json) { implicit request =>
-    logger.info("Request body for idmsCreateSAMonitoringCase: " + request.body)
-    logger.info("Request headers for idmsCreateSAMonitoringCase: " + request.headers)
+    logger.info(s"Request body for idmsCreateSAMonitoringCase: ${request.body}")
+    logger.info(s"Request headers for idmsCreateSAMonitoringCase: ${request.headers}")
+
     val correlationId = getCorrelationIdHeader(request.headers)
+
     withCustomJsonBody[CreateIDMSMonitoringCaseRequestSA] { req =>
       logger.info(
         s"Received request to create SA IDMS monitoring case with correlationId: $correlationId and idValue: ${req.idValue}"
       )
-      for {
-        _            <- enactStageRepository.addIDMSStageSA(correlationId, req)
-        fileResponse <- constructResponse(s"/idms.createSAMonitoringCase/", s"${req.idValue}.json")
-      } yield fileResponse
+
+      enactStageRepository
+        .addIDMSStageSA(correlationId, req)
+        .map { _ =>
+          constructResponse("/idms.createSAMonitoringCase/", s"${req.idValue}.json")
+            .getOrElse(NotFound(s"file not found: /idms.createSAMonitoringCase/${req.idValue}.json"))
+        }
     }
   }
 
@@ -256,33 +258,40 @@ class TimeToPayController @Inject() (
     withCustomJsonBody[CesaCancelPlanRequest] { req =>
       val testDataPackage = "/cesa.cancelCase/"
 
-      val firstIdentifierOrUtr: Option[String] =
-        if (req.identifications.length == 1) {
-          req.identifications.map(_.idValue).headOption
-        } else {
+      // Identify the UTR or single identifier
+      val maybeUtrIdentifier: Option[String] =
+        if (req.identifications.length == 1)
+          req.identifications.headOption.map(_.idValue)
+        else
           req.identifications.find(_.idType == "UTR").map(_.idValue)
+
+      // Build the response with the desired status
+      def respond(fileName: String, status: ResultStatus): Option[Result] = {
+        logger.info(s"Preparing cancel response for file: $fileName with status: ${status.header.status}")
+        constructResponse(testDataPackage, fileName).map { baseResult =>
+          val requestedCode = status.header.status
+          baseResult.copy(header = baseResult.header.copy(status = requestedCode))
         }
+      }
 
-      val response =
-        firstIdentifierOrUtr
-          .flatMap {
-            case "cesaCancelPlan_error_400" =>
-              buildResponseFromFileAndStatus(testDataPackage, BadRequest, "cesaCancelPlan_error_400.json")
-            case "cesaCancelPlan_error_404" =>
-              buildResponseFromFileAndStatus(testDataPackage, NotFound, "cesaCancelPlan_error_404.json")
-            case "cesaCancelPlan_error_409" =>
-              buildResponseFromFileAndStatus(testDataPackage, Conflict, "cesaCancelPlan_error_409.json")
-            case "6642083101" =>
-              buildResponseFromFileAndStatus(testDataPackage, InternalServerError, "cesaCancelPlan_error_500.json")
-            case "cesaCancelPlan_error_502" =>
-              buildResponseFromFileAndStatus(testDataPackage, BadGateway, "cesaCancelPlan_error_502.json")
-            case "cesaSuccessNonJSON" =>
-              buildResponseFromFileAndStatus(testDataPackage, Ok, "cesaSuccessNonJSON.json")
-            case _ => buildResponseFromFileAndStatus(testDataPackage, Ok, "cesaCancelPlanSuccess.json")
-          }
-          .getOrElse(NotFound("file not found"))
+      // Apply desired response status based on UTR
+      val byUtr: Option[Result] = maybeUtrIdentifier.flatMap {
+        case "cesaCancelPlan_error_400" =>
+          respond("cesaCancelPlan_error_400.json", Results.BadRequest)
+        case "cesaCancelPlan_error_404" =>
+          respond("cesaCancelPlan_error_404.json", Results.NotFound)
+        case "cesaCancelPlan_error_409" =>
+          respond("cesaCancelPlan_error_409.json", Results.Conflict)
+        case "6642083101" =>
+          respond("cesaCancelPlan_error_500.json", Results.InternalServerError)
+        case "cesaCancelPlan_error_502" =>
+          respond("cesaCancelPlan_error_502.json", Results.BadGateway)
+        case utr =>
+          respond(s"$utr.json", Results.Ok)
+      }
 
-      Future.successful(response)
+      // Return the appropriate stubbed response
+      Future.successful(byUtr.getOrElse(Results.NotFound("file not found")))
     }
   }
 
@@ -295,35 +304,54 @@ class TimeToPayController @Inject() (
         .map(_.idValue.value)
 
       val lastName = req.customer.individual.lastName
-      logger.info("CDCS create case identifiers are: " + identifiers)
+      logger.info(s"CDCS create case identifiers are: ${identifiers.mkString(", ")}")
 
       enactStageRepository.addCDCSStage(getCorrelationIdHeader(request.headers), req).map { _ =>
-        identifiers
-          .foldLeft(None: Option[Status])((x, identifier) =>
-            if (x.isDefined) {
-              x
-            } else {
+        // Match on UTRs
+        val byUtr: Option[Result] =
+          identifiers.foldLeft(None: Option[Result]) { (acc, identifier) =>
+            if (acc.isDefined) acc
+            else {
               identifier match {
+                case "3145760528" =>
+                  Some(Results.InternalServerError("intentional stubbed 500"))
+                case "2001234567" =>
+                  constructResponse(testDataPackage, "2001234567.json")
+                    .map(res => res.copy(header = res.header.copy(status = OK)))
+
                 case "3153830017" => Some(Status(INTERNAL_SERVER_ERROR))
                 case "3145760528" => Some(Status(INTERNAL_SERVER_ERROR))
                 case s if s.startsWith("cdcsResponse_error_") =>
-                  val code = s.stripPrefix("cdcsResponse_error_").takeWhile(_.isDigit)
-                  Some(Status(code.toInt))
-                case _ => None
+                  val code = s.stripPrefix("cdcsResponse_error_").takeWhile(_.isDigit).toInt
+                  Some(Results.Status(code)("intentional stubbed error"))
+
+                case _ =>
+                  None
               }
             }
-          )
-          .orElse {
+          }
+
+        // Match on last name if no UTR case matched
+        val finalResult: Option[Result] =
+          byUtr.orElse {
             lastName match {
-              case CdcsCreateCaseRequestLastName("STUB_FAILURE_500") => new Some(Status(INTERNAL_SERVER_ERROR))
+              case CdcsCreateCaseRequestLastName("STUB_FAILURE_500") =>
+                Some(Results.InternalServerError("intentional stubbed 500"))
+
               case CdcsCreateCaseRequestLastName("STUB_FAILURE_400") =>
-                buildResponseFromFileAndStatus(testDataPackage, BadRequest, "cdcsCreateCaseFailure_400.json")
+                constructResponse(testDataPackage, "cdcsCreateCaseFailure_400.json")
+                  .map(res => res.copy(header = res.header.copy(status = BAD_REQUEST)))
+
               case CdcsCreateCaseRequestLastName("STUB_FAILURE_422") =>
-                buildResponseFromFileAndStatus(testDataPackage, UnprocessableEntity, "cdcsCreateCaseFailure_422.json")
-              case _ => buildResponseFromFileAndStatus(testDataPackage, Ok, "cdcsCreateCaseSuccessResponse.json")
+                constructResponse(testDataPackage, "cdcsCreateCaseFailure_422.json")
+                  .map(res => res.copy(header = res.header.copy(status = UNPROCESSABLE_ENTITY)))
+
+              case _ =>
+                constructResponse(testDataPackage, "cdcsCreateCaseSuccessResponse.json")
+                  .map(res => res.copy(header = res.header.copy(status = OK)))
             }
           }
-          .getOrElse(NotFound("file not found"))
+        finalResult.getOrElse(Results.NotFound("file not found"))
       }
     }
   }
@@ -331,56 +359,42 @@ class TimeToPayController @Inject() (
   def cesaCreateRequest(): Action[JsValue] = Action.async(parse.json) { implicit request =>
     withCustomJsonBody[CesaCreateRequest] { req =>
       val testDataPackage = "/cesa.createRequest/"
-
       val maybeUtrIdentifier = req.identifications.find(_.idType == "UTR").map(_.idValue)
       val startDate = req.ttpStartDate
 
+      def respond(fileName: String, status: ResultStatus): Option[Result] = {
+        logger.info(s"Preparing response for file: $fileName with status: ${status.header.status}")
+        constructResponse(testDataPackage, fileName).map { baseResult =>
+          val requestedCode = status.header.status
+          baseResult.copy(header = baseResult.header.copy(status = requestedCode))
+        }
+      }
+
       enactStageRepository.addCESAStage(getCorrelationIdHeader(request.headers), req).map { _ =>
-        maybeUtrIdentifier
-          .flatMap {
-            case "1062431399" =>
-              buildResponseFromFileAndStatus(
-                testDataPackage,
-                InternalServerError,
-                "cesaCreateRequestFailure_400.json"
-              )
-            case "3193095982" =>
-              buildResponseFromFileAndStatus(testDataPackage, BadRequest, "cesaCreateRequestFailure_400.json")
-            case "8625159625" =>
-              buildResponseFromFileAndStatus(testDataPackage, UnprocessableEntity, "8625159625.json")
-            case "cesaSuccessNonJSON" =>
-              buildResponseFromFileAndStatus(testDataPackage, Ok, "cesaSuccessNonJSON.json")
-            case utr => buildResponseFromFileAndStatus(testDataPackage, Ok, s"$utr.json")
-          }
-          .orElse {
+        // Match on UTRs
+        val byUtr: Option[Result] = maybeUtrIdentifier.flatMap {
+          case "1062431399" => respond("cesaCreateRequestFailure_400.json", Results.InternalServerError)
+          case "3193095982" => respond("cesaCreateRequestFailure_400.json", Results.BadRequest)
+          case "8625159625" => respond("8625159625.json", Results.UnprocessableEntity)
+          case utr          => respond(s"$utr.json", Results.Ok)
+        }
+
+        // 🧠 Only check startDate if there were no UTR matches
+        val finalResult: Option[Result] =
+          if (byUtr.isDefined) byUtr
+          else {
             startDate match {
-              case Some("2019-06-08") =>
-                buildResponseFromFileAndStatus(testDataPackage, BadGateway, "cesaCreateRequestFailure_502.json")
-              case Some("2020-06-08") =>
-                buildResponseFromFileAndStatus(testDataPackage, BadRequest, "cesaCreateRequestFailure_400.json")
-              case Some("2021-06-08") =>
-                buildResponseFromFileAndStatus(testDataPackage, Conflict, "cesaCreateRequestFailure_409.json")
-              case Some("2025-06-01") =>
-                buildResponseFromFileAndStatus(testDataPackage, NotFound, "cesaCreateRequestFailure_404.json")
-              case _ => buildResponseFromFileAndStatus(testDataPackage, Ok, "cesaCreateRequestSuccessResponse.json")
+              case Some("2019-06-08") => respond("cesaCreateRequestFailure_502.json", Results.BadGateway)
+              case Some("2020-06-08") => respond("cesaCreateRequestFailure_400.json", Results.BadRequest)
+              case Some("2021-06-08") => respond("cesaCreateRequestFailure_409.json", Results.Conflict)
+              case Some("2025-06-01") => respond("cesaCreateRequestFailure_404.json", Results.NotFound)
+              case _                  => respond("cesaCreateRequestSuccessResponse.json", Results.Ok)
             }
           }
-          .getOrElse(NotFound("file not found"))
+        finalResult.getOrElse(Results.NotFound("file not found"))
       }
     }
   }
-
-  private def buildResponseFromFileAndStatus(testDataPackage: String, responseStatus: Status, fileName: String) =
-    findFile(testDataPackage, fileName) match {
-      case Some(file) if file.getName == "cesaSuccessNonJSON.json" => Some(Status(200))
-      case Some(file) =>
-        val fileString = FileUtils.readFileToString(file, Charset.defaultCharset())
-        Try(Json.parse(fileString)).toOption match {
-          case Some(jsValue) => Some(responseStatus(jsValue))
-          case None          => Some(InternalServerError(s"failing stub cannot parse file $fileName"))
-        }
-      case None => None
-    }
 
   def enactStage(correlationId: String): Action[AnyContent] = Action.async { request =>
     enactStageRepository.findByCorrelationId(correlationId).map { stage: Option[EnactStage] =>
@@ -391,34 +405,43 @@ class TimeToPayController @Inject() (
   private def findFile(path: String, fileName: String): Option[File] =
     environment.getExistingFile(s"$basePath$path$fileName")
 
-  private def constructResponse(path: String, fileName: String)(implicit hc: HeaderCarrier): Future[Result] = {
-    val fileMaybe: Option[File] = findFile(path, fileName)
+  private def constructResponse(path: String, fileName: String)(implicit hc: HeaderCarrier): Option[Result] = {
+    logger.info(s"constructResponse++++++() → Looking for file: $path$fileName")
+    // 🧠 Check prefixes before attempting to find or read the file
+    if (fileName.startsWith("PA400")) {
+      val msg = "FileName starts with PA400, returning 400 Bad Request"
+      logger.error(s"Status $BAD_REQUEST, message: $msg")
+      return Some(Results.BadRequest(msg))
+    }
 
-    fileMaybe match {
-      case None if fileName.toUpperCase().startsWith("PA400") =>
-        val msg = "intentional stubbed bad request"
-        logger.error(s"Status $BAD_REQUEST, message: $msg")
-        Future successful BadRequest(msg)
-      case None if fileName.toUpperCase().startsWith("PA422") =>
-        val msg = "intentional stubbed unprocessable entity"
-        logger.error(s"Status $UNPROCESSABLE_ENTITY, message: $msg")
-        Future successful UnprocessableEntity(msg)
-      case None =>
-        logger.error(s"Status $NOT_FOUND, message: file not found $path FileName: $fileName")
-        Future successful NotFound(s"file not found Path: $path FileName: $fileName")
-      case Some(file) if fileName.toUpperCase().startsWith("200") =>
-        val fileString = FileUtils.readFileToString(file, Charset.defaultCharset())
-        val jsonResult = Try(Json.parse(fileString)).toOption
-        val result = jsonResult
-          .map(Ok(_))
-          .getOrElse(Ok(fileString))
-        Future.successful(result)
-      case Some(file) =>
-        val fileString = FileUtils.readFileToString(file, Charset.defaultCharset())
-        val result = Try(Json.parse(fileString)).toOption
-          .map(Ok(_))
-          .getOrElse(InternalServerError(s"stub failed to parse file $basePath$path"))
-        Future successful result
+    if (fileName.startsWith("PA422")) {
+      val msg = "FileName starts with PA422, returning 422 Unprocessable Entity"
+      logger.error(s"Status $UNPROCESSABLE_ENTITY, message: $msg")
+      return Some(Results.UnprocessableEntity(msg))
+    }
+
+    if (fileName.startsWith("PA404")) {
+      val msg = "FileName starts with PA404, returning 404 Not Found"
+      logger.error(s"Status $NOT_FOUND, message: $msg")
+      return Some(Results.NotFound(msg))
+    }
+
+    // Look for the file if it didn’t match any special prefixes above
+    findFile(path, fileName).map { file =>
+      val fileString = FileUtils.readFileToString(file, Charset.defaultCharset())
+      logger.info(s"constructResponse() → Reading file: $path$fileName, content:\n$fileString")
+
+      if (fileName.startsWith("200")) {
+        // 200 files: OK with JSON if parsable, else OK with raw text
+        logger.info(s"constructResponse() → FileName starts with 200, attempting to parse JSON")
+        Try(Json.parse(fileString)).toOption.map(Results.Ok(_)).getOrElse(Results.Ok(fileString))
+      } else {
+        // Others: OK with JSON if parsable, else 500
+        logger.info(s"constructResponse() → Attempting to parse JSON")
+        Try(Json.parse(fileString)).toOption
+          .map(Results.Ok(_))
+          .getOrElse(Results.InternalServerError(s"stub failed to parse file $path$fileName"))
+      }
     }
   }
 
