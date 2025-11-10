@@ -1,0 +1,183 @@
+{
+  "cesaData": {
+    "customer": {
+      "individual": {
+        "title": "Mr",
+        "firstName": "Ben",
+        "lastName": "Thomas",
+        "unallocatedCredit": 12345,
+        "processingOfficeOrgUnitId": "string",
+        "dateOfBirth": "2024-03-15",
+        "dateOfDeath": "2024-03-15",
+        "identifications": [
+          {
+            "idType": "UTR",
+            "idValue": "SA123545"
+          }
+        ]
+      }
+    },
+    "signals": [
+      {
+        "signalType": "string",
+        "signalValue": "string",
+        "signalDescription": "string"
+      }
+    ],
+    "addresses": [
+      {
+        "addressType": "string",
+        "addressLine1": "string",
+        "addressLine2": "string",
+        "addressLine3": "string",
+        "addressLine4": "string",
+        "rls": true,
+        "contactDetails": {
+          "telephoneNumber": "0302 400 4859",
+          "fax": "0302 989 2453",
+          "mobile": "7984958691",
+          "email": "agent1@gmail.com"
+        },
+        "postCode": "string",
+        "postcodeHistory": [
+          {
+            "addressPostcode": "string",
+            "postcodeDate": "2024-03-15"
+          }
+        ]
+      }
+    ],
+    "filings": [
+      {
+        "icrCategory": "SA",
+        "icrDescription": "SA Return",
+        "fromDate": "2024-03-15",
+        "toDate": "2024-03-15",
+        "dueDate": "2024-03-15"
+      }
+    ],
+    "charges": [
+      {
+        "chargeType": "AbC1",
+        "UTR": "7529526482",
+        "tieBreaker": "1234",
+        "creationDate": "2024-03-15",
+        "originalCreationDate": "2024-03-15",
+        "saTaxYearEnd": "2024-03-15",
+        "originalChargeType": "Ab23",
+        "originalTieBreaker": "1234",
+        "mainType": "string",
+        "mainTrans": "4910",
+        "parentMainTrans": "YnAS",
+        "subTrans": "1553",
+        "taxPeriodFrom": "2024-03-15",
+        "taxPeriodTo": "2024-03-15",
+        "chargeReference": "7QIT8",
+        "parentChargeReference": "7QIT8",
+        "dueDate": "2024-03-15",
+        "interestStartDate": "2024-03-15",
+        "outstandingAmount": 50000,
+        "accruedInterest": 50000
+      }
+    ],
+    "responseCode": {
+      "timestamp": "2024-02-28T11:43:56.235Z",
+      "httpCode": 200,
+      "reasonCode": "002",
+      "description": "success"
+    }
+  },
+  "etmpData": {
+    "customer": {
+      "individual": {
+        "title": "Mr",
+        "firstName": "Ben",
+        "lastName": "Thomas",
+        "dateOfBirth": "2024-03-15",
+        "dateOfDeath": "2024-03-15",
+        "districtNumber": "206809",
+        "identifications": [
+          {
+            "idType": "UTR",
+            "idValue": "SA123545"
+          }
+        ]
+      }
+    },
+    "signals": [
+      {
+        "signalType": "string",
+        "signalValue": "string",
+        "signalDescription": "string"
+      }
+    ],
+    "addresses": [
+      {
+        "addressType": "string",
+        "addressLine1": "string",
+        "addressLine2": "string",
+        "addressLine3": "string",
+        "addressLine4": "string",
+        "rls": true,
+        "contactDetails": {
+          "telephoneNumber": "0302 400 4859",
+          "fax": "0302 989 2453",
+          "mobile": "7984958691",
+          "email": "agent1@gmail.com"
+        },
+        "postCode": "string",
+        "postcodeHistory": [
+          {
+            "addressPostcode": "string",
+            "postcodeDate": "2024-03-15"
+          }
+        ]
+      }
+    ],
+    "filings": [
+      {
+        "icrCategory": "SA",
+        "icrDescription": "SA Return",
+        "fromDate": "2024-03-15",
+        "toDate": "2024-03-15",
+        "dueDate": "2024-03-15"
+      }
+    ],
+    "charges": [
+      {
+        "chargeType": "In Year RTI Charge - Tax",
+        "ddInProgress": "true",
+        "mainType": "string",
+        "mainTrans": "5100",
+        "parentMainTrans": "Kk9Y",
+        "subTrans": "1553",
+        "taxPeriodFrom": "2024-03-15",
+        "taxPeriodTo": "2024-03-15",
+        "chargeReference": "7QIT8",
+        "parentChargeReference": "7QIT8",
+        "dueDate": "2024-03-15",
+        "interestStartDate": "2024-03-15",
+        "outstandingAmount": 999999999.99,
+        "accruedInterest": 50000,
+        "locks": [
+          {
+            "lockType": "Dunning",
+            "lockReason": "string"
+          }
+        ]
+      }
+    ],
+    "responseCode": {
+      "timestamp": "2024-02-28T11:43:56.235Z",
+      "httpCode": 200,
+      "reasonCode": "003",
+      "description": "success"
+    }
+  },
+  "responseCode": {
+    "timestamp": "2024-02-28T11:43:56.235Z",
+    "httpCode": 200,
+    "reasonCode": "002",
+    "description": "success"
+  }
+}
