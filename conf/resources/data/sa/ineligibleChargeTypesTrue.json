@@ -1,0 +1,88 @@
+{
+  "cesaData": {
+    "customer": {
+      "individual": {
+        "title": "Mr",
+        "firstName": "Ben",
+        "lastName": "Thomas",
+        "dateOfBirth": "2014-09-12",
+        "dateOfDeath": "2014-09-12",
+        "identifications": [
+          {
+            "idType": "UTR",
+            "idValue": "SA123545"
+          }
+        ]
+      }
+    },
+    "addresses": [
+      {
+        "addressType": "string",
+        "addressLine1": "string",
+        "addressLine2": "string",
+        "addressLine3": "string",
+        "addressLine4": "string",
+        "rls": true,
+        "postCode": "string",
+        "country": "string"
+      }
+    ],
+    "filings": [
+      {
+        "icrCategory": "string",
+        "icrDescription": "string",
+        "fromDate": "2014-09-12",
+        "toDate": "2014-09-12",
+        "dueDate": "2014-09-12"
+      }
+    ],
+    "charges": [
+      {
+        "chargeType": "First penalty for late tax return",
+        "mainType": "First penalty for late tax return",
+        "mainTrans": "5015",
+        "subTrans": "2090",
+        "UTR": "73",
+        "taxPeriodFrom": "2022-02-06",
+        "taxPeriodTo": "2022-03-05",
+        "dueDate": "<DUE_DATE>",
+        "interestStartDate": "2022-03-05",
+        "tieBreaker": "4321",
+        "creationDate": "2022-03-05",
+        "saTaxYearEnd": "2022-03-05",
+        "originalChargeType": "string",
+        "originalTieBreaker": "1234",
+        "chargeReference": "XM123456789812",
+        "outstandingAmount": 3000.00,
+        "accruedInterest": 500.00
+      },
+      {
+        "chargeType": "Second penalty for late tax return",
+        "mainType": "Second penalty for late tax return",
+        "mainTrans": "5015",
+        "subTrans": "2195",
+        "UTR": "73",
+        "taxPeriodFrom": "2022-02-06",
+        "taxPeriodTo": "2022-03-05",
+        "dueDate": "<DUE_DATE>",
+        "interestStartDate": "2022-03-05",
+        "tieBreaker": "4321",
+        "creationDate": "2022-03-05",
+        "saTaxYearEnd": "2022-03-05",
+        "originalChargeType": "string",
+        "originalTieBreaker": "1234",
+        "chargeReference": "XM123456789815",
+        "outstandingAmount": 3000.00,
+        "accruedInterest": 500.00
+      }
+    ],
+    "responseCode": {
+      "timestamp": "2024-03-28T13:43:56.235Z",
+      "httpCode": 200
+    }
+  },
+  "responseCode": {
+    "timestamp": "2024-03-28T13:43:56.235Z",
+    "httpCode": 200
+  }
+}
