@@ -18,13 +18,14 @@ package uk.gov.hmrc.debttransformationstub.controllers
 
 import org.apache.commons.io.FileUtils
 import play.api.Environment
-import play.api.libs.json.{ JsValue, Json }
-import play.api.mvc.Results.{ Status => ResultStatus }
+import play.api.http.ContentTypes
+import play.api.libs.json.{JsValue, Json}
+import play.api.mvc.Results.{Status => ResultStatus}
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
-import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.{ CdcsCreateCaseRequestIdTypeReference, CdcsCreateCaseRequestLastName }
+import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.{CdcsCreateCaseRequestIdTypeReference, CdcsCreateCaseRequestLastName}
 import uk.gov.hmrc.debttransformationstub.models._
-import uk.gov.hmrc.debttransformationstub.repositories.{ EnactStage, EnactStageRepository }
+import uk.gov.hmrc.debttransformationstub.repositories.{EnactStage, EnactStageRepository}
 import uk.gov.hmrc.debttransformationstub.services.TTPPollingService
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.http.HeaderCarrier
@@ -32,8 +33,9 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import java.io.File
 import java.nio.charset.Charset
+import java.time.LocalDateTime
 import javax.inject.Inject
-import scala.concurrent.{ ExecutionContext, Future }
+import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Source
 import scala.util.Try
 
@@ -221,15 +223,19 @@ class TimeToPayController @Inject() (
     val correlationId = getCorrelationIdHeader(request.headers)
 
     withCustomJsonBody[CreateIDMSMonitoringCaseRequest] { req =>
+      val reference =
+        if (Option(req.ddiReference).exists(_.trim.nonEmpty)) req.ddiReference
+        else req.address.addressLine1
+
       logger.info(
-        s"Received request to create IDMS monitoring case with correlationId: $correlationId and ddiReference: ${req.ddiReference}"
+        s"Received request to create IDMS monitoring case with correlationId: $correlationId and reference: $reference"
       )
 
       enactStageRepository
-        .addIDMSStage(correlationId, req) // Future[Unit]
+        .addIDMSStage(correlationId, req)
         .map { _ =>
-          constructResponse("/idms.createTTPMonitoringCase/", s"${req.ddiReference}.json")
-            .getOrElse(NotFound(s"file not found: /idms.createTTPMonitoringCase/${req.ddiReference}.json"))
+          constructResponse("/idms.createTTPMonitoringCase/", s"$reference.json")
+            .getOrElse(NotFound(s"file not found: /idms.createTTPMonitoringCase/$reference.json"))
         }
     }
   }
@@ -406,27 +412,43 @@ class TimeToPayController @Inject() (
     environment.getExistingFile(s"$basePath$path$fileName")
 
   private def constructResponse(path: String, fileName: String)(implicit hc: HeaderCarrier): Option[Result] = {
-    logger.info(s"constructResponse++++++() → Looking for file: $path$fileName")
-    // 🧠 Check prefixes before attempting to find or read the file
+    logger.info(s"constructResponse() → Attempting to match on prefix: $path$fileName")
+
     if (fileName.startsWith("PA400")) {
-      val msg = "FileName starts with PA400, returning 400 Bad Request"
-      logger.error(s"Status $BAD_REQUEST, message: $msg")
-      return Some(Results.BadRequest(msg))
+      logger.info("FileName: " + fileName + " starts with PA400. Returning 400 Bad Request.")
+      val msg = Json.obj(
+        "errors" -> Json.obj(
+          "processingDateTime" -> "2024-04-11T10:07:55.749038Z",
+          "code"               -> "BAD_REQUEST",
+          "text"               -> "idType: must match \"^[A-Z0-9]{1,6}$\""
+        )
+      )
+      logger.info(s"Status $BAD_REQUEST, message: ${Json.stringify(msg)}")
+      return Some(Results.BadRequest(msg).as(ContentTypes.JSON))
     }
 
     if (fileName.startsWith("PA422")) {
-      val msg = "FileName starts with PA422, returning 422 Unprocessable Entity"
-      logger.error(s"Status $UNPROCESSABLE_ENTITY, message: $msg")
-      return Some(Results.UnprocessableEntity(msg))
+      val timestamp = LocalDateTime.now()
+      logger.info("FileName: " + fileName + " starts with PA422. Returning 422 Not Found.")
+      val msg = Json.obj(
+        "errors" -> Json.obj(
+          "processingDateTime"-> "2024-04-11T10:09:21.750575Z",
+          "code"               -> "UNPROCESSABLE_ENTITY",
+          "text" -> "Error: originalChargeCreationDate, originalChargeType & originalTieBreaker all need to be populated if chargeType has value LPI"
+        )
+      )
+      logger.info(s"Status $UNPROCESSABLE_ENTITY, message: ${Json.stringify(msg)}")
+      return Some(Results.UnprocessableEntity(msg).as(ContentTypes.JSON))
     }
 
     if (fileName.startsWith("PA404")) {
-      val msg = "FileName starts with PA404, returning 404 Not Found"
+      val msg = "FileName: " + fileName + " starts with PA404. Returning 404 Not Found."
       logger.error(s"Status $NOT_FOUND, message: $msg")
       return Some(Results.NotFound(msg))
     }
 
     // Look for the file if it didn’t match any special prefixes above
+    logger.info(s"constructResponse() →  No match on prefix. Looking for file: $path$fileName")
     findFile(path, fileName).map { file =>
       val fileString = FileUtils.readFileToString(file, Charset.defaultCharset())
       logger.info(s"constructResponse() → Reading file: $path$fileName, content:\n$fileString")
