@@ -19,13 +19,13 @@ package uk.gov.hmrc.debttransformationstub.controllers
 import org.apache.commons.io.FileUtils
 import play.api.Environment
 import play.api.http.ContentTypes
-import play.api.libs.json.{JsValue, Json}
-import play.api.mvc.Results.{Status => ResultStatus}
+import play.api.libs.json.{ JsValue, Json }
+import play.api.mvc.Results.{ Status => ResultStatus }
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
-import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.{CdcsCreateCaseRequestIdTypeReference, CdcsCreateCaseRequestLastName}
+import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.{ CdcsCreateCaseRequestIdTypeReference, CdcsCreateCaseRequestLastName }
 import uk.gov.hmrc.debttransformationstub.models._
-import uk.gov.hmrc.debttransformationstub.repositories.{EnactStage, EnactStageRepository}
+import uk.gov.hmrc.debttransformationstub.repositories.{ EnactStage, EnactStageRepository }
 import uk.gov.hmrc.debttransformationstub.services.TTPPollingService
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.http.HeaderCarrier
@@ -35,7 +35,7 @@ import java.io.File
 import java.nio.charset.Charset
 import java.time.LocalDateTime
 import javax.inject.Inject
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{ ExecutionContext, Future }
 import scala.io.Source
 import scala.util.Try
 
