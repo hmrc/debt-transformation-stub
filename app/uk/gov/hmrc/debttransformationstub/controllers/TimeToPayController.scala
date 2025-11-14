@@ -432,7 +432,7 @@ class TimeToPayController @Inject() (
       logger.info("FileName: " + fileName + " starts with PA422. Returning 422 Not Found.")
       val msg = Json.obj(
         "errors" -> Json.obj(
-          "processingDateTime"-> "2024-04-11T10:09:21.750575Z",
+          "processingDateTime" -> "2024-04-11T10:09:21.750575Z",
           "code"               -> "UNPROCESSABLE_ENTITY",
           "text" -> "Error: originalChargeCreationDate, originalChargeType & originalTieBreaker all need to be populated if chargeType has value LPI"
         )
