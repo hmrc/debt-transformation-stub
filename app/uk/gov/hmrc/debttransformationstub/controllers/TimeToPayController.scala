@@ -225,7 +225,7 @@ class TimeToPayController @Inject() (
     withCustomJsonBody[CreateIDMSMonitoringCaseRequest] { req =>
       val reference =
         if (Option(req.ddiReference).exists(_.trim.nonEmpty)) req.ddiReference
-        else req.address.addressLine1
+        else "ddiReference"
 
       logger.info(
         s"Received request to create IDMS monitoring case with correlationId: $correlationId and reference: $reference"
