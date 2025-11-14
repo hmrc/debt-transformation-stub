@@ -25,12 +25,18 @@ import play.api.libs.json.{ Json, OFormat }
 import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequest._
 import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes._
 
-case class CdcsCreateCaseRequest(
+case class TTP(
   plan: CdcsCreateCaseRequestPlan,
   customer: CdcsCreateCaseRequestCustomer,
   taxAccount: CdcsCreateCaseRequestTaxAccount,
   upstreamErrors: Option[List[CdcsCreateCaseRequestUpstreamError]]
 )
+
+object TTP {
+  implicit val formats: OFormat[TTP] = Json.format[TTP]
+}
+
+case class CdcsCreateCaseRequest(TTP: TTP)
 
 object CdcsCreateCaseRequest {
 
