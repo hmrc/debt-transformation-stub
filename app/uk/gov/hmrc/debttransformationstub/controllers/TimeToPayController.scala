@@ -299,11 +299,11 @@ class TimeToPayController @Inject() (
     withCustomJsonBody[CdcsCreateCaseRequest] { req =>
       val testDataPackage = "/cdcs.createCase/"
 
-      val identifiers = req.customer.individual.identifications
+      val identifiers = req.TTP.customer.individual.identifications
         .filter(_.idType == CdcsCreateCaseRequestIdTypeReference.UTR)
         .map(_.idValue.value)
 
-      val lastName = req.customer.individual.lastName
+      val lastName = req.TTP.customer.individual.lastName
       logger.info(s"CDCS create case identifiers are: ${identifiers.mkString(", ")}")
 
       enactStageRepository.addCDCSStage(getCorrelationIdHeader(request.headers), req).map { _ =>
