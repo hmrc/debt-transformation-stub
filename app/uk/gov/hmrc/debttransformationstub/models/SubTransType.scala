@@ -54,6 +54,7 @@ object SubTransType extends Enum[SubTransType] with PlayJsonEnum[SubTransType] {
   case object SAOpLed1047 extends SubTransType("1047")
   case object SAOpLed1060 extends SubTransType("1060")
   case object SAOpLed1096 extends SubTransType("1096")
+  case object SAOpLed1100 extends SubTransType("1100")
   case object SAOpLed1555 extends SubTransType("1555")
   case object SAOpLed1560 extends SubTransType("1560")
   case object SAOpLed1565 extends SubTransType("1565")
