@@ -428,7 +428,6 @@ class TimeToPayController @Inject() (
     }
 
     if (fileName.startsWith("PA422")) {
-      val timestamp = LocalDateTime.now()
       logger.info("FileName: " + fileName + " starts with PA422. Returning 422 Not Found.")
       val msg = Json.obj(
         "errors" -> Json.obj(
@@ -447,7 +446,6 @@ class TimeToPayController @Inject() (
       return Some(Results.NotFound(msg))
     }
 
-    // Look for the file if it didn’t match any special prefixes above
     logger.info(s"constructResponse() →  No match on prefix. Looking for file: $path$fileName")
     findFile(path, fileName).map { file =>
       val fileString = FileUtils.readFileToString(file, Charset.defaultCharset())
