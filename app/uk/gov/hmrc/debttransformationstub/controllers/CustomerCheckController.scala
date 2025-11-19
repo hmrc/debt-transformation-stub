@@ -16,14 +16,19 @@
 
 package uk.gov.hmrc.debttransformationstub.controllers
 
+import org.apache.commons.io.FileUtils
 import play.api.Environment
 import play.api.libs.json.{ JsValue, Json }
-import play.api.mvc.{ Action, ControllerComponents, Headers, Request }
+import play.api.mvc.Results.{ Status => ResultStatus }
+import play.api.mvc.{ Action, ControllerComponents, Headers, Request, Result, Results }
 import uk.gov.hmrc.debttransformationstub.models.CustomerCheckRequest
 import uk.gov.hmrc.debttransformationstub.repositories.EnactStageRepository
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
+import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
+import java.io.File
+import java.nio.charset.Charset
 import javax.inject.Inject
 import scala.concurrent.{ ExecutionContext, Future }
 import scala.io.Source
@@ -37,10 +42,19 @@ class CustomerCheckController @Inject() (
     extends BackendController(cc) with CustomBaseController {
 
   private lazy val logger = new RequestAwareLogger(this.getClass)
-  private val basePath = "conf/resources/data/customercheck"
+  private val basePath = "conf/resources/data/customerCheck"
 
   def customerCheck(): Action[JsValue] = Action.async(parse.json) { implicit rawRequest: Request[JsValue] =>
     val correlationId = getCorrelationIdHeader(rawRequest.headers)
+    val testDataPackage = "/customerCheck/"
+
+    def respond(fileName: String, status: ResultStatus): Option[Result] = {
+      logger.info(s"Preparing response for file: $fileName with status: ${status.header.status}")
+      constructResponse(testDataPackage, fileName).map { baseResult =>
+        val requestedCode = status.header.status
+        baseResult.copy(header = baseResult.header.copy(status = requestedCode))
+      }
+    }
 
     withCustomJsonBody[CustomerCheckRequest] { request =>
       // Extract identifier from the first customer in the request
@@ -65,10 +79,22 @@ class CustomerCheckController @Inject() (
                   }
 
               maybeFileContent match {
+                case Success("Error400") =>
+                  logger.warn("********Error400*********")
+                  Future.successful(respond("customerCheckFailure_400.json", Results.BadRequest).getOrElse(Results.NotFound("file not found")))
+                case Success("Error403") =>
+                  logger.warn("********Error403*********")
+                  Future.successful(respond("customerCheckFailure_403.json", Results.BadRequest).getOrElse(Results.NotFound("file not found")))
+                case Success("Error500") =>
+                  logger.warn("********Error500*********")
+                  Future.successful(respond("customerCheckFailure_500.json", Results.BadRequest).getOrElse(Results.NotFound("file not found")))
+                case Success("Error503") =>
+                  logger.warn("********Error503*********")
+                  Future.successful(respond("customerCheckFailure_503.json", Results.BadRequest).getOrElse(Results.NotFound("file not found")))
                 case Success(value) =>
                   enactStageRepository
-                    .addCustomerCheckStage(correlationId, request)
-                    .map(_ => Ok(Json.parse(value)))
+                  .addCustomerCheckStage(correlationId, request)
+                  .map(_ => Ok(Json.parse(value)))
                 case Failure(exception) =>
                   logger.error(s"Failed to parse the file $file", exception)
                   Future.successful(InternalServerError(s"Stub failed to parse file $file"))
@@ -78,6 +104,31 @@ class CustomerCheckController @Inject() (
           val message = "No identifier found in request"
           logger.error(s"Status $BAD_REQUEST, message: $message")
           Future successful BadRequest(message)
+      }
+    }
+  }
+
+  private def findFile(path: String, fileName: String): Option[File] =
+    environment.getExistingFile(s"$basePath$path$fileName")
+
+  private def constructResponse(path: String, fileName: String)(implicit hc: HeaderCarrier): Option[Result] = {
+    logger.info(s"constructResponse++++++() → Looking for file: $path$fileName")
+
+    // Look for the file if it didn’t match any special prefixes above
+    findFile(path, fileName).map { file =>
+      val fileString = FileUtils.readFileToString(file, Charset.defaultCharset())
+      logger.info(s"constructResponse() → Reading file: ***************==============$path$fileName, content:\n$fileString")
+
+      if (fileName.startsWith("200")) {
+        // 200 files: OK with JSON if parsable, else OK with raw text
+        logger.info(s"constructResponse() → FileName starts with 200, attempting to parse JSON")
+        Try(Json.parse(fileString)).toOption.map(Results.Ok(_)).getOrElse(Results.Ok(fileString))
+      } else {
+        // Others: OK with JSON if parsable, else 500
+        logger.info(s"constructResponse() → Attempting to parse JSON")
+        Try(Json.parse(fileString)).toOption
+          .map(Results.Ok(_))
+          .getOrElse(Results.InternalServerError(s"stub failed to parse file $path$fileName"))
       }
     }
   }
