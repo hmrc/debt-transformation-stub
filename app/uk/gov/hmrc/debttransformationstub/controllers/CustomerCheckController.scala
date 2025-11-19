@@ -65,10 +65,16 @@ class CustomerCheckController @Inject() (
 
       identifierMaybe match {
         case Some(identifier) =>
-          val relativePath = s"$basePath/$identifier-encrypted.json"
-          environment.getExistingFile(relativePath) match {
+          val encryptedPath = s"$basePath/$identifier-encrypted.json"
+          val plainPath = s"$basePath/$identifier.json"
+
+          val fileOption = environment
+            .getExistingFile(encryptedPath)
+            .orElse(environment.getExistingFile(plainPath))
+
+          fileOption match {
             case None =>
-              val message = s"file [$relativePath] not found"
+              val message = s"file [$encryptedPath] or [$plainPath] not found"
               logger.error(s"Status $NOT_FOUND, message: $message")
               Future successful NotFound(message)
             case Some(file) =>
@@ -80,21 +86,33 @@ class CustomerCheckController @Inject() (
 
               maybeFileContent match {
                 case Success("Error400") =>
-                  logger.warn("********Error400*********")
-                  Future.successful(respond("customerCheckFailure_400.json", Results.BadRequest).getOrElse(Results.NotFound("file not found")))
+                  Future.successful(
+                    respond("customerCheckFailure_400.json", Results.BadRequest).getOrElse(
+                      Results.NotFound("file not found")
+                    )
+                  )
                 case Success("Error403") =>
-                  logger.warn("********Error403*********")
-                  Future.successful(respond("customerCheckFailure_403.json", Results.BadRequest).getOrElse(Results.NotFound("file not found")))
+                  Future.successful(
+                    respond("customerCheckFailure_403.json", Results.Forbidden).getOrElse(
+                      Results.NotFound("file not found")
+                    )
+                  )
                 case Success("Error500") =>
-                  logger.warn("********Error500*********")
-                  Future.successful(respond("customerCheckFailure_500.json", Results.BadRequest).getOrElse(Results.NotFound("file not found")))
+                  Future.successful(
+                    respond("customerCheckFailure_500.json", Results.InternalServerError).getOrElse(
+                      Results.NotFound("file not found")
+                    )
+                  )
                 case Success("Error503") =>
-                  logger.warn("********Error503*********")
-                  Future.successful(respond("customerCheckFailure_503.json", Results.BadRequest).getOrElse(Results.NotFound("file not found")))
+                  Future.successful(
+                    respond("customerCheckFailure_503.json", Results.ServiceUnavailable).getOrElse(
+                      Results.NotFound("file not found")
+                    )
+                  )
                 case Success(value) =>
                   enactStageRepository
-                  .addCustomerCheckStage(correlationId, request)
-                  .map(_ => Ok(Json.parse(value)))
+                    .addCustomerCheckStage(correlationId, request)
+                    .map(_ => Ok(Json.parse(value)))
                 case Failure(exception) =>
                   logger.error(s"Failed to parse the file $file", exception)
                   Future.successful(InternalServerError(s"Stub failed to parse file $file"))
@@ -117,7 +135,9 @@ class CustomerCheckController @Inject() (
     // Look for the file if it didn’t match any special prefixes above
     findFile(path, fileName).map { file =>
       val fileString = FileUtils.readFileToString(file, Charset.defaultCharset())
-      logger.info(s"constructResponse() → Reading file: ***************==============$path$fileName, content:\n$fileString")
+      logger.info(
+        s"constructResponse() → Reading file: $path$fileName, content:\n$fileString"
+      )
 
       if (fileName.startsWith("200")) {
         // 200 files: OK with JSON if parsable, else OK with raw text
