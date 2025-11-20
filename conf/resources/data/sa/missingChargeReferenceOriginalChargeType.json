@@ -1,0 +1,92 @@
+{
+  "cesaData": {
+    "customer": {
+      "individual": {
+        "title": "Mr",
+        "firstName": "Ben",
+        "lastName": "Thomas",
+        "unallocatedCredit": 12345,
+        "processingOfficeOrgUnitId": "string",
+        "dateOfBirth": "2024-03-15",
+        "dateOfDeath": "2024-03-15",
+        "identifications": [
+          {
+            "idType": "UTR",
+            "idValue": "SA123545"
+          }
+        ]
+      }
+    },
+    "signals": [
+      {
+        "signalType": "string",
+        "signalValue": "string",
+        "signalDescription": "string"
+      }
+    ],
+    "addresses": [
+      {
+        "addressType": "string",
+        "addressLine1": "string",
+        "addressLine2": "string",
+        "addressLine3": "string",
+        "addressLine4": "string",
+        "rls": true,
+        "contactDetails": {
+          "telephoneNumber": "0302 400 4859",
+          "fax": "0302 989 2453",
+          "mobile": "7984958691",
+          "email": "agent1@gmail.com"
+        },
+        "postCode": "string",
+        "postcodeHistory": [
+          {
+            "addressPostcode": "string",
+            "postcodeDate": "2024-03-15"
+          }
+        ]
+      }
+    ],
+    "filings": [
+      {
+        "icrCategory": "SA",
+        "icrDescription": "SA Return",
+        "fromDate": "2024-03-15",
+        "toDate": "2024-03-15",
+        "dueDate": "2024-03-15"
+      }
+    ],
+    "charges": [
+      {
+        "chargeType": "LPI",
+        "UTR": "missingChargeReferenceOriginalChargeType",
+        "tieBreaker": "0002",
+        "creationDate": "2022-07-03",
+        "saTaxYearEnd": "2023-03-05",
+        "originalChargeType": "BCD",
+        "mainType": "Charge 1",
+        "mainTrans": "4000",
+        "parentMainTrans": "4000",
+        "subTrans": "1005",
+        "taxPeriodFrom": "2022-02-06",
+        "taxPeriodTo": "2022-03-05",
+        "dueDate": "<DUE_DATE>",
+        "interestStartDate": "2022-03-05",
+        "outstandingAmount": 3000.00,
+        "accruedInterest": 500.00
+      }
+    ],
+    "responseCode": {
+      "timestamp": "2024-02-28T11:43:56.235Z",
+      "httpCode": 200,
+      "reasonCode": "002",
+      "description": "success"
+    }
+  },
+  "responseCode": {
+    "timestamp": "2024-02-28T11:43:56.235Z",
+    "httpCode": 200,
+    "reasonCode": "002",
+    "description": "success"
+  }
+}
