@@ -260,6 +260,7 @@ class TimeToPayController @Inject() (
     }
   }
 
+  // Call made to CESA for the route: /cancel of time-to-pay
   def cesaCancelCase(): Action[JsValue] = Action.async(parse.json) { implicit request =>
     withCustomJsonBody[CesaCancelPlanRequest] { req =>
       val testDataPackage = "/cesa.cancelCase/"
@@ -362,6 +363,7 @@ class TimeToPayController @Inject() (
     }
   }
 
+  // Call made to CESA for the routes: /inform and /full-amend of time-to-pay
   def cesaCreateRequest(): Action[JsValue] = Action.async(parse.json) { implicit request =>
     withCustomJsonBody[CesaCreateRequest] { req =>
       val testDataPackage = "/cesa.createRequest/"
@@ -410,6 +412,42 @@ class TimeToPayController @Inject() (
 
   private def findFile(path: String, fileName: String): Option[File] =
     environment.getExistingFile(s"$basePath$path$fileName")
+
+  // Call made to time-to-pay for the routes: /cancel, /inform and /full-amend of time-to-pay-proxy
+  def proxyPlanCase(): Action[JsValue] = Action.async(parse.json) { implicit request =>
+    withCustomJsonBody[TimeToPayProxyPlanRequest] { req =>
+      val testDataPackage = "/ttp.proxy/"
+
+      // Identify the UTR or single identifier
+      val maybeUtrIdentifier: Option[String] =
+        if (req.identifications.length == 1)
+          req.identifications.headOption.map(_.idValue)
+        else
+          req.identifications.find(_.idType == "UTR").map(_.idValue)
+
+      // Build the response with the desired status
+      def respond(fileName: String, status: ResultStatus): Option[Result] = {
+        logger.info(s"Preparing cancel response for file: $fileName with status: ${status.header.status}")
+        constructResponse(testDataPackage, fileName).map { baseResult =>
+          val requestedCode = status.header.status
+          baseResult.copy(header = baseResult.header.copy(status = requestedCode))
+        }
+      }
+
+      // Apply desired response status based on UTR
+      val byUtr: Option[Result] = maybeUtrIdentifier.flatMap {
+        case "proxyPlan_error_400" =>
+          respond("proxyPlan_error_400.json", Results.BadRequest)
+        case "proxyPlan_error_500" =>
+          respond("proxyPlan_error_500.json", Results.InternalServerError)
+        case utr =>
+          respond(s"$utr.json", Results.Ok)
+      }
+
+      // Return the appropriate stubbed response
+      Future.successful(byUtr.getOrElse(Results.NotFound("file not found")))
+    }
+  }
 
   private def constructResponse(path: String, fileName: String)(implicit hc: HeaderCarrier): Option[Result] = {
     logger.info(s"constructResponse() → Attempting to match on prefix: $path$fileName")

@@ -1,0 +1,8 @@
+{
+  "failures": [
+    {
+      "code": "BAD_REQUEST",
+      "reason": "Invalid request payload: missing identifications"
+    }
+  ]
+}
