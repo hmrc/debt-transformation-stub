@@ -1,4 +1,12 @@
 {
+  "apisCalled": [
+    {
+      "name": "CESA",
+      "statusCode": 500,
+      "processingDateTime": "2025-01-22T14:35:00Z",
+      "errorResponse": "TTP End date can not be before Start date"
+    }
+  ],
   "internalErrors": [
     {
       "message": "Internal Server Error"
