@@ -59,9 +59,12 @@ POST          /idms/essttp/v1/saeligibilitycheck                                
 
 POST          /cesa/debt/providechargereferences                                                     uk.gov.hmrc.debttransformationstub.controllers.CESAController.getCESAdata()
 POST          /prweb/api/TTP/v1/CreateSSTTP                                                          uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.cdcsCreateCase()
+
+# Time To Pay routes which interact with CESA
 POST          /cesa/debt/ttp/cancel                                                                  uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.cesaCancelCase()
 POST          /cesa/debt/ttp/create                                                                  uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.cesaCreateRequest()
 
+# Time To Pay Proxy routes which interact with Time To Pay
 POST          /debts/time-to-pay/cancel                                                              uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.proxyPlanCase()
 POST          /debts/time-to-pay/inform                                                              uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.proxyPlanCase()
 POST          /debts/time-to-pay/full-amend                                                          uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.proxyPlanCase()
