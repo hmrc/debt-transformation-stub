@@ -46,7 +46,7 @@ class CustomerCheckController @Inject() (
 
   def customerCheck(): Action[JsValue] = Action.async(parse.json) { implicit rawRequest: Request[JsValue] =>
     val correlationId = getCorrelationIdHeader(rawRequest.headers)
-    val testDataPackage = "/customerCheck/"
+    val testDataPackage = "/"
 
     def respond(fileName: String, status: ResultStatus): Option[Result] = {
       logger.info(s"Preparing response for file: $fileName with status: ${status.header.status}")
