@@ -78,7 +78,7 @@ class CustomerCheckController @Inject() (
         case Some(identifier) =>
           // Check for error trigger identifiers first
           identifier match {
-            case id if id.endsWith("0A") =>
+            case id if id.endsWith("8A") =>
               logger.warn(s"Customer check error trigger identifier (400): $identifier")
               recordAndRespond(request, "customerCheckFailure_400.json", Results.BadRequest)
             case id if id.endsWith("0B") =>
