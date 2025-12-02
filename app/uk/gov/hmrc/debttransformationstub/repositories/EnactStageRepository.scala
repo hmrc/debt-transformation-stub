@@ -149,7 +149,11 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
       .toFuture()
   }
 
-  def addCustomerCheckStage(correlationId: String, request: CustomerCheckRequest, statusCode: Int): Future[EnactStage] = {
+  def addCustomerCheckStage(
+    correlationId: String,
+    request: CustomerCheckRequest,
+    statusCode: Int
+  ): Future[EnactStage] = {
     logger.warn(s"Recording CustomerCheck stage request $correlationId with status code $statusCode")
     collection
       .findOneAndUpdate(
