@@ -78,16 +78,16 @@ class CustomerCheckController @Inject() (
         case Some(identifier) =>
           // Check for error trigger identifiers first
           identifier match {
-            case id if id.endsWith("8A") =>
+            case id if id.endsWith("400A") =>
               logger.warn(s"Customer check error trigger identifier (400): $identifier")
               recordAndRespond(request, "customerCheckFailure_400.json", Results.BadRequest)
-            case id if id.endsWith("0B") =>
+            case id if id.endsWith("403B") =>
               logger.warn(s"Customer check error trigger identifier (403): $identifier")
               recordAndRespond(request, "customerCheckFailure_403.json", Results.Forbidden)
-            case id if id.endsWith("0C") =>
+            case id if id.endsWith("500C") =>
               logger.warn(s"Customer check error trigger identifier (500): $identifier")
               recordAndRespond(request, "customerCheckFailure_500.json", Results.InternalServerError)
-            case id if id.endsWith("0D") =>
+            case id if id.endsWith("503D") =>
               logger.warn(s"Customer check error trigger identifier (503): $identifier")
               recordAndRespond(request, "customerCheckFailure_503.json", Results.ServiceUnavailable)
             case _ =>
