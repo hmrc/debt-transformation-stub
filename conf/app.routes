@@ -9,6 +9,7 @@ GET           /prweb/api/ARC/01/ChargeData/customer/:customerUniqueRef/debts/deb
 POST          /prweb/api/ARC/01/RefData                                                              uk.gov.hmrc.debttransformationstub.controllers.ReferenceLookupController.getReferenceDataLookup
 
 POST          /prweb/PRRestService/oauth2/v1/token                                                   uk.gov.hmrc.debttransformationstub.controllers.AuthController.getAccessToken()
+POST          /prweb/api/oauth2/v1/token                                                             uk.gov.hmrc.debttransformationstub.controllers.AuthController.getAccessToken()
 
 POST          /individuals/debts/field-collections/:idType/:idValue/charge                           uk.gov.hmrc.debttransformationstub.controllers.DebtManagementAPITestController.fieldCollectionsCharge(idType: String, idValue: String)
 PUT           /individuals/debts/field-collections/:idType/:idValue/charge                           uk.gov.hmrc.debttransformationstub.controllers.DebtManagementAPITestController.fieldCollectionsCharge(idType: String, idValue: String)
