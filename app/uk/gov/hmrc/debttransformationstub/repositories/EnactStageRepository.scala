@@ -41,12 +41,15 @@ case class EnactStage(
   idmsRequestSA: Option[CreateIDMSMonitoringCaseRequestSA] = None,
   cdcsRequest: Option[CdcsCreateCaseRequest] = None,
   cesaRequest: Option[CesaCreateRequest] = None,
+  customerCheckRequest: Option[CustomerCheckRequest] = None,
   nddsAttempts: Option[Int] = None,
   pegaAttempts: Option[Int] = None,
   etmpAttempts: Option[Int] = None,
   idmsAttempts: Option[Int] = None,
   cdcsAttempts: Option[Int] = None,
-  cesaAttempts: Option[Int] = None
+  cesaAttempts: Option[Int] = None,
+  customerCheckAttempts: Option[Int] = None,
+  customerCheckStatus: Option[Int] = None
 )
 
 object EnactStage {
@@ -141,6 +144,25 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
       .findOneAndUpdate(
         equal("correlationId", correlationId),
         combine(set("cesaRequest", Codecs.toBson(request)), inc("cesaAttempts", 1)),
+        new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
+      )
+      .toFuture()
+  }
+
+  def addCustomerCheckStage(
+    correlationId: String,
+    request: CustomerCheckRequest,
+    statusCode: Int
+  ): Future[EnactStage] = {
+    logger.warn(s"Recording CustomerCheck stage request $correlationId with status code $statusCode")
+    collection
+      .findOneAndUpdate(
+        equal("correlationId", correlationId),
+        combine(
+          set("customerCheckRequest", Codecs.toBson(request)),
+          set("customerCheckStatus", statusCode),
+          inc("customerCheckAttempts", 1)
+        ),
         new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
       )
       .toFuture()
