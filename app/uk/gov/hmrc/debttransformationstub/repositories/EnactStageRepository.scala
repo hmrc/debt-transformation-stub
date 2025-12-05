@@ -42,6 +42,7 @@ case class EnactStage(
   cdcsRequest: Option[CdcsCreateCaseRequest] = None,
   cesaRequest: Option[CesaCreateRequest] = None,
   customerCheckRequest: Option[CustomerCheckRequest] = None,
+  hodReferralRequest: Option[HodReferralRequest] = None,
   nddsAttempts: Option[Int] = None,
   pegaAttempts: Option[Int] = None,
   etmpAttempts: Option[Int] = None,
@@ -49,7 +50,9 @@ case class EnactStage(
   cdcsAttempts: Option[Int] = None,
   cesaAttempts: Option[Int] = None,
   customerCheckAttempts: Option[Int] = None,
-  customerCheckStatus: Option[Int] = None
+  customerCheckStatus: Option[Int] = None,
+  hodReferralAttempts: Option[Int] = None,
+  hodReferralStatus: Option[Int] = None
 )
 
 object EnactStage {
@@ -162,6 +165,25 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
           set("customerCheckRequest", Codecs.toBson(request)),
           set("customerCheckStatus", statusCode),
           inc("customerCheckAttempts", 1)
+        ),
+        new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
+      )
+      .toFuture()
+  }
+
+  def addHodReferralStage(
+    correlationId: String,
+    request: HodReferralRequest,
+    statusCode: Int
+  ): Future[EnactStage] = {
+    logger.warn(s"Recording HodReferral stage request $correlationId with status code $statusCode")
+    collection
+      .findOneAndUpdate(
+        equal("correlationId", correlationId),
+        combine(
+          set("hodReferralRequest", Codecs.toBson(request)),
+          set("hodReferralStatus", statusCode),
+          inc("hodReferralAttempts", 1)
         ),
         new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
       )
