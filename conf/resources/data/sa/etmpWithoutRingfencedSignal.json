@@ -90,13 +90,6 @@
         "country": "string"
       }
     ],
-    "signals": [
-      {
-        "signalType": "RLS",
-        "signalValue": "false",
-        "signalDescription": "false"
-      }
-    ],
     "filings": [
       {
         "icrCategory": "ZR01",
