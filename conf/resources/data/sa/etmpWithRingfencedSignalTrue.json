@@ -92,7 +92,7 @@
     ],
     "signals": [
       {
-        "signalType": "Customer Account Group",
+        "signalType": "CUSTOMER ACCOUNT GROUP",
         "signalValue": "Wealthy 1",
         "signalDescription": "ETMP Ringfenced Signal Check Wealthy 1"
       }
