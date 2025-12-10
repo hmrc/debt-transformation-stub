@@ -20,17 +20,19 @@ import play.api.libs.json.{ JsValue, Json }
 import play.api.mvc.{ Action, ControllerComponents, Headers, Request }
 import uk.gov.hmrc.debttransformationstub.models.HodReferralRequest
 import uk.gov.hmrc.debttransformationstub.repositories.EnactStageRepository
+import uk.gov.hmrc.debttransformationstub.services.HodReferralDecryptionService
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
-import scala.concurrent.{ ExecutionContext, Future }
+import scala.concurrent.ExecutionContext
 
 class HodReferralController @Inject() (
   cc: ControllerComponents,
-  enactStageRepository: EnactStageRepository
+  enactStageRepository: EnactStageRepository,
+  decryptionService: HodReferralDecryptionService
 )(implicit ec: ExecutionContext)
     extends BackendController(cc) with CustomBaseController {
 
@@ -44,9 +46,16 @@ class HodReferralController @Inject() (
       logger.info(s"[DEBUG] HodReferral called with correlationId=$correlationId")
       logger.info(s"[DEBUG] HodReferral request: ${Json.toJson(request)}")
 
-      // Record the request in the repository
+      // Attempt to decrypt the message content
+      val decryptedXml = decryptionService.decrypt(request)
+      decryptedXml match {
+        case Some(xml) => logger.info(s"[DEBUG] HodReferral decryption successful, XML length: ${xml.length}")
+        case None      => logger.warn(s"[DEBUG] HodReferral decryption failed - could not decrypt with test keys")
+      }
+
+      // Record the request in the repository (including decrypted content if available)
       enactStageRepository
-        .addHodReferralStage(correlationId, request, 200)
+        .addHodReferralStage(correlationId, request, 200, decryptedXml)
         .map { _ =>
           logger.info(s"[DEBUG] HodReferral stage recorded in EnactStage repository with status 200")
 

@@ -20,7 +20,9 @@ import play.api.libs.json.{ Json, OFormat }
 
 case class HodReferralRequest(
   ledgerSection: Option[String],
-  messageContent: String
+  messageContent: String,
+  aesKey: String,
+  iv: String
 )
 
 object HodReferralRequest {
