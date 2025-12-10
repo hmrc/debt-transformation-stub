@@ -73,3 +73,5 @@ POST          /debts/time-to-pay/inform                                         
 POST          /individuals/debts/time-to-pay/full-amend                                              uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.proxyPlanCase()
 POST          /debts/time-to-pay/full-amend                                                          uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.proxyPlanCase()
 POST          /scrbroker/accessmgmt                                                                  uk.gov.hmrc.debttransformationstub.controllers.CustomerCheckController.customerCheck()
+
+POST          /prsup/PRRestService/NPSWMReferrals/v1/processEncryptedReferrals                      uk.gov.hmrc.debttransformationstub.controllers.HodReferralController.processEncryptedReferrals()
