@@ -291,6 +291,8 @@ class TimeToPayController @Inject() (
           respond("cesaCancelPlan_error_409.json", Results.Conflict)
         case "6642083101" =>
           respond("cesaCancelPlan_error_500.json", Results.InternalServerError)
+        case "1101733108" =>
+          respond("cesaCancelPlan_error_500.json", Results.InternalServerError)
         case "cesaCancelPlan_error_502" =>
           respond("cesaCancelPlan_error_502.json", Results.BadGateway)
         case utr =>
