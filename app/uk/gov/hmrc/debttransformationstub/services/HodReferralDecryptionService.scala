@@ -85,8 +85,8 @@ class HodReferralDecryptionService @Inject() () extends Logging {
     Base64.getDecoder.decode(fallbackPrivateKeyBase64)
   )
 
-  /** Attempts to decrypt the HoD Referral message content using either the primary or fallback test key.
-    * Returns None if decryption fails with both keys.
+  /** Attempts to decrypt the HoD Referral message content using either the primary or fallback test key. Returns None
+    * if decryption fails with both keys.
     */
   def decrypt(request: HodReferralRequest): Option[String] =
     privateKeys.view
@@ -95,7 +95,7 @@ class HodReferralDecryptionService @Inject() () extends Logging {
 
   private def tryDecrypt(request: HodReferralRequest, privateKeyBytes: Array[Byte]): Try[String] = Try {
     val privateKey: PrivateKey = {
-      val keySpec    = new PKCS8EncodedKeySpec(privateKeyBytes, "RSA")
+      val keySpec = new PKCS8EncodedKeySpec(privateKeyBytes, "RSA")
       val keyFactory = KeyFactory.getInstance("RSA")
       keyFactory.generatePrivate(keySpec)
     }
@@ -107,8 +107,8 @@ class HodReferralDecryptionService @Inject() () extends Logging {
     }
 
     val encryptedAesKeyBytes = Base64.getDecoder.decode(request.aesKey)
-    val encryptedIvBytes     = Base64.getDecoder.decode(request.iv)
-    val ciphertextBytes      = Base64.getDecoder.decode(request.messageContent)
+    val encryptedIvBytes = Base64.getDecoder.decode(request.iv)
+    val ciphertextBytes = Base64.getDecoder.decode(request.messageContent)
 
     val aesKey: SecretKey = {
       val aesKeyBytes = rsaUnWrappingCipher.doFinal(encryptedAesKeyBytes)
@@ -118,7 +118,7 @@ class HodReferralDecryptionService @Inject() () extends Logging {
     val initialisationVector: Array[Byte] = rsaUnWrappingCipher.doFinal(encryptedIvBytes)
 
     val aesDecryptionCipher: Cipher = {
-      val cipher   = Cipher.getInstance("AES/CBC/PKCS5Padding")
+      val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
       val ivParams = new IvParameterSpec(initialisationVector)
       cipher.init(Cipher.DECRYPT_MODE, aesKey, ivParams)
       cipher
