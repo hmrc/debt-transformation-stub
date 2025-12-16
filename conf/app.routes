@@ -72,7 +72,7 @@ POST          /individuals/debts/time-to-pay/inform                             
 POST          /debts/time-to-pay/inform                                                              uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.proxyPlanCase()
 POST          /individuals/debts/time-to-pay/full-amend                                              uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.proxyPlanCase()
 POST          /debts/time-to-pay/full-amend                                                          uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.proxyPlanCase()
-POST          /scrbroker/accessmgmt                                                                  uk.gov.hmrc.debttransformationstub.controllers.CustomerCheckController.customerCheck()
+POST          /scrbroker/filtration                                                                  uk.gov.hmrc.debttransformationstub.controllers.CustomerCheckController.customerCheck()
 
 # HoD Referral stub (without encryption at this stage)
 POST          /prsup/PRRestService/NPSWMReferrals/v1/processEncryptedReferrals                      uk.gov.hmrc.debttransformationstub.controllers.HodReferralController.processEncryptedReferrals()
