@@ -24,8 +24,7 @@ import uk.gov.hmrc.debttransformationstub.services.HodReferralDecryptionService
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
-import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
+import java.time.Instant
 import javax.inject.Inject
 import scala.concurrent.ExecutionContext
 
@@ -37,7 +36,6 @@ class HodReferralController @Inject() (
     extends BackendController(cc) with CustomBaseController {
 
   private lazy val logger = new RequestAwareLogger(this.getClass)
-  private val dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss.SSS zzz")
 
   def processEncryptedReferrals(): Action[JsValue] = Action.async(parse.json) { implicit rawRequest: Request[JsValue] =>
     val correlationId = getCorrelationIdHeader(rawRequest.headers)
@@ -59,14 +57,11 @@ class HodReferralController @Inject() (
         .map { _ =>
           logger.info(s"[DEBUG] HodReferral stage recorded in EnactStage repository with status 200")
 
-          // Return a success response with current timestamp
-          val now = ZonedDateTime.now()
-          val formattedDateTime = now.format(dateTimeFormatter)
-
+          // Return a success response with current timestamp in ISO 8601 format
           Ok(
             Json.obj(
               "status"             -> "Success",
-              "processingDateTime" -> formattedDateTime
+              "processingDateTime" -> Instant.now().toString
             )
           )
         }
