@@ -313,7 +313,7 @@ class TimeToPayController @Inject() (
         .map(_.idValue.value)
 
       val lastName = req.TTP.customer.individual.lastName
-      logger.info(s"CDCS crreate case identifiers are: ${identifiers.mkString(", ")}")
+      logger.info(s"CDCS create case identifiers are: ${identifiers.mkString(", ")}")
 
       enactStageRepository.addCDCSStage(identifiers.head, req).map { _ =>
         // Match on UTRs
