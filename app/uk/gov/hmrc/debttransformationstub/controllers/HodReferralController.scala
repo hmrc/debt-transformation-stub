@@ -27,9 +27,6 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import java.time.Instant
 import javax.inject.Inject
 import scala.concurrent.ExecutionContext
-import scala.util.Try
-import scala.xml.XML
-
 
 class HodReferralController @Inject() (
   cc: ControllerComponents,
@@ -82,7 +79,6 @@ class HodReferralController @Inject() (
       .findFirstMatchIn(xmlStr)
       .map(_.group(1))
       .getOrElse("")
-
 
   def getCorrelationIdHeader(headers: Headers): String =
     headers.get("correlationId").getOrElse(throw new Exception("Missing required correlationId header"))
