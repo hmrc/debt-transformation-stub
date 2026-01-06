@@ -16,14 +16,14 @@
 
 package uk.gov.hmrc.debttransformationstub.models.chargeinfo
 
-import play.api.libs.json.{Json, Reads}
+import play.api.libs.json.{ Json, Reads }
 import uk.gov.hmrc.debttransformationstub.models.Identification
 
 final case class ChargeInfoRequest(
-                                    channelIdentifier: String,
-                                    identifications: List[Identification],
-                                    regimeType: String
-                                  )
+  channelIdentifier: String,
+  identifications: List[Identification],
+  regimeType: String
+)
 object ChargeInfoRequest {
   implicit val reader: Reads[ChargeInfoRequest] = Json.reads[ChargeInfoRequest]
 }

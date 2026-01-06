@@ -18,7 +18,7 @@ package uk.gov.hmrc.debttransformationstub.controllers
 
 import org.apache.commons.io.FileUtils
 import play.api.Environment
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.{ JsValue, Json }
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.models.chargeinfo.ChargeInfoRequest
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
@@ -31,7 +31,7 @@ import javax.inject.Inject
 import scala.concurrent.Future
 import scala.util.Try
 
-class TimeToPayEligibilityController @Inject()(
+class TimeToPayEligibilityController @Inject() (
   cc: ControllerComponents,
   environment: Environment
 ) extends BackendController(cc) with CustomBaseController {
@@ -51,11 +51,13 @@ class TimeToPayEligibilityController @Inject()(
           req.identifications.find(_.idType == "UTR").map(_.idValue)
       logger.info(s"Maybe UTR provided: $maybeUtr")
 
-      val maybeResultByUtr: Option[Result] = maybeUtr flatMap {
-        utr => constructResponse(path, s"$utr.json")
+      val maybeResultByUtr: Option[Result] = maybeUtr flatMap { utr =>
+        constructResponse(path, s"$utr.json")
       }
 
-      Future.successful(maybeResultByUtr.getOrElse(Results.InternalServerError(s"Could not find file $maybeUtr in path $path")))
+      Future.successful(
+        maybeResultByUtr.getOrElse(Results.InternalServerError(s"Could not find file $maybeUtr in path $path"))
+      )
     }
   }
 
@@ -65,18 +67,16 @@ class TimeToPayEligibilityController @Inject()(
 
       Try(Json.parse(fileString)).toOption match {
         case Some(fileJson) =>
-          logger.info(
-          s"""constructResponse() → Successfully parsed fileName: $fileName
-             |Returning body:
-             |$fileJson
-             |""".stripMargin)
+          logger.info(s"""constructResponse() → Successfully parsed fileName: $fileName
+                         |Returning body:
+                         |$fileJson
+                         |""".stripMargin)
           Results.Ok(fileJson)
         case None =>
           logger.info(s"constructResponse() → Failed to parse fileName: $fileName")
           Results.InternalServerError(s"stub failed to parse file $path$fileName")
       }
     }
-
 
   private def findFile(path: String, fileName: String): Option[File] =
     environment.getExistingFile(s"$basePath$path$fileName")
