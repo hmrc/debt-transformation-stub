@@ -76,6 +76,8 @@ class CustomerCheckController @Inject() (
 
       identifierMaybe match {
         case Some(identifier) =>
+          val fileIdentifier = identifier.replace("/", "")
+
           // Check for error trigger identifiers first
           identifier match {
             case id if id.endsWith("400A") =>
@@ -91,8 +93,8 @@ class CustomerCheckController @Inject() (
               logger.warn(s"Customer check error trigger identifier (503): $identifier")
               recordAndRespond(request, "customerCheckFailure_503.json", Results.ServiceUnavailable)
             case _ =>
-              // Normal case: look for encrypted file with the identifier
-              val encryptedPath = s"$basePath/$identifier-encrypted.json"
+              // Normal case: look for encrypted file with the identifier (without slash)
+              val encryptedPath = s"$basePath/$fileIdentifier-encrypted.json"
               logger.info(s"[DEBUG] Looking for CustomerCheck file: $encryptedPath")
               environment.getExistingFile(encryptedPath) match {
                 case None =>
