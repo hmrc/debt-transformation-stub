@@ -32,7 +32,7 @@ import javax.inject.{ Inject, Singleton }
 import scala.concurrent.{ ExecutionContext, Future }
 
 case class EnactStage(
-  correlationId: String,
+  correlationId: Option[String] = None,
   nddsRequest: Option[NDDSRequest] = None,
   pegaRequest: Option[UpdateCaseRequest] = None,
   etmpRequest: Option[PaymentLockRequest] = None,
@@ -108,33 +108,36 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
       .toFuture()
   }
 
-  def addIDMSStage(correlationId: String, request: CreateIDMSMonitoringCaseRequest): Future[EnactStage] = {
-    logger.warn(s"Recording IDMS stage request $correlationId")
+  def addIDMSStage(idValue: String, request: CreateIDMSMonitoringCaseRequest): Future[EnactStage] = {
+    logger.info(s"Recording IDMS stage request $idValue")
+    logger.info(s"IDMS Request being recorded: ${Json.prettyPrint(Json.toJson(request))}")
     collection
       .findOneAndUpdate(
-        equal("correlationId", correlationId),
+        equal("idValue", idValue),
         combine(set("idmsRequest", Codecs.toBson(request)), inc("idmsAttempts", 1)),
         new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
       )
       .toFuture()
   }
 
-  def addIDMSStageSA(correlationId: String, request: CreateIDMSMonitoringCaseRequestSA): Future[EnactStage] = {
-    logger.warn(s"Recording SA IDMS stage request $correlationId")
+  def addIDMSStageSA(idValue: String, request: CreateIDMSMonitoringCaseRequestSA): Future[EnactStage] = {
+    logger.info(s"Recording IDMS SA stage request $idValue")
+    logger.info(s"IDMS SA Request being recorded: ${Json.prettyPrint(Json.toJson(request))}")
     collection
       .findOneAndUpdate(
-        equal("correlationId", correlationId),
+        equal("idValue", idValue),
         combine(set("idmsRequestSA", Codecs.toBson(request)), inc("idmsAttempts", 1)),
         new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
       )
       .toFuture()
   }
 
-  def addCDCSStage(correlationId: String, request: CdcsCreateCaseRequest): Future[EnactStage] = {
-    logger.warn(s"Recording CDCS stage request $correlationId")
+  def addCDCSStage(idValue: String, request: CdcsCreateCaseRequest): Future[EnactStage] = {
+    logger.info(s"Recording CDCS stage request $idValue")
+    logger.info(s"CDCS Request being recorded: ${Json.prettyPrint(Json.toJson(request))}")
     collection
       .findOneAndUpdate(
-        equal("correlationId", correlationId),
+        equal("idValue", idValue),
         combine(set("cdcsRequest", Codecs.toBson(request)), inc("cdcsAttempts", 1)),
         new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
       )
@@ -172,12 +175,12 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
   }
 
   def addHodReferralStage(
-    correlationId: String,
+    idValue: String,
     request: HodReferralRequest,
     statusCode: Int,
     decryptedXml: Option[String] = None
   ): Future[EnactStage] = {
-    logger.warn(s"Recording HodReferral stage request $correlationId with status code $statusCode")
+    logger.warn(s"Recording HodReferral stage request $idValue with status code $statusCode")
     val updates = Seq(
       set("hodReferralRequest", Codecs.toBson(request)),
       set("hodReferralStatus", statusCode),
@@ -186,7 +189,7 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
 
     collection
       .findOneAndUpdate(
-        equal("correlationId", correlationId),
+        equal("idValue", idValue),
         combine(updates: _*),
         new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
       )
@@ -195,6 +198,9 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
 
   def findByCorrelationId(correlationId: String): Future[Option[EnactStage]] =
     collection.find(equal("correlationId", correlationId)).headOption()
+
+  def findByIdValue(idValue: String): Future[Option[EnactStage]] =
+    collection.find(equal("idValue", idValue)).headOption()
 
   def deleteAll(): Future[DeleteResult] = collection.deleteMany(Document()).toFuture()
 

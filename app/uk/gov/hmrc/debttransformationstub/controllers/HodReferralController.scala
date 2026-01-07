@@ -38,11 +38,10 @@ class HodReferralController @Inject() (
   private lazy val logger = new RequestAwareLogger(this.getClass)
 
   def processEncryptedReferrals(): Action[JsValue] = Action.async(parse.json) { implicit rawRequest: Request[JsValue] =>
-    val correlationId = getCorrelationIdHeader(rawRequest.headers)
+    logger.info(s"processEncryptedReferrals request isssss ${rawRequest.body}")
 
     withCustomJsonBody[HodReferralRequest] { request =>
-      logger.info(s"[DEBUG] HodReferral called with correlationId=$correlationId")
-      logger.info(s"[DEBUG] HodReferral request: ${Json.toJson(request)}")
+      logger.info(s"[DEBUG] HodReferral requestt: ${Json.toJson(request)}")
 
       // Attempt to decrypt the message content
       val decryptedXml = decryptionService.decrypt(request)
@@ -51,9 +50,12 @@ class HodReferralController @Inject() (
         case None      => logger.warn(s"[DEBUG] HodReferral decryption failed - could not decrypt with test keys")
       }
 
+      val idValue: String = extractNinoFromHodXml(decryptedXml.toString)
+      logger.info(s"[DEBUG] Extracted NINO from decrypted XML: $idValue")
+
       // Record the request in the repository (including decrypted content if available)
       enactStageRepository
-        .addHodReferralStage(correlationId, request, 200, decryptedXml)
+        .addHodReferralStage(idValue, request, 200, decryptedXml)
         .map { _ =>
           logger.info(s"[DEBUG] HodReferral stage recorded in EnactStage repository with status 200")
 
@@ -67,6 +69,14 @@ class HodReferralController @Inject() (
         }
     }
   }
+  val NinoRegex =
+    """(?:name="NINO"\s+type="String"\s+value="|label="NINO"\s+value=")([A-Z]{2}\d{6}[A-Z])""".r
+
+  def extractNinoFromHodXml(xmlStr: String): String =
+    NinoRegex
+      .findFirstMatchIn(xmlStr)
+      .map(_.group(1))
+      .getOrElse("")
 
   def getCorrelationIdHeader(headers: Headers): String =
     headers.get("correlationId").getOrElse(throw new Exception("Missing required correlationId header"))

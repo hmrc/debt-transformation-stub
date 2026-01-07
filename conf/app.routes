@@ -54,6 +54,7 @@ POST          /individuals/debts/essttp/payment-lock                            
 POST          /individuals/debts/essttp/monitoring-case                                              uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.idmsCreateTTPMonitoringCase
 POST          /idms/essttp/v1/samonitoringcase                                                       uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.idmsCreateSAMonitoringCase
 GET           /enactStage/:correlationId                                                             uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.enactStage(correlationId: String)
+GET           /enactStageByIdValue/:idValue                                                          uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.enactStageByIdValue(idValue: String)
 
 POST          /individuals/debts/essttp/eligibility-check                                            uk.gov.hmrc.debttransformationstub.controllers.IDMSController.paymentPlanEligibilityDm
 POST          /idms/essttp/v1/saeligibilitycheck                                                     uk.gov.hmrc.debttransformationstub.controllers.IDMSController.saEligibilityCheck()
@@ -77,4 +78,4 @@ POST          /scrbroker/filtration                                             
 POST          /debts/time-to-pay/charge-info                                                         uk.gov.hmrc.debttransformationstub.controllers.TimeToPayEligibilityController.getCharges()
 
 # HoD Referral stub (without encryption at this stage)
-POST          /npswm/prsup/PRRestService/NPSWMReferrals/v1/processEncryptedReferrals                uk.gov.hmrc.debttransformationstub.controllers.HodReferralController.processEncryptedReferrals()
+POST          /npswm/prsup/PRRestService/NPSWMReferrals/v1/processEncryptedReferrals                 uk.gov.hmrc.debttransformationstub.controllers.HodReferralController.processEncryptedReferrals()

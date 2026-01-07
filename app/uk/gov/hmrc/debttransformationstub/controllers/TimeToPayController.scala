@@ -219,19 +219,19 @@ class TimeToPayController @Inject() (
   }
 
   def idmsCreateTTPMonitoringCase: Action[JsValue] = Action.async(parse.json) { implicit request =>
-    val correlationId = getCorrelationIdHeader(request.headers)
-
     withCustomJsonBody[CreateIDMSMonitoringCaseRequest] { req =>
+      val idValue = req.idValue
+
       val reference =
         if (Option(req.ddiReference).exists(_.trim.nonEmpty)) req.ddiReference
         else "ddiReference"
 
       logger.info(
-        s"Received request to create IDMS monitoring case with correlationId: $correlationId and reference: $reference"
+        s"Received request to create IDMS monitoring case with idValue: $idValue and reference: $reference"
       )
 
       enactStageRepository
-        .addIDMSStage(correlationId, req)
+        .addIDMSStage(idValue, req)
         .map { _ =>
           constructResponse("/idms.createTTPMonitoringCase/", s"$reference.json")
             .getOrElse(NotFound(s"file not found: /idms.createTTPMonitoringCase/$reference.json"))
@@ -243,15 +243,14 @@ class TimeToPayController @Inject() (
     logger.info(s"Request body for idmsCreateSAMonitoringCase: ${request.body}")
     logger.info(s"Request headers for idmsCreateSAMonitoringCase: ${request.headers}")
 
-    val correlationId = getCorrelationIdHeader(request.headers)
-
     withCustomJsonBody[CreateIDMSMonitoringCaseRequestSA] { req =>
       logger.info(
-        s"Received request to create SA IDMS monitoring case with correlationId: $correlationId and idValue: ${req.idValue}"
+        s"Received request to create SA IDMS monitoring case with idValue: ${req.idValue}"
       )
+      val idValue = req.idValue
 
       enactStageRepository
-        .addIDMSStageSA(correlationId, req)
+        .addIDMSStageSA(idValue, req)
         .map { _ =>
           constructResponse("/idms.createSAMonitoringCase/", s"${req.idValue}.json")
             .getOrElse(NotFound(s"file not found: /idms.createSAMonitoringCase/${req.idValue}.json"))
@@ -316,7 +315,7 @@ class TimeToPayController @Inject() (
       val lastName = req.TTP.customer.individual.lastName
       logger.info(s"CDCS create case identifiers are: ${identifiers.mkString(", ")}")
 
-      enactStageRepository.addCDCSStage(getCorrelationIdHeader(request.headers), req).map { _ =>
+      enactStageRepository.addCDCSStage(identifiers.head, req).map { _ =>
         // Match on UTRs
         val byUtr: Option[Result] =
           identifiers.foldLeft(None: Option[Result]) { (acc, identifier) =>
@@ -409,6 +408,12 @@ class TimeToPayController @Inject() (
 
   def enactStage(correlationId: String): Action[AnyContent] = Action.async { request =>
     enactStageRepository.findByCorrelationId(correlationId).map { stage: Option[EnactStage] =>
+      Ok(Json.toJson(stage))
+    }
+  }
+
+  def enactStageByIdValue(idValue: String): Action[AnyContent] = Action.async { request =>
+    enactStageRepository.findByIdValue(idValue).map { stage: Option[EnactStage] =>
       Ok(Json.toJson(stage))
     }
   }
