@@ -52,7 +52,8 @@ case class EnactStage(
   customerCheckAttempts: Option[Int] = None,
   customerCheckStatus: Option[Int] = None,
   hodReferralAttempts: Option[Int] = None,
-  hodReferralStatus: Option[Int] = None
+  hodReferralStatus: Option[Int] = None,
+  combinedStageAttempts: Option[Int] = None
 )
 
 object EnactStage {
@@ -167,7 +168,8 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
         combine(
           set("customerCheckRequest", Codecs.toBson(request)),
           set("customerCheckStatus", statusCode),
-          inc("customerCheckAttempts", 1)
+          inc("customerCheckAttempts", 1),
+          inc("combinedStageAttempts", 1)
         ),
         new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
       )
