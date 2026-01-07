@@ -33,7 +33,6 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import java.io.File
 import java.nio.charset.Charset
-import java.time.LocalDateTime
 import javax.inject.Inject
 import scala.concurrent.{ ExecutionContext, Future }
 import scala.io.Source

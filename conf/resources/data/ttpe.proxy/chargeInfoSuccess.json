@@ -1,0 +1,61 @@
+{
+  "addresses" : [
+    {
+      "addressLine1" : "Address Line 1",
+      "addressLine2" : "Address Line 2",
+      "addressLine3" : "Address Line 3",
+      "addressLine4" : "Address Line 4",
+      "addressType" : "Address Type",
+      "contactDetails" : { },
+      "postCode" : "AB12 3CD",
+      "postcodeHistory" : [
+        {
+          "addressPostcode" : "AB12 3CD",
+          "postcodeDate" : "2020-01-01"
+        }
+      ],
+      "rls" : true
+    }
+  ],
+  "chargeTypeAssessment" : [
+    {
+      "chargeReference" : "CHARGE REFERENCE",
+      "charges" : [
+        {
+          "accruedInterest" : 50,
+          "chargeSource" : "Source",
+          "chargeType" : "charge type",
+          "creationDate" : "2025-07-02",
+          "dueDate" : "2021-01-31",
+          "interestStartDate" : "2020-01-03",
+          "isInterestBearingCharge" : true,
+          "mainType" : "main type",
+          "originalChargeType" : "Original Charge Type",
+          "originalCreationDate" : "2025-07-02",
+          "originalTieBreaker" : "Original Tie Breaker",
+          "outstandingAmount" : 500,
+          "parentMainTrans" : "Parent Main Transaction",
+          "saTaxYearEnd" : "2020-04-05",
+          "subTrans" : "1000",
+          "taxPeriodFrom" : "2020-01-02",
+          "taxPeriodTo" : "2020-12-31",
+          "tieBreaker" : "Tie Breaker"
+        }
+      ],
+      "debtTotalAmount" : 1000,
+      "mainTrans" : "2000",
+      "parentChargeReference" : "PARENT CHARGE REF"
+    }
+  ],
+  "identification" : [
+    {
+      "idType" : "UTR",
+      "idValue" : "chargesInfoSuccess"
+    }
+  ],
+  "individualDetails" : {
+    "customerType" : "MTD(ITSA)",
+    "transitionToCDCS" : true
+  },
+  "processingDateTime" : "2025-07-02T15:00:41.689625"
+}
