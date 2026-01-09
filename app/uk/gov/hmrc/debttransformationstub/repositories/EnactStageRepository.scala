@@ -115,7 +115,7 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
     collection
       .findOneAndUpdate(
         equal("idValue", idValue),
-        combine(set("idmsRequest", Codecs.toBson(request)), inc("idmsAttempts", 1)),
+        combine(set("idmsRequest", Codecs.toBson(request)), inc("idmsAttempts", 1), inc("combinedStageAttempts", 1)),
         new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
       )
       .toFuture()
@@ -127,7 +127,7 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
     collection
       .findOneAndUpdate(
         equal("idValue", idValue),
-        combine(set("idmsRequestSA", Codecs.toBson(request)), inc("idmsAttempts", 1)),
+        combine(set("idmsRequestSA", Codecs.toBson(request)), inc("idmsAttempts", 1), inc("combinedStageAttempts", 1)),
         new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
       )
       .toFuture()
@@ -139,7 +139,7 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
     collection
       .findOneAndUpdate(
         equal("idValue", idValue),
-        combine(set("cdcsRequest", Codecs.toBson(request)), inc("cdcsAttempts", 1)),
+        combine(set("cdcsRequest", Codecs.toBson(request)), inc("cdcsAttempts", 1), inc("combinedStageAttempts", 1)),
         new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
       )
       .toFuture()
