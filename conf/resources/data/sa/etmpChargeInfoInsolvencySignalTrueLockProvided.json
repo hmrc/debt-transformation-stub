@@ -161,8 +161,8 @@
         "accruedInterest": 50000,
         "locks": [
           {
-            "lockType": "Clearing",
-            "lockReason": "Noreallocation"
+            "lockType": "Posting/Clearing",
+            "lockReason": "No Reallocation"
           }
         ]
       }
