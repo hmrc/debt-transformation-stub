@@ -1,0 +1,254 @@
+{
+  "cesaData": {
+    "customer": {
+      "individual": {
+        "title": "Mr",
+        "firstName": "Ben",
+        "lastName": "Thomas",
+        "dateOfBirth": "2014-09-12",
+        "dateOfDeath": "2014-09-12",
+        "identifications": [
+          {
+            "idType": "UTR",
+            "idValue": "multipleChargesWithMissingReferences"
+          }
+        ]
+      }
+    },
+    "addresses": [
+      {
+        "addressType": "string",
+        "addressLine1": "string",
+        "addressLine2": "string",
+        "addressLine3": "string",
+        "addressLine4": "string",
+        "rls": true
+      }
+    ],
+    "filings": [
+      {
+        "icrCategory": "string",
+        "icrDescription": "string",
+        "fromDate": "2014-09-12",
+        "toDate": "2014-09-12",
+        "dueDate": "2014-09-12"
+      }
+    ],
+    "charges": [
+      {
+        "chargeType": "LPI",
+        "UTR": "multipleChargesWithMissingReferences",
+        "tieBreaker": "0002",
+        "creationDate": "2022-07-03",
+        "originalCreationDate": "2022-06-03",
+        "saTaxYearEnd": "2023-03-05",
+        "originalChargeType": "BCD",
+        "originalTieBreaker": "0001",
+        "mainType": "Charge 1",
+        "mainTrans": "4000",
+        "parentMainTrans": "4000",
+        "subTrans": "1005",
+        "taxPeriodFrom": "2022-02-06",
+        "taxPeriodTo": "2022-03-05",
+        "dueDate": "<DUE_DATE>",
+        "interestStartDate": "2022-03-05",
+        "outstandingAmount": 3000.00,
+        "accruedInterest": 500.00
+      },
+      {
+        "chargeType": "SA Payment on Account 1",
+        "UTR": "multipleChargesWithMissingReferences",
+        "tieBreaker": "1234",
+        "creationDate": "2024-03-15",
+        "originalCreationDate": "2024-03-15",
+        "saTaxYearEnd": "2024-03-15",
+        "originalChargeType": "Ab23",
+        "originalTieBreaker": "1234",
+        "mainType": "NIC4-GB",
+        "mainTrans": "4910",
+        "subTrans": "1096",
+        "taxPeriodFrom": "2024-03-15",
+        "taxPeriodTo": "2024-03-15",
+        "chargeReference": "7QIT8",
+        "dueDate": "2024-03-15",
+        "interestStartDate": "2024-03-15",
+        "outstandingAmount": 10000,
+        "accruedInterest": 1000
+      },
+      {
+        "chargeType": "SA Payment on Account 2",
+        "UTR": "multipleChargesWithMissingReferences",
+        "tieBreaker": "1234",
+        "creationDate": "2024-03-15",
+        "originalCreationDate": "2024-03-15",
+        "saTaxYearEnd": "2024-03-15",
+        "originalChargeType": "Ab23",
+        "originalTieBreaker": "1234",
+        "mainType": "ITSA England & NI",
+        "mainTrans": "4930",
+        "subTrans": "1011",
+        "taxPeriodFrom": "2024-03-15",
+        "taxPeriodTo": "2024-03-15",
+        "chargeReference": "SAPAY1",
+        "dueDate": "2024-03-15",
+        "interestStartDate": "2024-03-15",
+        "outstandingAmount": 800,
+        "accruedInterest": 200
+      },
+      {
+        "chargeType": "LPI",
+        "UTR": "multipleChargesWithMissingReferences",
+        "tieBreaker": "0002",
+        "creationDate": "2022-07-03",
+        "saTaxYearEnd": "2023-03-05",
+        "mainType": "Charge 2",
+        "mainTrans": "4000",
+        "parentMainTrans": "4000",
+        "subTrans": "1046",
+        "taxPeriodFrom": "2022-02-06",
+        "taxPeriodTo": "2022-03-05",
+        "dueDate": "<DUE_DATE>",
+        "interestStartDate": "2022-03-05",
+        "outstandingAmount": 3000.00,
+        "accruedInterest": 500.00
+      }
+    ],
+    "responseCode": {
+      "timestamp": "2024-02-28T11:43:56.235Z",
+      "httpCode": 200,
+      "reasonCode": "002",
+      "description": "success"
+    }
+  },
+  "etmpData": {
+    "customer": {
+      "individual": {
+        "title": "Mr",
+        "firstName": "Ben",
+        "lastName": "Thomas",
+        "dateOfBirth": "2024-03-15",
+        "dateOfDeath": "2024-03-15",
+        "districtNumber": "206809",
+        "identifications": [
+          {
+            "idType": "UTR",
+            "idValue": "SA123545"
+          }
+        ]
+      }
+    },
+    "signals": [
+      {
+        "signalType": "string",
+        "signalValue": "string",
+        "signalDescription": "string"
+      }
+    ],
+    "addresses": [
+      {
+        "addressType": "string",
+        "addressLine1": "string",
+        "addressLine2": "string",
+        "addressLine3": "string",
+        "addressLine4": "string",
+        "rls": true,
+        "contactDetails": {
+          "telephoneNumber": "0302 400 4859",
+          "fax": "0302 989 2453",
+          "mobile": "7984958691",
+          "email": "agent1@gmail.com"
+        },
+        "postCode": "string",
+        "postcodeHistory": [
+          {
+            "addressPostcode": "string",
+            "postcodeDate": "2024-03-15"
+          }
+        ]
+      }
+    ],
+    "filings": [
+      {
+        "icrCategory": "SA",
+        "icrDescription": "SA Return",
+        "fromDate": "2024-03-15",
+        "toDate": "2024-03-15",
+        "dueDate": "2024-03-15"
+      }
+    ],
+    "charges": [
+      {
+        "chargeType": "SA Late Payment interest",
+        "mainType": "ITSA NIC4 Interest GB",
+        "mainTrans": "6010",
+        "subTrans": "1605",
+        "UTR": "73",
+        "taxPeriodFrom": "2022-02-06",
+        "taxPeriodTo": "2022-03-05",
+        "dueDate": "<DUE_DATE>",
+        "tieBreaker": "4321",
+        "creationDate": "2022-03-05",
+        "saTaxYearEnd": "2022-03-05",
+        "originalChargeType": "string",
+        "originalTieBreaker": "1234",
+        "chargeReference": "XM123456789812",
+        "parentChargeReference": "7QIT8",
+        "parentMainTrans": "4910",
+        "outstandingAmount": 4000.00,
+        "accruedInterest": 500.00
+      },
+      {
+        "chargeType": "SA Late Payment interest",
+        "mainType": "ITSA Interest England",
+        "mainTrans": "6010",
+        "subTrans": "1555",
+        "UTR": "73",
+        "taxPeriodFrom": "2022-02-06",
+        "taxPeriodTo": "2022-03-05",
+        "dueDate": "<DUE_DATE>",
+        "tieBreaker": "4321",
+        "creationDate": "2022-03-05",
+        "saTaxYearEnd": "2022-03-05",
+        "originalChargeType": "string",
+        "originalTieBreaker": "1234",
+        "chargeReference": "XM123456789812",
+        "parentChargeReference": "7QIT8",
+        "parentMainTrans": "4910",
+        "outstandingAmount": 3000.00,
+        "accruedInterest": 500.00
+      },
+      {
+        "chargeType": "SA Payment on Account 2",
+        "UTR": "7529526482",
+        "tieBreaker": "1234",
+        "creationDate": "2024-03-15",
+        "originalCreationDate": "2024-03-15",
+        "saTaxYearEnd": "2024-03-15",
+        "originalChargeType": "Ab23",
+        "originalTieBreaker": "1234",
+        "mainType": "NIC4-GB",
+        "mainTrans": "4930",
+        "subTrans": "1005",
+        "taxPeriodFrom": "2024-03-15",
+        "taxPeriodTo": "2024-03-15",
+        "chargeReference": "SAPAY1",
+        "dueDate": "2024-03-15",
+        "interestStartDate": "2024-03-15",
+        "outstandingAmount": 700,
+        "accruedInterest": 300
+      }
+    ],
+    "responseCode": {
+      "timestamp": "2024-02-28T11:43:56.235Z",
+      "httpCode": 200,
+      "reasonCode": "003",
+      "description": "success"
+    }
+  },
+  "responseCode": {
+    "timestamp": "2024-02-28T11:43:56.235Z",
+    "httpCode": 200,
+    "reasonCode": "003",
+    "description": "Retrieved successfully"
+  }
+}
