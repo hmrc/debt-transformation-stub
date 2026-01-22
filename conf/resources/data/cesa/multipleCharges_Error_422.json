@@ -1,0 +1,4 @@
+{
+  "code": 422,
+  "details": "Unprocessable - At least one of the submitted debits could not be processed."
+}

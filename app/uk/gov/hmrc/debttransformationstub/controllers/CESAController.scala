@@ -53,8 +53,14 @@ class CESAController @Inject() (environment: Environment, cc: ControllerComponen
 
           maybeFileContent match {
             case Success(value) =>
-              // Might throw if parsing fails
-              Future.successful(Ok(Json.parse(value)))
+              val json = Json.parse(value)
+              val result = file.getName match {
+                case "multipleCharges_Error_401.json" => Unauthorized(json)
+                case "multipleCharges_Error_422.json" => UnprocessableEntity(json)
+                case "multipleCharges_Error_502.json" => BadGateway(json)
+                case _                                => Ok(json)
+              }
+              Future.successful(result)
             case Failure(exception) =>
               logger.error(s"Failed to parse the file $file", exception)
               Future.successful(InternalServerError(s"Stub failed to parse file $file"))
@@ -62,5 +68,4 @@ class CESAController @Inject() (environment: Environment, cc: ControllerComponen
       }
     }
   }
-
 }
