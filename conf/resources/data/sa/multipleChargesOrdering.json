@@ -10,7 +10,7 @@
         "identifications": [
           {
             "idType": "UTR",
-            "idValue": "multipleChargesWithMissingReferences"
+            "idValue": "multipleChargesOrdering"
           }
         ]
       }
@@ -37,7 +37,7 @@
     "charges": [
       {
         "chargeType": "LPI",
-        "UTR": "multipleChargesWithMissingReferences",
+        "UTR": "multipleChargesOrdering",
         "tieBreaker": "0002",
         "creationDate": "2022-07-03",
         "originalCreationDate": "2022-06-03",
@@ -57,7 +57,7 @@
       },
       {
         "chargeType": "SA Payment on Account 1",
-        "UTR": "multipleChargesWithMissingReferences",
+        "UTR": "multipleChargesOrdering",
         "tieBreaker": "1234",
         "creationDate": "2024-03-15",
         "originalCreationDate": "2024-03-15",
@@ -76,29 +76,26 @@
         "accruedInterest": 1000
       },
       {
-        "chargeType": "SA Payment on Account 2",
-        "UTR": "multipleChargesWithMissingReferences",
-        "tieBreaker": "1234",
-        "creationDate": "2024-03-15",
-        "originalCreationDate": "2024-03-15",
-        "saTaxYearEnd": "2024-03-15",
-        "originalChargeType": "Ab23",
-        "originalTieBreaker": "1234",
-        "mainType": "ITSA England & NI",
-        "mainTrans": "4930",
-        "subTrans": "1011",
-        "taxPeriodFrom": "2024-03-15",
-        "taxPeriodTo": "2024-03-15",
-        "chargeReference": "SAPAY1",
-        "dueDate": "2024-03-15",
-        "interestStartDate": "2024-03-15",
-        "outstandingAmount": 800,
-        "accruedInterest": 200
+        "chargeType": "LPI",
+        "UTR": "multipleChargesOrdering",
+        "tieBreaker": "0002",
+        "creationDate": "2022-07-03",
+        "saTaxYearEnd": "2023-03-05",
+        "mainType": "Charge 2",
+        "mainTrans": "4000",
+        "parentMainTrans": "4000",
+        "subTrans": "1046",
+        "taxPeriodFrom": "2022-02-06",
+        "taxPeriodTo": "2022-03-05",
+        "dueDate": "<DUE_DATE>",
+        "interestStartDate": "2022-03-05",
+        "outstandingAmount": 3000.00,
+        "accruedInterest": 500.00
       },
       {
-        "chargeType": "LPI",
-        "UTR": "multipleChargesWithMissingReferences",
-        "tieBreaker": "0002",
+        "chargeType": "SUR1",
+        "UTR": "multipleChargesOrdering",
+        "tieBreaker": "0001",
         "creationDate": "2022-07-03",
         "saTaxYearEnd": "2023-03-05",
         "mainType": "Charge 2",
@@ -216,26 +213,6 @@
         "parentMainTrans": "4910",
         "outstandingAmount": 3000.00,
         "accruedInterest": 500.00
-      },
-      {
-        "chargeType": "SA Payment on Account 2",
-        "UTR": "7529526482",
-        "tieBreaker": "1234",
-        "creationDate": "2024-03-15",
-        "originalCreationDate": "2024-03-15",
-        "saTaxYearEnd": "2024-03-15",
-        "originalChargeType": "Ab23",
-        "originalTieBreaker": "1234",
-        "mainType": "NIC4-GB",
-        "mainTrans": "4930",
-        "subTrans": "1005",
-        "taxPeriodFrom": "2024-03-15",
-        "taxPeriodTo": "2024-03-15",
-        "chargeReference": "SAPAY1",
-        "dueDate": "2024-03-15",
-        "interestStartDate": "2024-03-15",
-        "outstandingAmount": 700,
-        "accruedInterest": 300
       }
     ],
     "responseCode": {

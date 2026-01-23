@@ -1,7 +1,7 @@
 {
   "debitIdentifiers": [
     {
-      "UTR": "multipleChargesWithMissingReferences",
+      "UTR": "multipleChargesOrdering",
       "saTaxYearEnd": 2023,
       "creationDate": "2022-07-03",
       "chargeType": "LPI",
@@ -14,7 +14,7 @@
       "processingOutcome": "E"
     },
     {
-      "UTR": "multipleChargesWithMissingReferences",
+      "UTR": "multipleChargesOrdering",
       "saTaxYearEnd": 2023,
       "creationDate": "2022-07-03",
       "chargeType": "LPI",
@@ -22,6 +22,18 @@
       "originalCreationDate": "2022-06-03",
       "originalTieBreaker": "0001",
       "chargeReference": "MissingRef1",
+      "parentChargeReference": "K0000000000001",
+      "processingOutcome": "E"
+    },
+    {
+      "UTR": "multipleChargesOrdering",
+      "saTaxYearEnd": 2023,
+      "creationDate": "2022-07-03",
+      "chargeType": "SUR1",
+      "tieBreaker": "0001",
+      "originalCreationDate": "2022-06-03",
+      "originalTieBreaker": "0001",
+      "chargeReference": "MissingRef2",
       "parentChargeReference": "K0000000000001",
       "processingOutcome": "E"
     }
