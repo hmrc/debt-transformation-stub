@@ -58,7 +58,6 @@ object CdcsCreateCaseRequest {
     duration: Option[CdcsCreateCaseRequestPlanDuration],
     initialPaymentMethod: Option[CdcsCreateCaseRequestPaymentMethod],
     initialPaymentReference: Option[CdcsCreateCaseRequestInitialPaymentReference],
-    totalLiabilityAmount: Option[CdcsCreateCaseRequestTotalLiabilityAmount],
     initialPaymentAmount: Option[CdcsCreateCaseRequestInitialPaymentAmount],
     initialPaymentDate: Option[CdcsCreateCaseRequestInitialPaymentDate],
     paymentPlanType: Option[CdcsCreateCaseRequestPaymentPlanType],

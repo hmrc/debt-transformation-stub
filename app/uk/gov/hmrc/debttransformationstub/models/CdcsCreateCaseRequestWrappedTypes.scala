@@ -209,13 +209,6 @@ object CdcsCreateCaseRequestWrappedTypes {
       Json.valueFormat[CdcsCreateCaseRequestTotalDebtIncInt]
   }
 
-  final case class CdcsCreateCaseRequestTotalLiabilityAmount(value: BigInt)
-
-  object CdcsCreateCaseRequestTotalLiabilityAmount {
-    implicit val format: Format[CdcsCreateCaseRequestTotalLiabilityAmount] =
-      Json.valueFormat[CdcsCreateCaseRequestTotalLiabilityAmount]
-  }
-
   final case class CdcsCreateCaseRequestTotalInterest(value: BigInt)
   object CdcsCreateCaseRequestTotalInterest {
     implicit val format: Format[CdcsCreateCaseRequestTotalInterest] =
