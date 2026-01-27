@@ -38,10 +38,12 @@ class HodReferralController @Inject() (
   private lazy val logger = new RequestAwareLogger(this.getClass)
 
   def processEncryptedReferrals(): Action[JsValue] = Action.async(parse.json) { implicit rawRequest: Request[JsValue] =>
-    logger.info(s"processEncryptedReferrals request isssss ${rawRequest.body}")
+    val correlationId = getCorrelationIdHeader(rawRequest.headers)
+    logger.info(s"[DEBUG] HOD Referral called with correlationId=$correlationId")
+    logger.info(s"[DEBUG] processEncryptedReferrals request is ${rawRequest.body}")
 
     withCustomJsonBody[HodReferralRequest] { request =>
-      logger.info(s"[DEBUG] HodReferral requestt: ${Json.toJson(request)}")
+      logger.info(s"[DEBUG] HodReferral request: ${Json.toJson(request)}")
 
       // Attempt to decrypt the message content
       val decryptedXml = decryptionService.decrypt(request)
@@ -55,7 +57,7 @@ class HodReferralController @Inject() (
 
       // Record the request in the repository (including decrypted content if available)
       enactStageRepository
-        .addHodReferralStage(idValue, request, 200, decryptedXml)
+        .addHodReferralStage(idValue, correlationId, request, 200, decryptedXml)
         .map { _ =>
           logger.info(s"[DEBUG] HodReferral stage recorded in EnactStage repository with status 200")
 

@@ -178,12 +178,14 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
 
   def addHodReferralStage(
     idValue: String,
+    correlationId: String,
     request: HodReferralRequest,
     statusCode: Int,
     decryptedXml: Option[String] = None
   ): Future[EnactStage] = {
     logger.warn(s"Recording HodReferral stage request $idValue with status code $statusCode")
     val updates = Seq(
+      set("correlationId", correlationId),
       set("hodReferralRequest", Codecs.toBson(request)),
       set("hodReferralStatus", statusCode),
       inc("hodReferralAttempts", 1)
