@@ -17,13 +17,6 @@
         ]
       }
     },
-    "signals": [
-      {
-        "signalType": "string",
-        "signalValue": "string",
-        "signalDescription": "string"
-      }
-    ],
     "addresses": [
       {
         "addressType": "string",
@@ -147,7 +140,7 @@
       {
         "chargeType": "In Year RTI Charge - Tax",
         "ddInProgress": "true",
-        "mainType": "string",
+        "mainType": "Charge 1",
         "mainTrans": "5100",
         "parentMainTrans": "Kk9Y",
         "subTrans": "1553",
