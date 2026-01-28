@@ -20,7 +20,7 @@
     "signals": [
       {
         "signalType": "Insolvent",
-        "signalValue": "false",
+        "signalValue": "N",
         "signalDescription": "CESA Signal Insolvent False"
       }
     ],
