@@ -30,7 +30,7 @@
     "signals": [
       {
         "signalType": "Welsh Language Signal",
-        "signalValue": "False",
+        "signalValue": "false",
         "signalDescription": "CESA Welsh Language Signal"
       }
     ],
