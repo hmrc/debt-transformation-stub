@@ -382,7 +382,6 @@ class TimeToPayController @Inject() (
       val testDataPackage = "/cesa.createRequest/"
       val maybeUtrIdentifier = req.identifications.find(_.idType == "UTR").map(_.idValue)
       val startDate = req.ttpStartDate
-      logger.info(">>>>>>>>>>>>")
       def respond(fileName: String, status: ResultStatus): Option[Result] = {
         logger.info(s"Preparing response for file: $fileName with status: ${status.header.status}")
         constructResponse(testDataPackage, fileName).map { baseResult =>
