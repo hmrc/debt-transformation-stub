@@ -212,8 +212,20 @@ class TimeToPayController @Inject() (
       enactStageRepository
         .addETMPStage(correlationId, req) // Future[Unit]
         .map { _ =>
-          constructResponse("/etmp.executePaymentLock/", s"${req.idValue}.json")
-            .getOrElse(NotFound(s"file not found: /etmp.executePaymentLock/${req.idValue}.json"))
+          (req.idType.toUpperCase, req.idValue) match {
+            case ("UTR", "etmpCreateRequestFailure_400") =>
+              logger.info("ETMP executePaymentLock: returning 400 for UTR etmpCreateRequestFailure_400")
+              Results.BadRequest
+            case ("UTR", "etmpCreateRequestFailure_422") =>
+              logger.info("ETMP executePaymentLock: returning 422 for UTR etmpCreateRequestFailure_422")
+              Results.UnprocessableEntity
+            case ("UTR", "etmpCreateRequestFailure_500") =>
+              logger.info("ETMP executePaymentLock: returning 500 for UTR etmpCreateRequestFailure_500")
+              Results.InternalServerError
+            case _ =>
+              constructResponse("/etmp.executePaymentLock/", s"${req.idValue}.json")
+                .getOrElse(NotFound(s"file not found: /etmp.executePaymentLock/${req.idValue}.json"))
+          }
         }
     }
   }
@@ -367,11 +379,11 @@ class TimeToPayController @Inject() (
 
   // Call made to CESA for the routes: /inform and /full-amend of time-to-pay
   def cesaCreateRequest(): Action[JsValue] = Action.async(parse.json) { implicit request =>
-    withCustomJsonBody[CesaCreateRequest] { req =>
+    withCustomJsonBody[CesaEtmpCreateRequest] { req =>
       val testDataPackage = "/cesa.createRequest/"
       val maybeUtrIdentifier = req.identifications.find(_.idType == "UTR").map(_.idValue)
       val startDate = req.ttpStartDate
-
+      logger.info(">>>>>>>>>>>>")
       def respond(fileName: String, status: ResultStatus): Option[Result] = {
         logger.info(s"Preparing response for file: $fileName with status: ${status.header.status}")
         constructResponse(testDataPackage, fileName).map { baseResult =>

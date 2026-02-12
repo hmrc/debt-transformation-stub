@@ -18,7 +18,7 @@ package uk.gov.hmrc.debttransformationstub.models
 
 import play.api.libs.json.{ Format, Json, OFormat }
 
-case class CesaCreateRequest(
+case class CesaEtmpCreateRequest(
   identifications: List[CESAIdentification],
   transitionedIndicator: Option[Boolean],
   ttpStartDate: Option[String],
@@ -40,6 +40,6 @@ object CESAIdentification {
 
 }
 
-object CesaCreateRequest {
-  implicit val format: OFormat[CesaCreateRequest] = Json.format[CesaCreateRequest]
+object CesaEtmpCreateRequest {
+  implicit val format: OFormat[CesaEtmpCreateRequest] = Json.format[CesaEtmpCreateRequest]
 }
