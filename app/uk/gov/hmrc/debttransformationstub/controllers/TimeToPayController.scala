@@ -378,6 +378,56 @@ class TimeToPayController @Inject() (
     }
   }
 
+  def etmpExecuteRemoveCharge: Action[JsValue] = Action.async(parse.json) { implicit request =>
+//    val correlationId = getCorrelationIdHeader(request.headers)
+//
+//    withCustomJsonBody[EtmpRemoveChargeRequest] { removeChargeReq =>
+//      enactStageRepository
+//        .addETMPRemoveChargeStage(correlationId, removeChargeReq)
+//        .map { _ =>
+//          constructResponse("/etmp.removeCharge/", s"${removeChargeReq.idValue}.json")
+//            .getOrElse(NotFound(s"file not found: /etmp.removeCharge/${removeChargeReq.idValue}.json"))
+//        }
+//    }
+    withCustomJsonBody[EtmpRemoveChargeRequest] { req =>
+      val testDataPackage = "/etmp.removeCharge/"
+      val maybeUtrIdentifier = req.identifications.find(_.idType == "UTR").map(_.idValue)
+      val startDate = req.ttpStartDate
+
+      def respond(fileName: String, status: ResultStatus): Option[Result] = {
+        logger.info(s"Preparing response for file: $fileName with status: ${status.header.status}")
+        constructResponse(testDataPackage, fileName).map { baseResult =>
+          val requestedCode = status.header.status
+          baseResult.copy(header = baseResult.header.copy(status = requestedCode))
+        }
+      }
+
+      enactStageRepository.addCESAStage(getCorrelationIdHeader(request.headers), req).map { _ =>
+        // Match on UTRs
+        val byUtr: Option[Result] = maybeUtrIdentifier.flatMap {
+          case "1062431399" => respond("cesaCreateRequestFailure_400.json", Results.InternalServerError)
+          case "3193095982" => respond("cesaCreateRequestFailure_400.json", Results.BadRequest)
+          case "8625159625" => respond("8625159625.json", Results.UnprocessableEntity)
+          case utr          => respond(s"$utr.json", Results.Ok)
+        }
+
+        // 🧠 Only check startDate if there were no UTR matches
+        val finalResult: Option[Result] =
+          if (byUtr.isDefined) byUtr
+          else {
+            startDate match {
+              case Some("2019-06-08") => respond("cesaCreateRequestFailure_502.json", Results.BadGateway)
+              case Some("2020-06-08") => respond("cesaCreateRequestFailure_400.json", Results.BadRequest)
+              case Some("2021-06-08") => respond("cesaCreateRequestFailure_409.json", Results.Conflict)
+              case Some("2025-06-01") => respond("cesaCreateRequestFailure_404.json", Results.NotFound)
+              case _                  => respond("cesaCreateRequestSuccessResponse.json", Results.Ok)
+            }
+          }
+        finalResult.getOrElse(Results.NotFound("file not found"))
+      }
+    }
+  }
+
   // Call made to CESA for the routes: /inform and /full-amend of time-to-pay
   def cesaRequest(): Action[JsValue] = Action.async(parse.json) { implicit request =>
     withCustomJsonBody[CesaRequest] { req =>

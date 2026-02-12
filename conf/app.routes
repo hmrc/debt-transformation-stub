@@ -79,3 +79,5 @@ POST          /debts/time-to-pay/charge-info                                    
 
 # HoD Referral stub (without encryption at this stage)
 POST          /npswm/prsup/PRRestService/NPSWMReferrals/v1/processEncryptedReferrals                 uk.gov.hmrc.debttransformationstub.controllers.HodReferralController.processEncryptedReferrals()
+
+PUT          /RESTAdapter/essttp/charges                                                             uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.etmpExecuteRemoveCharge()

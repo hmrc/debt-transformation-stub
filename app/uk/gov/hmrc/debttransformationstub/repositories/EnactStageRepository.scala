@@ -109,6 +109,17 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
       .toFuture()
   }
 
+  def addETMPRemoveChargeStage(correlationId: String, request: EtmpRemoveChargeRequest): Future[EnactStage] = {
+    logger.warn(s"Recording ETMP Remove Charge stage request $correlationId")
+    collection
+      .findOneAndUpdate(
+        equal("correlationId", correlationId),
+        combine(set("etmpRemoveChargeRequest", Codecs.toBson(request)), inc("etmpRemoveChargeAttempts", 1)),
+        new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
+      )
+      .toFuture()
+  }
+
   def addIDMSStage(idValue: String, request: CreateIDMSMonitoringCaseRequest): Future[EnactStage] = {
     logger.info(s"Recording IDMS stage request $idValue")
     logger.info(s"IDMS Request being recorded: ${Json.prettyPrint(Json.toJson(request))}")
