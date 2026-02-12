@@ -214,13 +214,12 @@ class TimeToPayController @Inject() (
         .map { _ =>
           (req.idType.toUpperCase, req.idValue) match {
             case ("UTR", "etmpCreateRequestFailure_400") =>
-              logger.info("ETMP executePaymentLock: returning 400 for UTR etmpCreateRequestFailure_400")
               Results.BadRequest
             case ("UTR", "etmpCreateRequestFailure_422") =>
-              logger.info("ETMP executePaymentLock: returning 422 for UTR etmpCreateRequestFailure_422")
               Results.UnprocessableEntity
             case ("UTR", "etmpCreateRequestFailure_500") =>
-              logger.info("ETMP executePaymentLock: returning 500 for UTR etmpCreateRequestFailure_500")
+              Results.InternalServerError
+            case ("UTR", "error-500-stub") =>
               Results.InternalServerError
             case _ =>
               constructResponse("/etmp.executePaymentLock/", s"${req.idValue}.json")
