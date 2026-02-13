@@ -377,8 +377,8 @@ class TimeToPayController @Inject() (
   }
 
   // Call made to CESA for the routes: /inform and /full-amend of time-to-pay
-  def cesaCreateRequest(): Action[JsValue] = Action.async(parse.json) { implicit request =>
-    withCustomJsonBody[CesaEtmpCreateRequest] { req =>
+  def cesaRequest(): Action[JsValue] = Action.async(parse.json) { implicit request =>
+    withCustomJsonBody[CesaRequest] { req =>
       val testDataPackage = "/cesa.createRequest/"
       val maybeUtrIdentifier = req.identifications.find(_.idType == "UTR").map(_.idValue)
       val startDate = req.ttpStartDate
