@@ -311,12 +311,14 @@ class TimeToPayController @Inject() (
             Results.InternalServerError("intentional stubbed 500")
 
           case CdcsCreateCaseRequestLastName("STUB_FAILURE_400") =>
-            val result = constructResponseHandlingNotFound(testDataPackage, "cdcsCreateCaseFailure_400.json")
-            result.copy(header = result.header.copy(status = BAD_REQUEST))
+            constructResponse(testDataPackage, "cdcsCreateCaseFailure_400.json")
+              .map(res => res.copy(header = res.header.copy(status = BAD_REQUEST)))
+              .getOrElse(NotFound(s"Could not find file from $testDataPackage/cdcsCreateCaseFailure_400.json"))
 
           case CdcsCreateCaseRequestLastName("STUB_FAILURE_422") =>
-            val result = constructResponseHandlingNotFound(testDataPackage, "cdcsCreateCaseFailure_422.json")
-            result.copy(header = result.header.copy(status = UNPROCESSABLE_ENTITY))
+            constructResponse(testDataPackage, "cdcsCreateCaseFailure_422.json")
+              .map(res => res.copy(header = res.header.copy(status = UNPROCESSABLE_ENTITY)))
+              .getOrElse(NotFound(s"Could not find file from $testDataPackage/cdcsCreateCaseFailure_422.json"))
 
           case _ =>
             val result = constructResponseHandlingNotFound(testDataPackage, "cdcsCreateCaseSuccessResponse.json")
