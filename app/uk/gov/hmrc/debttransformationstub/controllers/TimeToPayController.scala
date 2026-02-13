@@ -260,7 +260,7 @@ class TimeToPayController @Inject() (
 
       // Identify the UTR or single identifier
       val maybeUtrIdentifier: Option[String] =
-          req.identifications.find(_.idType == "UTR").map(_.idValue)
+        req.identifications.find(_.idType == "UTR").map(_.idValue)
 
       // Build the response with the desired status
       def respond(fileName: String, status: ResultStatus): Result = {
@@ -305,7 +305,7 @@ class TimeToPayController @Inject() (
       val lastName: CdcsCreateCaseRequestLastName = req.TTP.customer.individual.lastName
       logger.info(s"CDCS create case identifiers are: ${identifications.mkString(", ")}")
 
-      def fromLastName: Result = {
+      def fromLastName: Result =
         lastName match {
           case CdcsCreateCaseRequestLastName("STUB_FAILURE_500") =>
             Results.InternalServerError("intentional stubbed 500")
@@ -322,7 +322,6 @@ class TimeToPayController @Inject() (
             val result = constructResponseHandlingNotFound(testDataPackage, "cdcsCreateCaseSuccessResponse.json")
             result.copy(header = result.header.copy(status = OK))
         }
-      }
 
       identifications match {
         case Nil => Future.successful(Results.BadRequest("No identifications supplied"))
@@ -373,13 +372,12 @@ class TimeToPayController @Inject() (
         val requestedCode = status.header.status
         val initialResult: Either[FileNotFoundError, Result] = constructResponse(testDataPackage, fileName)
 
-        initialResult.map {
-          value => value.copy(header = value.header.copy(status = requestedCode))
+        initialResult.map { value =>
+          value.copy(header = value.header.copy(status = requestedCode))
         }
       }
 
       enactStageRepository.addCESAStage(getCorrelationIdHeader(request.headers), req).map { _ =>
-
         val maybeByUtr: Option[Either[FileNotFoundError, Result]] = maybeUtrIdentifier.map {
           case "1062431399" => respond("cesaCreateRequestFailure_400.json", Results.InternalServerError)
           case "3193095982" => respond("cesaCreateRequestFailure_400.json", Results.BadRequest)
@@ -388,25 +386,26 @@ class TimeToPayController @Inject() (
             respond(s"$utr.json", Results.Ok)
         }
 
-        def maybeByStartDate: Either[FileNotFoundError, Result] = {
+        def maybeByStartDate: Either[FileNotFoundError, Result] =
           startDate match {
             case Some("2019-06-08") => respond("cesaCreateRequestFailure_502.json", Results.BadGateway)
             case Some("2020-06-08") => respond("cesaCreateRequestFailure_400.json", Results.BadRequest)
             case Some("2021-06-08") => respond("cesaCreateRequestFailure_409.json", Results.Conflict)
             case Some("2025-06-01") => respond("cesaCreateRequestFailure_404.json", Results.NotFound)
-            case _ => respond("cesaCreateRequestSuccessResponse.json", Results.Ok)
+            case _                  => respond("cesaCreateRequestSuccessResponse.json", Results.Ok)
           }
-        }
 
         maybeByUtr match {
           case None =>
             maybeByStartDate match {
-              case Left(error) => Results.NotFound(s"UTR is missing and could not find file from startDate\n errors:\n$error")
+              case Left(error) =>
+                Results.NotFound(s"UTR is missing and could not find file from startDate\n errors:\n$error")
               case Right(value) => value
             }
           case Some(Left(error1)) =>
             maybeByStartDate match {
-              case Left(error2) => Results.NotFound(s"Could not find file from UTR or startDate\n errors:\n $error1\n$error2")
+              case Left(error2) =>
+                Results.NotFound(s"Could not find file from UTR or startDate\n errors:\n $error1\n$error2")
               case Right(value) => value
             }
           case Some(Right(value)) =>
@@ -442,7 +441,7 @@ class TimeToPayController @Inject() (
 
       // Identify the UTR
       val maybeUtrIdentifier: Option[String] =
-          req.identifications.find(_.idType == "UTR").map(_.idValue)
+        req.identifications.find(_.idType == "UTR").map(_.idValue)
 
       // Build the response with the desired status
       def respond(fileName: String, status: ResultStatus): Result = {
@@ -475,8 +474,8 @@ class TimeToPayController @Inject() (
       val msg = Json.obj(
         "errors" -> Json.obj(
           "processingDateTime" -> "2024-04-11T10:07:55.749038Z",
-          "code" -> "BAD_REQUEST",
-          "text" -> "idType: must match \"^[A-Z0-9]{1,6}$\""
+          "code"               -> "BAD_REQUEST",
+          "text"               -> "idType: must match \"^[A-Z0-9]{1,6}$\""
         )
       )
       logger.info(s"Status $BAD_REQUEST, message: ${Json.stringify(msg)}")
@@ -504,7 +503,9 @@ class TimeToPayController @Inject() (
 
   }
 
-  private def constructResponse(path: String, fileName: String)(implicit hc: HeaderCarrier): Either[FileNotFoundError, Result] = {
+  private def constructResponse(path: String, fileName: String)(implicit
+    hc: HeaderCarrier
+  ): Either[FileNotFoundError, Result] = {
     logger.info(s"constructResponse() → Attempting to match on prefix: $path$fileName")
 
     if (fileName.startsWith("PA400")) {
