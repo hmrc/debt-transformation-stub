@@ -212,8 +212,19 @@ class TimeToPayController @Inject() (
       enactStageRepository
         .addETMPStage(correlationId, req) // Future[Unit]
         .map { _ =>
-          constructResponse("/etmp.executePaymentLock/", s"${req.idValue}.json")
-            .getOrElse(NotFound(s"file not found: /etmp.executePaymentLock/${req.idValue}.json"))
+          (req.idType.toUpperCase, req.idValue) match {
+            case ("UTR", "etmpCreateRequestFailure_400") =>
+              Results.BadRequest
+            case ("UTR", "etmpCreateRequestFailure_422") =>
+              Results.UnprocessableEntity
+            case ("UTR", "etmpCreateRequestFailure_500") =>
+              Results.InternalServerError
+            case ("UTR", "error-500-stub") =>
+              Results.InternalServerError
+            case _ =>
+              constructResponse("/etmp.executePaymentLock/", s"${req.idValue}.json")
+                .getOrElse(NotFound(s"file not found: /etmp.executePaymentLock/${req.idValue}.json"))
+          }
         }
     }
   }
@@ -366,12 +377,11 @@ class TimeToPayController @Inject() (
   }
 
   // Call made to CESA for the routes: /inform and /full-amend of time-to-pay
-  def cesaCreateRequest(): Action[JsValue] = Action.async(parse.json) { implicit request =>
-    withCustomJsonBody[CesaCreateRequest] { req =>
+  def cesaRequest(): Action[JsValue] = Action.async(parse.json) { implicit request =>
+    withCustomJsonBody[CesaRequest] { req =>
       val testDataPackage = "/cesa.createRequest/"
       val maybeUtrIdentifier = req.identifications.find(_.idType == "UTR").map(_.idValue)
       val startDate = req.ttpStartDate
-
       def respond(fileName: String, status: ResultStatus): Option[Result] = {
         logger.info(s"Preparing response for file: $fileName with status: ${status.header.status}")
         constructResponse(testDataPackage, fileName).map { baseResult =>
