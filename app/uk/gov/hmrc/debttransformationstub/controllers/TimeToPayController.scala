@@ -155,7 +155,7 @@ class TimeToPayController @Inject() (
         req.identification.find(pred).map(_.idValue).toRight(BadRequest(missingMsg))
 
       def fileResponse(id: String): Result =
-        constructResponseHandlingNotFound("/ndds.enactArrangement/", s"$id.json")
+        handleNotFound(constructResponse("/ndds.enactArrangement/", s"$id.json"))
 
       val idEither: Either[Result, String] =
         if (services.contains("PAYE"))
@@ -193,7 +193,7 @@ class TimeToPayController @Inject() (
         enactStageRepository
           .addPegaStage(correlationId, req) // Future[Unit]
           .map { _ =>
-            constructResponseHandlingNotFound("/pega.updateCase/", s"$caseId.json")
+            handleNotFound(constructResponse("/pega.updateCase/", s"$caseId.json"))
           }
       }
     } else {
@@ -210,7 +210,7 @@ class TimeToPayController @Inject() (
       enactStageRepository
         .addETMPStage(correlationId, req) // Future[Unit]
         .map { _ =>
-          constructResponseHandlingNotFound("/etmp.executePaymentLock/", s"${req.idValue}.json")
+          handleNotFound(constructResponse("/etmp.executePaymentLock/", s"${req.idValue}.json"))
         }
     }
   }
@@ -230,7 +230,7 @@ class TimeToPayController @Inject() (
       enactStageRepository
         .addIDMSStage(idValue, req)
         .map { _ =>
-          constructResponseHandlingNotFound("/idms.createTTPMonitoringCase/", s"$reference.json")
+          handleNotFound(constructResponse("/idms.createTTPMonitoringCase/", s"$reference.json"))
         }
     }
   }
@@ -248,7 +248,7 @@ class TimeToPayController @Inject() (
       enactStageRepository
         .addIDMSStageSA(idValue, req)
         .map { _ =>
-          constructResponseHandlingNotFound("/idms.createSAMonitoringCase/", s"${req.idValue}.json")
+          handleNotFound(constructResponse("/idms.createSAMonitoringCase/", s"${req.idValue}.json"))
         }
     }
   }
@@ -263,16 +263,17 @@ class TimeToPayController @Inject() (
         req.identifications.find(_.idType == "UTR").map(_.idValue)
 
       // Build the response with the desired status
-      def respond(fileName: String, status: ResultStatus): Result = {
+      def respond(fileName: String, status: ResultStatus): Either[FileNotFoundError, Result] = {
         logger.info(s"Preparing cancel response for file: $fileName with status: ${status.header.status}")
         val requestedCode = status.header.status
 
-        val initialResult = constructResponseHandlingNotFound(testDataPackage, fileName)
-        initialResult.copy(header = initialResult.header.copy(status = requestedCode))
+        constructResponse(testDataPackage, fileName).map { baseResult =>
+          baseResult.copy(header = baseResult.header.copy(status = requestedCode))
+        }
       }
 
       // Apply desired response status based on UTR
-      val byUtr: Option[Result] = maybeUtrIdentifier.map {
+      val maybeByUtr: Option[Either[FileNotFoundError, Result]] = maybeUtrIdentifier.map {
         case "cesaCancelPlan_error_400" =>
           respond("cesaCancelPlan_error_400.json", Results.BadRequest)
         case "cesaCancelPlan_error_409" =>
@@ -289,8 +290,11 @@ class TimeToPayController @Inject() (
           respond(s"$utr.json", Results.Ok)
       }
 
+      val result: Result =
+        handleNotFound(maybeByUtr.getOrElse(Right(Results.BadRequest("UTR not provided"))))
+
       // Return the appropriate stubbed response
-      Future.successful(byUtr.getOrElse(Results.BadRequest("UTR missing")))
+      Future.successful(result)
     }
   }
 
@@ -305,49 +309,52 @@ class TimeToPayController @Inject() (
       val lastName: CdcsCreateCaseRequestLastName = req.TTP.customer.individual.lastName
       logger.info(s"CDCS create case identifiers are: ${identifications.mkString(", ")}")
 
-      def fromLastName: Result =
+      def fromLastName: Either[FileNotFoundError, Result] =
         lastName match {
           case CdcsCreateCaseRequestLastName("STUB_FAILURE_500") =>
-            Results.InternalServerError("intentional stubbed 500")
+            Right(Results.InternalServerError("intentional stubbed 500"))
 
           case CdcsCreateCaseRequestLastName("STUB_FAILURE_400") =>
             constructResponse(testDataPackage, "cdcsCreateCaseFailure_400.json")
               .map(res => res.copy(header = res.header.copy(status = BAD_REQUEST)))
-              .getOrElse(NotFound(s"Could not find file from $testDataPackage/cdcsCreateCaseFailure_400.json"))
 
           case CdcsCreateCaseRequestLastName("STUB_FAILURE_422") =>
             constructResponse(testDataPackage, "cdcsCreateCaseFailure_422.json")
               .map(res => res.copy(header = res.header.copy(status = UNPROCESSABLE_ENTITY)))
-              .getOrElse(NotFound(s"Could not find file from $testDataPackage/cdcsCreateCaseFailure_422.json"))
 
           case _ =>
-            val result = constructResponseHandlingNotFound(testDataPackage, "cdcsCreateCaseSuccessResponse.json")
-            result.copy(header = result.header.copy(status = OK))
+            constructResponse(testDataPackage, "cdcsCreateCaseSuccessResponse.json").map { baseResult =>
+              baseResult.copy(header = baseResult.header.copy(status = OK))
+            }
         }
+
+      val maybeResult: Either[FileNotFoundError, Result] = maybeUtrIdentifier match {
+        case None =>
+          fromLastName
+        case Some(identifier) =>
+          identifier match {
+            case "3145760528" =>
+              Right(Results.InternalServerError("intentional stubbed 500"))
+            case "2001234567" =>
+              constructResponse(testDataPackage, "2001234567.json")
+
+            case "3153830017" => Right(Results.InternalServerError("intentional stubbed 500"))
+            case "3145760528" => Right(Results.InternalServerError("intentional stubbed 500"))
+            case s if s.startsWith("cdcsResponse_error_") =>
+              val code = s.stripPrefix("cdcsResponse_error_").takeWhile(_.isDigit).toInt
+              Right(Results.Status(code)("intentional stubbed error"))
+            case _ =>
+              fromLastName
+          }
+      }
+
+      val result: Result = handleNotFound(maybeResult)
 
       identifications match {
         case Nil => Future.successful(Results.BadRequest("No identifications supplied"))
         case ::(head, _) =>
           enactStageRepository.addCDCSStage(idValue = head.idValue.value, req).map { _ =>
-            maybeUtrIdentifier match {
-              case Some(identifier) =>
-                identifier match {
-                  case "3145760528" =>
-                    Results.InternalServerError("intentional stubbed 500")
-                  case "2001234567" =>
-                    constructResponseHandlingNotFound(testDataPackage, "2001234567.json")
-
-                  case "3153830017" => Results.InternalServerError("intentional stubbed 500")
-                  case "3145760528" => Results.InternalServerError("intentional stubbed 500")
-                  case s if s.startsWith("cdcsResponse_error_") =>
-                    val code = s.stripPrefix("cdcsResponse_error_").takeWhile(_.isDigit).toInt
-                    Results.Status(code)("intentional stubbed error")
-                  case _ =>
-                    fromLastName
-                }
-              case None =>
-                fromLastName
-            }
+            result
           }
       }
     }
@@ -429,13 +436,6 @@ class TimeToPayController @Inject() (
     }
   }
 
-  final case class FileNotFoundError(msg: String)
-
-  private def findFile(path: String, fileName: String): Either[FileNotFoundError, File] = {
-    val combinedPath = s"$basePath$path$fileName"
-    environment.getExistingFile(combinedPath).toRight(FileNotFoundError(s"File not found for path: $path"))
-  }
-
   // Call made to time-to-pay for the routes: /cancel, /inform and /full-amend of time-to-pay-proxy
   def proxyPlanCase(): Action[JsValue] = Action.async(parse.json) { implicit request =>
     withCustomJsonBody[TimeToPayProxyPlanRequest] { req =>
@@ -446,15 +446,17 @@ class TimeToPayController @Inject() (
         req.identifications.find(_.idType == "UTR").map(_.idValue)
 
       // Build the response with the desired status
-      def respond(fileName: String, status: ResultStatus): Result = {
+      def respond(fileName: String, status: ResultStatus): Either[FileNotFoundError, Result] = {
         logger.info(s"Preparing cancel response for file: $fileName with status: ${status.header.status}")
         val requestedCode = status.header.status
-        val result = constructResponseHandlingNotFound(testDataPackage, fileName)
-        result.copy(header = result.header.copy(status = requestedCode))
+
+        constructResponse(testDataPackage, fileName).map { baseResult =>
+          baseResult.copy(header = baseResult.header.copy(status = requestedCode))
+        }
       }
 
       // Apply desired response status based on UTR
-      val maybeByUtr: Option[Result] = maybeUtrIdentifier.map {
+      val maybeByUtr: Option[Either[FileNotFoundError, Result]] = maybeUtrIdentifier.map {
         case "proxyPlan_error_400" =>
           respond("proxyPlan_error_400.json", Results.BadRequest)
         case "proxyPlan_error_500" =>
@@ -464,9 +466,25 @@ class TimeToPayController @Inject() (
       }
 
       // Return the appropriate stubbed response
-      Future.successful(maybeByUtr.getOrElse(Results.BadRequest("UTR not provided")))
+      val result: Result =
+        handleNotFound(maybeByUtr.getOrElse(Right(Results.BadRequest("UTR not provided"))))
+
+      Future.successful(result)
     }
   }
+
+  final case class FileNotFoundError(msg: String)
+
+  private def findFile(path: String, fileName: String): Either[FileNotFoundError, File] = {
+    val combinedPath = s"$basePath$path$fileName"
+    environment.getExistingFile(combinedPath).toRight(FileNotFoundError(s"File not found for path: $path"))
+  }
+
+  private def handleNotFound(resultOrError: Either[FileNotFoundError, Result]): Result =
+    resultOrError match {
+      case Right(value) => value
+      case Left(value)  => Results.NotFound(value.msg)
+    }
 
   /** Temporary handling of certain cases to support E2E testing */
   object EndToEndTestDataHandling {
@@ -536,9 +554,6 @@ class TimeToPayController @Inject() (
       }
     }
   }
-
-  private def constructResponseHandlingNotFound(path: String, fileName: String)(implicit hc: HeaderCarrier): Result =
-    constructResponse(path, fileName).getOrElse(NotFound(s"Could not find file from $path/$fileName"))
 
   def getCorrelationIdHeader(headers: Headers): String =
     headers.get("correlationId").getOrElse(throw new Exception("Missing required correlationId header"))
