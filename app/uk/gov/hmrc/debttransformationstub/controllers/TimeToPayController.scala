@@ -291,7 +291,12 @@ class TimeToPayController @Inject() (
       }
 
       val result: Result =
-        handleNotFound(maybeByUtr.getOrElse(Right(Results.BadRequest("UTR not provided"))))
+        handleNotFound(
+          maybeByUtr.getOrElse {
+            logger.error(s"Error: UTR required to find a file when stubbing ${request.uri}")
+            Right(Results.BadRequest("UTR not provided"))
+          }
+        )
 
       // Return the appropriate stubbed response
       Future.successful(result)
@@ -467,23 +472,31 @@ class TimeToPayController @Inject() (
 
       // Return the appropriate stubbed response
       val result: Result =
-        handleNotFound(maybeByUtr.getOrElse(Right(Results.BadRequest("UTR not provided"))))
+        handleNotFound(
+          maybeByUtr.getOrElse {
+            logger.error(s"Error: UTR required to find a file when stubbing ${request.uri}")
+            Right(Results.BadRequest("UTR not provided"))
+          }
+        )
 
       Future.successful(result)
     }
   }
 
-  final case class FileNotFoundError(msg: String)
+  private final case class FileNotFoundError(msg: String)
 
   private def findFile(path: String, fileName: String): Either[FileNotFoundError, File] = {
     val combinedPath = s"$basePath$path$fileName"
     environment.getExistingFile(combinedPath).toRight(FileNotFoundError(s"File not found for path: $path"))
   }
 
-  private def handleNotFound(resultOrError: Either[FileNotFoundError, Result]): Result =
+  private def handleNotFound(resultOrError: Either[FileNotFoundError, Result])(implicit hc: HeaderCarrier): Result =
     resultOrError match {
       case Right(value) => value
-      case Left(value)  => Results.NotFound(value.msg)
+      case Left(value) =>
+        logger.info(s"Could not find file. Error with potentially sensitive information:\n ${value.msg}")
+        logger.error("Could not find file. The path cannot be logged at this level.")
+        Results.NotFound(value.msg)
     }
 
   /** Temporary handling of certain cases to support E2E testing */
