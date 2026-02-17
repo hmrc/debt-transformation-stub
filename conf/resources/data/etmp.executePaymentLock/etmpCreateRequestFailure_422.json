@@ -1,7 +1,8 @@
 {
-  "errors": {
-    "processingDate": "2022-01-31T09:26:17Z",
-    "code": "002",
-    "text": "ID Number Missing or Invalid"
-  }
+  "failures": [
+    {
+      "code": "INVALID_CHARGE_REFERENCE",
+      "reason": "The remote endpoint has indicated that one or more charge references are invalid"
+    }
+  ]
 }

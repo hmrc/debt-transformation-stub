@@ -23,9 +23,9 @@ import play.api.libs.json.{ JsValue, Json }
 import play.api.mvc.Results.{ Status => ResultStatus }
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
-import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.{ CdcsCreateCaseRequestIdTypeReference, CdcsCreateCaseRequestLastName }
+import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.{CdcsCreateCaseRequestIdTypeReference, CdcsCreateCaseRequestLastName}
 import uk.gov.hmrc.debttransformationstub.models._
-import uk.gov.hmrc.debttransformationstub.repositories.{ EnactStage, EnactStageRepository }
+import uk.gov.hmrc.debttransformationstub.repositories.{EnactStage, EnactStageRepository}
 import uk.gov.hmrc.debttransformationstub.services.TTPPollingService
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.http.HeaderCarrier
@@ -34,7 +34,7 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import java.io.File
 import java.nio.charset.Charset
 import javax.inject.Inject
-import scala.concurrent.{ ExecutionContext, Future }
+import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Source
 import scala.util.Try
 
@@ -206,24 +206,25 @@ class TimeToPayController @Inject() (
   def etmpExecutePaymentLock: Action[JsValue] = Action.async(parse.json) { implicit request =>
     val correlationId = getCorrelationIdHeader(request.headers)
 
+    val baseFolder = "/etmp.executePaymentLock/"
+
     withCustomJsonBody[PaymentLockRequest] { req =>
       enactStageRepository
         .addETMPStage(correlationId, req) // Future[Unit]
-        .map { _ =>
+        .map { _ => handleNotFound {
           (req.idType.toUpperCase, req.idValue) match {
-            case ("UTR", "etmpCreateRequestFailure_400") =>
-              Results.BadRequest
-            case ("UTR", "etmpCreateRequestFailure_422") =>
-              Results.UnprocessableEntity
-            case ("UTR", "etmpCreateRequestFailure_500") =>
-              Results.InternalServerError
-            case ("UTR", "error-500-stub") =>
-              Results.InternalServerError
+            case ("UTR", filename @ "etmpCreateRequestFailure_400") =>
+              constructResponse(baseFolder, s"$filename.json", Results.BadRequest(_))
+            case ("UTR", filename @ "etmpCreateRequestFailure_422") =>
+              constructResponse(baseFolder, s"$filename.json", Results.UnprocessableEntity(_))
+            case ("UTR", filename @ "etmpCreateRequestFailure_500") =>
+              constructResponse(baseFolder, s"$filename.json", Results.InternalServerError(_))
+            case ("UTR", filename @ "error-500-stub") =>
+              constructResponse(baseFolder, s"$filename.json", Results.InternalServerError(_))
             case _ =>
-              handleNotFound(constructResponse("/etmp.executePaymentLock/", s"${req.idValue}.json"))
+              constructResponse(baseFolder, s"${req.idValue}.json")
           }
-
-        }
+        }}
     }
   }
 
@@ -548,7 +549,7 @@ class TimeToPayController @Inject() (
 
   }
 
-  private def constructResponse(path: String, fileName: String)(implicit
+  private def constructResponse(path: String, fileName: String, resultConstructor: JsValue => Result = Results.Ok(_))(implicit
     hc: HeaderCarrier
   ): Either[FileNotFoundError, Result] = {
     logger.info(s"constructResponse() → Attempting to match on prefix: $path$fileName")
@@ -570,10 +571,10 @@ class TimeToPayController @Inject() (
           logger.info(s"constructResponse() → FileName starts with 200, attempting to parse JSON")
           Try(Json.parse(fileString)).toOption.map(Results.Ok(_)).getOrElse(Results.Ok(fileString))
         } else {
-          // Others: OK with JSON if parsable, else 500
+          // Others: provided status with JSON if parsable, else 500
           logger.info(s"constructResponse() → Attempting to parse JSON")
           Try(Json.parse(fileString)).toOption
-            .map(Results.Ok(_))
+            .map(resultConstructor(_))
             .getOrElse(Results.InternalServerError(s"stub failed to parse file $path$fileName"))
         }
       }
