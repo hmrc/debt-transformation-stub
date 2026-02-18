@@ -18,8 +18,8 @@ package uk.gov.hmrc.debttransformationstub.models
 
 import play.api.libs.json.{ Json, OFormat }
 
-case class CesaCancelPlanRequest(
-  identifications: List[CesaCancelPlanRequestIdentification],
+case class CancelPlanRequest(
+  identifications: List[CancelPlanRequestIdentification],
   noteLines: List[String],
   transitionedIndicator: Option[Boolean],
   ttpStartDate: Option[String],
@@ -33,12 +33,12 @@ case class CesaCancelPlanRequest(
   ttpEnfActToTake: Option[String]
 )
 
-object CesaCancelPlanRequest {
-  implicit val format: OFormat[CesaCancelPlanRequest] = Json.format[CesaCancelPlanRequest]
+object CancelPlanRequest {
+  implicit val format: OFormat[CancelPlanRequest] = Json.format[CancelPlanRequest]
 }
 
-case class CesaCancelPlanRequestIdentification(idType: String, idValue: String)
+case class CancelPlanRequestIdentification(idType: String, idValue: String)
 
-object CesaCancelPlanRequestIdentification {
-  implicit val format: OFormat[CesaCancelPlanRequestIdentification] = Json.format[CesaCancelPlanRequestIdentification]
+object CancelPlanRequestIdentification {
+  implicit val format: OFormat[CancelPlanRequestIdentification] = Json.format[CancelPlanRequestIdentification]
 }
