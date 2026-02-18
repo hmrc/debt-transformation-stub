@@ -220,8 +220,6 @@ class TimeToPayController @Inject() (
                 constructResponse(baseFolder, s"$filename.json", Results.UnprocessableEntity(_))
               case ("UTR", filename @ "etmpCreateRequestFailure_500") =>
                 constructResponse(baseFolder, s"$filename.json", Results.InternalServerError(_))
-              case ("UTR", filename @ "error-500-stub") =>
-                constructResponse(baseFolder, s"$filename.json", Results.InternalServerError(_))
               case _ =>
                 constructResponse(baseFolder, s"${req.idValue}.json")
             }
