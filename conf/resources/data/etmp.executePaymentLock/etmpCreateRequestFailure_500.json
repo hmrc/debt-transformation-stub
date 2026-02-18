@@ -1,0 +1,8 @@
+{
+  "failures": [
+    {
+      "code": "SERVER_ERROR",
+      "reason": "IF is currently experiencing problems that require live service intervention."
+    }
+  ]
+}

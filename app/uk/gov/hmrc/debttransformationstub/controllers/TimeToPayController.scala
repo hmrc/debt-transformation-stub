@@ -206,11 +206,24 @@ class TimeToPayController @Inject() (
   def etmpExecutePaymentLock: Action[JsValue] = Action.async(parse.json) { implicit request =>
     val correlationId = getCorrelationIdHeader(request.headers)
 
+    val baseFolder = "/etmp.executePaymentLock/"
+
     withCustomJsonBody[PaymentLockRequest] { req =>
       enactStageRepository
         .addETMPStage(correlationId, req) // Future[Unit]
         .map { _ =>
-          handleNotFound(constructResponse("/etmp.executePaymentLock/", s"${req.idValue}.json"))
+          handleNotFound {
+            (req.idType.toUpperCase, req.idValue) match {
+              case ("UTR", filename @ "etmpCreateRequestFailure_400") =>
+                constructResponse(baseFolder, s"$filename.json", Results.BadRequest(_))
+              case ("UTR", filename @ "etmpCreateRequestFailure_422") =>
+                constructResponse(baseFolder, s"$filename.json", Results.UnprocessableEntity(_))
+              case ("UTR", filename @ "etmpCreateRequestFailure_500") =>
+                constructResponse(baseFolder, s"$filename.json", Results.InternalServerError(_))
+              case _ =>
+                constructResponse(baseFolder, s"${req.idValue}.json")
+            }
+          }
         }
     }
   }
@@ -366,8 +379,8 @@ class TimeToPayController @Inject() (
   }
 
   // Call made to CESA for the routes: /inform and /full-amend of time-to-pay
-  def cesaCreateRequest(): Action[JsValue] = Action.async(parse.json) { implicit request =>
-    withCustomJsonBody[CesaCreateRequest] { req =>
+  def cesaRequest(): Action[JsValue] = Action.async(parse.json) { implicit request =>
+    withCustomJsonBody[CesaRequest] { req =>
       val testDataPackage = "/cesa.createRequest/"
       val maybeUtrIdentifier: Option[String] =
         req.identifications.find(_.idType == "UTR").map(_.idValue) match {
@@ -536,8 +549,8 @@ class TimeToPayController @Inject() (
 
   }
 
-  private def constructResponse(path: String, fileName: String)(implicit
-    hc: HeaderCarrier
+  private def constructResponse(path: String, fileName: String, resultConstructor: JsValue => Result = Results.Ok(_))(
+    implicit hc: HeaderCarrier
   ): Either[FileNotFoundError, Result] = {
     logger.info(s"constructResponse() → Attempting to match on prefix: $path$fileName")
 
@@ -558,10 +571,10 @@ class TimeToPayController @Inject() (
           logger.info(s"constructResponse() → FileName starts with 200, attempting to parse JSON")
           Try(Json.parse(fileString)).toOption.map(Results.Ok(_)).getOrElse(Results.Ok(fileString))
         } else {
-          // Others: OK with JSON if parsable, else 500
+          // Others: provided status with JSON if parsable, else 500
           logger.info(s"constructResponse() → Attempting to parse JSON")
           Try(Json.parse(fileString)).toOption
-            .map(Results.Ok(_))
+            .map(resultConstructor(_))
             .getOrElse(Results.InternalServerError(s"stub failed to parse file $path$fileName"))
         }
       }

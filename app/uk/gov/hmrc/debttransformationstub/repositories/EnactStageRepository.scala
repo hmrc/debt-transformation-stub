@@ -39,7 +39,7 @@ case class EnactStage(
   idmsRequest: Option[CreateIDMSMonitoringCaseRequest] = None,
   idmsRequestSA: Option[CreateIDMSMonitoringCaseRequestSA] = None,
   cdcsRequest: Option[CdcsCreateCaseRequest] = None,
-  cesaRequest: Option[CesaCreateRequest] = None,
+  cesaRequest: Option[CesaRequest] = None,
   customerCheckRequest: Option[CustomerCheckRequest] = None,
   hodReferralRequest: Option[HodReferralRequest] = None,
   hodReferralDecryptedXml: Option[String] = None,
@@ -145,7 +145,7 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
       .toFuture()
   }
 
-  def addCESAStage(correlationId: String, request: CesaCreateRequest): Future[EnactStage] = {
+  def addCESAStage(correlationId: String, request: CesaRequest): Future[EnactStage] = {
     logger.warn(s"Recording CESA stage request $correlationId")
     collection
       .findOneAndUpdate(
