@@ -380,23 +380,23 @@ class TimeToPayController @Inject() (
 
   def etmpExecuteRemoveCharge: Action[JsValue] = Action.async(parse.json) { implicit request =>
     val correlationId = getCorrelationIdHeader(request.headers)
+    val baseFolder = "/etmp.removeCharge/"
 
     withCustomJsonBody[EtmpRemoveChargeRequest] { removeChargeReq =>
       enactStageRepository
         .addETMPRemoveChargeStage(correlationId, removeChargeReq)
         .map { _ =>
-          (removeChargeReq.idType.toString, removeChargeReq.idValue.toString) match {
-            case ("UTR", "etmpCreateRequestFailure_400") =>
-              Results.BadRequest
-            case ("UTR", "etmpCreateRequestFailure_422") =>
-              Results.UnprocessableEntity
-            case ("UTR", "etmpCreateRequestFailure_500") =>
-              Results.InternalServerError
-            case ("UTR", "error-500-stub") =>
-              Results.InternalServerError
-            case _ =>
-              constructResponse("/etmp.removeCharge/", s"${removeChargeReq.idValue}.json")
-                .getOrElse(NotFound(s"file not found: /etmp.removeCharge/${removeChargeReq.idValue}.json"))
+          handleNotFound {
+            (removeChargeReq.idType.toString.toUpperCase, removeChargeReq.idValue.toString.toUpperCase) match {
+              case ("UTR", filename @ "etmpCreateRequestFailure_400") =>
+                constructResponse(baseFolder, s"$filename.json", Results.BadRequest(_))
+              case ("UTR", filename @ "etmpCreateRequestFailure_422") =>
+                constructResponse(baseFolder, s"$filename.json", Results.UnprocessableEntity(_))
+              case ("UTR", filename @ "etmpCreateRequestFailure_500") =>
+                constructResponse(baseFolder, s"$filename.json", Results.InternalServerError(_))
+              case _ =>
+                constructResponse(baseFolder, s"${removeChargeReq.idValue}.json")
+            }
           }
         }
     }
