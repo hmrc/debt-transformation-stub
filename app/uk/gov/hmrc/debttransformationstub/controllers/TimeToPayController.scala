@@ -388,11 +388,11 @@ class TimeToPayController @Inject() (
         .map { _ =>
           handleNotFound {
             (removeChargeReq.idType.toString.toUpperCase, removeChargeReq.idValue.toString.toUpperCase) match {
-              case ("UTR", filename @ "etmpCreateRequestFailure_400") =>
+              case ("UTR", filename @ "etmpRemoveRequestFailure_400") =>
                 constructResponse(baseFolder, s"$filename.json", Results.BadRequest(_))
-              case ("UTR", filename @ "etmpCreateRequestFailure_422") =>
+              case ("UTR", filename @ "etmpRemoveRequestFailure_422") =>
                 constructResponse(baseFolder, s"$filename.json", Results.UnprocessableEntity(_))
-              case ("UTR", filename @ "etmpCreateRequestFailure_500") =>
+              case ("UTR", filename @ "etmpRemoveRequestFailure_500") =>
                 constructResponse(baseFolder, s"$filename.json", Results.InternalServerError(_))
               case _ =>
                 constructResponse(baseFolder, s"${removeChargeReq.idValue}.json")
