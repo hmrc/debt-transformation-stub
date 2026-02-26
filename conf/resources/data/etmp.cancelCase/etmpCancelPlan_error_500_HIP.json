@@ -1,0 +1,9 @@
+{
+  "origin": "HIP",
+  "response": [
+    {
+      "type": "Type of Failure",
+      "reason": "Reason for Failure"
+    }
+  ]
+}
