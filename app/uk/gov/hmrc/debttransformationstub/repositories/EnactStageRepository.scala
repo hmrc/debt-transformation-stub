@@ -32,9 +32,19 @@ import play.api.libs.functional.syntax._
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
+case class EnactEtmp(
+  etmpRequest: Option[PaymentLockRequest] = None,
+  etmpRemoveRequest: Option[ETMPRemoveRequest] = None,
+  etmpAttempts: Option[Int] = None,
+)
+
+object EnactEtmp {
+  implicit val format = Json.format[EnactEtmp]
+}
+
 case class EnactStage(
   correlationId: Option[String] = None,
-  etmp: Option[EnactEtmp],
+  etmp: EnactEtmp,
   nddsRequest: Option[NDDSRequest] = None,
   pegaRequest: Option[UpdateCaseRequest] = None,
   idmsRequest: Option[CreateIDMSMonitoringCaseRequest] = None,
@@ -57,97 +67,31 @@ case class EnactStage(
 )
 
 object EnactStage {
-  implicit val format: OFormat[EnactStage] = OFormat(reads, writes)
-
-  private val reads: Reads[EnactStage] = (
-    (__ \"correlationId").readNullable[String] and
-    __.read[EnactEtmp](EnactEtmp.reads) and
-    (__ \ "nddsRequest").readNullable[NDDSRequest] and
-    (__ \ "pegaRequest").readNullable[UpdateCaseRequest] and
-    (__ \ "idmsRequest").readNullable[CreateIDMSMonitoringCaseRequest] and
-    (__ \ "idmsRequestSA").readNullable[CreateIDMSMonitoringCaseRequestSA] and
-    (__ \ "cdcsRequest").readNullable[CdcsCreateCaseRequest] and
-    (__ \ "cesaRequest").readNullable[CesaRequest] and
-    (__ \ "customerCheckRequest").readNullable[CustomerCheckRequest] and
-    (__ \ "hodReferralRequest").readNullable[HodReferralRequest] and
-    (__ \ "hodReferralDecryptedXml").readNullable[String] and
-    (__ \ "nddsAttempts").readNullable[Int] and
-    (__ \ "pegaAttempts").readNullable[Int] and
-    (__ \ "idmsAttempts").readNullable[Int] and
-    (__ \ "cdcsAttempts").readNullable[Int] and
-    (__ \ "cesaAttempts").readNullable[Int] and
-    (__ \ "customerCheckAttempts").readNullable[Int] and
-    (__ \ "customerCheckStatus").readNullable[Int] and
-    (__ \ "hodReferralAttempts").readNullable[Int] and
-    (__ \ "hodReferralStatus").readNullable[Int] and
-    (__ \ "combinedStageAttempts").readNullable[Int]
-  )(EnactStage.apply _)
-
-  private val writes: OWrites[EnactStage] = (
-    (__ \"correlationId").writeNullable[String] and
-      __.write[EnactEtmp](EnactEtmp.writes) and
-      (__ \ "nddsRequest").writeNullable[NDDSRequest] and
-      (__ \ "pegaRequest").writeNullable[UpdateCaseRequest] and
-      (__ \ "idmsRequest").writeNullable[CreateIDMSMonitoringCaseRequest] and
-      (__ \ "idmsRequestSA").writeNullable[CreateIDMSMonitoringCaseRequestSA] and
-      (__ \ "cdcsRequest").writeNullable[CdcsCreateCaseRequest] and
-      (__ \ "cesaRequest").writeNullable[CesaRequest] and
-      (__ \ "customerCheckRequest").writeNullable[CustomerCheckRequest] and
-      (__ \ "hodReferralRequest").writeNullable[HodReferralRequest] and
-      (__ \ "hodReferralDecryptedXml").writeNullable[String] and
-      (__ \ "nddsAttempts").writeNullable[Int] and
-      (__ \ "pegaAttempts").writeNullable[Int] and
-      (__ \ "idmsAttempts").writeNullable[Int] and
-      (__ \ "cdcsAttempts").writeNullable[Int] and
-      (__ \ "cesaAttempts").writeNullable[Int] and
-      (__ \ "customerCheckAttempts").writeNullable[Int] and
-      (__ \ "customerCheckStatus").writeNullable[Int] and
-      (__ \ "hodReferralAttempts").writeNullable[Int] and
-      (__ \ "hodReferralStatus").writeNullable[Int] and
-      (__ \ "combinedStageAttempts").writeNullable[Int]
-    )(es => (
-      es.correlationId,
-      es.etmp,
-      es.nddsRequest,
-      es.pegaRequest,
-      es.idmsRequest,
-      es.idmsRequestSA,
-      es.cdcsRequest,
-      es.cesaRequest,
-      es.customerCheckRequest,
-      es.hodReferralRequest,
-      es.hodReferralDecryptedXml,
-      es.nddsAttempts,
-      es.pegaAttempts,
-      es.idmsAttempts,
-      es.cdcsAttempts,
-      es.cesaAttempts,
-      es.customerCheckAttempts,
-      es.customerCheckStatus,
-      es.hodReferralAttempts,
-      es.hodReferralStatus,
-      es.combinedStageAttempts,
-  ))
-}
-
-case class EnactEtmp(
-  etmpRequest: Option[PaymentLockRequest] = None,
-  etmpRemoveRequest: Option[ETMPRemoveRequest] = None,
-  etmpAttempts: Option[Int] = None,
-)
-
-object EnactEtmp {
-  val reads: Reads[EnactEtmp] = (
-    (__ \ "etmpRequest").readNullable[PaymentLockRequest] and
-      (__ \ "etmpRemoveRequest").readNullable[ETMPRemoveRequest] and
-      (__ \ "etmpAttempts").readNullable[Int]
-    )(EnactEtmp.apply _)
-
-  val writes: Writes[EnactEtmp] = (
-    (__ \ "etmpRequest").writeNullable[PaymentLockRequest] and
-      (__ \ "etmpRemoveRequest").writeNullable[ETMPRemoveRequest] and
-      (__ \ "etmpAttempts").writeNullable[Int]
-    )(ee => (ee.etmpRequest, ee.etmpRemoveRequest, ee.etmpAttempts))
+  implicit val format: OFormat[EnactStage] = (
+    (
+      (__ \ "correlationId").formatNullable[String] and
+        JsPath.format[EnactEtmp] and
+          (__ \ "nddsRequest").formatNullable[NDDSRequest] and
+            (__ \ "pegaRequest").formatNullable[UpdateCaseRequest] and
+            (__ \ "idmsRequest").formatNullable[CreateIDMSMonitoringCaseRequest] and
+            (__ \ "idmsRequestSA").formatNullable[CreateIDMSMonitoringCaseRequestSA] and
+            (__ \ "cdcsRequest").formatNullable[CdcsCreateCaseRequest] and
+            (__ \ "cesaRequest").formatNullable[CesaRequest] and
+            (__ \ "customerCheckRequest").formatNullable[CustomerCheckRequest] and
+            (__ \ "hodReferralRequest").formatNullable[HodReferralRequest] and
+            (__ \ "hodReferralDecryptedXml").formatNullable[String] and
+            (__ \ "nddsAttempts").formatNullable[Int] and
+            (__ \ "pegaAttempts").formatNullable[Int] and
+            (__ \ "idmsAttempts").formatNullable[Int] and
+            (__ \ "cdcsAttempts").formatNullable[Int] and
+            (__ \ "cesaAttempts").formatNullable[Int] and
+            (__ \ "customerCheckAttempts").formatNullable[Int] and
+            (__ \ "customerCheckStatus").formatNullable[Int] and
+            (__ \ "hodReferralAttempts").formatNullable[Int] and
+            (__ \ "hodReferralStatus").formatNullable[Int] and
+            (__ \ "combinedStageAttempts").formatNullable[Int]
+    )(EnactStage.apply _, unlift(EnactStage.unapply))
+  )
 }
 
 @Singleton
