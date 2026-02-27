@@ -19,13 +19,13 @@ package uk.gov.hmrc.debttransformationstub.controllers
 import org.apache.commons.io.FileUtils
 import play.api.Environment
 import play.api.http.ContentTypes
-import play.api.libs.json.{JsValue, Json}
-import play.api.mvc.Results.{Status => ResultStatus}
+import play.api.libs.json.{ JsValue, Json }
+import play.api.mvc.Results.{ Status => ResultStatus }
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
-import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.{CdcsCreateCaseRequestIdTypeReference, CdcsCreateCaseRequestLastName}
+import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.{ CdcsCreateCaseRequestIdTypeReference, CdcsCreateCaseRequestLastName }
 import uk.gov.hmrc.debttransformationstub.models._
-import uk.gov.hmrc.debttransformationstub.repositories.{EnactStage, EnactStageRepository}
+import uk.gov.hmrc.debttransformationstub.repositories.{ EnactStage, EnactStageRepository }
 import uk.gov.hmrc.debttransformationstub.services.TTPPollingService
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.http.HeaderCarrier
@@ -34,7 +34,7 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import java.io.File
 import java.nio.charset.Charset
 import javax.inject.Inject
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{ ExecutionContext, Future }
 import scala.io.Source
 import scala.util.Try
 
@@ -277,7 +277,7 @@ class TimeToPayController @Inject() (
 
       // Build the response with the desired status
       def respond(fileName: String, status: ResultStatus): Either[FileNotFoundError, Result] = {
-        logger.info(s"Preparing CESA cancel response for file: $fileName with status: ${status.header.status}")
+        logger.info(s"Preparing cancel response for file: $fileName with status: ${status.header.status}")
         val requestedCode = status.header.status
 
         constructResponse(testDataPackage, fileName).map { baseResult =>
@@ -300,9 +300,9 @@ class TimeToPayController @Inject() (
         case "9831098765" =>
           respond("cesaCancelPlan_error_500.json", Results.InternalServerError)
         case "cancelPlan_unparseable_500" =>
-          Some(Results.InternalServerError("Internal Server Error - stubbed, non-JSON body").as("text/plain"))
+          Right(Results.InternalServerError("Internal Server Error - stubbed, non-JSON body").as("text/plain"))
         case "cesaCancelPlan_unparseable_500" =>
-          Some(Results.InternalServerError("Internal Server Error - stubbed, non-JSON body").as("text/plain"))
+          Right(Results.InternalServerError("Internal Server Error - stubbed, non-JSON body").as("text/plain"))
         case "cesaCancelPlan_error_502" =>
           respond("cesaCancelPlan_error_502.json", Results.BadGateway)
         case utr =>
@@ -337,25 +337,26 @@ class TimeToPayController @Inject() (
         } yield idValue
 
       // Build the response with the desired status
-      def respond(fileName: String, status: ResultStatus): Option[Result] = {
+      def respond(fileName: String, status: ResultStatus): Either[FileNotFoundError, Result] = {
         logger.info(s"Preparing ETMP cancel response for file: $fileName with status: ${status.header.status}")
+        val requestedCode = status.header.status
+
         constructResponse(testDataPackage, fileName).map { baseResult =>
-          val requestedCode = status.header.status
-          logger.info(s"Stub ETMP response body: ${baseResult.body match { case play.api.http.HttpEntity.Strict(data, _) => data.utf8String; case _ => "[non-strict body: not logged]" }}")
+          logger.info(s"Stub ETMP response body: ${baseResult.body match { case play.api.http.HttpEntity.Strict(d, _) => d.utf8String; case _ => "[non-strict body]" }}")
           baseResult.copy(header = baseResult.header.copy(status = requestedCode))
         }
       }
 
       // Apply desired response status based on UTR
-      val byUtr: Option[Result] = maybeUtrIdentifier.flatMap {
+      val maybeByUtr: Option[Either[FileNotFoundError, Result]] = maybeUtrIdentifier.map {
         case "etmpCancelPlan_error_400" =>
           respond("etmpCancelPlan_error_400.json", Results.BadRequest)
         case "etmpCancelPlan_error_401" =>
-          Some(Results.Unauthorized)
+          Right(Results.Unauthorized)
         case "etmpCancelPlan_error_403" =>
-          Some(Results.Forbidden)
+          Right(Results.Forbidden)
         case "etmpCancelPlan_error_404" =>
-          Some(Results.NotFound)
+          Right(Results.NotFound)
         case "etmpCancelPlan_error_422" =>
           respond("etmpCancelPlan_error_422.json", Results.UnprocessableEntity)
         case "etmpCancelPlan_error_500" =>
@@ -363,19 +364,27 @@ class TimeToPayController @Inject() (
         case "etmpCancelPlan_error_500_HIP" =>
           respond("etmpCancelPlan_error_500_HIP.json", Results.InternalServerError)
         case "cancelPlan_unparseable_500" =>
-          Some(Results.InternalServerError("Internal Server Error - stubbed, non-JSON body").as("text/plain"))
+          Right(Results.InternalServerError("Internal Server Error - stubbed, non-JSON body").as("text/plain"))
         case "etmpCancelPlan_unparseable_500" =>
-          Some(Results.InternalServerError("Internal Server Error - stubbed, non-JSON body").as("text/plain"))
+          Right(Results.InternalServerError("Internal Server Error - stubbed, non-JSON body").as("text/plain"))
         case "etmpCancelPlan_error_503" =>
           respond("etmpCancelPlan_error_503.json", Results.ServiceUnavailable)
         case utr =>
           respond(s"$utr.json", Results.Ok)
       }
 
+      val result: Result =
+        handleNotFound(
+          maybeByUtr.getOrElse {
+            logger.error(s"Error: UTR required to find a file when stubbing ${request.uri}")
+            Right(Results.BadRequest("UTR not provided"))
+          }
+        )
+
       // Return the appropriate stubbed response
-      Future.successful(byUtr.getOrElse(Results.NotFound("file not found")))
+      Future.successful(result)
     }
-}
+  }
 
   def cdcsCreateCase(): Action[JsValue] = Action.async(parse.json) { implicit request =>
     withCustomJsonBody[CdcsCreateCaseRequest] { req =>
@@ -515,9 +524,6 @@ class TimeToPayController @Inject() (
     }
   }
 
-  private def findFile(path: String, fileName: String): Option[File] =
-    environment.getExistingFile(s"$basePath$path$fileName")
-
   // Call made to time-to-pay for the routes: /cancel, /inform and /full-amend of time-to-pay-proxy
   def proxyPlanCase(): Action[JsValue] = Action.async(parse.json) { implicit request =>
     withCustomJsonBody[TimeToPayProxyPlanRequest] { req =>
@@ -538,7 +544,7 @@ class TimeToPayController @Inject() (
       }
 
       // Apply desired response status based on UTR
-      val byUtr: Option[Result] = maybeUtrIdentifier.flatMap {
+      val maybeByUtr: Option[Either[FileNotFoundError, Result]] = maybeUtrIdentifier.map {
         case "proxyPlan_error_400" =>
           respond("proxyPlan_error_400.json", Results.BadRequest)
         case "proxyPlan_error_500" =>
