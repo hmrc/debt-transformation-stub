@@ -339,7 +339,9 @@ class TimeToPayController @Inject() (
         val requestedCode = status.header.status
 
         constructResponse(testDataPackage, fileName).map { baseResult =>
-          logger.info(s"Stub ETMP response body: ${baseResult.body match { case play.api.http.HttpEntity.Strict(d, _) => d.utf8String; case _ => "[non-strict body]" }}")
+          logger.info(s"Stub ETMP response body: ${baseResult.body match {
+              case play.api.http.HttpEntity.Strict(d, _) => d.utf8String; case _ => "[non-strict body]"
+            }}")
           baseResult.copy(header = baseResult.header.copy(status = requestedCode))
         }
       }
