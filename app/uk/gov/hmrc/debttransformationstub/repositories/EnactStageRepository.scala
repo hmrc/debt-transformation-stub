@@ -20,22 +20,23 @@ import com.mongodb.client.model.FindOneAndUpdateOptions
 import org.mongodb.scala.bson.Document
 import org.mongodb.scala.model.Filters._
 import org.mongodb.scala.model.Updates._
-import org.mongodb.scala.model.{ IndexModel, ReturnDocument }
+import org.mongodb.scala.model.{IndexModel, ReturnDocument}
 import org.mongodb.scala.result.DeleteResult
 import play.api.Logger
-import play.api.libs.json.{ Json, OFormat }
+import play.api.libs.json.{JsPath, Json, OFormat, Reads, Writes, __, OWrites}
 import uk.gov.hmrc.debttransformationstub.models._
 import uk.gov.hmrc.mongo.MongoComponent
-import uk.gov.hmrc.mongo.play.json.{ Codecs, PlayMongoRepository }
+import uk.gov.hmrc.mongo.play.json.{Codecs, PlayMongoRepository}
+import play.api.libs.functional.syntax._
 
-import javax.inject.{ Inject, Singleton }
-import scala.concurrent.{ ExecutionContext, Future }
+import javax.inject.{Inject, Singleton}
+import scala.concurrent.{ExecutionContext, Future}
 
 case class EnactStage(
   correlationId: Option[String] = None,
+  etmp: Option[EnactEtmp],
   nddsRequest: Option[NDDSRequest] = None,
   pegaRequest: Option[UpdateCaseRequest] = None,
-  etmpRequest: Option[PaymentLockRequest] = None,
   idmsRequest: Option[CreateIDMSMonitoringCaseRequest] = None,
   idmsRequestSA: Option[CreateIDMSMonitoringCaseRequestSA] = None,
   cdcsRequest: Option[CdcsCreateCaseRequest] = None,
@@ -45,7 +46,6 @@ case class EnactStage(
   hodReferralDecryptedXml: Option[String] = None,
   nddsAttempts: Option[Int] = None,
   pegaAttempts: Option[Int] = None,
-  etmpAttempts: Option[Int] = None,
   idmsAttempts: Option[Int] = None,
   cdcsAttempts: Option[Int] = None,
   cesaAttempts: Option[Int] = None,
@@ -57,7 +57,97 @@ case class EnactStage(
 )
 
 object EnactStage {
-  implicit val format: OFormat[EnactStage] = Json.format[EnactStage]
+  implicit val format: OFormat[EnactStage] = OFormat(reads, writes)
+
+  private val reads: Reads[EnactStage] = (
+    (__ \"correlationId").readNullable[String] and
+    __.read[EnactEtmp](EnactEtmp.reads) and
+    (__ \ "nddsRequest").readNullable[NDDSRequest] and
+    (__ \ "pegaRequest").readNullable[UpdateCaseRequest] and
+    (__ \ "idmsRequest").readNullable[CreateIDMSMonitoringCaseRequest] and
+    (__ \ "idmsRequestSA").readNullable[CreateIDMSMonitoringCaseRequestSA] and
+    (__ \ "cdcsRequest").readNullable[CdcsCreateCaseRequest] and
+    (__ \ "cesaRequest").readNullable[CesaRequest] and
+    (__ \ "customerCheckRequest").readNullable[CustomerCheckRequest] and
+    (__ \ "hodReferralRequest").readNullable[HodReferralRequest] and
+    (__ \ "hodReferralDecryptedXml").readNullable[String] and
+    (__ \ "nddsAttempts").readNullable[Int] and
+    (__ \ "pegaAttempts").readNullable[Int] and
+    (__ \ "idmsAttempts").readNullable[Int] and
+    (__ \ "cdcsAttempts").readNullable[Int] and
+    (__ \ "cesaAttempts").readNullable[Int] and
+    (__ \ "customerCheckAttempts").readNullable[Int] and
+    (__ \ "customerCheckStatus").readNullable[Int] and
+    (__ \ "hodReferralAttempts").readNullable[Int] and
+    (__ \ "hodReferralStatus").readNullable[Int] and
+    (__ \ "combinedStageAttempts").readNullable[Int]
+  )(EnactStage.apply _)
+
+  private val writes: OWrites[EnactStage] = (
+    (__ \"correlationId").writeNullable[String] and
+      __.write[EnactEtmp](EnactEtmp.writes) and
+      (__ \ "nddsRequest").writeNullable[NDDSRequest] and
+      (__ \ "pegaRequest").writeNullable[UpdateCaseRequest] and
+      (__ \ "idmsRequest").writeNullable[CreateIDMSMonitoringCaseRequest] and
+      (__ \ "idmsRequestSA").writeNullable[CreateIDMSMonitoringCaseRequestSA] and
+      (__ \ "cdcsRequest").writeNullable[CdcsCreateCaseRequest] and
+      (__ \ "cesaRequest").writeNullable[CesaRequest] and
+      (__ \ "customerCheckRequest").writeNullable[CustomerCheckRequest] and
+      (__ \ "hodReferralRequest").writeNullable[HodReferralRequest] and
+      (__ \ "hodReferralDecryptedXml").writeNullable[String] and
+      (__ \ "nddsAttempts").writeNullable[Int] and
+      (__ \ "pegaAttempts").writeNullable[Int] and
+      (__ \ "idmsAttempts").writeNullable[Int] and
+      (__ \ "cdcsAttempts").writeNullable[Int] and
+      (__ \ "cesaAttempts").writeNullable[Int] and
+      (__ \ "customerCheckAttempts").writeNullable[Int] and
+      (__ \ "customerCheckStatus").writeNullable[Int] and
+      (__ \ "hodReferralAttempts").writeNullable[Int] and
+      (__ \ "hodReferralStatus").writeNullable[Int] and
+      (__ \ "combinedStageAttempts").writeNullable[Int]
+    )(es => (
+      es.correlationId,
+      es.etmp,
+      es.nddsRequest,
+      es.pegaRequest,
+      es.idmsRequest,
+      es.idmsRequestSA,
+      es.cdcsRequest,
+      es.cesaRequest,
+      es.customerCheckRequest,
+      es.hodReferralRequest,
+      es.hodReferralDecryptedXml,
+      es.nddsAttempts,
+      es.pegaAttempts,
+      es.idmsAttempts,
+      es.cdcsAttempts,
+      es.cesaAttempts,
+      es.customerCheckAttempts,
+      es.customerCheckStatus,
+      es.hodReferralAttempts,
+      es.hodReferralStatus,
+      es.combinedStageAttempts,
+  ))
+}
+
+case class EnactEtmp(
+  etmpRequest: Option[PaymentLockRequest] = None,
+  etmpRemoveRequest: Option[ETMPRemoveRequest] = None,
+  etmpAttempts: Option[Int] = None,
+)
+
+object EnactEtmp {
+  val reads: Reads[EnactEtmp] = (
+    (__ \ "etmpRequest").readNullable[PaymentLockRequest] and
+      (__ \ "etmpRemoveRequest").readNullable[ETMPRemoveRequest] and
+      (__ \ "etmpAttempts").readNullable[Int]
+    )(EnactEtmp.apply _)
+
+  val writes: Writes[EnactEtmp] = (
+    (__ \ "etmpRequest").writeNullable[PaymentLockRequest] and
+      (__ \ "etmpRemoveRequest").writeNullable[ETMPRemoveRequest] and
+      (__ \ "etmpAttempts").writeNullable[Int]
+    )(ee => (ee.etmpRequest, ee.etmpRemoveRequest, ee.etmpAttempts))
 }
 
 @Singleton
@@ -103,18 +193,19 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
     collection
       .findOneAndUpdate(
         equal("correlationId", correlationId),
-        combine(set("etmpRequest", Codecs.toBson(request)), inc("etmpAttempts", 1)),
+        combine(set("etmpRequest", Codecs.toBson(request)), inc("etmpAttempts", 1), inc("combinedStageAttempts", 1)),
         new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
       )
       .toFuture()
   }
 
-  def addETMPRemoveChargeStage(correlationId: String, request: EtmpRemoveChargeRequest): Future[EnactStage] = {
-    logger.warn(s"Recording ETMP Remove Charge stage request $correlationId")
+  def addETMPRemoveChargeStage(correlationId: String, request: ETMPRemoveRequest): Future[EnactStage] = {
+    logger.warn(s"Recording ETMP Remove Charge correlationId $correlationId")
+    logger.info(s"ETMP Remove Charge stage request being recorded: ${Json.prettyPrint(Json.toJson(request))}")
     collection
       .findOneAndUpdate(
         equal("correlationId", correlationId),
-        combine(set("etmpRemoveChargeRequest", Codecs.toBson(request)), inc("etmpRemoveChargeAttempts", 1)),
+        combine(set("etmpRemoveRequest", Codecs.toBson(request)), inc("etmpAttempts", 1), inc("combinedStageAttempts", 1)),
         new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
       )
       .toFuture()

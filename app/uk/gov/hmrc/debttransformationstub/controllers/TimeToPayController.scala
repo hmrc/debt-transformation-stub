@@ -19,13 +19,13 @@ package uk.gov.hmrc.debttransformationstub.controllers
 import org.apache.commons.io.FileUtils
 import play.api.Environment
 import play.api.http.ContentTypes
-import play.api.libs.json.{ JsValue, Json }
-import play.api.mvc.Results.{ Status => ResultStatus }
+import play.api.libs.json.{JsValue, Json}
+import play.api.mvc.Results.{Status => ResultStatus}
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
-import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.{ CdcsCreateCaseRequestIdTypeReference, CdcsCreateCaseRequestLastName }
+import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.{CdcsCreateCaseRequestIdTypeReference, CdcsCreateCaseRequestLastName}
 import uk.gov.hmrc.debttransformationstub.models._
-import uk.gov.hmrc.debttransformationstub.repositories.{ EnactStage, EnactStageRepository }
+import uk.gov.hmrc.debttransformationstub.repositories.{EnactStage, EnactStageRepository}
 import uk.gov.hmrc.debttransformationstub.services.TTPPollingService
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.http.HeaderCarrier
@@ -34,7 +34,7 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import java.io.File
 import java.nio.charset.Charset
 import javax.inject.Inject
-import scala.concurrent.{ ExecutionContext, Future }
+import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Source
 import scala.util.Try
 
@@ -211,7 +211,9 @@ class TimeToPayController @Inject() (
     withCustomJsonBody[PaymentLockRequest] { req =>
       enactStageRepository
         .addETMPStage(correlationId, req) // Future[Unit]
-        .map { _ =>
+        .recoverWith(r => Future.successful(println("FAILED ETMP STAGE: $r")))
+        .map { res =>
+          println(s"ENACT STAGE ETMP: $res")
           handleNotFound {
             (req.idType.toUpperCase, req.idValue) match {
               case ("UTR", filename @ "etmpCreateRequestFailure_400") =>
@@ -382,12 +384,13 @@ class TimeToPayController @Inject() (
     val correlationId = getCorrelationIdHeader(request.headers)
     val baseFolder = "/etmp.removeCharge/"
 
-    withCustomJsonBody[EtmpRemoveChargeRequest] { removeChargeReq =>
+    withCustomJsonBody[ETMPRemoveRequest] { removeChargeReq =>
+      logger.info(s"---------------> file: ${removeChargeReq.idValue.getOrElse("")}")
       enactStageRepository
         .addETMPRemoveChargeStage(correlationId, removeChargeReq)
         .map { _ =>
           handleNotFound {
-            (removeChargeReq.idType.toString.toUpperCase, removeChargeReq.idValue.toString.toUpperCase) match {
+            (removeChargeReq.idType.toString.toUpperCase, removeChargeReq.idValue.getOrElse("")) match {
               case ("UTR", filename @ "etmpRemoveRequestFailure_400") =>
                 constructResponse(baseFolder, s"$filename.json", Results.BadRequest(_))
               case ("UTR", filename @ "etmpRemoveRequestFailure_422") =>
@@ -395,7 +398,7 @@ class TimeToPayController @Inject() (
               case ("UTR", filename @ "etmpRemoveRequestFailure_500") =>
                 constructResponse(baseFolder, s"$filename.json", Results.InternalServerError(_))
               case _ =>
-                constructResponse(baseFolder, s"${removeChargeReq.idValue}.json")
+                constructResponse(baseFolder, s"${removeChargeReq.idValue.getOrElse("")}.json")
             }
           }
         }

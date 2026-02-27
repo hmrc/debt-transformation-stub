@@ -18,7 +18,7 @@ package uk.gov.hmrc.debttransformationstub.models
 
 import play.api.libs.json.{ Format, Json }
 
-final case class EtmpRemoveChargeRequest(
+final case class ETMPRemoveRequest(
   idType: Option[String],
   idValue: Option[String],
   regimeType: Option[String],
@@ -29,6 +29,6 @@ final case class EtmpRemoveChargeRequest(
   noteLines: Option[List[String]]
 )
 
-object EtmpRemoveChargeRequest {
-  implicit val format: Format[EtmpRemoveChargeRequest] = Json.format[EtmpRemoveChargeRequest]
+object ETMPRemoveRequest {
+  implicit val format: Format[ETMPRemoveRequest] = Json.format[ETMPRemoveRequest]
 }
