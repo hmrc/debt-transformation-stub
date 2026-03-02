@@ -78,7 +78,7 @@ POST          /scrbroker/filtration                                             
 POST          /debts/time-to-pay/charge-info                                                         uk.gov.hmrc.debttransformationstub.controllers.TimeToPayEligibilityController.getCharges()
 
 # Time To Pay route which interact with ETMP
-PUT           /RESTAdapter/essttp/charges                                                            uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.etmpCancelPlan()
+PUT           /RESTAdapter/essttp/charges                                                            uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.etmpInformCancelPlan()
 
 # HoD Referral stub (without encryption at this stage)
 POST          /npswm/prsup/PRRestService/NPSWMReferrals/v1/processEncryptedReferrals                 uk.gov.hmrc.debttransformationstub.controllers.HodReferralController.processEncryptedReferrals()

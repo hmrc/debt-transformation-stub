@@ -323,9 +323,12 @@ class TimeToPayController @Inject() (
   }
 
   // Call made to ETMP:
-  def etmpCancelPlan(): Action[JsValue] = Action.async(parse.json) { implicit request =>
-    withCustomJsonBody[EtmpCancelPlanRequest] { req =>
-      val testDataPackage = "/etmp.cancelCase/"
+  def etmpInformCancelPlan(): Action[JsValue] = Action.async(parse.json) { implicit request =>
+    withCustomJsonBody[EtmpPlanRequest] { req =>
+
+      logger.info(s"Hitting ETMP STUB ****")
+
+      val testDataPackage = "/etmp.informCancelCase/"
       val maybeUtrIdentifier: Option[String] =
         for {
           idType  <- req.idType
@@ -348,26 +351,26 @@ class TimeToPayController @Inject() (
 
       // Apply desired response status based on UTR
       val maybeByUtr: Option[Either[FileNotFoundError, Result]] = maybeUtrIdentifier.map {
-        case "etmpCancelPlan_error_400" =>
-          respond("etmpCancelPlan_error_400.json", Results.BadRequest)
-        case "etmpCancelPlan_error_401" =>
+        case "etmp1854Plan_error_400" =>
+          respond("etmp1854Plan_error_400.json", Results.BadRequest)
+        case "etmp1854Plan_error_401" =>
           Right(Results.Unauthorized)
-        case "etmpCancelPlan_error_403" =>
+        case "etmp1854Plan_error_403" =>
           Right(Results.Forbidden)
-        case "etmpCancelPlan_error_404" =>
+        case "etmp1854Plan_error_404" =>
           Right(Results.NotFound)
-        case "etmpCancelPlan_error_422" =>
-          respond("etmpCancelPlan_error_422.json", Results.UnprocessableEntity)
-        case "etmpCancelPlan_error_500" =>
-          respond("etmpCancelPlan_error_500.json", Results.InternalServerError)
-        case "etmpCancelPlan_error_500_HIP" =>
-          respond("etmpCancelPlan_error_500_HIP.json", Results.InternalServerError)
+        case "etmp1854Plan_error_422" =>
+          respond("etmp1854Plan_error_422.json", Results.UnprocessableEntity)
+        case "etmp1854Plan_error_500" =>
+          respond("etmp1854Plan_error_500.json", Results.InternalServerError)
+        case "etmp1854Plan_error_500_HIP" =>
+          respond("etmp1854Plan_error_500_HIP.json", Results.InternalServerError)
         case "cancelPlan_unparseable_500" =>
           Right(Results.InternalServerError("Internal Server Error - stubbed, non-JSON body").as("text/plain"))
-        case "etmpCancelPlan_unparseable_500" =>
+        case "etmp1854Plan_unparseable_500" =>
           Right(Results.InternalServerError("Internal Server Error - stubbed, non-JSON body").as("text/plain"))
-        case "etmpCancelPlan_error_503" =>
-          respond("etmpCancelPlan_error_503.json", Results.ServiceUnavailable)
+        case "etmp1854Plan_error_503" =>
+          respond("etmp1854Plan_error_503.json", Results.ServiceUnavailable)
         case utr =>
           respond(s"$utr.json", Results.Ok)
       }

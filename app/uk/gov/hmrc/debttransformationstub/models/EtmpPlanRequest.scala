@@ -18,7 +18,7 @@ package uk.gov.hmrc.debttransformationstub.models
 
 import play.api.libs.json.{ Json, OFormat }
 
-case class EtmpCancelPlanRequest(
+case class EtmpPlanRequest(
   idType: Option[String],
   idValue: Option[String],
   regimeType: Option[String],
@@ -29,6 +29,6 @@ case class EtmpCancelPlanRequest(
   noteLines: Option[List[String]]
 )
 
-object EtmpCancelPlanRequest {
-  implicit val format: OFormat[EtmpCancelPlanRequest] = Json.format[EtmpCancelPlanRequest]
+object EtmpPlanRequest {
+  implicit val format: OFormat[EtmpPlanRequest] = Json.format[EtmpPlanRequest]
 }
