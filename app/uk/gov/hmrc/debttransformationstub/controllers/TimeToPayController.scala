@@ -325,9 +325,6 @@ class TimeToPayController @Inject() (
   // Call made to ETMP:
   def etmpInformCancelPlan(): Action[JsValue] = Action.async(parse.json) { implicit request =>
     withCustomJsonBody[EtmpPlanRequest] { req =>
-
-      logger.info(s"Hitting ETMP STUB ****")
-
       val testDataPackage = "/etmp.informCancelCase/"
       val maybeUtrIdentifier: Option[String] =
         for {
