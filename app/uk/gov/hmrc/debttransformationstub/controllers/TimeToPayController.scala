@@ -19,7 +19,7 @@ package uk.gov.hmrc.debttransformationstub.controllers
 import org.apache.commons.io.FileUtils
 import play.api.Environment
 import play.api.http.ContentTypes
-import play.api.libs.json.{ JsNull, JsObject, JsValue, Json }
+import play.api.libs.json.{ JsValue, Json }
 import play.api.mvc.Results.{ Status => ResultStatus }
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
@@ -512,15 +512,8 @@ class TimeToPayController @Inject() (
   }
 
   def enactStage(correlationId: String): Action[AnyContent] = Action.async { request =>
-    enactStageRepository.findByCorrelationId(correlationId).map { stages: Seq[EnactStage] =>
-      // Hack to handle concurrent creation of DB entries (likely by Full Amend).
-      // We read all discrete entries, and then recombine the JSON to achieve a single object with all fields populated.
-      Ok(
-        stages
-          .map(Json.toJson(_))
-          .reduceOption((jsonA, jsonB) => jsonA.as[JsObject] ++ jsonB.as[JsObject])
-          .getOrElse(JsNull)
-      )
+    enactStageRepository.findByCorrelationId(correlationId).map { stage: Option[EnactStage] =>
+      Ok(Json.toJson(stage))
     }
   }
 

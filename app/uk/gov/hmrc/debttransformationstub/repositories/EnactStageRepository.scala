@@ -200,8 +200,8 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
       .toFuture()
   }
 
-  def findByCorrelationId(correlationId: String): Future[Seq[EnactStage]] =
-    collection.find(equal("correlationId", correlationId)).toFuture()
+  def findByCorrelationId(correlationId: String): Future[Option[EnactStage]] =
+    collection.find(equal("correlationId", correlationId)).headOption()
 
   def findByIdValue(idValue: String): Future[Option[EnactStage]] =
     collection.find(equal("idValue", idValue)).headOption()
