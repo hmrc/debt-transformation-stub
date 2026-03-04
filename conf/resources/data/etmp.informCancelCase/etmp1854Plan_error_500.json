@@ -1,0 +1,10 @@
+{
+  "origin": "HoD",
+  "response": {
+    "error": {
+      "code": "500",
+      "message": "string",
+      "logID": "89505FF7D91484D27D33CC1E5E208807"
+    }
+  }
+}

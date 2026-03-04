@@ -289,6 +289,8 @@ class TimeToPayController @Inject() (
       val maybeByUtr: Option[Either[FileNotFoundError, Result]] = maybeUtrIdentifier.map {
         case "cesaCancelPlan_error_400" =>
           respond("cesaCancelPlan_error_400.json", Results.BadRequest)
+        case "cesaCancelPlan_error_404" =>
+          respond("cesaCancelPlan_error_404.json", Results.NotFound)
         case "cesaCancelPlan_error_409" =>
           respond("cesaCancelPlan_error_409.json", Results.Conflict)
         case "6642083101" =>
@@ -297,8 +299,75 @@ class TimeToPayController @Inject() (
           respond("cesaCancelPlan_error_500.json", Results.InternalServerError)
         case "9831098765" =>
           respond("cesaCancelPlan_error_500.json", Results.InternalServerError)
+        case "cancelPlan_unparseable_500" =>
+          Right(Results.InternalServerError("Internal Server Error - stubbed, non-JSON body").as("text/plain"))
+        case "cesaCancelPlan_unparseable_500" =>
+          Right(Results.InternalServerError("Internal Server Error - stubbed, non-JSON body").as("text/plain"))
         case "cesaCancelPlan_error_502" =>
           respond("cesaCancelPlan_error_502.json", Results.BadGateway)
+        case utr =>
+          respond(s"$utr.json", Results.Ok)
+      }
+
+      val result: Result =
+        handleNotFound(
+          maybeByUtr.getOrElse {
+            logger.error(s"Error: UTR required to find a file when stubbing ${request.uri}")
+            Right(Results.BadRequest("UTR not provided"))
+          }
+        )
+
+      // Return the appropriate stubbed response
+      Future.successful(result)
+    }
+  }
+
+  // Call made to ETMP:
+  def etmpInformCancelPlan(): Action[JsValue] = Action.async(parse.json) { implicit request =>
+    withCustomJsonBody[EtmpPlanRequest] { req =>
+      val testDataPackage = "/etmp.informCancelCase/"
+      val maybeUtrIdentifier: Option[String] =
+        for {
+          idType  <- req.idType
+          idValue <- req.idValue
+          if idType.equalsIgnoreCase("UTR") && idValue.nonEmpty
+        } yield idValue
+
+      // Build the response with the desired status
+      def respond(fileName: String, status: ResultStatus): Either[FileNotFoundError, Result] = {
+        logger.info(s"Preparing ETMP cancel response for file: $fileName with status: ${status.header.status}")
+        val requestedCode = status.header.status
+
+        constructResponse(testDataPackage, fileName).map { baseResult =>
+          logger.info(s"Stub ETMP response body: ${baseResult.body match {
+              case play.api.http.HttpEntity.Strict(d, _) => d.utf8String; case _ => "[non-strict body]"
+            }}")
+          baseResult.copy(header = baseResult.header.copy(status = requestedCode))
+        }
+      }
+
+      // Apply desired response status based on UTR
+      val maybeByUtr: Option[Either[FileNotFoundError, Result]] = maybeUtrIdentifier.map {
+        case "etmp1854Plan_error_400" =>
+          respond("etmp1854Plan_error_400.json", Results.BadRequest)
+        case "etmp1854Plan_error_401" =>
+          Right(Results.Unauthorized)
+        case "etmp1854Plan_error_403" =>
+          Right(Results.Forbidden)
+        case "etmp1854Plan_error_404" =>
+          Right(Results.NotFound)
+        case "etmp1854Plan_error_422" =>
+          respond("etmp1854Plan_error_422.json", Results.UnprocessableEntity)
+        case "etmp1854Plan_error_500" =>
+          respond("etmp1854Plan_error_500.json", Results.InternalServerError)
+        case "etmp1854Plan_error_500_HIP" =>
+          respond("etmp1854Plan_error_500_HIP.json", Results.InternalServerError)
+        case "cancelPlan_unparseable_500" =>
+          Right(Results.InternalServerError("Internal Server Error - stubbed, non-JSON body").as("text/plain"))
+        case "etmp1854Plan_unparseable_500" =>
+          Right(Results.InternalServerError("Internal Server Error - stubbed, non-JSON body").as("text/plain"))
+        case "etmp1854Plan_error_503" =>
+          respond("etmp1854Plan_error_503.json", Results.ServiceUnavailable)
         case utr =>
           respond(s"$utr.json", Results.Ok)
       }
