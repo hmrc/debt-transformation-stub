@@ -20,18 +20,18 @@ import com.mongodb.client.model.FindOneAndUpdateOptions
 import org.mongodb.scala.bson.Document
 import org.mongodb.scala.model.Filters._
 import org.mongodb.scala.model.Updates._
-import org.mongodb.scala.model.{IndexModel, ReturnDocument}
+import org.mongodb.scala.model.{ IndexModel, ReturnDocument }
 import org.mongodb.scala.result.DeleteResult
 import play.api.Logger
 import play.api.libs.concurrent.Futures
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.json.{ Json, OFormat }
 import uk.gov.hmrc.debttransformationstub.models._
 import uk.gov.hmrc.mongo.MongoComponent
-import uk.gov.hmrc.mongo.play.json.{Codecs, PlayMongoRepository}
+import uk.gov.hmrc.mongo.play.json.{ Codecs, PlayMongoRepository }
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{ Inject, Singleton }
 import scala.concurrent.duration.DurationInt
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{ ExecutionContext, Future }
 import scala.util.Random
 
 case class EnactStage(
