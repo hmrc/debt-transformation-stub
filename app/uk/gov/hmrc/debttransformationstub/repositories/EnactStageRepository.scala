@@ -23,13 +23,16 @@ import org.mongodb.scala.model.Updates._
 import org.mongodb.scala.model.{ IndexModel, ReturnDocument }
 import org.mongodb.scala.result.DeleteResult
 import play.api.Logger
+import play.api.libs.concurrent.Futures
 import play.api.libs.json.{ Json, OFormat }
 import uk.gov.hmrc.debttransformationstub.models._
 import uk.gov.hmrc.mongo.MongoComponent
 import uk.gov.hmrc.mongo.play.json.{ Codecs, PlayMongoRepository }
 
 import javax.inject.{ Inject, Singleton }
+import scala.concurrent.duration.DurationInt
 import scala.concurrent.{ ExecutionContext, Future }
+import scala.util.Random
 
 case class EnactStage(
   correlationId: Option[String] = None,
@@ -61,7 +64,7 @@ object EnactStage {
 }
 
 @Singleton
-class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: ExecutionContext)
+class EnactStageRepository @Inject() (mongo: MongoComponent, futures: Futures)(implicit ec: ExecutionContext)
     extends PlayMongoRepository[EnactStage](
       mongo,
       "enact-stages",
@@ -100,13 +103,17 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
 
   def addETMPStage(correlationId: String, request: PaymentLockRequest): Future[EnactStage] = {
     logger.warn(s"Recording ETMP stage request $correlationId")
-    collection
-      .findOneAndUpdate(
-        equal("correlationId", correlationId),
-        combine(set("etmpRequest", Codecs.toBson(request)), inc("etmpAttempts", 1)),
-        new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
-      )
-      .toFuture()
+
+    // We add a random delay before interacting with the DB to cater for Full Amend making requests to ETMP & CESA in parallel.
+    withJitterBeforeRunning {
+      collection
+        .findOneAndUpdate(
+          equal("correlationId", correlationId),
+          combine(set("etmpRequest", Codecs.toBson(request)), inc("etmpAttempts", 1)),
+          new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
+        )
+        .toFuture()
+    }
   }
 
   def addIDMSStage(idValue: String, request: CreateIDMSMonitoringCaseRequest): Future[EnactStage] = {
@@ -147,13 +154,16 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
 
   def addCESAStage(correlationId: String, request: CesaRequest): Future[EnactStage] = {
     logger.warn(s"Recording CESA stage request $correlationId")
-    collection
-      .findOneAndUpdate(
-        equal("correlationId", correlationId),
-        combine(set("cesaRequest", Codecs.toBson(request)), inc("cesaAttempts", 1)),
-        new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
-      )
-      .toFuture()
+    // We add a random delay before interacting with the DB to cater for Full Amend making requests to ETMP & CESA in parallel.
+    withJitterBeforeRunning {
+      collection
+        .findOneAndUpdate(
+          equal("correlationId", correlationId),
+          combine(set("cesaRequest", Codecs.toBson(request)), inc("cesaAttempts", 1)),
+          new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
+        )
+        .toFuture()
+    }
   }
 
   def addCustomerCheckStage(
@@ -207,5 +217,8 @@ class EnactStageRepository @Inject() (mongo: MongoComponent)(implicit ec: Execut
     collection.find(equal("idValue", idValue)).headOption()
 
   def deleteAll(): Future[DeleteResult] = collection.deleteMany(Document()).toFuture()
+
+  private def withJitterBeforeRunning[A](operation: => Future[A]) =
+    futures.delayed(Random.between(0, 300).millis)(operation)
 
 }
