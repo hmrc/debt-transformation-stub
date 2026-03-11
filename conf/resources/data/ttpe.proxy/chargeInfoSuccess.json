@@ -44,7 +44,8 @@
       ],
       "debtTotalAmount" : 1000,
       "mainTrans" : "2000",
-      "parentChargeReference" : "PARENT CHARGE REF"
+      "parentChargeReference" : "PARENT CHARGE REF",
+      "isInsolvent": false
     }
   ],
   "identification" : [
@@ -57,5 +58,6 @@
     "customerType" : "MTD(ITSA)",
     "transitionToCDCS" : true
   },
-  "processingDateTime" : "2025-07-02T15:00:41.689625"
+  "processingDateTime" : "2025-07-02T15:00:41.689625",
+  "chargeTypesExcluded" : false
 }
