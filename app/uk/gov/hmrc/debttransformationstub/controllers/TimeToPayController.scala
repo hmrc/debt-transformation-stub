@@ -301,8 +301,6 @@ class TimeToPayController @Inject() (
           respond("cesaCancelPlan_error_500.json", Results.InternalServerError)
         case "cancelPlan_unparseable_500" =>
           Right(Results.InternalServerError("Internal Server Error - stubbed, non-JSON body").as("text/plain"))
-        case "cesaCancelPlan_unparseable_500" =>
-          Right(Results.InternalServerError("Internal Server Error - stubbed, non-JSON body").as("text/plain"))
         case "cesaCancelPlan_error_502" =>
           respond("cesaCancelPlan_error_502.json", Results.BadGateway)
         case utr =>
@@ -365,6 +363,8 @@ class TimeToPayController @Inject() (
         case "cancelPlan_unparseable_500" =>
           Right(Results.InternalServerError("Internal Server Error - stubbed, non-JSON body").as("text/plain"))
         case "etmp1854Plan_unparseable_500" =>
+          Right(Results.InternalServerError("Internal Server Error - stubbed, non-JSON body").as("text/plain"))
+        case "error-500-stub" =>
           Right(Results.InternalServerError("Internal Server Error - stubbed, non-JSON body").as("text/plain"))
         case "etmp1854Plan_error_503" =>
           respond("etmp1854Plan_error_503.json", Results.ServiceUnavailable)
