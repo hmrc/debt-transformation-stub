@@ -414,6 +414,7 @@ object CdcsCreateCaseRequestWrappedTypes {
       with IntPlayJsonValueEnum[CdcsCreateCaseRequestIdTypeReference] {
     val values: immutable.IndexedSeq[CdcsCreateCaseRequestIdTypeReference] = findValues
     case object UTR extends CdcsCreateCaseRequestIdTypeReference(73, CdcsCreateCaseRequestIdType("UTR"))
+    case object SAFE extends CdcsCreateCaseRequestIdTypeReference(60, CdcsCreateCaseRequestIdType("SAFE"))
   }
 
   sealed abstract class CdcsCreateCaseRequestRegimeTypeReference(
