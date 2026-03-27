@@ -348,26 +348,14 @@ class TimeToPayController @Inject() (
       val maybeByUtr: Option[Either[FileNotFoundError, Result]] = maybeUtrIdentifier.map {
         case "etmp1854Plan_error_400" =>
           respond("etmp1854Plan_error_400.json", Results.BadRequest)
-        case "etmp1854Plan_error_401" =>
-          Right(Results.Unauthorized)
-        case "etmp1854Plan_error_403" =>
-          Right(Results.Forbidden)
-        case "etmp1854Plan_error_404" =>
-          Right(Results.NotFound)
         case "etmp1854Plan_error_422" =>
           respond("etmp1854Plan_error_422.json", Results.UnprocessableEntity)
         case "etmp1854Plan_error_500" =>
           respond("etmp1854Plan_error_500.json", Results.InternalServerError)
-        case "etmp1854Plan_error_500_HIP" =>
-          respond("etmp1854Plan_error_500_HIP.json", Results.InternalServerError)
-        case "cancelPlan_unparseable_500" =>
-          Right(Results.InternalServerError("Internal Server Error - stubbed, non-JSON body").as("text/plain"))
         case "etmp1854Plan_unparseable_500" =>
           Right(Results.InternalServerError("Internal Server Error - stubbed, non-JSON body").as("text/plain"))
         case "error-500-stub" =>
           Right(Results.InternalServerError("Internal Server Error - stubbed, non-JSON body").as("text/plain"))
-        case "etmp1854Plan_error_503" =>
-          respond("etmp1854Plan_error_503.json", Results.ServiceUnavailable)
         case utr =>
           respond(s"$utr.json", Results.Ok)
       }
