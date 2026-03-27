@@ -352,14 +352,10 @@ class TimeToPayController @Inject() (
           respond("etmp1854Plan_error_422.json", Results.UnprocessableEntity)
         case "etmp1854Plan_error_500" =>
           respond("etmp1854Plan_error_500.json", Results.InternalServerError)
-        case "etmp1854Plan_error_500_HIP" =>
-          respond("etmp1854Plan_error_500_HIP.json", Results.InternalServerError)
         case "etmp1854Plan_unparseable_500" =>
           Right(Results.InternalServerError("Internal Server Error - stubbed, non-JSON body").as("text/plain"))
         case "error-500-stub" =>
           Right(Results.InternalServerError("Internal Server Error - stubbed, non-JSON body").as("text/plain"))
-        case "etmp1854Plan_error_503" =>
-          respond("etmp1854Plan_error_503.json", Results.ServiceUnavailable)
         case utr =>
           respond(s"$utr.json", Results.Ok)
       }
