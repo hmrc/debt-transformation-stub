@@ -55,8 +55,6 @@ class CESAController @Inject() (environment: Environment, cc: ControllerComponen
             case Success(value) =>
               val json = Json.parse(value)
               val result = file.getName match {
-                case "multipleCharges_Error_401.json" => Unauthorized(json)
-                case "multipleCharges_Error_422.json" => UnprocessableEntity(json)
                 case "multipleCharges_Error_502.json" => BadGateway(json)
                 case _                                => Ok(json)
               }
