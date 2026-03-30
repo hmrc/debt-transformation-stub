@@ -148,14 +148,19 @@ class TimeToPayController @Inject() (
   def nddsEnactArrangement: Action[JsValue] = Action.async(parse.json) { implicit request =>
     val correlationId = getCorrelationIdHeader(request.headers)
 
+    val directory = "/ndds.enactArrangement/"
+
     withCustomJsonBody[NDDSRequest] { req =>
       val services = req.paymentPlan.paymentPlanCharges.map(_.hodService).toSet
 
       def needId(pred: Identification => Boolean, missingMsg: String): Either[Result, String] =
         req.identification.find(pred).map(_.idValue).toRight(BadRequest(missingMsg))
 
-      def fileResponse(id: String): Result =
-        handleNotFound(constructResponse("/ndds.enactArrangement/", s"$id.json"))
+      def fileResponse(id: String): Result = handleNotFound(
+        constructResponse(directory, s"$id.json").left.flatMap { _ =>
+          constructResponse(directory, "9876543210.json")
+        }
+      )
 
       val idEither: Either[Result, String] =
         if (services.contains("PAYE"))
@@ -221,7 +226,8 @@ class TimeToPayController @Inject() (
               case ("UTR", filename @ "etmpCreateRequestFailure_500") =>
                 constructResponse(baseFolder, s"$filename.json", Results.InternalServerError(_))
               case _ =>
-                constructResponse(baseFolder, s"${req.idValue}.json")
+                constructResponse(baseFolder, s"${req.idValue}.json").left
+                  .flatMap(_ => constructResponse(baseFolder, "864FZ00049.json"))
             }
           }
         }
@@ -252,6 +258,8 @@ class TimeToPayController @Inject() (
     logger.info(s"Request body for idmsCreateSAMonitoringCase: ${request.body}")
     logger.info(s"Request headers for idmsCreateSAMonitoringCase: ${request.headers}")
 
+    val directory = "/idms.createSAMonitoringCase/"
+
     withCustomJsonBody[CreateIDMSMonitoringCaseRequestSA] { req =>
       logger.info(
         s"Received request to create SA IDMS monitoring case with idValue: ${req.idValue}"
@@ -261,7 +269,10 @@ class TimeToPayController @Inject() (
       enactStageRepository
         .addIDMSStageSA(idValue, req)
         .map { _ =>
-          handleNotFound(constructResponse("/idms.createSAMonitoringCase/", s"${req.idValue}.json"))
+          handleNotFound(
+            constructResponse(directory, s"${req.idValue}.json").left
+              .flatMap(_ => constructResponse(directory, "9876543210.json"))
+          )
         }
     }
   }
@@ -425,16 +436,15 @@ class TimeToPayController @Inject() (
 
       val result: Result = handleNotFound(maybeResult)
 
-      identifications match {
-        case Nil => Future.successful(Results.BadRequest("No identifications supplied"))
-        case ::(head, _) =>
-          enactStageRepository.addCDCSStage(idValue = head.idValue.value, req).map { _ =>
+      maybeUtrIdentifier match {
+        case None => Future.successful(Results.BadRequest("No UTR supplied"))
+        case Some(utr) =>
+          enactStageRepository.addCDCSStage(idValue = utr, req).map { _ =>
             result
           }
       }
     }
   }
-
   // Call made to CESA for the routes: /inform and /full-amend of time-to-pay
   def cesaRequest(): Action[JsValue] = Action.async(parse.json) { implicit request =>
     withCustomJsonBody[CesaRequest] { req =>
