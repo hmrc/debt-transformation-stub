@@ -65,6 +65,7 @@ POST          /prweb/api/TTP/v1/CreateSSTTP                                     
 # Time To Pay routes which interact with CESA
 POST          /cesa/debt/ttp/cancel                                                                  uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.cesaCancelCase()
 POST          /cesa/debt/ttp/create                                                                  uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.cesaRequest()
+POST          /cesa/debt/ttp/amend                                                                  uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.cesaRequest()
 
 # Time To Pay Proxy routes which interact with Time To Pay
 POST          /individuals/debts/time-to-pay/cancel                                                  uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.proxyPlanCase()
