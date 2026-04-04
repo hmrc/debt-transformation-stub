@@ -20,6 +20,7 @@ import play.api.libs.json.{ Format, Json, OFormat }
 
 case class CesaRequest(
   identifications: List[CESAIdentification],
+  debtItemCharges : List[DebtItemChargeId],
   transitionedIndicator: Option[Boolean],
   ttpStartDate: Option[String],
   ttpEndDate: Option[String],
