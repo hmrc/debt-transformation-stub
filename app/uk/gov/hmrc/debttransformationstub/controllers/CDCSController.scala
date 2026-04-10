@@ -38,6 +38,7 @@ class CDCSController @Inject() (environment: Environment, cc: ControllerComponen
     withCustomJsonBody[CdcsRequest] { request =>
       val fileName: String = request.identifications.head.idValue
       val relativePath = s"$basePath" + "/" + s"$fileName.json"
+      logger.info(s"***** \n\n\nPATH: $relativePath")
       environment.getExistingFile(relativePath) match {
         case None =>
           val message = s"file [$relativePath] not found"
@@ -54,7 +55,13 @@ class CDCSController @Inject() (environment: Environment, cc: ControllerComponen
           maybeFileContent match {
             case Success(value) =>
               // Might throw if parsing fails
-              Future.successful(Ok(Json.parse(value)))
+              val json = Json.parse(value)
+              val result = file.getName match {
+                case "cdcsClientError400.json" => BadRequest(json)
+                case _                                => Ok(json)
+              }
+              logger.info(s"*******************CDCS RESPONSE*****\n\n\n$json\n\n\n")
+              Future.successful(result)
             case Failure(exception) =>
               logger.error(s"Failed to parse the file $file", exception)
               Future.successful(InternalServerError(s"Stub failed to parse file $file"))
