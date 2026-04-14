@@ -1,0 +1,15 @@
+{
+  "debitIdentifiers": [
+    {
+      "UTR": "missingChargeReferenceMandatoryFields",
+      "saTaxYearEnd": 2023,
+      "creationDate": "2022-07-03",
+      "chargeType": "LPI",
+      "tieBreaker": "0002",
+      "originalCreationDate": "2022-06-03",
+      "originalTieBreaker": "0001",
+      "chargeReference": "K0000000000003",
+      "processingOutcome": "E"
+    }
+  ]
+}
