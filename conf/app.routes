@@ -83,3 +83,5 @@ PUT           /etmp/RESTAdapter/essttp/charges                                  
 
 # HoD Referral stub (without encryption at this stage)
 POST          /npswm/prsup/PRRestService/NPSWMReferrals/v1/processEncryptedReferrals                 uk.gov.hmrc.debttransformationstub.controllers.HodReferralController.processEncryptedReferrals()
+
+POST          /RESTAdapter/cross-regime/payment/penalty/ttp/first-contact-date                       uk.gov.hmrc.debttransformationstub.controllers.FirstContactDateController.firstContactDate()
