@@ -78,12 +78,12 @@ class FirstContactDateController @Inject() (
         case utr =>
           respond(s"$utr.json", Results.Ok)
         case undefinedValue =>
-          Left(FileNotFoundError(s"File not found ${undefinedValue}"))
+          Left(FileNotFoundError(s"File not found $undefinedValue"))
       }
 
       Future.successful(
         maybeResultByIdType match {
-          case Left(error) => Results.NotFound(s"File not found: $error")
+          case Left(error)   => Results.NotFound(s"File not found: $error")
           case Right(result) => result
         }
       )
