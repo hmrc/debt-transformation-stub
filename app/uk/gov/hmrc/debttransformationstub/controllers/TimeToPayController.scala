@@ -19,13 +19,13 @@ package uk.gov.hmrc.debttransformationstub.controllers
 import org.apache.commons.io.FileUtils
 import play.api.Environment
 import play.api.http.ContentTypes
-import play.api.libs.json.{ JsValue, Json }
-import play.api.mvc.Results.{ Status => ResultStatus }
+import play.api.libs.json.{JsValue, Json}
+import play.api.mvc.Results.{Status => ResultStatus}
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
-import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.{ CdcsCreateCaseRequestIdTypeReference, CdcsCreateCaseRequestLastName }
+import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.CdcsCreateCaseRequestIdTypeReference
 import uk.gov.hmrc.debttransformationstub.models._
-import uk.gov.hmrc.debttransformationstub.repositories.{ EnactStage, EnactStageRepository }
+import uk.gov.hmrc.debttransformationstub.repositories.{EnactStage, EnactStageRepository}
 import uk.gov.hmrc.debttransformationstub.services.TTPPollingService
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.http.HeaderCarrier
@@ -34,7 +34,7 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import java.io.File
 import java.nio.charset.Charset
 import javax.inject.Inject
-import scala.concurrent.{ ExecutionContext, Future }
+import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Source
 import scala.util.Try
 
@@ -392,31 +392,9 @@ class TimeToPayController @Inject() (
       val maybeUtrIdentifier: Option[String] =
         identifications.find(_.idType == CdcsCreateCaseRequestIdTypeReference.UTR).map(_.idValue.value)
 
-      val lastName: CdcsCreateCaseRequestLastName = req.TTP.customer.individual.lastName
       logger.info(s"CDCS create case identifiers are: ${identifications.mkString(", ")}")
 
-      def fromLastName: Either[FileNotFoundError, Result] =
-        lastName match {
-          case CdcsCreateCaseRequestLastName("STUB_FAILURE_500") =>
-            Right(Results.InternalServerError("intentional stubbed 500"))
-
-          case CdcsCreateCaseRequestLastName("STUB_FAILURE_400") =>
-            constructResponse(testDataPackage, "cdcsCreateCaseFailure_400.json")
-              .map(res => res.copy(header = res.header.copy(status = BAD_REQUEST)))
-
-          case CdcsCreateCaseRequestLastName("STUB_FAILURE_422") =>
-            constructResponse(testDataPackage, "cdcsCreateCaseFailure_422.json")
-              .map(res => res.copy(header = res.header.copy(status = UNPROCESSABLE_ENTITY)))
-
-          case _ =>
-            constructResponse(testDataPackage, "cdcsCreateCaseSuccessResponse.json").map { baseResult =>
-              baseResult.copy(header = baseResult.header.copy(status = OK))
-            }
-        }
-
       val maybeResult: Either[FileNotFoundError, Result] = maybeUtrIdentifier match {
-        case None =>
-          fromLastName
         case Some(identifier) =>
           identifier match {
             case "3145760528" =>
@@ -426,11 +404,16 @@ class TimeToPayController @Inject() (
 
             case "3153830017" => Right(Results.InternalServerError("intentional stubbed 500"))
             case "3145760528" => Right(Results.InternalServerError("intentional stubbed 500"))
+            case "cdcsCreateCaseFailure_400" =>
+              constructResponse(testDataPackage, "cdcsCreateCaseFailure_400.json")
+                .map(res => res.copy(header = res.header.copy(status = BAD_REQUEST)))
             case s if s.startsWith("cdcsResponse_error_") =>
               val code = s.stripPrefix("cdcsResponse_error_").takeWhile(_.isDigit).toInt
               Right(Results.Status(code)("intentional stubbed error"))
             case _ =>
-              fromLastName
+              constructResponse(testDataPackage, "cdcsCreateCaseSuccessResponse.json").map { baseResult =>
+                baseResult.copy(header = baseResult.header.copy(status = OK))
+              }
           }
       }
 
