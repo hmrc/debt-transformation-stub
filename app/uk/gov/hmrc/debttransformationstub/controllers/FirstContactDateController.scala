@@ -59,7 +59,7 @@ class FirstContactDateController @Inject() (
             } yield iDNumber
           )
 
-      val fileId = maybeUtrIdNumber.getOrElse("firstContactDateSuccessNoIdType")
+      val fileId = maybeUtrIdNumber.getOrElse("firstContactDateSuccess")
 
       logger.info(s"Maybe UTR/NINO provided: $maybeUtrIdNumber")
 
