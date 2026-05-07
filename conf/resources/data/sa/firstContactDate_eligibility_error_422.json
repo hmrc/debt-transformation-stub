@@ -10,7 +10,7 @@
         "identifications": [
           {
             "idType": "UTR",
-            "idValue": "firstContactDate_error_422"
+            "idValue": "firstContactDate_eligibility_error_422"
           }
         ]
       }

@@ -10,7 +10,7 @@
         "identifications": [
           {
             "idType": "UTR",
-            "idValue": "firstContactDateSuccess"
+            "idValue": "firstContactDate_eligibility_success"
           }
         ]
       }
