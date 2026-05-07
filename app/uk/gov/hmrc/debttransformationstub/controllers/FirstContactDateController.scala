@@ -59,7 +59,7 @@ class FirstContactDateController @Inject() (
             } yield iDNumber
           )
 
-      val fileId = maybeUtrIdNumber.getOrElse("firstContactDateSuccess")
+      val fileId = maybeUtrIdNumber.getOrElse("firstContactDate_eligibility_success")
 
       logger.info(s"Maybe UTR/NINO provided: $maybeUtrIdNumber")
 
@@ -74,7 +74,7 @@ class FirstContactDateController @Inject() (
 
       val maybeResultByIdType: Either[FileNotFoundError, Result] = fileId match {
         case "firstContactDate_error_422" =>
-          respond("firstContactDate_error_422.json", Results.UnprocessableEntity)
+          respond("firstContactDate_eligibility_error_422.json", Results.UnprocessableEntity)
         case utr =>
           respond(s"$utr.json", Results.Ok)
         case undefinedValue =>
