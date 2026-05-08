@@ -1,6 +1,5 @@
 {
-  "upstreamErrors": {
-    "code": "TTP003",
-    "description": "UTR value is missing"
+  "error": {
+    "description": "Invalid Request"
   }
 }
