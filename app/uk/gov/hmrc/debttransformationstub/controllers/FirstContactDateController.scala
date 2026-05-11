@@ -18,18 +18,16 @@ package uk.gov.hmrc.debttransformationstub.controllers
 
 import org.apache.commons.io.FileUtils
 import play.api.Environment
-import play.api.libs.json.{JsValue, Json}
-import play.api.mvc.Results.{Status => ResultStatus}
+import play.api.libs.json.{ JsValue, Json }
+import play.api.mvc.Results.{ Status => ResultStatus }
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.models.FirstContactDateRequest
-import uk.gov.hmrc.debttransformationstub.repositories.EnactStageRepository
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import java.io.File
 import java.nio.charset.Charset
-import java.time.Instant
 import javax.inject.Inject
 import scala.concurrent.Future
 import scala.util.Try
@@ -43,7 +41,6 @@ class FirstContactDateController @Inject() (
   private val basePath = "conf/resources/data"
 
   def firstContactDate(): Action[JsValue] = Action.async(parse.json) { implicit request =>
-
     val correlationId = getCorrelationIdHeader(request.headers)
     logger.info(s"[DEBUG] firstcontactdate called with correlationId=$correlationId")
     withCustomJsonBody[FirstContactDateRequest] { req =>
@@ -64,12 +61,12 @@ class FirstContactDateController @Inject() (
             } yield iDNumber
           )
 
-      val fileId = maybeUtrIdNumber.getOrElse{
+      val fileId = maybeUtrIdNumber.getOrElse {
         if (correlationId == "some-correlation-uuid") {
-        "firstContactDate_eligibility_error_422"
-      } else {
-        "firstContactDateSuccess"
-      }
+          "firstContactDate_eligibility_error_422"
+        } else {
+          "firstContactDateSuccess"
+        }
       }
       logger.info(s"Maybe UTR/NINO provided: $maybeUtrIdNumber")
 
@@ -125,6 +122,7 @@ class FirstContactDateController @Inject() (
     val combinedPath = s"$basePath$path$fileName"
     environment.getExistingFile(combinedPath).toRight(FileNotFoundError(s"File not found for path: $path"))
   }
+
   def getCorrelationIdHeader(headers: Headers): String =
     headers.get("correlationId").getOrElse(throw new Exception("Missing required correlationId header"))
 }
