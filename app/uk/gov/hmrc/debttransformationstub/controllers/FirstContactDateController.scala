@@ -61,13 +61,7 @@ class FirstContactDateController @Inject() (
             } yield iDNumber
           )
 
-      val fileId = maybeUtrIdNumber.getOrElse {
-        if (correlationId == "some-correlation-uuid") {
-          "firstContactDate_eligibility_error_422"
-        } else {
-          "firstContactDateSuccess"
-        }
-      }
+      val fileId = maybeUtrIdNumber.getOrElse("firstContactDateSuccess")
       logger.info(s"Maybe UTR/NINO provided: $maybeUtrIdNumber")
 
       def respond(fileName: String, status: ResultStatus): Either[FileNotFoundError, Result] = {
