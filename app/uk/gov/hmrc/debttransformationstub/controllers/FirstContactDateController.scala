@@ -76,6 +76,8 @@ class FirstContactDateController @Inject() (
       val maybeResultByIdType: Either[FileNotFoundError, Result] = fileId match {
         case "firstContactDate_eligibility_error_422" =>
           respond("firstContactDate_eligibility_error_422.json", Results.UnprocessableEntity)
+        case "firstContactDate_chargeInfo_error_422" =>
+          respond("firstContactDate_chargeInfo_error_422.json", Results.UnprocessableEntity)
         case utr =>
           respond(s"$utr.json", Results.Created)
         case undefinedValue =>
