@@ -61,7 +61,11 @@ class FirstContactDateController @Inject() (
             } yield iDNumber
           )
 
-      val fileId = maybeUtrIdNumber.getOrElse("firstContactDateSuccess")
+      val maybeFirstContactDateBusinessError: Option[String] = req.chargeReference.head match {
+        case s"error_$code" => Some(s"error_$code")
+        case s"server_error" => Some("server_error")
+      }
+      val fileId = maybeFirstContactDateBusinessError.getOrElse(maybeUtrIdNumber.getOrElse("firstContactDateSuccess"))
       logger.info(s"Maybe UTR/NINO provided: $maybeUtrIdNumber")
 
       def respond(fileName: String, status: ResultStatus): Either[FileNotFoundError, Result] = {
@@ -78,6 +82,10 @@ class FirstContactDateController @Inject() (
           respond("firstContactDate_eligibility_error_422.json", Results.UnprocessableEntity)
         case "firstContactDate_chargeInfo_error_422" =>
           respond("firstContactDate_chargeInfo_error_422.json", Results.UnprocessableEntity)
+        case s"error_$code" =>
+          respond(s"firstContactDate_eligibility_error_$code.json", Results.UnprocessableEntity)
+        case "server_error" =>
+          respond("firstContactDate_error_500.json", Results.InternalServerError)
         case utr =>
           respond(s"$utr.json", Results.Created)
         case undefinedValue =>
