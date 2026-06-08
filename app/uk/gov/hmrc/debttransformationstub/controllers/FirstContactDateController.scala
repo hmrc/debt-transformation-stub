@@ -62,7 +62,7 @@ class FirstContactDateController @Inject() (
           )
 
       val maybeFirstContactDateBusinessError: Option[String] = req.chargeReference.head match {
-        case s"error_$code" => Some(s"error_$code")
+        case s"error_$code"  => Some(s"error_$code")
         case s"server_error" => Some("server_error")
       }
       val fileId = maybeFirstContactDateBusinessError.getOrElse(maybeUtrIdNumber.getOrElse("firstContactDateSuccess"))
