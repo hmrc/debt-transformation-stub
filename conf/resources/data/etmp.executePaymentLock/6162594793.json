@@ -1,0 +1,8 @@
+{
+  "failures": [
+    {
+      "code": "INVALID_CHARGE_REFERENCE",
+      "reason": "The remote endpoint has indicated that one or more charge references are invalid"
+    }
+  ]
+}
