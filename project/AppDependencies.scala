@@ -1,4 +1,4 @@
-import sbt._
+import sbt.*
 
 object AppDependencies {
 
@@ -10,7 +10,7 @@ object AppDependencies {
     "com.fasterxml.jackson.core" % "jackson-core"              % "2.21.3",
     "uk.gov.hmrc"               %% "bootstrap-backend-play-30" % bootstrapPlay,
     "uk.gov.hmrc.mongo"         %% "hmrc-mongo-play-30"        % hmrcMongoPlay,
-    "com.beachape"              %% "enumeratum-play-json"      % "1.9.7",
+    "com.beachape"              %% "enumeratum-play-json"      % "1.9.8",
     "commons-io"                 % "commons-io"                % "2.22.0",
     "com.nrinaudo"              %% "kantan.csv"                % "0.8.0"
   )
