@@ -6,11 +6,11 @@ resolvers += Resolver.typesafeRepo("releases")
 
 addSbtPlugin("uk.gov.hmrc"       % "sbt-auto-build"     % "3.24.0")
 addSbtPlugin("uk.gov.hmrc"       % "sbt-distributables" % "2.6.0")
-addSbtPlugin("org.playframework" % "sbt-plugin"         % "3.0.10")
-addSbtPlugin("org.scalameta"     % "sbt-scalafmt"       % "2.5.6")
+addSbtPlugin("org.playframework" % "sbt-plugin"         % "3.0.11")
+addSbtPlugin("org.scalameta"     % "sbt-scalafmt"       % "2.6.1")
 
 // To use this plugin, run: sbt dependencyUpdates
-addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.6.4")
+addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.7.0")
 
 /* Allows commands like `sbt dependencyBrowseGraph` to view the dependency graph locally. */
 addDependencyTreePlugin
