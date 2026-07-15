@@ -21,9 +21,9 @@ import play.api.libs.json.{ Json, OFormat }
 import java.time.LocalDate
 
 case class FirstContactDateRequest(
-  iDType: Option[String],
-  iDNumber: Option[String],
-  chargeReference: List[String],
+  idType: Option[String],
+  idNumber: Option[String],
+  chargeReferences: List[String],
   firstContactDate: LocalDate
 )
 

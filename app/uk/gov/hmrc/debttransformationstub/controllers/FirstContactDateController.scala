@@ -49,14 +49,14 @@ class FirstContactDateController @Inject() (
 
       val maybeUtrIdNumber: Option[String] =
         (for {
-          iDType   <- req.iDType
-          iDNumber <- req.iDNumber
+          iDType   <- req.idType
+          iDNumber <- req.idNumber
           if iDType.equalsIgnoreCase("UTR") && iDNumber.nonEmpty
         } yield iDNumber)
           .orElse(
             for {
-              iDType   <- req.iDType
-              iDNumber <- req.iDNumber
+              iDType   <- req.idType
+              iDNumber <- req.idNumber
               if iDType.equalsIgnoreCase("NINO") && iDNumber.nonEmpty
             } yield iDNumber
           )
