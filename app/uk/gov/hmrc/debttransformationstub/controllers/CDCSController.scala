@@ -23,6 +23,7 @@ import uk.gov.hmrc.debttransformationstub.models.CdcsRequest
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
+import java.io.File
 import javax.inject.Inject
 import scala.concurrent.Future
 import scala.io.Source
@@ -37,32 +38,40 @@ class CDCSController @Inject() (environment: Environment, cc: ControllerComponen
   def cdcsData(): Action[JsValue] = Action.async(parse.json) { implicit rawRequest: Request[JsValue] =>
     withCustomJsonBody[CdcsRequest] { request =>
       val fileName: String = request.identifications.head.idValue
-      val relativePath = s"$basePath" + "/" + s"$fileName.json"
-      environment.getExistingFile(relativePath) match {
-        case None =>
-          val message = s"file [$relativePath] not found"
-          logger.error(s"Status $NOT_FOUND, message: $message")
-          Future successful NotFound(message)
-        case Some(file) =>
-          val maybeFileContent: Try[String] =
-            Using(Source.fromFile(file))(source => source.mkString)
-              .recoverWith { case ex: Throwable =>
-                // Explain which file failed to be read.
-                Failure(new RuntimeException(s"Failed to read file: ${file.getPath}", ex))
-              }
+      val defaultFileName: String = "cdcsPassed"
 
-          maybeFileContent match {
-            case Success(value) =>
-              // Might throw if parsing fails
-              val json = Json.parse(value)
-              val result = file.getName match {
-                case "cdcsClientError400.json" => BadRequest(json)
-                case _                         => Ok(json)
+      val fileAndName: Option[(File, String)] =
+        environment
+          .getExistingFile(s"$basePath/$fileName.json")
+          .map(file => (file, fileName))
+          .orElse(environment.getExistingFile(s"$basePath/$defaultFileName.json").map(file => (file, defaultFileName)))
+
+      fileAndName match {
+        case None =>
+          Future.successful(
+            InternalServerError(
+              s"Neither the requested $fileName nor the default $defaultFileName JSON file was found in the conf directory."
+            )
+          )
+
+        case Some((file, name)) =>
+          val parseAttempt: Try[JsValue] = Using(Source.fromFile(file)) { source =>
+            Json.parse(source.mkString)
+          }.recoverWith { case ex: Throwable =>
+            Failure(new RuntimeException(s"Failed to read or parse file: ${file.getPath}", ex))
+          }
+
+          parseAttempt match {
+            case Success(validJson) =>
+              val result = name match {
+                case "cdcsClientError400" => BadRequest(validJson)
+                case _                    => Ok(validJson)
               }
               Future.successful(result)
+
             case Failure(exception) =>
-              logger.error(s"Failed to parse the file $file", exception)
-              Future.successful(InternalServerError(s"Stub failed to parse file $file"))
+              logger.error(s"Failed to parse the file $name", exception)
+              Future.successful(InternalServerError(s"Stub failed to parse file $name"))
           }
       }
     }
