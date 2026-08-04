@@ -16,10 +16,9 @@
 
 package uk.gov.hmrc.debttransformationstub.controllers
 
-import org.apache.commons.io.FilenameUtils
 import play.api.Environment
 import play.api.libs.json.Json
-import play.api.mvc.{Action, AnyContent, ControllerComponents, Request}
+import play.api.mvc.{ Action, AnyContent, ControllerComponents, Request }
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
@@ -29,7 +28,7 @@ import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 import scala.io.Source
 import scala.math.Ordering.Implicits.infixOrderingOps
-import scala.util.{Failure, Success, Try, Using}
+import scala.util.{ Failure, Success, Try, Using }
 
 class ETMPController @Inject() (environment: Environment, cc: ControllerComponents) extends BackendController(cc) {
 

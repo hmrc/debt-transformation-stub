@@ -15,21 +15,20 @@
  */
 
 package uk.gov.hmrc.debttransformationstub.controllers
-import org.apache.commons.io.FilenameUtils
 import play.api.Environment
 import play.api.libs.json._
-import play.api.mvc.{Action, ControllerComponents}
-import uk.gov.hmrc.debttransformationstub.models.{CustomerDataRequest, Identity}
+import play.api.mvc.{ Action, ControllerComponents }
+import uk.gov.hmrc.debttransformationstub.controllers.CustomBaseController.returnStatusBasedOnIdValue
+import uk.gov.hmrc.debttransformationstub.models.{ CustomerDataRequest, Identity }
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
-import uk.gov.hmrc.debttransformationstub.controllers.CustomBaseController.returnStatusBasedOnIdValue
 
 import java.io.File
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 import scala.io.Source
-import scala.util.{Failure, Success, Try, Using}
+import scala.util.{ Failure, Success, Try, Using }
 class SACustomersDataController @Inject() (environment: Environment, cc: ControllerComponents)
     extends BackendController(cc) {
 
