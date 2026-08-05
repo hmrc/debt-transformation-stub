@@ -18,10 +18,10 @@ package uk.gov.hmrc.debttransformationstub.controllers
 import play.api.Environment
 import play.api.libs.json._
 import play.api.mvc.{ Action, ControllerComponents }
+import uk.gov.hmrc.debttransformationstub.controllers.CustomBaseController.returnStatusBasedOnIdValue
 import uk.gov.hmrc.debttransformationstub.models.{ CustomerDataRequest, Identity }
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
-import uk.gov.hmrc.debttransformationstub.controllers.CustomBaseController.returnStatusBasedOnIdValue
 
 import java.io.File
 import java.time.LocalDate
@@ -67,7 +67,7 @@ class SACustomersDataController @Inject() (environment: Environment, cc: Control
                 val relativePath = s"$basePath/$possibleE2ETestIdValue.json"
                 environment.getExistingFile(relativePath) match {
                   case Some(file) =>
-                    Try(Json.parse(saCustomerDataString(file))) match {
+                    Try(Json.parse(saCustomerDataString(file, idValue))) match {
                       case Success(js) => status(js)
                       case Failure(ex) =>
                         logger.error(s"Failed to parse the file $relativePath", ex)
@@ -80,7 +80,7 @@ class SACustomersDataController @Inject() (environment: Environment, cc: Control
                 val relativePath = s"$basePath/$possibleE2ETestIdValue.json"
                 environment.getExistingFile(relativePath) match {
                   case Some(file) =>
-                    Try(Json.parse(saCustomerDataString(file))) match {
+                    Try(Json.parse(saCustomerDataString(file, idValue))) match {
                       case Success(js) => Ok(js)
                       case Failure(ex) =>
                         logger.error(s"Failed to parse the file $relativePath")
@@ -94,7 +94,7 @@ class SACustomersDataController @Inject() (environment: Environment, cc: Control
     }
   }
 
-  private def saCustomerDataString(file: File): String = {
+  private def saCustomerDataString(file: File, idValue: String): String = {
     val currentDate = LocalDate.now()
 
     val responseTemplate: String =
@@ -112,6 +112,7 @@ class SACustomersDataController @Inject() (environment: Environment, cc: Control
         .replaceAll("<DUE_DATE>", dueDateInPast.format(dateFormatter))
         .replaceAll("<DUE_DATE_TODAY>", dueDateToday.format(dateFormatter))
         .replaceAll("<DUE_DATE_FOR_FUTURE>", dueDateInFuture.format(dateFormatter))
+        .replaceAll("<UTR>", idValue)
 
     println(
       s"""====================

@@ -105,6 +105,7 @@ class ETMPController @Inject() (environment: Environment, cc: ControllerComponen
         .replaceAll("<DUE_DATE_EQUALS_MAX_DEBT_AGE_VATC>", dueDateEqualsMaxDebtAgeVATC.format(dateFormatter))
         .replaceAll("<DUE_DATE_OVER_MAX_DEBT_AGE_PAYE>", dueDateOverMaxDebtAgePAYE.format(dateFormatter))
         .replaceAll("<DUE_DATE_EQUALS_MAX_DEBT_AGE_PAYE>", dueDateEqualsMaxDebtAgePAYE.format(dateFormatter))
+        .replaceAll("<UTR>", idValue)
 
     println(
       s"""====================

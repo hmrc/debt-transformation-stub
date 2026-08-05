@@ -10,7 +10,7 @@
         "identifications": [
           {
             "idType": "UTR",
-            "idValue": "SA123545"
+            "idValue": "<UTR>"
           }
         ]
       }
@@ -74,7 +74,7 @@
         "identifications": [
           {
             "idType": "UTR",
-            "idValue": "SA123545"
+            "idValue": "<UTR>"
           }
         ]
       }
