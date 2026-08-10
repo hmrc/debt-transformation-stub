@@ -74,17 +74,7 @@
       "outstandingAmount": 10.00,
       "dueDate": "<DUE_DATE>",
       "interestStartDate": "2022-03-19",
-      "accruedInterest": 0.00,
-      "locks": [
-        {
-          "lockType": "Dunning",
-          "lockReason": "TC Debt Notification to DWP"
-        },
-        {
-          "lockType": "Calculate Interest",
-          "lockReason": "manual RPI Signal"
-        }
-      ]
+      "accruedInterest": 0.00
     },
     {
       "chargeType": "In Year RTI Charge - Tax",
@@ -97,17 +87,7 @@
       "outstandingAmount": 10.00,
       "dueDate": "<DUE_DATE_FOR_FUTURE>",
       "interestStartDate": "2022-03-19",
-      "accruedInterest": 0.00,
-      "locks": [
-        {
-          "lockType": "Dunning",
-          "lockReason": "TC Debt Notification to DWP"
-        },
-        {
-          "lockType": "Calculate Interest",
-          "lockReason": "manual RPI Signal"
-        }
-      ]
+      "accruedInterest": 0.00
     }
   ]
 }
