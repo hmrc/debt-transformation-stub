@@ -120,7 +120,7 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
         "for simple inputs (test debugging too)" - {
           "given an empty table" - {
             val input =
-              s"""Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref\tPeriod End
+              s"""Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tSSTTP hodReference\tPeriod End
                  |END_INPUT""".stripMargin
 
             "when asked to output IFS Scala config" in {
@@ -173,7 +173,7 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
                 """Paste the TSV and end the input with "END_INPUT" on one line.""",
                 """Parsed master IFS data: {
                   |  "tableData" : {
-                  |    "headings" : [ "Main Trans", "Sub Trans", "Interest bearing", "Interest key", "Interest only Debt", "Charge Ref", "Period End" ],
+                  |    "headings" : [ "Main Trans", "Sub Trans", "Interest bearing", "Interest key", "Interest only Debt", "SSTTP hodReference", "Period End" ],
                   |    "rows" : [ ]
                   |  }
                   |}""".stripMargin
@@ -184,7 +184,7 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
 
           "given a very short table" - {
             val input =
-              s"""Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref\tPeriod End\tRegime Usage
+              s"""Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tSSTTP hodReference\tPeriod End\tRegime Usage
                  |1520\t1090\tN\tN/A\tN\tN/A\tperiodEnd\tCDCS
                  |4530\t3190\tN\t\tN\tCharge Ref\tperiodEnd\tSIA
                  |END_INPUT""".stripMargin
@@ -246,7 +246,7 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
                 """Paste the TSV and end the input with "END_INPUT" on one line.""",
                 """Parsed master IFS data: {
                   |  "tableData" : {
-                  |    "headings" : [ "Main Trans", "Sub Trans", "Interest bearing", "Interest key", "Interest only Debt", "Charge Ref", "Period End", "Regime Usage" ],
+                  |    "headings" : [ "Main Trans", "Sub Trans", "Interest bearing", "Interest key", "Interest only Debt", "SSTTP hodReference", "Period End", "Regime Usage" ],
                   |    "rows" : [ [ "1520", "1090", "N", "N/A", "N", "N/A", "periodEnd", "CDCS" ], [ "4530", "3190", "N", "", "N", "Charge Ref", "periodEnd", "SIA" ] ]
                   |  }
                   |}""".stripMargin
@@ -257,7 +257,7 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
 
         "given vanilla inputs that aren't so simple" - {
           val input =
-            s"""Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref\tPeriod End\tRegime Usage
+            s"""Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tSSTTP hodReference\tPeriod End\tRegime Usage
                |1520\t1090\tN\tN/A\tN\tN/A\tperiodEnd\tCDCS
                |1525\t1000\tY\t4\tN\tN/A\tsome description\tPAYE
                |1045\t1090\tN\t\t\tCharge ref\tperiodEnd\tCDCS
@@ -266,7 +266,7 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
                |4620\t1175\t\t\tY\tCharge ref\tperiodEnd\tVAT
                |4920\t1553\tY\t\tN\tN/A\tperiodEnd\tCDCS
                |6010\t1554\tN\t\tY\tN/A\tperiodEnd\tCDCS
-               |4910\t1005\tY\t\tN\tUTR\tperiodEnd\tCDCS
+               |4910\t1005\tY\t\tN\tUTR with suffix\tperiodEnd\tCDCS
                |4910\t1007\tY\t\tN\tN/A\tperiodEnd\tCDCS
                |4530\t3190\tN\t\tN\tCharge Ref\tperiodEnd\tSIA
                |END_INPUT""".stripMargin
@@ -459,7 +459,7 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
 
         "given sections with duplicate main and sub trans with different values" - {
           val consoleInput =
-            s"""Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tCharge Ref\tPeriod End\tRegime Usage
+            s"""Main Trans\tSub Trans\tInterest bearing\tInterest key\tInterest only Debt\tSSTTP hodReference\tPeriod End\tRegime Usage
                |1520\t1090\tN\tN/A\tN\tN/A\tsome description\tCDCS
                |1520\t1090\tN\tN/A\tN\tN/A\tsome description\tVAT
                |1525\t1000\tY\t4\tN\tN/A\tsome description\tCDCS
@@ -499,29 +499,29 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
 
       val inputCaseFromTsvFile = InputCase(
         name = "from a TSV file",
-        inputArg = "--input-file=/some/file/path/master-ifs-data-august-2024.tsv",
+        inputArg = "--input-file=/some/file/path/master-ifs-data-august-2026.tsv",
         () =>
           ApplicationInputs.oneFileAtMostOnce(
-            filename = "/some/file/path/master-ifs-data-august-2024.tsv",
-            fileContent = Data.`Sample--2025-11-05--DTD-3398`.tsvInput()
+            filename = "/some/file/path/master-ifs-data-august-2026.tsv",
+            fileContent = Data.`Sample--2026-08-04--DTD-4688`.tsvInput()
           )
       )
       val inputCaseFromCleanCsvFile = InputCase(
         name = "from a clean CSV file",
-        inputArg = "--input-file=/some/file/path/master-ifs-data-august-2024.csv",
+        inputArg = "--input-file=/some/file/path/master-ifs-data-august-2026.csv",
         () =>
           ApplicationInputs.oneFileAtMostOnce(
-            filename = "/some/file/path/master-ifs-data-august-2024.csv",
-            fileContent = Data.`Sample--2025-11-05--DTD-3398`.csvInputWithCleanHeadings()
+            filename = "/some/file/path/master-ifs-data-august-2026.csv",
+            fileContent = Data.`Sample--2026-08-04--DTD-4688`.csvInputWithCleanHeadings()
           )
       )
       val inputCaseFromMessyCsvFile = InputCase(
         name = "from a messy Excel CSV export file",
-        inputArg = "--input-file=/some/file/path/master-ifs-data-august-2024.csv",
+        inputArg = "--input-file=/some/file/path/master-ifs-data-august-2026.csv",
         () =>
           ApplicationInputs.oneFileAtMostOnce(
-            filename = "/some/file/path/master-ifs-data-august-2024.csv",
-            fileContent = Data.`Sample--2025-11-05--DTD-3398`.csvInputWithMessyHeadings()
+            filename = "/some/file/path/master-ifs-data-august-2026.csv",
+            fileContent = Data.`Sample--2026-08-04--DTD-4688`.csvInputWithMessyHeadings()
           )
       )
       val inputCaseFromTsvConsole = InputCase(
@@ -529,19 +529,19 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
         inputArg = "--input-console-tsv",
         () =>
           ApplicationInputs.consoleFromExactString(
-            stdinContent = Data.`Sample--2025-11-05--DTD-3398`.tsvInput() + "\nEND_INPUT"
+            stdinContent = Data.`Sample--2026-08-04--DTD-4688`.tsvInput() + "\nEND_INPUT"
           )
       )
 
       val outputCaseAsIfsScala = OutputFormatCase(
         name = "outputted as an IFS Scala config",
         formatArg = "--output-format=ifs-scala-config",
-        expectedOutput = () => Data.`Sample--2025-11-05--DTD-3398`.outputScalaIfsConf()
+        expectedOutput = () => Data.`Sample--2026-08-04--DTD-4688`.outputScalaIfsConf()
       )
       val outputCaseAsApplicationConf = OutputFormatCase(
         name = "outputted as an application.conf",
         formatArg = "--output-format=application-conf",
-        expectedOutput = () => Data.`Sample--2025-11-05--DTD-3398`.outputApplicationConf()
+        expectedOutput = () => Data.`Sample--2026-08-04--DTD-4688`.outputApplicationConf()
       )
 
       val testCases: List[TestCase] = List(
@@ -594,34 +594,34 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
 
 object InterestForecastingRulesGeneratorSpec {
   private object Data {
-    object `Sample--2025-11-05--DTD-3398` {
+    object `Sample--2026-08-04--DTD-4688` {
       def tsvInput(): String = {
         val path =
-          "test/resources/InterestForecastingRulesGenerator/samples/2025-11-05--DTD-3398/input-with-clean-headings.tsv"
+          "test/resources/InterestForecastingRulesGenerator/samples/2026-08-04--DTD-4688/input-with-clean-headings.tsv"
         Using(scala.io.Source.fromFile(path))(_.mkString).get
       }
 
       def csvInputWithCleanHeadings(): String = {
         val path =
-          "test/resources/InterestForecastingRulesGenerator/samples/2025-11-05--DTD-3398/input-with-clean-headings.csv"
+          "test/resources/InterestForecastingRulesGenerator/samples/2026-08-04--DTD-4688/input-with-clean-headings.csv"
         Using(scala.io.Source.fromFile(path))(_.mkString).get
       }
 
       def csvInputWithMessyHeadings(): String = {
         val path =
-          "test/resources/InterestForecastingRulesGenerator/samples/2025-11-05--DTD-3398/input-with-messy-headings.csv"
+          "test/resources/InterestForecastingRulesGenerator/samples/2026-08-04--DTD-4688/input-with-messy-headings.csv"
         Using(scala.io.Source.fromFile(path))(_.mkString).get
       }
 
       def outputApplicationConf(): String = {
         val path =
-          "test/resources/InterestForecastingRulesGenerator/samples/2025-11-05--DTD-3398/output-application-conf-array.txt"
+          "test/resources/InterestForecastingRulesGenerator/samples/2026-08-04--DTD-4688/output-application-conf-array.txt"
         Using(scala.io.Source.fromFile(path))(_.mkString).get
       }
 
       def outputScalaIfsConf(): String = {
         val path =
-          "test/resources/InterestForecastingRulesGenerator/samples/2025-11-05--DTD-3398/output-ifs-scala-config.txt"
+          "test/resources/InterestForecastingRulesGenerator/samples/2026-08-04--DTD-4688/output-ifs-scala-config.txt"
         Using(scala.io.Source.fromFile(path))(_.mkString).get
       }
     }
