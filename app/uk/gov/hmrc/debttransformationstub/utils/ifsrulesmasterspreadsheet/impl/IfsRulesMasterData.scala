@@ -67,7 +67,7 @@ final case class IfsRulesMasterData(
       }
 
     def useChargeReference(index: Int): Option[Boolean] = {
-      val chargeReference: String = Lookup2D.chargeReferenceAt(index).actual
+      val ssttpHodReference: String = Lookup2D.ssttpHodReferenceAt(index).actual
 
       val saSsttpRegimeList = List(
         RegimeUsage.`SA SSTTP AND NOT into IFS and SoL`,
@@ -75,16 +75,16 @@ final case class IfsRulesMasterData(
         RegimeUsage.`SA SSTTP AND into IFS and SoL AND Op Led`
       )
 
-      chargeReference.toLowerCase match {
-        case "n/a"        => if (saSsttpRegimeList.contains(regimeUsage(index))) Some(false) else None
-        case "charge ref" => Some(true)
-        case "asn"        => Some(false)
-        case "vrn"        => Some(false)
-        case "utr"        => Some(false)
+      ssttpHodReference.toLowerCase match {
+        case "n/a"             => if (saSsttpRegimeList.contains(regimeUsage(index))) Some(false) else None
+        case "charge ref"      => Some(true)
+        case "asn"             => Some(false)
+        case "vrn"             => Some(false)
+        case "utr with suffix" => Some(false)
         case _ =>
           val rowDisplay: JsValue = Json.toJson(tableData.dataRowAt(index).values.map(_.actual))
           throw new IllegalArgumentException(
-            s"Cannot convert useChargeReference=${JsString(chargeReference)} to boolean; check the code. Row values: $rowDisplay"
+            s"Cannot convert useChargeReference=${JsString(ssttpHodReference)} to boolean; check the code. Row values: $rowDisplay"
           )
       }
     }
@@ -99,6 +99,7 @@ final case class IfsRulesMasterData(
         case "SA SSTTP AND into IFS and SoL"            => RegimeUsage.`SA SSTTP AND into IFS and SoL`
         case "SA SSTTP AND into IFS and SoL AND Op Led" => RegimeUsage.`SA SSTTP AND into IFS and SoL AND Op Led`
         case "SIA"                                      => RegimeUsage.Sia
+        case "AMC"                                      => RegimeUsage.Amc
         case unknown =>
           val rowDisplay: JsValue = Json.toJson(tableData.dataRowAt(index).values.map(_.actual))
           throw new IllegalArgumentException(
@@ -118,7 +119,7 @@ final case class IfsRulesMasterData(
 
     def interestOnlyDebtAt(index: Int): CellValue = cellValueAt(index, KnownHeadings.interestOnlyDebt)
 
-    def chargeReferenceAt(index: Int): CellValue = cellValueAt(index, KnownHeadings.chargeReference)
+    def ssttpHodReferenceAt(index: Int): CellValue = cellValueAt(index, KnownHeadings.ssttpHodReference)
 
     def regimeUsage(index: Int): CellValue = cellValueAt(index, KnownHeadings.regimeUsage)
 
@@ -160,7 +161,7 @@ object IfsRulesMasterData {
     val interestBearing: Heading = Heading("Interest bearing")
     val interestKey: Heading = Heading("Interest key")
     val interestOnlyDebt: Heading = Heading("Interest only Debt")
-    val chargeReference: Heading = Heading("Charge Ref")
+    val ssttpHodReference: Heading = Heading("SSTTP hodReference")
     val regimeUsage: Heading = Heading("Regime Usage")
   }
 
@@ -173,6 +174,7 @@ object IfsRulesMasterData {
     case object `SA into IFS and SoL AND NOT SSTTP` extends RegimeUsage(isForSelfServe = false, isForIfs = true)
     case object `SA SSTTP AND NOT into IFS and SoL` extends RegimeUsage(isForSelfServe = true, isForIfs = true)
     case object Sia extends RegimeUsage(isForSelfServe = true, isForIfs = true)
+    case object Amc extends RegimeUsage(isForSelfServe = true, isForIfs = true)
 
     /** Debts that can be used for both SSTTP and Operator led. */
     case object `SA SSTTP AND into IFS and SoL` extends RegimeUsage(isForSelfServe = true, isForIfs = true)
