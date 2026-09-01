@@ -3,11 +3,11 @@ import sbt.*
 object AppDependencies {
 
   val bootstrapPlay = "10.8.0"
-  val hmrcMongoPlay = "2.12.0"
+  val hmrcMongoPlay = "2.13.0"
 
   val compile: Seq[ModuleID] = Seq(
     // This is necessary until the HMRC/Play dependencies bring in the version of Jackson that is not insecure.
-    "com.fasterxml.jackson.core" % "jackson-core"              % "2.22.0",
+    "com.fasterxml.jackson.core" % "jackson-core"              % "2.22.2",
     "uk.gov.hmrc"               %% "bootstrap-backend-play-30" % bootstrapPlay,
     "uk.gov.hmrc.mongo"         %% "hmrc-mongo-play-30"        % hmrcMongoPlay,
     "com.beachape"              %% "enumeratum-play-json"      % "1.9.8",
@@ -17,7 +17,7 @@ object AppDependencies {
 
   val test: Seq[ModuleID] = Seq(
     "uk.gov.hmrc"            %% "bootstrap-test-play-30"  % bootstrapPlay % Test,
-    "org.mockito"            %% "mockito-scala-scalatest" % "2.2.1"       % Test,
+    "org.mockito"            %% "mockito-scala-scalatest" % "2.2.3"       % Test,
     "uk.gov.hmrc.mongo"      %% "hmrc-mongo-test-play-30" % hmrcMongoPlay % Test,
     "org.scalatestplus.play" %% "scalatestplus-play"      % "7.0.2"       % Test
   )

@@ -11,7 +11,9 @@ lazy val microservice = Project(appName, file("."))
       "-Xlint:-byname-implicit",
       "-Wconf:src=routes/.*:s",
       "-Wconf:cat=unused-imports&src=html/.*:s"
-    )
+    ),
+    // fixes the funkiness that tries to 'upgrade' to an old version
+    dependencyUpdatesFilter -= moduleFilter(organization = "commons-io", name = "commons-io", revision = "20030203.000550")
   )
   .settings(resolvers += Resolver.jcenterRepo)
   .disablePlugins(JUnitXmlReportPlugin)
