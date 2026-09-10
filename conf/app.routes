@@ -74,7 +74,7 @@ POST          /individuals/debts/time-to-pay/inform                             
 POST          /debts/time-to-pay/inform                                                              uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.proxyPlanCase()
 POST          /individuals/debts/time-to-pay/full-amend                                              uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.proxyPlanCase()
 POST          /debts/time-to-pay/full-amend                                                          uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.proxyPlanCase()
-POST          /debts/time-to-pay/charge-migration                                                    uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.proxyPlanCase()
+POST          /debts/time-to-pay/charge-migration                                                    uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.chargeMigration()
 POST          /scrbroker/filtration                                                                  uk.gov.hmrc.debttransformationstub.controllers.CustomerCheckController.customerCheck()
 
 POST          /debts/time-to-pay/charge-info                                                         uk.gov.hmrc.debttransformationstub.controllers.TimeToPayEligibilityController.getCharges()
