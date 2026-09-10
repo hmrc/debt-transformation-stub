@@ -552,11 +552,11 @@ class TimeToPayController @Inject() (
 
   def chargeMigration(): Action[JsValue] = Action(parse.json) { implicit request =>
     val response = Json.obj(
-      "planId" -> "_processed_plan_id_",
-      "processingDateTime "-> java.time.Instant.now().toString
+      "planId"              -> "_processed_plan_id_",
+      "processingDateTime " -> java.time.Instant.now().toString
     )
 
-    (Ok(response))
+    Ok(response)
   }
 
   private final case class FileNotFoundError(msg: String)
