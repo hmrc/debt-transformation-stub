@@ -274,8 +274,8 @@ class TimeToPayController @Inject() (
         .addIDMSStageSA(idValue, req)
         .map { _ =>
           handleNotFound(
-            constructResponse(directory, s"${req.idValue}.json").left
-              .flatMap(_ => constructResponse(directory, "9876543210.json"))
+            constructResponse(directory, s"${req.idValue}.json", Results.Created(_)).left
+              .flatMap(_ => constructResponse(directory, "9876543210.json", Results.Created(_)))
           )
         }
     }
