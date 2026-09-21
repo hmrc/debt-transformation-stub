@@ -1,0 +1,45 @@
+{
+  "name": "Global",
+  "variables": [
+    {
+      "name": "correlationId",
+      "value": "ec127538-8e41-4aae-b706-8fe4c2a2cfd2",
+      "type": "text",
+      "enabled": true,
+      "secret": false
+    },
+    {
+      "name": "idValue",
+      "value": "4567",
+      "type": "text",
+      "enabled": true,
+      "secret": false
+    },
+    {
+      "name": "customerReference",
+      "value": "customerRef1234",
+      "type": "text",
+      "enabled": true,
+      "secret": false
+    },
+    {
+      "name": "planId",
+      "value": "YYjbyDsnNIhdvkG",
+      "type": "text",
+      "enabled": true,
+      "secret": false
+    },
+    {
+      "name": "internalAuthToken",
+      "value": "internalAuthToken",
+      "type": "text",
+      "enabled": true,
+      "secret": true
+    }
+  ],
+  "info": {
+    "type": "bruno-environment",
+    "exportedAt": "2026-09-17T09:29:07.887Z",
+    "exportedUsing": "Bruno/v4.1.0"
+  }
+}
