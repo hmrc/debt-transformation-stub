@@ -6,6 +6,7 @@
       "addressLine3" : "Address Line 3",
       "addressLine4" : "Address Line 4",
       "addressType" : "Address Type",
+      "addressSource" : "ETMP",
       "contactDetails" : { },
       "postCode" : "AB12 3CD",
       "postcodeHistory" : [
