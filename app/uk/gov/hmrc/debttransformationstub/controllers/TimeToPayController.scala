@@ -460,8 +460,10 @@ class TimeToPayController @Inject() (
 
       enactStageRepository.addCESAStage(getCorrelationIdHeader(request.headers), req).map { _ =>
         val maybeByUtr: Option[Either[FileNotFoundError, Result]] = maybeUtrIdentifier.map {
+          case "1239876502" => respond("cesaCreateRequestFailure_502.json", Results.BadGateway)
           case "1062431399" => respond("cesaCreateRequestFailure_400.json", Results.InternalServerError)
           case "3193095982" => respond("cesaCreateRequestFailure_400.json", Results.BadRequest)
+          case "1234567409" => respond("cesaCreateRequestFailure_409.json", Results.Conflict)
           case "8625159625" => respond("8625159625.json", Results.UnprocessableEntity)
           case utr =>
             respond(s"$utr.json", Results.Ok)
@@ -469,10 +471,7 @@ class TimeToPayController @Inject() (
 
         def maybeByStartDate: Either[FileNotFoundError, Result] =
           startDate match {
-            case Some("2019-06-08") => respond("cesaCreateRequestFailure_502.json", Results.BadGateway)
             case Some("2020-06-08") => respond("cesaCreateRequestFailure_400.json", Results.BadRequest)
-            case Some("2021-06-08") => respond("cesaCreateRequestFailure_409.json", Results.Conflict)
-            case Some("2025-06-01") => respond("cesaCreateRequestFailure_404.json", Results.NotFound)
             case _                  => respond("cesaCreateRequestSuccessResponse.json", Results.Ok)
           }
 
