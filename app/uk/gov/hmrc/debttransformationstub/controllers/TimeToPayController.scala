@@ -19,13 +19,13 @@ package uk.gov.hmrc.debttransformationstub.controllers
 import org.apache.commons.io.FileUtils
 import play.api.Environment
 import play.api.http.ContentTypes
-import play.api.libs.json.{ JsValue, Json }
-import play.api.mvc.Results.{ Status => ResultStatus }
+import play.api.libs.json.{JsValue, Json}
+import play.api.mvc.Results.{Status => ResultStatus}
 import play.api.mvc._
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
 import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.CdcsCreateCaseRequestIdTypeReference
 import uk.gov.hmrc.debttransformationstub.models._
-import uk.gov.hmrc.debttransformationstub.repositories.{ EnactStage, EnactStageRepository }
+import uk.gov.hmrc.debttransformationstub.repositories.{EnactStage, EnactStageRepository}
 import uk.gov.hmrc.debttransformationstub.services.TTPPollingService
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.http.HeaderCarrier
@@ -34,18 +34,18 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import java.io.File
 import java.nio.charset.Charset
 import javax.inject.Inject
-import scala.concurrent.{ ExecutionContext, Future }
+import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Source
 import scala.util.Try
 
-class TimeToPayController @Inject() (
-  environment: Environment,
-  cc: ControllerComponents,
-  appConfig: AppConfig,
-  ttpPollingService: TTPPollingService,
-  enactStageRepository: EnactStageRepository
-)(implicit ec: ExecutionContext)
-    extends BackendController(cc) with CustomBaseController {
+class TimeToPayController @Inject()(
+                                     environment: Environment,
+                                     cc: ControllerComponents,
+                                     appConfig: AppConfig,
+                                     ttpPollingService: TTPPollingService,
+                                     enactStageRepository: EnactStageRepository
+                                   )(implicit ec: ExecutionContext)
+  extends BackendController(cc) with CustomBaseController {
 
   private lazy val logger = new RequestAwareLogger(this.getClass)
   private val basePath = "conf/resources/data"
@@ -55,7 +55,7 @@ class TimeToPayController @Inject() (
       if (appConfig.isPollingEnv) {
         ttpPollingService.insertRequestAndServeResponse(Json.toJson(req), Some(request.uri)).map {
           case Some(v) => Status(v.status.getOrElse(201))(v.content)
-          case None    => ServiceUnavailable
+          case None => ServiceUnavailable
         }
       } else {
         val fileMaybe: Option[File] =
@@ -77,7 +77,7 @@ class TimeToPayController @Inject() (
     if (appConfig.isPollingEnv) {
       ttpPollingService.insertRequestAndServeResponse(Json.toJson(""), Some(request.uri)).map {
         case Some(v) => Status(v.status.getOrElse(200))(v.content)
-        case None    => ServiceUnavailable
+        case None => ServiceUnavailable
       }
     } else {
       environment.getExistingFile(s"$basePath/ttp.generateAffordabilityQuote/affordabilityQuoteResponse.json") match {
@@ -94,7 +94,7 @@ class TimeToPayController @Inject() (
       if (appConfig.isPollingEnv) {
         ttpPollingService.insertRequestAndServeResponse(Json.toJson(""), Some(request.uri)).map {
           case Some(v) => Status(v.status.getOrElse(200))(v.content)
-          case None    => ServiceUnavailable
+          case None => ServiceUnavailable
         }
       } else {
         environment.getExistingFile(s"$basePath/ttp.viewPlan/$pegaId.json") match {
@@ -110,7 +110,7 @@ class TimeToPayController @Inject() (
     if (appConfig.isPollingEnv) {
       ttpPollingService.insertRequestAndServeResponse(Json.toJson(""), Some(request.uri)).map {
         case Some(v) => Status(v.status.getOrElse(200))(v.content)
-        case None    => ServiceUnavailable
+        case None => ServiceUnavailable
       }
     } else {
       environment.getExistingFile(s"$basePath/ttp.updatePlan/$customerReference.json") match {
@@ -127,7 +127,7 @@ class TimeToPayController @Inject() (
       if (appConfig.isPollingEnv) {
         ttpPollingService.insertRequestAndServeResponse(Json.toJson(req), Some(request.uri)).map {
           case Some(v) => Status(v.status.getOrElse(201))(v.content)
-          case None    => ServiceUnavailable
+          case None => ServiceUnavailable
         }
       } else {
         val fileMaybe: Option[File] =
@@ -219,15 +219,17 @@ class TimeToPayController @Inject() (
         .map { _ =>
           handleNotFound {
             (req.idType.toUpperCase, req.idValue) match {
-              case ("UTR", filename @ "etmpCreateRequestFailure_400") =>
+              case ("UTR", filename@"etmpCreateRequestFailure_400") =>
                 constructResponse(baseFolder, s"$filename.json", Results.BadRequest(_))
-              case ("UTR", filename @ "etmpCreateRequestFailure_422") =>
+              case ("UTR", filename@"etmpCreateRequestFailure_422") =>
                 constructResponse(baseFolder, s"$filename.json", Results.UnprocessableEntity(_))
-              case ("UTR", filename @ "4697136606") =>
+              case ("UTR", filename@"4697136606") =>
                 constructResponse(baseFolder, s"$filename.json", Results.UnprocessableEntity(_))
-              case ("UTR", filename @ "6162594793") =>
+              case ("UTR", filename@"6162594793") =>
                 constructResponse(baseFolder, s"$filename.json", Results.UnprocessableEntity(_))
-              case ("UTR", filename @ "etmpCreateRequestFailure_500") =>
+              case ("UTR", filename@"etmpCreateRequestFailure_500") =>
+                constructResponse(baseFolder, s"$filename.json", Results.InternalServerError(_))
+              case ("UTR", filename@"3193095982") =>
                 constructResponse(baseFolder, s"$filename.json", Results.InternalServerError(_))
               case _ =>
                 constructResponse(baseFolder, s"${req.idValue}.json").left
@@ -341,7 +343,7 @@ class TimeToPayController @Inject() (
       val testDataPackage = "/etmp.informCancelCase/"
       val maybeUtrIdentifier: Option[String] =
         for {
-          idType  <- req.idType
+          idType <- req.idType
           idValue <- req.idValue
           if idType.equalsIgnoreCase("UTR") && idValue.nonEmpty
         } yield idValue
@@ -352,9 +354,12 @@ class TimeToPayController @Inject() (
         val requestedCode = status.header.status
 
         constructResponse(testDataPackage, fileName).map { baseResult =>
-          logger.info(s"Stub ETMP response body: ${baseResult.body match {
-              case play.api.http.HttpEntity.Strict(d, _) => d.utf8String; case _ => "[non-strict body]"
-            }}")
+          logger.info(s"Stub ETMP response body: ${
+            baseResult.body match {
+              case play.api.http.HttpEntity.Strict(d, _) => d.utf8String;
+              case _ => "[non-strict body]"
+            }
+          }")
           baseResult.copy(header = baseResult.header.copy(status = requestedCode))
         }
       }
@@ -432,6 +437,7 @@ class TimeToPayController @Inject() (
       }
     }
   }
+
   // Call made to CESA for the routes: /inform and /full-amend of time-to-pay
   def cesaRequest(): Action[JsValue] = Action.async(parse.json) { implicit request =>
     withCustomJsonBody[CesaRequest] { req =>
@@ -463,17 +469,18 @@ class TimeToPayController @Inject() (
           case "1239876502" => respond("cesaCreateRequestFailure_502.json", Results.BadGateway)
           case "1062431399" => respond("cesaCreateRequestFailure_400.json", Results.InternalServerError)
           case "3193095982" => respond("cesaCreateRequestFailure_400.json", Results.BadRequest)
+          case "3193095400" => respond("cesaCreateRequestFailure_400.json", Results.BadRequest)
           case "1234567409" => respond("cesaCreateRequestFailure_409.json", Results.Conflict)
           case "8625159625" => respond("8625159625.json", Results.UnprocessableEntity)
           case utr =>
             respond(s"$utr.json", Results.Ok)
         }
 
-        def maybeByStartDate: Either[FileNotFoundError, Result] =
-          startDate match {
-            case Some("2020-06-08") => respond("cesaCreateRequestFailure_400.json", Results.BadRequest)
-            case _                  => respond("cesaCreateRequestSuccessResponse.json", Results.Ok)
-          }
+                def maybeByStartDate: Either[FileNotFoundError, Result] =
+                  startDate match {
+                    case Some("2020-06-08") => respond("cesaCreateRequestFailure_400.json", Results.BadRequest)
+                    case _ => respond("cesaCreateRequestSuccessResponse.json", Results.Ok)
+                  }
 
         maybeByUtr match {
           case None =>
@@ -494,6 +501,7 @@ class TimeToPayController @Inject() (
       }
     }
   }
+
 
   def enactStage(correlationId: String): Action[AnyContent] = Action.async { request =>
     enactStageRepository.findByCorrelationId(correlationId).map { stage: Option[EnactStage] =>
@@ -551,7 +559,7 @@ class TimeToPayController @Inject() (
 
   def chargeMigration(): Action[JsValue] = Action(parse.json) { implicit request =>
     val response = Json.obj(
-      "planId"             -> "_processed_plan_id_",
+      "planId" -> "_processed_plan_id_",
       "processingDateTime" -> java.time.Instant.now().toString
     )
 
@@ -582,8 +590,8 @@ class TimeToPayController @Inject() (
       val msg = Json.obj(
         "errors" -> Json.obj(
           "processingDateTime" -> "2024-04-11T10:07:55.749038Z",
-          "code"               -> "BAD_REQUEST",
-          "text"               -> "idType: must match \"^[A-Z0-9]{1,6}$\""
+          "code" -> "BAD_REQUEST",
+          "text" -> "idType: must match \"^[A-Z0-9]{1,6}$\""
         )
       )
       logger.info(s"Status $BAD_REQUEST, message: ${Json.stringify(msg)}")
@@ -595,7 +603,7 @@ class TimeToPayController @Inject() (
       val msg = Json.obj(
         "errors" -> Json.obj(
           "processingDateTime" -> "2024-04-11T10:09:21.750575Z",
-          "code"               -> "UNPROCESSABLE_ENTITY",
+          "code" -> "UNPROCESSABLE_ENTITY",
           "text" -> "Error: originalChargeCreationDate, originalChargeType & originalTieBreaker all need to be populated if chargeType has value LPI"
         )
       )
