@@ -229,6 +229,8 @@ class TimeToPayController @Inject()(
                 constructResponse(baseFolder, s"$filename.json", Results.UnprocessableEntity(_))
               case ("UTR", filename@"etmpCreateRequestFailure_500") =>
                 constructResponse(baseFolder, s"$filename.json", Results.InternalServerError(_))
+              case ("UTR", filename@"1073639231") =>
+                constructResponse(baseFolder, s"$filename.json", Results.InternalServerError(_))
               case ("UTR", filename@"3193095982") =>
                 constructResponse(baseFolder, s"$filename.json", Results.InternalServerError(_))
               case _ =>
@@ -413,7 +415,7 @@ class TimeToPayController @Inject()(
 
             case "3153830017" => Right(Results.InternalServerError("intentional stubbed 500"))
             case "3145760528" => Right(Results.InternalServerError("intentional stubbed 500"))
-            case "cdcsCreateCaseFailure_400" =>
+            case "1234567890" =>
               constructResponse(testDataPackage, "cdcsCreateCaseFailure_400.json")
                 .map(res => res.copy(header = res.header.copy(status = BAD_REQUEST)))
             case s if s.startsWith("cdcsResponse_error_") =>
@@ -452,8 +454,6 @@ class TimeToPayController @Inject()(
               None
         }
 
-      val startDate = req.ttpStartDate
-
       def respond(fileName: String, status: ResultStatus): Either[FileNotFoundError, Result] = {
         logger.info(s"Preparing response for file: $fileName with status: ${status.header.status}")
         val requestedCode = status.header.status
@@ -476,27 +476,10 @@ class TimeToPayController @Inject()(
             respond(s"$utr.json", Results.Ok)
         }
 
-                def maybeByStartDate: Either[FileNotFoundError, Result] =
-                  startDate match {
-                    case Some("2020-06-08") => respond("cesaCreateRequestFailure_400.json", Results.BadRequest)
-                    case _ => respond("cesaCreateRequestSuccessResponse.json", Results.Ok)
-                  }
-
         maybeByUtr match {
-          case None =>
-            maybeByStartDate match {
-              case Left(error) =>
-                Results.NotFound(s"UTR is missing and could not find file from startDate\n errors:\n$error")
-              case Right(value) => value
-            }
-          case Some(Left(error1)) =>
-            maybeByStartDate match {
-              case Left(error2) =>
-                Results.NotFound(s"Could not find file from UTR or startDate\n errors:\n $error1\n$error2")
-              case Right(value) => value
-            }
-          case Some(Right(value)) =>
-            value
+          case Some(Right(value)) => value
+          case Some(Left(error)) => Results.NotFound(s"Could not find file from UTR error: $error")
+          case None => Results.NotFound("UTR is missing")
         }
       }
     }
