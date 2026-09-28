@@ -556,7 +556,7 @@ class TimeToPayController @Inject() (
       "processingDateTime" -> java.time.Instant.now().toString
     )
 
-    Ok(response)
+    Created(response)
   }
 
   private final case class FileNotFoundError(msg: String)
