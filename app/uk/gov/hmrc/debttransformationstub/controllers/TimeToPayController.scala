@@ -253,7 +253,7 @@ class TimeToPayController @Inject() (
       enactStageRepository
         .addIDMSStage(idValue, req)
         .map { _ =>
-          handleNotFound(constructResponse("/idms.createTTPMonitoringCase/", s"$reference.json"))
+          handleNotFound(constructResponse("/idms.createTTPMonitoringCase/", s"$reference.json", Results.Created(_)))
         }
     }
   }
