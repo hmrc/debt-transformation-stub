@@ -229,6 +229,10 @@ class TimeToPayController @Inject() (
                 constructResponse(baseFolder, s"$filename.json", Results.UnprocessableEntity(_))
               case ("UTR", filename @ "etmpCreateRequestFailure_500") =>
                 constructResponse(baseFolder, s"$filename.json", Results.InternalServerError(_))
+              case ("UTR", filename @ "1073639231") =>
+                constructResponse(baseFolder, s"$filename.json", Results.InternalServerError(_))
+              case ("UTR", filename @ "3193095982") =>
+                constructResponse(baseFolder, s"$filename.json", Results.InternalServerError(_))
               case _ =>
                 constructResponse(baseFolder, s"${req.idValue}.json").left
                   .flatMap(_ => constructResponse(baseFolder, "864FZ00049.json"))
@@ -353,7 +357,8 @@ class TimeToPayController @Inject() (
 
         constructResponse(testDataPackage, fileName).map { baseResult =>
           logger.info(s"Stub ETMP response body: ${baseResult.body match {
-              case play.api.http.HttpEntity.Strict(d, _) => d.utf8String; case _ => "[non-strict body]"
+              case play.api.http.HttpEntity.Strict(d, _) => d.utf8String;
+              case _                                     => "[non-strict body]"
             }}")
           baseResult.copy(header = baseResult.header.copy(status = requestedCode))
         }
@@ -408,7 +413,7 @@ class TimeToPayController @Inject() (
 
             case "3153830017" => Right(Results.InternalServerError("intentional stubbed 500"))
             case "3145760528" => Right(Results.InternalServerError("intentional stubbed 500"))
-            case "cdcsCreateCaseFailure_400" =>
+            case "1234567890" =>
               constructResponse(testDataPackage, "cdcsCreateCaseFailure_400.json")
                 .map(res => res.copy(header = res.header.copy(status = BAD_REQUEST)))
             case s if s.startsWith("cdcsResponse_error_") =>
@@ -432,6 +437,7 @@ class TimeToPayController @Inject() (
       }
     }
   }
+
   // Call made to CESA for the routes: /inform and /full-amend of time-to-pay
   def cesaRequest(): Action[JsValue] = Action.async(parse.json) { implicit request =>
     withCustomJsonBody[CesaRequest] { req =>
@@ -446,8 +452,6 @@ class TimeToPayController @Inject() (
               None
         }
 
-      val startDate = req.ttpStartDate
-
       def respond(fileName: String, status: ResultStatus): Either[FileNotFoundError, Result] = {
         logger.info(s"Preparing response for file: $fileName with status: ${status.header.status}")
         val requestedCode = status.header.status
@@ -460,37 +464,20 @@ class TimeToPayController @Inject() (
 
       enactStageRepository.addCESAStage(getCorrelationIdHeader(request.headers), req).map { _ =>
         val maybeByUtr: Option[Either[FileNotFoundError, Result]] = maybeUtrIdentifier.map {
+          case "1239876502" => respond("cesaCreateRequestFailure_502.json", Results.BadGateway)
           case "1062431399" => respond("cesaCreateRequestFailure_400.json", Results.InternalServerError)
           case "3193095982" => respond("cesaCreateRequestFailure_400.json", Results.BadRequest)
+          case "3193095400" => respond("cesaCreateRequestFailure_400.json", Results.BadRequest)
+          case "1234567409" => respond("cesaCreateRequestFailure_409.json", Results.Conflict)
           case "8625159625" => respond("8625159625.json", Results.UnprocessableEntity)
           case utr =>
             respond(s"$utr.json", Results.Ok)
         }
 
-        def maybeByStartDate: Either[FileNotFoundError, Result] =
-          startDate match {
-            case Some("2019-06-08") => respond("cesaCreateRequestFailure_502.json", Results.BadGateway)
-            case Some("2020-06-08") => respond("cesaCreateRequestFailure_400.json", Results.BadRequest)
-            case Some("2021-06-08") => respond("cesaCreateRequestFailure_409.json", Results.Conflict)
-            case Some("2025-06-01") => respond("cesaCreateRequestFailure_404.json", Results.NotFound)
-            case _                  => respond("cesaCreateRequestSuccessResponse.json", Results.Ok)
-          }
-
         maybeByUtr match {
-          case None =>
-            maybeByStartDate match {
-              case Left(error) =>
-                Results.NotFound(s"UTR is missing and could not find file from startDate\n errors:\n$error")
-              case Right(value) => value
-            }
-          case Some(Left(error1)) =>
-            maybeByStartDate match {
-              case Left(error2) =>
-                Results.NotFound(s"Could not find file from UTR or startDate\n errors:\n $error1\n$error2")
-              case Right(value) => value
-            }
-          case Some(Right(value)) =>
-            value
+          case Some(Right(value)) => value
+          case Some(Left(error))  => Results.NotFound(s"Could not find file from UTR error: $error")
+          case None               => Results.NotFound("UTR is missing")
         }
       }
     }
