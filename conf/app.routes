@@ -53,6 +53,7 @@ POST          /prweb/api/payments/v1/updatecase/:caseId                         
 POST          /individuals/debts/essttp/payment-lock                                                 uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.etmpExecutePaymentLock
 POST          /individuals/debts/essttp/monitoring-case                                              uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.idmsCreateTTPMonitoringCase
 POST          /idms/essttp/v1/samonitoringcase                                                       uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.idmsCreateSAMonitoringCase
+POST          /idms/essttp/v3/createmonitoringcase                                                   uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.idmsCreateTTPMonitoringCase
 GET           /enactStage/:correlationId                                                             uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.enactStage(correlationId: String)
 GET           /enactStageByIdValue/:idValue                                                          uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.enactStageByIdValue(idValue: String)
 
