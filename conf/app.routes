@@ -44,6 +44,7 @@ POST          /test-only/response                                               
 DELETE        /test-only/all-documents                                                               uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.testOnlyDeleteAllDocuments()
 
 GET           /individuals/debts/essttp/:regimeType/:idType/:idValue/payment-plan-eligibility        uk.gov.hmrc.debttransformationstub.controllers.ETMPController.paymentPlanEligibility(regimeType: String, idType: String, idValue: String)
+GET           /etmp/individuals/debts/essttp/:regimeType/:idType/:idValue/payment-plan-eligibility   uk.gov.hmrc.debttransformationstub.controllers.ETMPController.paymentPlanEligibility(regimeType: String, idType: String, idValue: String)
 
 POST          /prweb/api/CDS/v1/SACustomerData                                                       uk.gov.hmrc.debttransformationstub.controllers.SACustomersDataController.saCustomerData()
 
