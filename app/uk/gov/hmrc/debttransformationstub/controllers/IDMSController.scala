@@ -56,7 +56,7 @@ class IDMSController @Inject() (environment: Environment, cc: ControllerComponen
           maybeFileContent match {
             case Success(value) =>
               // Might throw if parsing fails
-              Future.successful(Ok(Json.parse(value)))
+              Future.successful(Created(Json.parse(value)))
             case Failure(exception) =>
               logger.error(s"Failed to parse the file $file", exception)
               Future.successful(InternalServerError(s"Stub failed to parse file $file"))
