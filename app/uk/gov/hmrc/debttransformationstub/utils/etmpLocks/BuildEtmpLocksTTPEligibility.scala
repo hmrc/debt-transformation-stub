@@ -60,7 +60,7 @@ object BuildEtmpLocksTTPEligibility extends App {
   private lazy val logger = new RequestAwareLogger(this.getClass)
   implicit val hc: HeaderCarrier = HeaderCarrier()
 
-  println(filterAndEncodeList(CsvData.expectedItems))
+  logger.info(filterAndEncodeList(CsvData.expectedItems))
 
   def filterAndEncodeList(csvLocks: List[LockTypeAndLock])(implicit hc: HeaderCarrier): String = {
     val validLockTypes = LockTypes.all.map(_.businessLockName.toLowerCase.replaceAll(" ", ""))
