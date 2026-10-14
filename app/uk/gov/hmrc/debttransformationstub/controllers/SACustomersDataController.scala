@@ -21,6 +21,7 @@ import play.api.mvc.{ Action, ControllerComponents }
 import uk.gov.hmrc.debttransformationstub.controllers.CustomBaseController.returnStatusBasedOnIdValue
 import uk.gov.hmrc.debttransformationstub.models.{ CustomerDataRequest, Identity }
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
+import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import java.io.File
@@ -33,7 +34,7 @@ class SACustomersDataController @Inject() (environment: Environment, cc: Control
     extends BackendController(cc) {
 
   private lazy val logger = new RequestAwareLogger(this.getClass)
-
+  private implicit val hc: HeaderCarrier = HeaderCarrier()
   private val basePath = "conf/resources/data/sa"
   private val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
@@ -114,7 +115,7 @@ class SACustomersDataController @Inject() (environment: Environment, cc: Control
         .replaceAll("<DUE_DATE_FOR_FUTURE>", dueDateInFuture.format(dateFormatter))
         .replaceAll("<UTR>", idValue)
 
-    println(
+    logger.info(
       s"""====================
          |$result
          |====================

@@ -19,10 +19,11 @@ package uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet
 import org.scalactic.source.Position
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers._
+import play.api.Logger
 import play.api.libs.json.Json
 import uk.gov.hmrc.debttransformationstub.testutils.StringAssertionOps._
 import uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet.InterestForecastingRulesGeneratorSpec.Data
-import uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet.impl.{ ApplicationInput, ConsoleInput, ConsoleOutput, DebugOutput, FileInput, InputOutput }
+import uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet.impl._
 
 import java.util.concurrent.atomic.AtomicReference
 import scala.util.Using
@@ -75,13 +76,14 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
     }
 
     object DebugOutputs {
+      val logger = Logger(getClass)
       def consoleWithCollector(storage: AtomicReference[Seq[String]]): DebugOutput =
         (line: String) => {
-          println(s"LOG: $line")
+          logger.info(s"LOG: $line")
           storage.updateAndGet(_ :+ line)
         }
 
-      def console: DebugOutput = (line: String) => println(s"LOG: $line")
+      def console: DebugOutput = (line: String) => logger.info(s"LOG: $line")
     }
 
     "for toy examples" - {

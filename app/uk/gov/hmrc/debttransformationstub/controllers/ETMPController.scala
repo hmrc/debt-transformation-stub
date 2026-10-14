@@ -20,6 +20,7 @@ import play.api.Environment
 import play.api.libs.json.Json
 import play.api.mvc.{ Action, AnyContent, ControllerComponents, Request }
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
+import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import java.io.File
@@ -33,6 +34,7 @@ import scala.util.{ Failure, Success, Try, Using }
 class ETMPController @Inject() (environment: Environment, cc: ControllerComponents) extends BackendController(cc) {
 
   private lazy val logger = new RequestAwareLogger(this.getClass)
+  private implicit val hc: HeaderCarrier = HeaderCarrier()
 
   private val basePath = "conf/resources/data/etmp.eligibility"
 
@@ -107,7 +109,7 @@ class ETMPController @Inject() (environment: Environment, cc: ControllerComponen
         .replaceAll("<DUE_DATE_EQUALS_MAX_DEBT_AGE_PAYE>", dueDateEqualsMaxDebtAgePAYE.format(dateFormatter))
         .replaceAll("<UTR>", idValue)
 
-    println(
+    logger.info(
       s"""====================
          |$result
          |====================

@@ -16,6 +16,9 @@
 
 package uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet.impl
 
+import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
+import uk.gov.hmrc.http.HeaderCarrier
+
 import scala.io.Source
 import scala.util.Using
 
@@ -78,12 +81,15 @@ object InputOutput {
   *   https://pubs.opengroup.org/onlinepubs/9699919799/functions/stderr.html
   */
 object RealTerminalInputOutput extends InputOutput {
+  private lazy val logger = new RequestAwareLogger(this.getClass)
+  private implicit val hc: HeaderCarrier = HeaderCarrier()
+
   def readFile(filename: String): String =
     Using(Source.fromFile(filename))(source => source.mkString).get
 
   def stdin: Iterator[String] = scala.io.Source.stdin.getLines()
 
-  def stdoutWrite(text: String): Unit = System.out.print(text)
+  def stdoutWrite(text: String): Unit = logger.info(text)
 
-  def debugWriteln(text: String): Unit = System.err.println(text)
+  def debugWriteln(text: String): Unit = logger.debug(text)
 }
