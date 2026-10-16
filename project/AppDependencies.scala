@@ -3,7 +3,7 @@ import sbt.*
 object AppDependencies {
 
   val bootstrapPlay = "10.8.0"
-  val hmrcMongoPlay = "2.13.0"
+  val hmrcMongoPlay = "2.14.0"
 
   val compile: Seq[ModuleID] = Seq(
     // This is necessary until the HMRC/Play dependencies bring in the version of Jackson that is not insecure.
