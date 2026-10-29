@@ -74,7 +74,7 @@
         "originalChargeType": "string",
         "originalTieBreaker": "1234",
         "chargeReference": "XM123456789812",
-        "outstandingAmount": 3000.00,
+        "outstandingAmount": 100000000.00,
         "accruedInterest": 500.00
       }
     ],
