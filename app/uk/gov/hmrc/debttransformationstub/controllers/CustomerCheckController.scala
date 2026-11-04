@@ -19,7 +19,7 @@ package uk.gov.hmrc.debttransformationstub.controllers
 import org.apache.commons.io.FileUtils
 import play.api.Environment
 import play.api.libs.json.{ JsValue, Json }
-import play.api.mvc.Results.{ Status => ResultStatus }
+import play.api.mvc.Results.Status as ResultStatus
 import play.api.mvc.{ Action, ControllerComponents, Headers, Request, Result, Results }
 import uk.gov.hmrc.debttransformationstub.models.CustomerCheckRequest
 import uk.gov.hmrc.debttransformationstub.repositories.EnactStageRepository

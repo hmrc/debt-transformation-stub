@@ -18,7 +18,7 @@ package uk.gov.hmrc.debttransformationstub.controllers
 
 import play.api.Environment
 import play.api.libs.json.Json
-import play.api.mvc._
+import play.api.mvc.*
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
 import uk.gov.hmrc.debttransformationstub.models.debtmanagment.{ FCTemplateRequest, RaiseAmendFeeRequest }
 import uk.gov.hmrc.debttransformationstub.services.DebtManagementAPIPollingService
@@ -37,7 +37,7 @@ class DebtManagementAPITestController @Inject() (
   environment: Environment
 )(implicit executionContext: ExecutionContext)
     extends BackendController(cc) {
-  import RaiseAmendFeeRequest._
+  import RaiseAmendFeeRequest.*
 
   private lazy val logger = new RequestAwareLogger(this.getClass)
   private val basePath = "conf/resources/data"

@@ -1,12 +1,12 @@
 # microservice specific routes
 
-GET           /debt                                                                                  uk.gov.hmrc.debttransformationstub.controllers.CaseManagementSystemController.getList
+GET           /debt                                                                                  uk.gov.hmrc.debttransformationstub.controllers.CaseManagementSystemController.getList()
 GET           /debt/:debtID                                                                          uk.gov.hmrc.debttransformationstub.controllers.CaseManagementSystemController.getCaseDetails(debtID: String, duties: Option[String])
-GET           /data                                                                                  uk.gov.hmrc.debttransformationstub.controllers.ReferenceLookupController.getList
+GET           /data                                                                                  uk.gov.hmrc.debttransformationstub.controllers.ReferenceLookupController.getList()
 GET           /data/:type/mainTrans/:mainTrans/subTrans/:subTrans                                    uk.gov.hmrc.debttransformationstub.controllers.ReferenceLookupController.getReferenceData(type: String, mainTrans: String, subTrans: String)
 
 GET           /prweb/api/ARC/01/ChargeData/customer/:customerUniqueRef/debts/debtId/:debtId          uk.gov.hmrc.debttransformationstub.controllers.CaseManagementSystemController.getDebtCaseManagement(customerUniqueRef: String, debtId: String)
-POST          /prweb/api/ARC/01/RefData                                                              uk.gov.hmrc.debttransformationstub.controllers.ReferenceLookupController.getReferenceDataLookup
+POST          /prweb/api/ARC/01/RefData                                                              uk.gov.hmrc.debttransformationstub.controllers.ReferenceLookupController.getReferenceDataLookup()
 
 POST          /prweb/PRRestService/oauth2/v1/token                                                   uk.gov.hmrc.debttransformationstub.controllers.AuthController.getAccessToken()
 POST          /prweb/api/oauth2/v1/token                                                             uk.gov.hmrc.debttransformationstub.controllers.AuthController.getAccessToken()
@@ -36,8 +36,8 @@ POST          /debts/time-to-pay/quote/arrangement                              
 POST          /prweb/api/TTP/v1/create                                                               uk.gov.hmrc.debttransformationstub.controllers.CaseManagementController.createCase
 POST          /prweb/api/TTP/v1/Eligibility                                                          uk.gov.hmrc.debttransformationstub.controllers.CDCSController.cdcsData()
 #All of the below are related to the only repository - EnactStageRespository
-GET           /test-only/all-requests                                                                uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.getTTPRequests
-GET           /test-only/requests                                                                    uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.getUnprocessedRequests
+GET           /test-only/all-requests                                                                uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.getTTPRequests()
+GET           /test-only/requests                                                                    uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.getUnprocessedRequests()
 DELETE        /test-only/request/:requestId                                                          uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.deleteTTPRequest(requestId: String)
 GET           /test-only/request/:requestId                                                          uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.getTTPRequest(requestId: String )
 POST          /test-only/response                                                                    uk.gov.hmrc.debttransformationstub.controllers.TimeToPayTestController.createTTPRequests
@@ -58,7 +58,7 @@ POST          /idms/essttp/v3/createmonitoringcase                              
 GET           /enactStage/:correlationId                                                             uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.enactStage(correlationId: String)
 GET           /enactStageByIdValue/:idValue                                                          uk.gov.hmrc.debttransformationstub.controllers.TimeToPayController.enactStageByIdValue(idValue: String)
 
-POST          /individuals/debts/essttp/eligibility-check                                            uk.gov.hmrc.debttransformationstub.controllers.IDMSController.paymentPlanEligibilityDm
+POST          /individuals/debts/essttp/eligibility-check                                            uk.gov.hmrc.debttransformationstub.controllers.IDMSController.paymentPlanEligibilityDm()
 POST          /idms/essttp/v1/saeligibilitycheck                                                     uk.gov.hmrc.debttransformationstub.controllers.IDMSController.saEligibilityCheck()
 
 POST          /cesa/debt/providechargereferences                                                     uk.gov.hmrc.debttransformationstub.controllers.CESAController.getCESAdata()

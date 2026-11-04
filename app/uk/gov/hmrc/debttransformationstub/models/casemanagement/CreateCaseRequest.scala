@@ -17,7 +17,7 @@
 package uk.gov.hmrc.debttransformationstub.models.casemanagement
 
 import play.api.libs.json.{ Json, OFormat }
-import uk.gov.hmrc.debttransformationstub.models._
+import uk.gov.hmrc.debttransformationstub.models.*
 
 final case class CreateCaseRequest(
   customerReference: CustomerReference,

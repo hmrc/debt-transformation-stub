@@ -17,7 +17,7 @@
 package uk.gov.hmrc.debttransformationstub.controllers
 
 import play.api.libs.json.{ JsValue, Json }
-import play.api.mvc._
+import play.api.mvc.*
 import uk.gov.hmrc.debttransformationstub.models.RequestDetail
 import uk.gov.hmrc.debttransformationstub.models.errors.{ TTPRequestsCreationError, TTPRequestsError }
 import uk.gov.hmrc.debttransformationstub.repositories.EnactStageRepository
@@ -41,25 +41,25 @@ class TimeToPayTestController @Inject() (
   val XCorrelationId = "X-Correlation-Id"
 
   def getTTPRequests(): Action[AnyContent] = Action.async { implicit request =>
-    ttpRequestsService.getTTPRequests().map { result: immutable.Seq[RequestDetail] =>
+    ttpRequestsService.getTTPRequests().map { (result: immutable.Seq[RequestDetail]) =>
       Results.Ok(Json.toJson(result))
     }
   }
 
   def getUnprocessedRequests(): Action[AnyContent] = Action.async { implicit request =>
-    ttpRequestsService.getUnprocesedTTPRequests().map { result: immutable.Seq[RequestDetail] =>
+    ttpRequestsService.getUnprocesedTTPRequests().map { (result: immutable.Seq[RequestDetail]) =>
       Results.Ok(Json.toJson(result))
     }
   }
 
   def getTTPRequest(requestId: String): Action[AnyContent] = Action.async { implicit request =>
-    ttpRequestsService.getTTPRequest(requestId).map { result: Option[RequestDetail] =>
+    ttpRequestsService.getTTPRequest(requestId).map { (result: Option[RequestDetail]) =>
       Results.Ok(Json.toJson(result))
     }
   }
 
   def createTTPRequests: Action[JsValue] = Action.async(parse.json) { implicit request =>
-    withCustomJsonBody[RequestDetail] { requestDetailsRequest: RequestDetail =>
+    withCustomJsonBody[RequestDetail] { (requestDetailsRequest: RequestDetail) =>
       logger.info("Persist the TTP requests")
       ttpRequestsService.addRequestDetails(requestDetailsRequest = requestDetailsRequest).map(toResult)
     }
@@ -68,7 +68,7 @@ class TimeToPayTestController @Inject() (
   def deleteTTPRequest(requestId: String): Action[AnyContent] = Action.async { implicit request =>
     ttpRequestsService.deleteTTPRequest(requestId).map {
       case Right(result) => Results.Ok(Json.toJson(result)).withHeaders(XCorrelationId -> result)
-      case Left(error) =>
+      case Left(error)   =>
         logger.error(s"TTPRequestDeletionError: $error")
         errorToResult(error)
     }
@@ -86,7 +86,7 @@ class TimeToPayTestController @Inject() (
 
   private def toResult(eitherResult: Either[TTPRequestsError, String]) = eitherResult match {
     case Right(result) => Results.Ok(Json.toJson(result)).withHeaders(XCorrelationId -> result)
-    case Left(error) =>
+    case Left(error)   =>
       errorToResult(error)
   }
 }

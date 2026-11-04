@@ -12,7 +12,7 @@ object AppDependencies {
     "uk.gov.hmrc.mongo"         %% "hmrc-mongo-play-30"        % hmrcMongoPlay,
     "com.beachape"              %% "enumeratum-play-json"      % "1.9.8",
     "commons-io"                 % "commons-io"                % "2.22.0",
-    "com.nrinaudo"              %% "kantan.csv"                % "0.8.0"
+    "com.nrinaudo"               % "kantan.csv_2.13"           % "0.8.0"
   )
 
   val test: Seq[ModuleID] = Seq(

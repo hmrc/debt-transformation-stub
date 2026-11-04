@@ -17,7 +17,7 @@
 package uk.gov.hmrc.debttransformationstub.controllers
 
 import play.api.Environment
-import play.api.mvc._
+import play.api.mvc.*
 import uk.gov.hmrc.debttransformationstub.utils.{ ListHelper, RequestAwareLogger }
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
@@ -43,7 +43,7 @@ class CaseManagementSystemController @Inject() (
     } else {
       environment.getExistingFile(basePath + casePath + debtID + ".json") match {
         case Some(file) => Ok(Source.fromFile(file).mkString)
-        case _ =>
+        case _          =>
           logger.error(s"Status $NOT_FOUND, message: file not found")
           NotFound("file not found")
       }

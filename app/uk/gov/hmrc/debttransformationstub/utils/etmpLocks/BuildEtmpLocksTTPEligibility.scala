@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.debttransformationstub.utils.etmpLocks
 
-import kantan.csv._
+import kantan.csv.*
 import kantan.csv.ops.toCsvInputOps
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.http.HeaderCarrier
@@ -98,7 +98,7 @@ object CsvData {
 
   private val unprocessedRows: List[List[String]] = maybeCsvData match {
     case Failure(exception) => throw new IllegalStateException(s"Exception: $exception")
-    case Success(csvData) =>
+    case Success(csvData)   =>
       csvData
         .asCsvReader[List[String]](rfc.withHeader())
         .collect { case Right(value) =>

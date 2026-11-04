@@ -23,14 +23,14 @@ final case class DebtItemId(value: String) extends AnyVal
 
 object DebtItemId extends ValueTypeFormatter {
   implicit val format: Format[DebtItemId] =
-    valueTypeFormatter(DebtItemId.apply, DebtItemId.unapply)
+    valueTypeFormatter(DebtItemId.apply, debtItemId => Some(debtItemId.value))
 }
 
 final case class DebtItemChargeId(value: String) extends AnyVal
 
 object DebtItemChargeId extends ValueTypeFormatter {
   implicit val format: Format[DebtItemChargeId] =
-    valueTypeFormatter(DebtItemChargeId.apply, DebtItemChargeId.unapply)
+    valueTypeFormatter(DebtItemChargeId.apply, debtItemChargeId => Some(debtItemChargeId.value))
 }
 
 final case class DebtItem(

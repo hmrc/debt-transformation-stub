@@ -58,14 +58,14 @@ object InterestForecastingRulesGenerator {
               case "--output-format=ifs-scala-config"  => OutputFormat.IfsScalaConfig
               case "--output-format=application-conf"  => OutputFormat.ApplicationConf
               case "--output-format=production-config" => OutputFormat.ProductionConfig
-              case wrongArgs =>
+              case wrongArgs                           =>
                 throw new IllegalArgumentException(s"Unknown output format args: ${Json.toJson(wrongArgs)}")
             }
 
           val outputLocation =
             outputLocArg match {
               case "--output=console" => OutputLocation.Console
-              case wrongArgs =>
+              case wrongArgs          =>
                 throw new IllegalArgumentException(s"Unknown output location args: ${Json.toJson(wrongArgs)}")
             }
 

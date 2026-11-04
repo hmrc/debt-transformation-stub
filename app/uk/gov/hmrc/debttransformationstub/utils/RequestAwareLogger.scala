@@ -20,7 +20,7 @@ import org.slf4j.MDC
 import play.api.Logger
 import uk.gov.hmrc.http.{ HeaderCarrier, RequestId }
 
-class RequestAwareLogger(clazz: Class[_]) {
+class RequestAwareLogger(clazz: Class[?]) {
   private val underlying = Logger(clazz)
 
   val requestIdKey = "x-request-id"

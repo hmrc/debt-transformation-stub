@@ -22,5 +22,5 @@ final case class CustomerReference(value: String) extends AnyVal
 
 object CustomerReference extends ValueTypeFormatter {
   implicit val format: Format[CustomerReference] =
-    valueTypeFormatter(CustomerReference.apply, CustomerReference.unapply)
+    valueTypeFormatter(CustomerReference.apply, customerReference => Some(customerReference.value))
 }
