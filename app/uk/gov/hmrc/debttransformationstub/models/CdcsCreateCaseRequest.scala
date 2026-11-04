@@ -22,8 +22,8 @@ package uk.gov.hmrc.debttransformationstub.models
  */
 
 import play.api.libs.json.{ Json, OFormat }
-import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequest._
-import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes._
+import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequest.*
+import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.*
 
 case class TTP(
   plan: CdcsCreateCaseRequestPlan,

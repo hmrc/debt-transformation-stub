@@ -18,14 +18,14 @@ package uk.gov.hmrc.debttransformationstub.repositories
 
 import com.mongodb.client.model.FindOneAndUpdateOptions
 import org.mongodb.scala.bson.Document
-import org.mongodb.scala.model.Filters._
-import org.mongodb.scala.model.Updates._
+import org.mongodb.scala.model.Filters.*
+import org.mongodb.scala.model.Updates.*
 import org.mongodb.scala.model.{ IndexModel, ReturnDocument }
 import org.mongodb.scala.result.DeleteResult
 import play.api.Logger
 import play.api.libs.concurrent.Futures
 import play.api.libs.json.{ Json, OFormat }
-import uk.gov.hmrc.debttransformationstub.models._
+import uk.gov.hmrc.debttransformationstub.models.*
 import uk.gov.hmrc.mongo.MongoComponent
 import uk.gov.hmrc.mongo.play.json.{ Codecs, PlayMongoRepository }
 
@@ -204,7 +204,7 @@ class EnactStageRepository @Inject() (mongo: MongoComponent, futures: Futures)(i
     collection
       .findOneAndUpdate(
         equal("idValue", idValue),
-        combine(updates: _*),
+        combine(updates*),
         new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER)
       )
       .toFuture()

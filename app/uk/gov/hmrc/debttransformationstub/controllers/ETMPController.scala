@@ -58,7 +58,7 @@ class ETMPController @Inject() (environment: Environment, cc: ControllerComponen
       environment.getExistingFile(relativePath) match {
         case Some(file) =>
           Try(Json.parse(paymentPlanEligibilityString(file, idValue))) match {
-            case Success(value) => Ok(value)
+            case Success(value)     => Ok(value)
             case Failure(exception) =>
               logger.error(s"Failed to parse the file $relativePath", exception)
               InternalServerError(s"stub failed to parse file $relativePath")

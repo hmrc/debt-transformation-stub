@@ -44,9 +44,9 @@ final case class IfsRulesMasterData(
 
     def isInterestBearing(index: Int): Boolean =
       Lookup2D.interestBearingAt(index).actual match {
-        case ""  => false
-        case "N" => false
-        case "Y" => true
+        case ""      => false
+        case "N"     => false
+        case "Y"     => true
         case unknown =>
           val rowDisplay: JsValue = Json.toJson(tableData.dataRowAt(index).values.map(_.actual))
           throw new IllegalArgumentException(
@@ -56,9 +56,9 @@ final case class IfsRulesMasterData(
 
     def interestOnlyDebt(index: Int): Boolean =
       Lookup2D.interestOnlyDebtAt(index).actual match {
-        case ""  => false
-        case "N" => false
-        case "Y" => true
+        case ""      => false
+        case "N"     => false
+        case "Y"     => true
         case unknown =>
           val rowDisplay: JsValue = Json.toJson(tableData.dataRowAt(index).values.map(_.actual))
           throw new IllegalArgumentException(
@@ -81,7 +81,7 @@ final case class IfsRulesMasterData(
         case "asn"             => Some(false)
         case "vrn"             => Some(false)
         case "utr with suffix" => Some(false)
-        case _ =>
+        case _                 =>
           val rowDisplay: JsValue = Json.toJson(tableData.dataRowAt(index).values.map(_.actual))
           throw new IllegalArgumentException(
             s"Cannot convert useChargeReference=${JsString(ssttpHodReference)} to boolean; check the code. Row values: $rowDisplay"
@@ -100,7 +100,7 @@ final case class IfsRulesMasterData(
         case "SA SSTTP AND into IFS and SoL AND Op Led" => RegimeUsage.`SA SSTTP AND into IFS and SoL AND Op Led`
         case "SIA"                                      => RegimeUsage.Sia
         case "AMC"                                      => RegimeUsage.Amc
-        case unknown =>
+        case unknown                                    =>
           val rowDisplay: JsValue = Json.toJson(tableData.dataRowAt(index).values.map(_.actual))
           throw new IllegalArgumentException(
             s"Cannot convert regimeUsage=${JsString(unknown)} to RegimeUsage; check the code. Row values: $rowDisplay"
