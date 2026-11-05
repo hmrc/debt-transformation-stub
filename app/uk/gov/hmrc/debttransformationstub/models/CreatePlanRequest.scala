@@ -39,7 +39,7 @@ object Instalment {
 final case class QuoteId(value: String) extends AnyVal
 
 object QuoteId extends ValueTypeFormatter {
-  implicit val format: Format[QuoteId] = valueTypeFormatter(QuoteId.apply, QuoteId.unapply)
+  implicit val format: Format[QuoteId] = valueTypeFormatter(QuoteId.apply, quoteId => Some(quoteId.value))
 }
 
 sealed abstract class PaymentMethod(override val entryName: String) extends EnumEntry
@@ -81,7 +81,7 @@ final case class PaymentReference(value: String) extends AnyVal
 
 object PaymentReference extends ValueTypeFormatter {
   implicit val format: Format[PaymentReference] =
-    valueTypeFormatter(PaymentReference.apply, PaymentReference.unapply)
+    valueTypeFormatter(PaymentReference.apply, paymentReference => Some(paymentReference.value))
 }
 
 final case class PaymentInformation(paymentMethod: PaymentMethod, paymentReference: PaymentReference)

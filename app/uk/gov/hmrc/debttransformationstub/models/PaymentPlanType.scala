@@ -22,5 +22,5 @@ final case class PaymentPlanType(value: String) extends AnyVal
 
 object PaymentPlanType extends ValueTypeFormatter {
   implicit val format: Format[PaymentPlanType] =
-    valueTypeFormatter(PaymentPlanType.apply, PaymentPlanType.unapply)
+    valueTypeFormatter(PaymentPlanType.apply, paymentPlanType => Some(paymentPlanType.value))
 }

@@ -18,8 +18,6 @@ package uk.gov.hmrc.debttransformationstub.models
 
 import play.api.libs.json.{ Json, OFormat }
 
-import java.time.LocalDate
-
 final case class Identity(
   idType: String,
   idValue: String

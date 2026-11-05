@@ -61,7 +61,7 @@ object InterestForecastingConfigBuilder {
           |
           |}""".stripMargin.split("\n")
 
-      prefix ++ rules.map(line => "      " + line) ++ suffix
+      prefix.toIndexedSeq ++ rules.map(line => "      " + line) ++ suffix.toIndexedSeq
     }
 
     def ifsProductionConfigOverride(ifsData: IfsRulesMasterData): Seq[String] =

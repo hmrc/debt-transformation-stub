@@ -20,11 +20,11 @@ import org.apache.commons.io.FileUtils
 import play.api.Environment
 import play.api.http.ContentTypes
 import play.api.libs.json.{ JsValue, Json }
-import play.api.mvc.Results.{ Status => ResultStatus }
-import play.api.mvc._
+import play.api.mvc.Results.Status as ResultStatus
+import play.api.mvc.*
 import uk.gov.hmrc.debttransformationstub.config.AppConfig
 import uk.gov.hmrc.debttransformationstub.models.CdcsCreateCaseRequestWrappedTypes.CdcsCreateCaseRequestIdTypeReference
-import uk.gov.hmrc.debttransformationstub.models._
+import uk.gov.hmrc.debttransformationstub.models.*
 import uk.gov.hmrc.debttransformationstub.repositories.{ EnactStage, EnactStageRepository }
 import uk.gov.hmrc.debttransformationstub.services.TTPPollingService
 import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
@@ -82,7 +82,7 @@ class TimeToPayController @Inject() (
     } else {
       environment.getExistingFile(s"$basePath/ttp.generateAffordabilityQuote/affordabilityQuoteResponse.json") match {
         case Some(file) => Future.successful(Ok(Source.fromFile(file).mkString))
-        case _ =>
+        case _          =>
           logger.error(s"Status $NOT_FOUND, message: file not found")
           Future.successful(NotFound("file not found"))
       }
@@ -99,7 +99,7 @@ class TimeToPayController @Inject() (
       } else {
         environment.getExistingFile(s"$basePath/ttp.viewPlan/$pegaId.json") match {
           case Some(file) => Future.successful(Ok(Source.fromFile(file).mkString))
-          case _ =>
+          case _          =>
             logger.error(s"Status $NOT_FOUND, message: file not found")
             Future.successful(NotFound("file not found"))
         }
@@ -115,7 +115,7 @@ class TimeToPayController @Inject() (
     } else {
       environment.getExistingFile(s"$basePath/ttp.updatePlan/$customerReference.json") match {
         case Some(file) => Future.successful(Ok(Source.fromFile(file).mkString))
-        case _ =>
+        case _          =>
           logger.error(s"Status $NOT_FOUND, message: file not found")
           Future.successful(NotFound("file not found"))
       }
@@ -183,7 +183,7 @@ class TimeToPayController @Inject() (
 
       idEither match {
         case Left(errorResult) => Future.successful(errorResult)
-        case Right(id) =>
+        case Right(id)         =>
           enactStageRepository.addNDDSStage(correlationId, req).map(_ => fileResponse(id))
       }
     }
@@ -412,7 +412,6 @@ class TimeToPayController @Inject() (
               constructResponse(testDataPackage, "2001234567.json")
 
             case "3153830017" => Right(Results.InternalServerError("intentional stubbed 500"))
-            case "3145760528" => Right(Results.InternalServerError("intentional stubbed 500"))
             case "1234567890" =>
               constructResponse(testDataPackage, "cdcsCreateCaseFailure_400.json")
                 .map(res => res.copy(header = res.header.copy(status = BAD_REQUEST)))
@@ -429,7 +428,7 @@ class TimeToPayController @Inject() (
       val result: Result = handleNotFound(maybeResult)
 
       maybeUtrIdentifier match {
-        case None => Future.successful(Results.BadRequest("No UTR supplied"))
+        case None      => Future.successful(Results.BadRequest("No UTR supplied"))
         case Some(utr) =>
           enactStageRepository.addCDCSStage(idValue = utr, req).map { _ =>
             result
@@ -444,7 +443,7 @@ class TimeToPayController @Inject() (
       val testDataPackage = "/cesa.createRequest/"
       val maybeUtrIdentifier: Option[String] =
         req.identifications.find(_.idType == "UTR").map(_.idValue) match {
-          case None => None
+          case None        => None
           case Some(value) =>
             if (value.length > 0)
               Some(value)
@@ -470,7 +469,7 @@ class TimeToPayController @Inject() (
           case "3193095400" => respond("cesaCreateRequestFailure_400.json", Results.BadRequest)
           case "1234567409" => respond("cesaCreateRequestFailure_409.json", Results.Conflict)
           case "8625159625" => respond("8625159625.json", Results.UnprocessableEntity)
-          case utr =>
+          case utr          =>
             respond(s"$utr.json", Results.Ok)
         }
 
@@ -484,13 +483,13 @@ class TimeToPayController @Inject() (
   }
 
   def enactStage(correlationId: String): Action[AnyContent] = Action.async { request =>
-    enactStageRepository.findByCorrelationId(correlationId).map { stage: Option[EnactStage] =>
+    enactStageRepository.findByCorrelationId(correlationId).map { (stage: Option[EnactStage]) =>
       Ok(Json.toJson(stage))
     }
   }
 
   def enactStageByIdValue(idValue: String): Action[AnyContent] = Action.async { request =>
-    enactStageRepository.findByIdValue(idValue).map { stage: Option[EnactStage] =>
+    enactStageRepository.findByIdValue(idValue).map { (stage: Option[EnactStage]) =>
       Ok(Json.toJson(stage))
     }
   }
@@ -556,7 +555,7 @@ class TimeToPayController @Inject() (
   private def handleNotFound(resultOrError: Either[FileNotFoundError, Result])(implicit hc: HeaderCarrier): Result =
     resultOrError match {
       case Right(value) => value
-      case Left(value) =>
+      case Left(value)  =>
         logger.info(s"Could not find file. Error with potentially sensitive information:\n ${value.msg}")
         logger.error("Could not find file. The path cannot be logged at this level.")
         Results.NotFound(value.msg)

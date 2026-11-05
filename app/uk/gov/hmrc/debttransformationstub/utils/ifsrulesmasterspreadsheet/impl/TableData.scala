@@ -62,7 +62,7 @@ object TableData {
         .map(rawRow => (splitCsvOrTsvRow(row = rawRow, separator = separator), rawRow))
         .toVector
 
-    val headings = parsedRowsWithRawRows.head._1.map(Heading)
+    val headings = parsedRowsWithRawRows.head._1.map(Heading.apply)
     val headingCount = headings.size
 
     val rows: Vector[Vector[CellValue]] =
