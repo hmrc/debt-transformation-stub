@@ -22,5 +22,5 @@ final case class PlanId(value: String) extends AnyVal
 
 object PlanId extends ValueTypeFormatter {
   implicit val format: Format[PlanId] =
-    valueTypeFormatter(PlanId.apply, PlanId.unapply)
+    valueTypeFormatter(PlanId.apply, planId => Some(planId.value))
 }

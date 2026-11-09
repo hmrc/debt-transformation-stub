@@ -18,7 +18,7 @@ package uk.gov.hmrc.debttransformationstub.testutils
 
 import org.scalactic.source.Position
 import org.scalatest.Assertion
-import org.scalatest.matchers.should.Matchers._
+import org.scalatest.matchers.should.Matchers.*
 
 object StringAssertionOps {
   implicit final class RichStringAssertion(str: String) {

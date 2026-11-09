@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.debttransformationstub.controllers
 import play.api.Environment
-import play.api.libs.json._
+import play.api.libs.json.*
 import play.api.mvc.{ Action, ControllerComponents }
 import uk.gov.hmrc.debttransformationstub.controllers.CustomBaseController.returnStatusBasedOnIdValue
 import uk.gov.hmrc.debttransformationstub.models.{ CustomerDataRequest, Identity }

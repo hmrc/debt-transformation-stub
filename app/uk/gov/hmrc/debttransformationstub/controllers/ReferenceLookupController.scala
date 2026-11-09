@@ -18,7 +18,7 @@ package uk.gov.hmrc.debttransformationstub.controllers
 
 import play.api.Environment
 import play.api.libs.json.JsValue
-import play.api.mvc._
+import play.api.mvc.*
 import uk.gov.hmrc.debttransformationstub.utils.{ ListHelper, ReferenceDataLookupRequest, RequestAwareLogger }
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
@@ -48,7 +48,7 @@ class ReferenceLookupController @Inject() (
         environment.getExistingFile(basePath + refPath + descType + "-" + mainTrans + "-" + subTrans + ".json") match {
 
           case Some(file) => Ok(Source.fromFile(file).mkString)
-          case _ =>
+          case _          =>
             logger.error(s"Status $NOT_FOUND, message: reference data file not found")
             NotFound("file not found")
         }

@@ -17,7 +17,7 @@
 package uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet
 
 import org.scalatest.freespec.AnyFreeSpec
-import org.scalatest.matchers.should.Matchers._
+import org.scalatest.matchers.should.Matchers.*
 import uk.gov.hmrc.debttransformationstub.utils.etmpLocks.{ BuildEtmpLocksTTPEligibility, EtmpLock, LockTypeAndLock }
 import uk.gov.hmrc.http.HeaderCarrier
 

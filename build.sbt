@@ -1,16 +1,16 @@
 val appName = "debt-transformation-stub"
 
 ThisBuild / majorVersion := 0
-ThisBuild / scalaVersion := "2.13.18"
+ThisBuild / scalaVersion := "3.3.7"
 
 lazy val microservice = Project(appName, file("."))
   .enablePlugins(PlayScala, SbtDistributablesPlugin)
   .settings(
     libraryDependencies ++= AppDependencies.compile ++ AppDependencies.test,
     scalacOptions ++= Seq(
-      "-Xlint:-byname-implicit",
+      "-source:future-migration",
+      "-Yretain-trees",
       "-Wconf:src=routes/.*:s",
-      "-Wconf:cat=unused-imports&src=html/.*:s"
     ),
     // fixes the funkiness that tries to 'upgrade' to an old version
     dependencyUpdatesFilter -= moduleFilter(

@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.debttransformationstub.models.casemanagement
 import play.api.libs.json.{ Json, OFormat }
-import uk.gov.hmrc.debttransformationstub.models._
+import uk.gov.hmrc.debttransformationstub.models.*
 
 import java.time.LocalDate
 

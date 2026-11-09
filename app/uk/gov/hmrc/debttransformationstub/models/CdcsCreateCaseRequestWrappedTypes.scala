@@ -30,298 +30,298 @@ import scala.collection.immutable
 object CdcsCreateCaseRequestWrappedTypes {
 
   // String Wrappers
-  final case class CdcsCreateCaseRequestTtpArrangementId(value: String)
+  final case class CdcsCreateCaseRequestTtpArrangementId(value: String) extends AnyVal
   object CdcsCreateCaseRequestTtpArrangementId {
     implicit val format: Format[CdcsCreateCaseRequestTtpArrangementId] =
       Json.valueFormat[CdcsCreateCaseRequestTtpArrangementId]
   }
 
-  final case class CdcsCreateCaseRequestAddressType(value: String)
+  final case class CdcsCreateCaseRequestAddressType(value: String) extends AnyVal
   object CdcsCreateCaseRequestAddressType {
     implicit val format: Format[CdcsCreateCaseRequestAddressType] = Json.valueFormat[CdcsCreateCaseRequestAddressType]
   }
 
-  final case class CdcsCreateCaseRequestIdType(value: String)
+  final case class CdcsCreateCaseRequestIdType(value: String) extends AnyVal
   object CdcsCreateCaseRequestIdType {
     implicit val format: Format[CdcsCreateCaseRequestIdType] = Json.valueFormat[CdcsCreateCaseRequestIdType]
   }
 
-  final case class CdcsCreateCaseRequestRegimeType(value: String)
+  final case class CdcsCreateCaseRequestRegimeType(value: String) extends AnyVal
   object CdcsCreateCaseRequestRegimeType {
     implicit val format: Format[CdcsCreateCaseRequestRegimeType] = Json.valueFormat[CdcsCreateCaseRequestRegimeType]
   }
 
-  final case class CdcsCreateCaseRequestAAId(value: String)
+  final case class CdcsCreateCaseRequestAAId(value: String) extends AnyVal
   object CdcsCreateCaseRequestAAId {
     implicit val format: Format[CdcsCreateCaseRequestAAId] = Json.valueFormat[CdcsCreateCaseRequestAAId]
   }
 
-  final case class CdcsCreateCaseRequestPaymentReference(value: String)
+  final case class CdcsCreateCaseRequestPaymentReference(value: String) extends AnyVal
   object CdcsCreateCaseRequestPaymentReference {
     implicit val format: Format[CdcsCreateCaseRequestPaymentReference] =
       Json.valueFormat[CdcsCreateCaseRequestPaymentReference]
   }
 
-  final case class CdcsCreateCaseRequestInitialPaymentReference(value: String)
+  final case class CdcsCreateCaseRequestInitialPaymentReference(value: String) extends AnyVal
   object CdcsCreateCaseRequestInitialPaymentReference {
     implicit val format: Format[CdcsCreateCaseRequestInitialPaymentReference] =
       Json.valueFormat[CdcsCreateCaseRequestInitialPaymentReference]
   }
 
-  final case class CdcsCreateCaseRequestDebtItemChargeId(value: String)
+  final case class CdcsCreateCaseRequestDebtItemChargeId(value: String) extends AnyVal
   object CdcsCreateCaseRequestDebtItemChargeId {
     implicit val format: Format[CdcsCreateCaseRequestDebtItemChargeId] =
       Json.valueFormat[CdcsCreateCaseRequestDebtItemChargeId]
   }
 
-  final case class CdcsCreateCaseRequestUpstreamErrorCode(value: String)
+  final case class CdcsCreateCaseRequestUpstreamErrorCode(value: String) extends AnyVal
   object CdcsCreateCaseRequestUpstreamErrorCode {
     implicit val format: Format[CdcsCreateCaseRequestUpstreamErrorCode] =
       Json.valueFormat[CdcsCreateCaseRequestUpstreamErrorCode]
   }
 
-  final case class CdcsCreateCaseRequestUpstreamErrorDescription(value: String)
+  final case class CdcsCreateCaseRequestUpstreamErrorDescription(value: String) extends AnyVal
   object CdcsCreateCaseRequestUpstreamErrorDescription {
     implicit val format: Format[CdcsCreateCaseRequestUpstreamErrorDescription] =
       Json.valueFormat[CdcsCreateCaseRequestUpstreamErrorDescription]
   }
 
-  final case class CdcsCreateCaseRequestTitle(value: String)
+  final case class CdcsCreateCaseRequestTitle(value: String) extends AnyVal
   object CdcsCreateCaseRequestTitle {
     implicit val format: Format[CdcsCreateCaseRequestTitle] = Json.valueFormat[CdcsCreateCaseRequestTitle]
   }
 
-  final case class CdcsCreateCaseRequestInitials(value: String)
+  final case class CdcsCreateCaseRequestInitials(value: String) extends AnyVal
   object CdcsCreateCaseRequestInitials {
     implicit val format: Format[CdcsCreateCaseRequestInitials] = Json.valueFormat[CdcsCreateCaseRequestInitials]
   }
 
-  final case class CdcsCreateCaseRequestFirstName(value: String)
+  final case class CdcsCreateCaseRequestFirstName(value: String) extends AnyVal
   object CdcsCreateCaseRequestFirstName {
     implicit val format: Format[CdcsCreateCaseRequestFirstName] = Json.valueFormat[CdcsCreateCaseRequestFirstName]
   }
 
-  final case class CdcsCreateCaseRequestMiddleName(value: String)
+  final case class CdcsCreateCaseRequestMiddleName(value: String) extends AnyVal
   object CdcsCreateCaseRequestMiddleName {
     implicit val format: Format[CdcsCreateCaseRequestMiddleName] = Json.valueFormat[CdcsCreateCaseRequestMiddleName]
   }
 
-  final case class CdcsCreateCaseRequestLastName(value: String)
+  final case class CdcsCreateCaseRequestLastName(value: String) extends AnyVal
   object CdcsCreateCaseRequestLastName {
     def empty: CdcsCreateCaseRequestLastName = CdcsCreateCaseRequestLastName("")
     implicit val format: Format[CdcsCreateCaseRequestLastName] = Json.valueFormat[CdcsCreateCaseRequestLastName]
   }
 
-  final case class CdcsCreateCaseRequestChargeReference(value: String)
+  final case class CdcsCreateCaseRequestChargeReference(value: String) extends AnyVal
   object CdcsCreateCaseRequestChargeReference {
     def empty: CdcsCreateCaseRequestChargeReference = CdcsCreateCaseRequestChargeReference("")
     implicit val format: Format[CdcsCreateCaseRequestChargeReference] =
       Json.valueFormat[CdcsCreateCaseRequestChargeReference]
   }
 
-  final case class CdcsCreateCaseRequestParentChargeReference(value: String)
+  final case class CdcsCreateCaseRequestParentChargeReference(value: String) extends AnyVal
   object CdcsCreateCaseRequestParentChargeReference {
     implicit val format: Format[CdcsCreateCaseRequestParentChargeReference] =
       Json.valueFormat[CdcsCreateCaseRequestParentChargeReference]
   }
 
-  final case class CdcsCreateCaseRequestMainTrans(value: String)
+  final case class CdcsCreateCaseRequestMainTrans(value: String) extends AnyVal
   object CdcsCreateCaseRequestMainTrans {
     def empty: CdcsCreateCaseRequestMainTrans = CdcsCreateCaseRequestMainTrans("")
     implicit val format: Format[CdcsCreateCaseRequestMainTrans] = Json.valueFormat[CdcsCreateCaseRequestMainTrans]
   }
 
-  final case class CdcsCreateCaseRequestSubTrans(value: String)
+  final case class CdcsCreateCaseRequestSubTrans(value: String) extends AnyVal
   object CdcsCreateCaseRequestSubTrans {
     def empty: CdcsCreateCaseRequestSubTrans = CdcsCreateCaseRequestSubTrans("")
     implicit val format: Format[CdcsCreateCaseRequestSubTrans] = Json.valueFormat[CdcsCreateCaseRequestSubTrans]
   }
 
-  final case class CdcsCreateCaseRequestParentMainTrans(value: String)
+  final case class CdcsCreateCaseRequestParentMainTrans(value: String) extends AnyVal
   object CdcsCreateCaseRequestParentMainTrans {
     implicit val format: Format[CdcsCreateCaseRequestParentMainTrans] =
       Json.valueFormat[CdcsCreateCaseRequestParentMainTrans]
   }
 
-  final case class CdcsCreateCaseRequestDistrictNumber(value: String)
+  final case class CdcsCreateCaseRequestDistrictNumber(value: String) extends AnyVal
   object CdcsCreateCaseRequestDistrictNumber {
     implicit val format: Format[CdcsCreateCaseRequestDistrictNumber] =
       Json.valueFormat[CdcsCreateCaseRequestDistrictNumber]
   }
 
-  final case class CdcsCreateCaseRequestAddressLine(value: String)
+  final case class CdcsCreateCaseRequestAddressLine(value: String) extends AnyVal
   object CdcsCreateCaseRequestAddressLine {
     def empty: CdcsCreateCaseRequestAddressLine = CdcsCreateCaseRequestAddressLine("")
     implicit val format: Format[CdcsCreateCaseRequestAddressLine] = Json.valueFormat[CdcsCreateCaseRequestAddressLine]
   }
 
-  final case class CdcsCreateCaseRequestPostCode(value: String)
+  final case class CdcsCreateCaseRequestPostCode(value: String) extends AnyVal
   object CdcsCreateCaseRequestPostCode {
     implicit val format: Format[CdcsCreateCaseRequestPostCode] = Json.valueFormat[CdcsCreateCaseRequestPostCode]
   }
 
-  final case class CdcsCreateCaseRequestTelephoneNumber(value: String)
+  final case class CdcsCreateCaseRequestTelephoneNumber(value: String) extends AnyVal
   object CdcsCreateCaseRequestTelephoneNumber {
     def empty: CdcsCreateCaseRequestTelephoneNumber = CdcsCreateCaseRequestTelephoneNumber("")
     implicit val format: Format[CdcsCreateCaseRequestTelephoneNumber] =
       Json.valueFormat[CdcsCreateCaseRequestTelephoneNumber]
   }
 
-  final case class CdcsCreateCaseRequestEmail(value: String)
+  final case class CdcsCreateCaseRequestEmail(value: String) extends AnyVal
   object CdcsCreateCaseRequestEmail {
     def empty: CdcsCreateCaseRequestEmail = CdcsCreateCaseRequestEmail("")
     implicit val format: Format[CdcsCreateCaseRequestEmail] = Json.valueFormat[CdcsCreateCaseRequestEmail]
   }
 
-  final case class CdcsCreateCaseRequestIdValue(value: String)
+  final case class CdcsCreateCaseRequestIdValue(value: String) extends AnyVal
   object CdcsCreateCaseRequestIdValue {
     implicit val format: Format[CdcsCreateCaseRequestIdValue] = Json.valueFormat[CdcsCreateCaseRequestIdValue]
   }
 
   // Int Wrappers
-  final case class CdcsCreateCaseRequestPlanDuration(value: Int)
+  final case class CdcsCreateCaseRequestPlanDuration(value: Int) extends AnyVal
   object CdcsCreateCaseRequestPlanDuration {
     implicit val format: Format[CdcsCreateCaseRequestPlanDuration] = Json.valueFormat[CdcsCreateCaseRequestPlanDuration]
   }
 
-  final case class CdcsCreateCaseRequestNumberOfInstalments(value: Int)
+  final case class CdcsCreateCaseRequestNumberOfInstalments(value: Int) extends AnyVal
   object CdcsCreateCaseRequestNumberOfInstalments {
     implicit val format: Format[CdcsCreateCaseRequestNumberOfInstalments] =
       Json.valueFormat[CdcsCreateCaseRequestNumberOfInstalments]
   }
 
-  final case class CdcsCreateCaseRequestInstalmentNumber(value: Int)
+  final case class CdcsCreateCaseRequestInstalmentNumber(value: Int) extends AnyVal
   object CdcsCreateCaseRequestInstalmentNumber {
     implicit val format: Format[CdcsCreateCaseRequestInstalmentNumber] =
       Json.valueFormat[CdcsCreateCaseRequestInstalmentNumber]
   }
 
   // BigInt Wrappers
-  final case class CdcsCreateCaseRequestInstalmentAmount(value: BigInt)
+  final case class CdcsCreateCaseRequestInstalmentAmount(value: BigInt) extends AnyVal
   object CdcsCreateCaseRequestInstalmentAmount {
     implicit val format: Format[CdcsCreateCaseRequestInstalmentAmount] =
       Json.valueFormat[CdcsCreateCaseRequestInstalmentAmount]
   }
 
-  final case class CdcsCreateCaseRequestTotalDebtIncInt(value: BigInt)
+  final case class CdcsCreateCaseRequestTotalDebtIncInt(value: BigInt) extends AnyVal
   object CdcsCreateCaseRequestTotalDebtIncInt {
     implicit val format: Format[CdcsCreateCaseRequestTotalDebtIncInt] =
       Json.valueFormat[CdcsCreateCaseRequestTotalDebtIncInt]
   }
 
-  final case class CdcsCreateCaseRequestTotalInterest(value: BigInt)
+  final case class CdcsCreateCaseRequestTotalInterest(value: BigInt) extends AnyVal
   object CdcsCreateCaseRequestTotalInterest {
     implicit val format: Format[CdcsCreateCaseRequestTotalInterest] =
       Json.valueFormat[CdcsCreateCaseRequestTotalInterest]
   }
 
-  final case class CdcsCreateCaseRequestInterestAccrued(value: BigInt)
+  final case class CdcsCreateCaseRequestInterestAccrued(value: BigInt) extends AnyVal
   object CdcsCreateCaseRequestInterestAccrued {
     implicit val format: Format[CdcsCreateCaseRequestInterestAccrued] =
       Json.valueFormat[CdcsCreateCaseRequestInterestAccrued]
   }
 
-  final case class CdcsCreateCaseRequestPlanInterest(value: BigInt)
+  final case class CdcsCreateCaseRequestPlanInterest(value: BigInt) extends AnyVal
   object CdcsCreateCaseRequestPlanInterest {
     implicit val format: Format[CdcsCreateCaseRequestPlanInterest] = Json.valueFormat[CdcsCreateCaseRequestPlanInterest]
   }
 
-  final case class CdcsCreateCaseRequestInitialPaymentAmount(value: BigInt)
+  final case class CdcsCreateCaseRequestInitialPaymentAmount(value: BigInt) extends AnyVal
   object CdcsCreateCaseRequestInitialPaymentAmount {
     implicit val format: Format[CdcsCreateCaseRequestInitialPaymentAmount] =
       Json.valueFormat[CdcsCreateCaseRequestInitialPaymentAmount]
   }
 
-  final case class CdcsCreateCaseRequestInstalmentAmountDue(value: BigInt)
+  final case class CdcsCreateCaseRequestInstalmentAmountDue(value: BigInt) extends AnyVal
   object CdcsCreateCaseRequestInstalmentAmountDue {
     implicit val format: Format[CdcsCreateCaseRequestInstalmentAmountDue] =
       Json.valueFormat[CdcsCreateCaseRequestInstalmentAmountDue]
   }
 
-  final case class CdcsCreateCaseRequestInstalmentExpectedPayment(value: BigInt)
+  final case class CdcsCreateCaseRequestInstalmentExpectedPayment(value: BigInt) extends AnyVal
   object CdcsCreateCaseRequestInstalmentExpectedPayment {
     implicit val format: Format[CdcsCreateCaseRequestInstalmentExpectedPayment] =
       Json.valueFormat[CdcsCreateCaseRequestInstalmentExpectedPayment]
   }
 
-  final case class CdcsCreateCaseRequestInstalmentInterestAccrued(value: BigInt)
+  final case class CdcsCreateCaseRequestInstalmentInterestAccrued(value: BigInt) extends AnyVal
   object CdcsCreateCaseRequestInstalmentInterestAccrued {
     implicit val format: Format[CdcsCreateCaseRequestInstalmentInterestAccrued] =
       Json.valueFormat[CdcsCreateCaseRequestInstalmentInterestAccrued]
   }
 
-  final case class CdcsCreateCaseRequestInstalmentBalance(value: BigInt)
+  final case class CdcsCreateCaseRequestInstalmentBalance(value: BigInt) extends AnyVal
   object CdcsCreateCaseRequestInstalmentBalance {
     implicit val format: Format[CdcsCreateCaseRequestInstalmentBalance] =
       Json.valueFormat[CdcsCreateCaseRequestInstalmentBalance]
   }
 
-  final case class CdcsCreateCaseRequestAmountDue(value: BigInt)
+  final case class CdcsCreateCaseRequestAmountDue(value: BigInt) extends AnyVal
   object CdcsCreateCaseRequestAmountDue {
     implicit val format: Format[CdcsCreateCaseRequestAmountDue] = Json.valueFormat[CdcsCreateCaseRequestAmountDue]
   }
 
   // BigDecimal Wrappers
-  final case class CdcsCreateCaseRequestOutstandingAmount(value: BigDecimal)
+  final case class CdcsCreateCaseRequestOutstandingAmount(value: BigDecimal) extends AnyVal
   object CdcsCreateCaseRequestOutstandingAmount {
     implicit val format: Format[CdcsCreateCaseRequestOutstandingAmount] =
       Json.valueFormat[CdcsCreateCaseRequestOutstandingAmount]
   }
 
-  final case class CdcsCreateCaseRequestDebtItemAmount(value: BigDecimal)
+  final case class CdcsCreateCaseRequestDebtItemAmount(value: BigDecimal) extends AnyVal
   object CdcsCreateCaseRequestDebtItemAmount {
     implicit val format: Format[CdcsCreateCaseRequestDebtItemAmount] =
       Json.valueFormat[CdcsCreateCaseRequestDebtItemAmount]
   }
 
   // LocalDate Wrappers
-  final case class CdcsCreateCaseRequestInstalmentStartDate(value: LocalDate)
+  final case class CdcsCreateCaseRequestInstalmentStartDate(value: LocalDate) extends AnyVal
   object CdcsCreateCaseRequestInstalmentStartDate {
     implicit val format: Format[CdcsCreateCaseRequestInstalmentStartDate] =
       Json.valueFormat[CdcsCreateCaseRequestInstalmentStartDate]
   }
 
-  final case class CdcsCreateCaseRequestChargeDueDate(value: LocalDate)
+  final case class CdcsCreateCaseRequestChargeDueDate(value: LocalDate) extends AnyVal
   object CdcsCreateCaseRequestChargeDueDate {
     implicit val format: Format[CdcsCreateCaseRequestChargeDueDate] =
       Json.valueFormat[CdcsCreateCaseRequestChargeDueDate]
   }
 
-  final case class CdcsCreateCaseRequestInstalmentDueDate(value: LocalDate)
+  final case class CdcsCreateCaseRequestInstalmentDueDate(value: LocalDate) extends AnyVal
   object CdcsCreateCaseRequestInstalmentDueDate {
     implicit val format: Format[CdcsCreateCaseRequestInstalmentDueDate] =
       Json.valueFormat[CdcsCreateCaseRequestInstalmentDueDate]
   }
 
-  final case class CdcsCreateCaseRequestPaymentDueDate(value: LocalDate)
+  final case class CdcsCreateCaseRequestPaymentDueDate(value: LocalDate) extends AnyVal
   object CdcsCreateCaseRequestPaymentDueDate {
     implicit val format: Format[CdcsCreateCaseRequestPaymentDueDate] =
       Json.valueFormat[CdcsCreateCaseRequestPaymentDueDate]
   }
 
-  final case class CdcsCreateCaseRequestDateOfBirth(value: LocalDate)
+  final case class CdcsCreateCaseRequestDateOfBirth(value: LocalDate) extends AnyVal
   object CdcsCreateCaseRequestDateOfBirth {
     implicit val format: Format[CdcsCreateCaseRequestDateOfBirth] = Json.valueFormat[CdcsCreateCaseRequestDateOfBirth]
   }
 
-  final case class CdcsCreateCaseRequestTaxPeriodFrom(value: LocalDate)
+  final case class CdcsCreateCaseRequestTaxPeriodFrom(value: LocalDate) extends AnyVal
   object CdcsCreateCaseRequestTaxPeriodFrom {
     implicit val format: Format[CdcsCreateCaseRequestTaxPeriodFrom] =
       Json.valueFormat[CdcsCreateCaseRequestTaxPeriodFrom]
   }
 
-  final case class CdcsCreateCaseRequestTaxPeriodTo(value: LocalDate)
+  final case class CdcsCreateCaseRequestTaxPeriodTo(value: LocalDate) extends AnyVal
   object CdcsCreateCaseRequestTaxPeriodTo {
     implicit val format: Format[CdcsCreateCaseRequestTaxPeriodTo] = Json.valueFormat[CdcsCreateCaseRequestTaxPeriodTo]
   }
 
-  final case class CdcsCreateCaseRequestInterestStartDate(value: LocalDate)
+  final case class CdcsCreateCaseRequestInterestStartDate(value: LocalDate) extends AnyVal
   object CdcsCreateCaseRequestInterestStartDate {
     implicit val format: Format[CdcsCreateCaseRequestInterestStartDate] =
       Json.valueFormat[CdcsCreateCaseRequestInterestStartDate]
   }
 
-  final case class CdcsCreateCaseRequestInitialPaymentDate(value: LocalDate)
+  final case class CdcsCreateCaseRequestInitialPaymentDate(value: LocalDate) extends AnyVal
   object CdcsCreateCaseRequestInitialPaymentDate {
     implicit val format: Format[CdcsCreateCaseRequestInitialPaymentDate] =
       Json.valueFormat[CdcsCreateCaseRequestInitialPaymentDate]

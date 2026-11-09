@@ -55,7 +55,7 @@ class DefaultTTPRequestsService @Inject() (ttpRequestsRepository: TTPRequestsRep
     val requestDetails = requestDetailsRequest.copy(createdOn = Some(currentDate))
 
     val writeResultF = ttpRequestsRepository.insertRequestsDetails(requestDetails)
-    writeResultF.flatMap { wr: InsertOneResult =>
+    writeResultF.flatMap { (wr: InsertOneResult) =>
       wr.wasAcknowledged() match {
         case false =>
           Future(
@@ -82,7 +82,7 @@ class DefaultTTPRequestsService @Inject() (ttpRequestsRepository: TTPRequestsRep
   override def deleteTTPRequest(
     requestId: String
   )(implicit hc: HeaderCarrier): Future[Either[TTPRequestsDeletionError, String]] =
-    ttpRequestsRepository.deleteTTPRequest(requestId) map { x: DeleteResult =>
+    ttpRequestsRepository.deleteTTPRequest(requestId) map { (x: DeleteResult) =>
       if (x.wasAcknowledged())
         Right("Successfully deleted the TTP request with request Id: " + requestId)
       else
