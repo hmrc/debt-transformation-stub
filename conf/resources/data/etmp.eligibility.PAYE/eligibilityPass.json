@@ -34,9 +34,9 @@
       "countryCode": "GB",
       "rls": false,
       "contactDetails": {
-        "telephoneNumber": "07823412345",
-        "fax": "07823412345",
-        "mobile": "07823412345",
+        "telephoneNumber": "020 7946 0000",
+        "fax": "020 7946 0999",
+        "mobile": "07700 900000",
         "emailAddress": "joe@snailmail.com",
         "altFormat": "123"
       },
@@ -66,9 +66,9 @@
       "countryCode": "GB",
       "rls": false,
       "contactDetails": {
-        "telephoneNumber": "07823412345",
-        "fax": "07823412345",
-        "mobile": "07823412345",
+        "telephoneNumber": "020 7946 0000",
+        "fax": "020 7946 0999",
+        "mobile": "07700 900000",
         "emailAddress": "joe@snailmail.com",
         "altFormat": "123"
       },
