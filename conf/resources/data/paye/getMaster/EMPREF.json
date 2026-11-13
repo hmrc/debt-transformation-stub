@@ -58,20 +58,20 @@
   }],
   "address": [{
     "type": "Business",
-    "addressLine1": "abcdefghijklmno",
-    "addressLine2": "abcde",
-    "addressLine3": "abcdefghijklmnopqr",
-    "addressLine4": "abcdefghijklmnopq",
-    "country": "AD",
-    "postCode": "B5 7LN",
+    "addressLine1": "1 ABCDE Street",
+    "addressLine2": "FGHIJ Town",
+    "addressLine3": "string",
+    "addressLine4": "string",
+    "country": "UK",
+    "postCode": "AA1 1AA",
     "rls": "Receiver is not known"
   }],
   "contacts": [{
     "contactType": "Business",
-    "phoneCountryCode": "AD",
+    "phoneCountryCode": "UK",
     "phoneNumber": "020 7946 0000",
-    "mobileCountryCode": "AD",
-    "mobileNumber": "08344414523",
+    "mobileCountryCode": "UK",
+    "mobileNumber": "07700 900000",
     "email": "abc@aol.com"
   }]
 }

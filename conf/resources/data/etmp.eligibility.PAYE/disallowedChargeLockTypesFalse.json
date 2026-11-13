@@ -12,19 +12,19 @@
   ],
   "customerPostcodes": [
     {
-      "addressPostcode": "BN127ER",
+      "addressPostcode": "AA1 1AA",
       "postcodeDate": "2022-05-22"
     },
     {
-      "addressPostcode": "BN129ER",
+      "addressPostcode": "AA1 1AA",
       "postcodeDate": "2022-02-28"
     },
     {
-      "addressPostcode": "BN119ER",
+      "addressPostcode": "AA1 1AA",
       "postcodeDate": "2001-01-31"
     },
     {
-      "addressPostcode": "BN164QR",
+      "addressPostcode": "AA1 1AA",
       "postcodeDate": "2022-03-02"
     }
   ],
@@ -45,11 +45,11 @@
   "addresses": [
     {
       "addressType": "PPOB",
-      "addressLine1": "Worthing1",
-      "addressLine2": "Worthing2",
-      "addressLine3": "Worthing3",
-      "addressLine4": "Worthing4",
-      "countryCode": "GB",
+      "addressLine1": "1 ABCDE Street",
+      "addressLine2": "FGHIJ Town",
+      "addressLine2": "string",
+      "addressLine2": "string",
+      "countryCode": "UK",
       "rls": false,
       "contactDetails": {
         "telephoneNumber": "020 7946 0000",
@@ -58,30 +58,30 @@
         "emailAddress": "joe@snailmail.com",
         "altFormat": "123"
       },
-      "postCode": "BN164QR",
-      "country": "GB",
+      "postCode": "AA1 1AA",
+      "country": "UK",
       "postcodeHistory": [
         {
-          "addressPostcode": "BN127ER",
+          "addressPostcode": "AA1 1AA",
           "postcodeDate": "2022-05-22"
         },
         {
-          "addressPostcode": "BN129ER",
+          "addressPostcode": "AA1 1AA",
           "postcodeDate": "2022-02-28"
         },
         {
-          "addressPostcode": "BN119ER",
+          "addressPostcode": "AA1 1AA",
           "postcodeDate": "2001-01-31"
         }
       ]
     },
     {
       "addressType": "AGENT",
-      "addressLine1": "Worthing1",
-      "addressLine2": "Worthing2",
-      "addressLine3": "Worthing3",
-      "addressLine4": "Worthing4",
-      "countryCode": "GB",
+      "addressLine1": "1 ABCDE Street",
+      "addressLine2": "FGHIJ Town",
+      "addressLine2": "string",
+      "addressLine2": "string",
+      "countryCode": "UK",
       "rls": false,
       "contactDetails": {
         "telephoneNumber": "020 7946 0000",
@@ -90,11 +90,11 @@
         "emailAddress": "joe@snailmail.com",
         "altFormat": "123"
       },
-      "postCode": "BN164QR",
-      "country": "GB",
+      "postCode": "AA1 1AA",
+      "country": "UK",
       "postcodeHistory": [
         {
-          "addressPostcode": "BN164QR",
+          "addressPostcode": "AA1 1AA",
           "postcodeDate": "2022-03-02"
         }
       ]

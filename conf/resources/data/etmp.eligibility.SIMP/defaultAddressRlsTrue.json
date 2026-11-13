@@ -13,32 +13,32 @@
   "addresses": [
     {
       "addressType": "XXDEFAULT",
-      "addressLine1": "Worthing1",
-      "countryCode": "GB",
+      "addressLine1": "1 ABCDE Street",
+      "countryCode": "UK",
       "rls": true,
       "emailAddress": "joe@snailmail.com",
       "telephoneNumber": "020 7946 0000",
-      "postCode": "BN164QR",
-      "country": "GB",
+      "postCode": "AA1 1AA",
+      "country": "UK",
       "postcodeHistory": []
     },
     {
       "addressType": "PPOB",
       "rls": false,
-      "addressLine1": "Worthing1",
-      "countryCode": "GB",
+      "addressLine1": "1 ABCDE Street",
+      "countryCode": "UK",
       "emailAddress": "joe@snailmail.com",
       "postcodeHistory": [
         {
-          "addressPostcode": "BN127ER",
+          "addressPostcode": "AA1 1AA",
           "postcodeDate": "2022-05-22"
         },
         {
-          "addressPostcode": "BN129ER",
+          "addressPostcode": "AA1 1AA",
           "postcodeDate": "2022-02-28"
         },
         {
-          "addressPostcode": "BN119ER",
+          "addressPostcode": "AA1 1AA",
           "postcodeDate": "2001-01-31"
         }
       ]
@@ -46,11 +46,11 @@
     {
       "addressType": "AGENT",
       "rls": false,
-      "addressLine1": "Worthing1",
-      "countryCode": "GB",
+      "addressLine1": "1 ABCDE Street",
+      "countryCode": "UK",
       "postcodeHistory": [
         {
-          "addressPostcode": "BN164QR",
+          "addressPostcode": "AA1 1AA",
           "postcodeDate": "2022-03-02"
         }
       ]

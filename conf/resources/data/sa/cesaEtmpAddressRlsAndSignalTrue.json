@@ -18,11 +18,11 @@
     "addresses": [
       {
         "addressType": "BA",
-        "addressLine1": "City Park",
-        "addressLine2": "The Droveway",
-        "addressLine3": "Hove",
+        "addressLine1": "1 ABCDE Street",
+        "addressLine2": "FGHIJ Town",
+        "addressLine2": "string",
         "rls": true,
-        "postCode": "BNE3 7PY"
+        "postCode": "AA1 1AA"
       }
     ],
     "signals": [
@@ -86,12 +86,12 @@
     "addresses": [
       {
         "addressType": "XXDefault",
-        "addressLine1": "City Park",
+        "addressLine1": "1 ABCDE Street",
         "emailAddress": "joe@snailmail.com",
         "postcodeDate": "2022-05-22",
         "rls": true,
-        "postCode": "BN127ER",
-        "country": "United Kingdom"
+        "postCode": "AA1 1AA",
+        "country": "UK"
       }
     ],
     "signals": [

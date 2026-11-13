@@ -18,12 +18,12 @@
     "addresses": [
       {
         "addressType": "Business",
-        "addressLine1": "Rough Trade East",
-        "addressLine2": "Old Truman Brewery",
+        "addressLine1": "1 ABCDE Street",
+        "addressLine2": "FGHIJ Town",
         "addressLine3": "91 Brick Ln",
-        "addressLine4": "London",
+        "addressLine2": "string",
         "rls": true,
-        "postCode": "E1 6QL",
+        "postCode": "AA1 1AA",
         "country": "UK"
       }
     ],

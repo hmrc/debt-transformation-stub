@@ -23,15 +23,15 @@
         "emailAddress": "joe@snailmail.com",
         "postcodeHistory": [
           {
-            "addressPostcode": "BN127ER",
+            "addressPostcode": "AA1 1AA",
             "postcodeDate": "2022-05-22"
           },
           {
-            "addressPostcode": "BN129ER",
+            "addressPostcode": "AA1 1AA",
             "postcodeDate": "2022-02-28"
           },
           {
-            "addressPostcode": "BN119ER",
+            "addressPostcode": "AA1 1AA",
             "postcodeDate": "2001-01-31"
           }
         ]
@@ -42,7 +42,7 @@
         "addressLine1": "string",
         "postcodeHistory": [
           {
-            "addressPostcode": "BN164QR",
+            "addressPostcode": "AA1 1AA",
             "postcodeDate": "2022-03-02"
           }
         ]
@@ -87,15 +87,15 @@
         "emailAddress": "joe@snailmail.com",
         "postcodeHistory": [
           {
-            "addressPostcode": "BN127ER",
+            "addressPostcode": "AA1 1AA",
             "postcodeDate": "2022-05-22"
           },
           {
-            "addressPostcode": "BN129ER",
+            "addressPostcode": "AA1 1AA",
             "postcodeDate": "2022-02-28"
           },
           {
-            "addressPostcode": "BN119ER",
+            "addressPostcode": "AA1 1AA",
             "postcodeDate": "2001-01-31"
           }
         ]
@@ -106,7 +106,7 @@
         "addressLine1": "string",
         "postcodeHistory": [
           {
-            "addressPostcode": "BN164QR",
+            "addressPostcode": "AA1 1AA",
             "postcodeDate": "2022-03-02"
           }
         ]

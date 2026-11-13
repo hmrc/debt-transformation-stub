@@ -19,19 +19,19 @@
       {
         "addressType": "String",
         "rls": false,
-        "addressLine1": "City Park",
+        "addressLine1": "1 ABCDE Street",
         "emailAddress": "joe@snailmail.com",
         "postcodeHistory": [
           {
-            "addressPostcode": "BN127ER",
+            "addressPostcode": "AA1 1AA",
             "postcodeDate": "2022-05-22"
           },
           {
-            "addressPostcode": "BN129ER",
+            "addressPostcode": "AA1 1AA",
             "postcodeDate": "2022-02-28"
           },
           {
-            "addressPostcode": "BN119ER",
+            "addressPostcode": "AA1 1AA",
             "postcodeDate": "2001-01-31"
           }
         ]
@@ -39,10 +39,10 @@
       {
         "addressType": "AGENT",
         "rls": false,
-        "addressLine1": "City Park",
+        "addressLine1": "1 ABCDE Street",
         "postcodeHistory": [
           {
-            "addressPostcode": "BN164QR",
+            "addressPostcode": "AA1 1AA",
             "postcodeDate": "2022-03-02"
           }
         ]
@@ -102,10 +102,10 @@
     "addresses": [
       {
         "addressType": "XXDefault",
-        "addressLine1": "2 Farthingale Walk",
-        "addressLine2": "London",
+        "addressLine1": "1 ABCDE Street",
+        "addressLine2": "FGHIJ Town",
         "rls": true,
-        "postCode": "E15 1AW",
+        "postCode": "AA1 1AA",
         "country": "UK"
       }
     ],

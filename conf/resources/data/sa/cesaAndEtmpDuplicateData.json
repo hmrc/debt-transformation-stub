@@ -29,7 +29,7 @@
         "rls": true,
         "postcodeHistory": [
           {
-            "addressPostcode": "ET3 MP3",
+            "addressPostcode": "AA1 1AA",
             "postcodeDate": "2024-03-15"
           }
         ],
@@ -39,7 +39,7 @@
           "mobile": "07700 900000",
           "email": "agent1@gmail.com"
         },
-        "postCode": "ET4 MP4",
+        "postCode": "AA1 1AA",
         "country": "Country_etmp"
       }
     ],
@@ -113,7 +113,7 @@
         "rls": true,
         "postcodeHistory": [
           {
-            "addressPostcode": "ET3 MP3",
+            "addressPostcode": "AA1 1AA",
             "postcodeDate": "2024-03-15"
           }
         ],
@@ -123,7 +123,7 @@
           "mobile": "07700 900000",
           "email": "agent1@gmail.com"
         },
-        "postCode": "ET4 MP4",
+        "postCode": "AA1 1AA",
         "country": "Country_etmp"
       }
     ],
