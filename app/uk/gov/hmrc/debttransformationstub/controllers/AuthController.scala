@@ -56,7 +56,7 @@ class AuthController @Inject() (environment: Environment, cc: ControllerComponen
                   logger.error(s"failed reading $file", exception)
                   Future successful InternalServerError(exception.getMessage)
                 case Success(content) =>
-                  Future successful Accepted(content)
+                  Future successful Ok(content)
               }
             }
             .getOrElse {
