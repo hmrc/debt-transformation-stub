@@ -27,6 +27,7 @@ import java.io.File
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
+import scala.annotation.unused
 import scala.io.Source
 import scala.math.Ordering.Implicits.infixOrderingOps
 import scala.util.{ Failure, Success, Try, Using }
@@ -40,8 +41,8 @@ class ETMPController @Inject() (environment: Environment, cc: ControllerComponen
 
   private val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
-  def paymentPlanEligibility(regimeType: String, idType: String, idValue: String): Action[AnyContent] = Action {
-    implicit request: Request[AnyContent] =>
+  def paymentPlanEligibility(regimeType: String, @unused idType: String, idValue: String): Action[AnyContent] = Action {
+    (request: Request[AnyContent]) =>
       val queryKeys: List[String] =
         List(
           "showIds",

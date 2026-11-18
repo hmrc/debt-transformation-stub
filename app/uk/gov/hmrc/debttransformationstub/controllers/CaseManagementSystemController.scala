@@ -22,6 +22,7 @@ import uk.gov.hmrc.debttransformationstub.utils.{ ListHelper, RequestAwareLogger
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.{ Inject, Singleton }
+import scala.annotation.unused
 import scala.io.Source
 
 @Singleton()
@@ -36,7 +37,7 @@ class CaseManagementSystemController @Inject() (
   private val listHelper: ListHelper = new ListHelper()
   private lazy val logger = new RequestAwareLogger(this.getClass)
 
-  def getCaseDetails(debtID: String, duties: Option[String]): Action[AnyContent] = Action { implicit request =>
+  def getCaseDetails(debtID: String, @unused duties: Option[String]): Action[AnyContent] = Action { implicit request =>
     val testOnlyResponseCode: Option[String] = request.headers.get("testOnlyResponseCode")
     if (testOnlyResponseCode.isDefined) {
       Results.Status(testOnlyResponseCode.map(_.toInt).getOrElse(500))
@@ -50,7 +51,7 @@ class CaseManagementSystemController @Inject() (
     }
   }
 
-  def getDebtCaseManagement(customerUniqueRef: String, debtId: String): Action[AnyContent] = Action {
+  def getDebtCaseManagement(@unused customerUniqueRef: String, debtId: String): Action[AnyContent] = Action {
     implicit request =>
       val maybeBearerToken: Option[String] = request.headers.get("Authorization")
       if (maybeBearerToken.isDefined) {

@@ -35,7 +35,9 @@ class IDMSController @Inject() (environment: Environment, cc: ControllerComponen
   private lazy val logger = new RequestAwareLogger(this.getClass)
   private val basePath = "conf/resources/data/idms"
 
-  def paymentPlanEligibilityDm(): Action[JsValue] = Action.async(parse.json) { implicit rawRequest: Request[JsValue] =>
+  def paymentPlanEligibilityDm(): Action[JsValue] = Action.async(parse.json) { (rawRequest: Request[JsValue]) =>
+    implicit val implicitRequest: Request[JsValue] = rawRequest
+
     withCustomJsonBody[PaymentPlanEligibilityDmRequest] { request =>
       val fileName = s"$basePath.eligibilityDm/${request.idValue}.json"
       environment.getExistingFile(fileName) match {
@@ -65,7 +67,9 @@ class IDMSController @Inject() (environment: Environment, cc: ControllerComponen
     }
   }
 
-  def saEligibilityCheck(): Action[JsValue] = Action.async(parse.json) { implicit rawRequest: Request[JsValue] =>
+  def saEligibilityCheck(): Action[JsValue] = Action.async(parse.json) { (rawRequest: Request[JsValue]) =>
+    implicit val implicitRequest: Request[JsValue] = rawRequest
+
     withCustomJsonBody[IdmsRequestForSa] { request =>
       val fileName = s"$basePath.saEligibilityCheck/${request.idValue}.json"
       environment.getExistingFile(fileName) match {

@@ -44,7 +44,9 @@ class CustomerCheckController @Inject() (
   private lazy val logger = new RequestAwareLogger(this.getClass)
   private val basePath = "conf/resources/data/customerCheck"
 
-  def customerCheck(): Action[JsValue] = Action.async(parse.json) { implicit rawRequest: Request[JsValue] =>
+  def customerCheck(): Action[JsValue] = Action.async(parse.json) { (rawRequest: Request[JsValue]) =>
+    implicit val implicitRequest: Request[JsValue] = rawRequest
+
     val correlationId = getCorrelationIdHeader(rawRequest.headers)
     val testDataPackage = "/"
 

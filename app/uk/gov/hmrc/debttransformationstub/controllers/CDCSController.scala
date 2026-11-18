@@ -35,7 +35,9 @@ class CDCSController @Inject() (environment: Environment, cc: ControllerComponen
   private lazy val logger = new RequestAwareLogger(this.getClass)
   private val basePath = "conf/resources/data/cdcs"
 
-  def cdcsData(): Action[JsValue] = Action.async(parse.json) { implicit rawRequest: Request[JsValue] =>
+  def cdcsData(): Action[JsValue] = Action.async(parse.json) { (rawRequest: Request[JsValue]) =>
+    implicit val implicitRequest: Request[JsValue] = rawRequest
+
     withCustomJsonBody[CdcsRequest] { request =>
       val fileName: String = request.identifications.head.idValue
       val defaultFileName: String = "cdcsPassed"

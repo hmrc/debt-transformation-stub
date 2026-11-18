@@ -20,6 +20,8 @@ import javax.inject.{ Inject, Singleton }
 import play.api.Configuration
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
+import scala.annotation.unused
+
 //trait AppConfig {
 //
 //  def dbUrl: String
@@ -29,7 +31,7 @@ import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 @Singleton
 class AppConfig @Inject() (
   config: Configuration,
-  servicesConfig: ServicesConfig
+  @unused servicesConfig: ServicesConfig
 ) {
   val dbUrl: String = config.get[String]("mongodb.uri")
 

@@ -35,7 +35,9 @@ class CaseManagementController @Inject() (
 
   private val basePath = "conf/resources/data"
 
-  def createCase: Action[JsValue] = Action.async(parse.json) { implicit request: Request[JsValue] =>
+  def createCase: Action[JsValue] = Action.async(parse.json) { (rawRequest: Request[JsValue]) =>
+    implicit val implicitRequest: Request[JsValue] = rawRequest
+
     withCustomJsonBody[CreateCaseRequest] { createCaseRequest =>
       val fileMaybe: Option[File] = environment.getExistingFile(
         s"$basePath/casemanagement.createcase/create-case-response.json"
