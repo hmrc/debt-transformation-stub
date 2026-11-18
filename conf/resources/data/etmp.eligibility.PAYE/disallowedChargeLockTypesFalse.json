@@ -16,15 +16,15 @@
       "postcodeDate": "2022-05-22"
     },
     {
-      "addressPostcode": "AA1 1AA",
+      "addressPostcode": "AA2 2AA",
       "postcodeDate": "2022-02-28"
     },
     {
-      "addressPostcode": "AA1 1AA",
+      "addressPostcode": "AA3 3AA",
       "postcodeDate": "2001-01-31"
     },
     {
-      "addressPostcode": "AA1 1AA",
+      "addressPostcode": "AA4 4AA",
       "postcodeDate": "2022-03-02"
     }
   ],
@@ -47,9 +47,9 @@
       "addressType": "PPOB",
       "addressLine1": "1 ABCDE Street",
       "addressLine2": "FGHIJ Town",
-      "addressLine2": "string",
-      "addressLine2": "string",
-      "countryCode": "UK",
+      "addressLine3": "string",
+      "addressLine4": "string",
+      "countryCode": "GB",
       "rls": false,
       "contactDetails": {
         "telephoneNumber": "020 7946 0000",
@@ -59,29 +59,29 @@
         "altFormat": "123"
       },
       "postCode": "AA1 1AA",
-      "country": "UK",
+      "country": "GB",
       "postcodeHistory": [
-        {
-          "addressPostcode": "AA1 1AA",
-          "postcodeDate": "2022-05-22"
-        },
-        {
-          "addressPostcode": "AA1 1AA",
-          "postcodeDate": "2022-02-28"
-        },
-        {
-          "addressPostcode": "AA1 1AA",
-          "postcodeDate": "2001-01-31"
-        }
+          {
+            "addressPostcode": "BB1 1BB",
+            "postcodeDate": "2022-05-22"
+          },
+          {
+            "addressPostcode": "BB2 2BB",
+            "postcodeDate": "2022-02-28"
+          },
+          {
+            "addressPostcode": "BB3 3BB",
+            "postcodeDate": "2001-01-31"
+          }
       ]
     },
     {
       "addressType": "AGENT",
       "addressLine1": "1 ABCDE Street",
       "addressLine2": "FGHIJ Town",
-      "addressLine2": "string",
-      "addressLine2": "string",
-      "countryCode": "UK",
+      "addressLine3": "string",
+      "addressLine4": "string",
+      "countryCode": "GB",
       "rls": false,
       "contactDetails": {
         "telephoneNumber": "020 7946 0000",
@@ -91,12 +91,12 @@
         "altFormat": "123"
       },
       "postCode": "AA1 1AA",
-      "country": "UK",
+      "country": "GB",
       "postcodeHistory": [
-        {
-          "addressPostcode": "AA1 1AA",
-          "postcodeDate": "2022-03-02"
-        }
+          {
+            "addressPostcode": "BB1 1BB",
+            "postcodeDate": "2022-03-02"
+          }
       ]
     }
   ],

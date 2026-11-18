@@ -20,8 +20,8 @@
         "addressType": "Business",
         "addressLine1": "1 ABCDE Street",
         "addressLine2": "FGHIJ Town",
-        "addressLine3": "91 Brick Ln",
-        "addressLine2": "string",
+        "addressLine3": "string",
+        "addressLine4": "string",
         "rls": true,
         "postCode": "AA1 1AA",
         "country": "UK"

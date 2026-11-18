@@ -15,20 +15,20 @@
       "addressType": "PPOB",
       "addressLine1": "1 ABCDE Street",
       "addressLine2": "FGHIJ Town",
-      "countryCode": "UK",
+      "countryCode": "GB",
       "rls": false,
       "emailAddress": "joe@snailmail.com",
       "postcodeHistory": [
         {
-          "addressPostcode": "AA1 1AA",
+          "addressPostcode": "BB1 1BB",
           "postcodeDate": "2022-05-22"
         },
         {
-          "addressPostcode": "AA1 1AA",
+          "addressPostcode": "BB2 2BB",
           "postcodeDate": "2022-02-28"
         },
         {
-          "addressPostcode": "AA1 1AA",
+          "addressPostcode": "BB3 3BB",
           "postcodeDate": "2001-01-31"
         }
       ]
@@ -37,13 +37,13 @@
       "addressType": "AGENT",
       "addressLine1": "1 ABCDE Street",
       "addressLine2": "FGHIJ Town",
-      "countryCode": "UK",
+      "countryCode": "GB",
       "rls": false,
       "postcodeHistory": [
-        {
-          "addressPostcode": "AA1 1AA",
-          "postcodeDate": "2022-03-02"
-        }
+          {
+            "addressPostcode": "BB1 1BB",
+            "postcodeDate": "2022-03-02"
+          }
       ]
     }
   ],

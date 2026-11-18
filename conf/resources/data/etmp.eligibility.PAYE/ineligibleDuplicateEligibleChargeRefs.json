@@ -15,11 +15,11 @@
       "addressType": "Business",
       "addressLine1": "1 ABCDE Street",
       "addressLine2": "FGHIJ Town",
-      "countryCode": "UK",
+      "countryCode": "GB",
       "rls": false,
       "postcodeHistory": [
         {
-          "addressPostcode": "AA1 1AA",
+          "addressPostcode": "BB1 1BB",
           "postcodeDate": "2013-11-15"
         }
       ]

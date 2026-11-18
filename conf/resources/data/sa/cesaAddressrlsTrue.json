@@ -20,7 +20,7 @@
         "addressType": "BA",
         "addressLine1": "1 ABCDE Street",
         "addressLine2": "FGHIJ Town",
-        "addressLine2": "string",
+        "addressLine3": "string",
         "rls": true,
         "postCode": "AA1 1AA"
       }

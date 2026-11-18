@@ -35,12 +35,12 @@
       "addressLine3": "string",
       "addressLine4": "string",
       "addressPostcode": "AA1 1AA",
-      "addressTelNo": "07624662959",
+      "addressTelNo": "07700 900000",
       "email": "jsmith@smithfamily.org",
       "contactName": "Jon",
-      "telNo1": "07624662959",
-      "telNo2": "07896578569",
-      "telNo3": "07923584768",
+      "telNo1": "07700 900001",
+      "telNo2": "07700 900002",
+      "telNo3": "07700 900003",
       "addressSignal": [{
         "custAddressSignalType": "##TBD##",
         "custAddressSignalValue": "Y"
