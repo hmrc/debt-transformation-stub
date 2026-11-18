@@ -26,6 +26,7 @@ import uk.gov.hmrc.debttransformationstub.utils.RequestAwareLogger
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.{ Inject, Singleton }
+import scala.annotation.unused
 import scala.concurrent.{ ExecutionContext, Future }
 import scala.io.Source
 
@@ -74,7 +75,7 @@ class DebtManagementAPITestController @Inject() (
         }
     }
 
-  def getDebtDataAndDWISignals(wmfId: String): Action[AnyContent] = Action.async { implicit request =>
+  def getDebtDataAndDWISignals(@unused wmfId: String): Action[AnyContent] = Action.async { implicit request =>
     if (appConfig.isPollingEnv)
       pollingService.insertRequestAndServeResponse(Json.obj(), request.uri).map {
         case Some(response) => Status(response.status.getOrElse(200))(response.content)
@@ -91,7 +92,7 @@ class DebtManagementAPITestController @Inject() (
       }
   }
 
-  def getTaxpayerData(idKey: String): Action[AnyContent] = Action.async { implicit request =>
+  def getTaxpayerData(@unused idKey: String): Action[AnyContent] = Action.async { implicit request =>
     if (appConfig.isPollingEnv)
       pollingService.insertTaxpayerRequestAndServeResponse().map {
         case Some(response) => Status(response.status.getOrElse(200))(response.content)

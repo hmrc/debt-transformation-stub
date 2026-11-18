@@ -78,10 +78,10 @@ class FirstContactDateController @Inject() (
           respond("firstContactDate_eligibility_error_422.json", Results.UnprocessableEntity)
         case "firstContactDate_chargeInfo_error_422" =>
           respond("firstContactDate_chargeInfo_error_422.json", Results.UnprocessableEntity)
+        case null =>
+          Left(FileNotFoundError("File ID not found"))
         case utr =>
           respond(s"$utr.json", Results.Created)
-        case undefinedValue =>
-          Left(FileNotFoundError(s"File not found $undefinedValue"))
       }
 
       Future.successful(

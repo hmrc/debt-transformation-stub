@@ -23,6 +23,7 @@ import org.mongodb.scala.result.{ DeleteResult, InsertOneResult }
 import uk.gov.hmrc.debttransformationstub.models.RequestDetail
 import uk.gov.hmrc.mongo.MongoComponent
 import uk.gov.hmrc.mongo.play.json.PlayMongoRepository
+import scala.language.adhocExtensions
 
 import javax.inject.Inject
 import scala.concurrent.{ ExecutionContext, Future }

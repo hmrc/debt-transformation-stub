@@ -34,6 +34,7 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import java.io.File
 import java.nio.charset.Charset
 import javax.inject.Inject
+import scala.annotation.unused
 import scala.concurrent.{ ExecutionContext, Future }
 import scala.io.Source
 import scala.util.Try
@@ -50,7 +51,9 @@ class TimeToPayController @Inject() (
   private lazy val logger = new RequestAwareLogger(this.getClass)
   private val basePath = "conf/resources/data"
 
-  def generateQuote: Action[JsValue] = Action.async(parse.json) { implicit request: Request[JsValue] =>
+  def generateQuote: Action[JsValue] = Action.async(parse.json) { (request: Request[JsValue]) =>
+    implicit val implicitRequest: Request[JsValue] = request
+
     withCustomJsonBody[GenerateQuoteRequest] { req =>
       if (appConfig.isPollingEnv) {
         ttpPollingService.insertRequestAndServeResponse(Json.toJson(req), Some(request.uri)).map {
@@ -73,7 +76,9 @@ class TimeToPayController @Inject() (
     }
   }
 
-  def generateAffordabilityQuote: Action[JsValue] = Action.async(parse.json) { implicit request: Request[JsValue] =>
+  def generateAffordabilityQuote: Action[JsValue] = Action.async(parse.json) { (request: Request[JsValue]) =>
+    implicit val implicitRequest: Request[JsValue] = request
+
     if (appConfig.isPollingEnv) {
       ttpPollingService.insertRequestAndServeResponse(Json.toJson(""), Some(request.uri)).map {
         case Some(v) => Status(v.status.getOrElse(200))(v.content)
@@ -89,7 +94,7 @@ class TimeToPayController @Inject() (
     }
   }
 
-  def getExistingQuote(customerReference: String, pegaId: String): Action[AnyContent] = Action.async {
+  def getExistingQuote(@unused customerReference: String, pegaId: String): Action[AnyContent] = Action.async {
     implicit request =>
       if (appConfig.isPollingEnv) {
         ttpPollingService.insertRequestAndServeResponse(Json.toJson(""), Some(request.uri)).map {
@@ -106,21 +111,22 @@ class TimeToPayController @Inject() (
       }
   }
 
-  def updateQuote(customerReference: String, pegaId: String): Action[AnyContent] = Action.async { implicit request =>
-    if (appConfig.isPollingEnv) {
-      ttpPollingService.insertRequestAndServeResponse(Json.toJson(""), Some(request.uri)).map {
-        case Some(v) => Status(v.status.getOrElse(200))(v.content)
-        case None    => ServiceUnavailable
-      }
-    } else {
-      environment.getExistingFile(s"$basePath/ttp.updatePlan/$customerReference.json") match {
-        case Some(file) => Future.successful(Ok(Source.fromFile(file).mkString))
-        case _          =>
-          logger.error(s"Status $NOT_FOUND, message: file not found")
-          Future.successful(NotFound("file not found"))
+  def updateQuote(@unused customerReference: String, @unused pegaId: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      if (appConfig.isPollingEnv) {
+        ttpPollingService.insertRequestAndServeResponse(Json.toJson(""), Some(request.uri)).map {
+          case Some(v) => Status(v.status.getOrElse(200))(v.content)
+          case None    => ServiceUnavailable
+        }
+      } else {
+        environment.getExistingFile(s"$basePath/ttp.updatePlan/$customerReference.json") match {
+          case Some(file) => Future.successful(Ok(Source.fromFile(file).mkString))
+          case _          =>
+            logger.error(s"Status $NOT_FOUND, message: file not found")
+            Future.successful(NotFound("file not found"))
+        }
       }
     }
-  }
 
   def createPlan: Action[JsValue] = Action.async(parse.json) { implicit request =>
     withCustomJsonBody[CreatePlanRequest] { req =>
@@ -423,6 +429,8 @@ class TimeToPayController @Inject() (
                 baseResult.copy(header = baseResult.header.copy(status = OK))
               }
           }
+        case None =>
+          Left(FileNotFoundError("No UTR supplied"))
       }
 
       val result: Result = handleNotFound(maybeResult)
@@ -482,13 +490,13 @@ class TimeToPayController @Inject() (
     }
   }
 
-  def enactStage(correlationId: String): Action[AnyContent] = Action.async { request =>
+  def enactStage(correlationId: String): Action[AnyContent] = Action.async { implicit request =>
     enactStageRepository.findByCorrelationId(correlationId).map { (stage: Option[EnactStage]) =>
       Ok(Json.toJson(stage))
     }
   }
 
-  def enactStageByIdValue(idValue: String): Action[AnyContent] = Action.async { request =>
+  def enactStageByIdValue(idValue: String): Action[AnyContent] = Action.async { implicit request =>
     enactStageRepository.findByIdValue(idValue).map { (stage: Option[EnactStage]) =>
       Ok(Json.toJson(stage))
     }

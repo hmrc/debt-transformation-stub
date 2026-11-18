@@ -33,7 +33,8 @@ class AuthController @Inject() (environment: Environment, cc: ControllerComponen
   private lazy val logger = new RequestAwareLogger(this.getClass)
 
   def getAccessToken(): Action[Map[String, Seq[String]]] = Action(parse.tolerantFormUrlEncoded).async {
-    implicit request: Request[Map[String, Seq[String]]] =>
+    (request: Request[Map[String, Seq[String]]]) =>
+      implicit val implicitRequest: Request[Map[String, Seq[String]]] = request
       val clientIdFileMapping = Map(
         "scheduler-stub-client-id"     -> "scheduled-bearer-token.json",
         "stub-client-id"               -> "non-scheduled-bearer-token.json",

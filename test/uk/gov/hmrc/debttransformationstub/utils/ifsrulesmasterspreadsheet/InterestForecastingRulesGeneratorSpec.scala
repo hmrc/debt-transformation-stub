@@ -26,15 +26,16 @@ import uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet.Intere
 import uk.gov.hmrc.debttransformationstub.utils.ifsrulesmasterspreadsheet.impl.*
 
 import java.util.concurrent.atomic.AtomicReference
+import scala.annotation.unused
 import scala.util.Using
 
 final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
   ".execute" - {
     object FileInputs {
-      def forbidden(implicit pos: Position): FileInput =
+      def forbidden(implicit @unused pos: Position): FileInput =
         (filename: String) => fail(s"Test does not allow reading files. Tried reading file: ${Json.toJson(filename)}")
 
-      def fileReadOnlyOnce(filename: String, input: String)(implicit pos: Position): FileInput = {
+      def fileReadOnlyOnce(filename: String, input: String)(implicit @unused pos: Position): FileInput = {
         val wholeInputEachTimeMutable: Iterator[String] =
           Iterator(input) ++
             Iterator.continually(s"Test does not allow reading file more than once: ${Json.toJson(filename)}")
@@ -46,12 +47,12 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
     }
 
     object ConsoleInputs {
-      def forbidden(implicit pos: Position): ConsoleInput =
+      def forbidden(implicit @unused pos: Position): ConsoleInput =
         new ConsoleInput {
           def stdin: Iterator[String] = fail("Test does not allow reading from stdin.")
         }
 
-      def fromExactString(consoleInput: String)(implicit pos: Position): ConsoleInput =
+      def fromExactString(consoleInput: String)(implicit @unused pos: Position): ConsoleInput =
         new ConsoleInput {
           def stdin: Iterator[String] =
             consoleInput.split("\n").iterator ++
@@ -68,7 +69,7 @@ final class InterestForecastingRulesGeneratorSpec extends AnyFreeSpec {
     }
 
     object ConsoleOutputs {
-      def forbidden(implicit pos: Position): ConsoleOutput =
+      def forbidden(implicit @unused pos: Position): ConsoleOutput =
         (text: String) => fail(s"Test does not allow writing to stdout. Tried writing: ${Json.toJson(text)}")
 
       def atomicCollector(storage: AtomicReference[String]): ConsoleOutput =

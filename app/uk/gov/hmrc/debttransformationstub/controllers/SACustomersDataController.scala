@@ -83,7 +83,7 @@ class SACustomersDataController @Inject() (environment: Environment, cc: Control
                   case Some(file) =>
                     Try(Json.parse(saCustomerDataString(file, idValue))) match {
                       case Success(js) => Ok(js)
-                      case Failure(ex) =>
+                      case Failure(_)  =>
                         logger.error(s"Failed to parse the file $relativePath")
                         InternalServerError(s"stub failed to parse file $relativePath")
                     }

@@ -28,6 +28,7 @@ import play.api.libs.json.{ Json, OFormat }
 import uk.gov.hmrc.debttransformationstub.models.*
 import uk.gov.hmrc.mongo.MongoComponent
 import uk.gov.hmrc.mongo.play.json.{ Codecs, PlayMongoRepository }
+import scala.language.adhocExtensions
 
 import javax.inject.{ Inject, Singleton }
 import scala.concurrent.duration.DurationInt
