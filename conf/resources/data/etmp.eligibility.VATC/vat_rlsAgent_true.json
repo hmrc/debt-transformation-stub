@@ -13,37 +13,37 @@
   "addresses": [
     {
       "addressType": "PPOB",
-      "addressLine1": "Worthing1",
-      "addressLine2": "Worthing2",
+      "addressLine1": "1 ABCDE Street",
+      "addressLine2": "FGHIJ Town",
       "countryCode": "GB",
       "rls": false,
       "emailAddress": "joe@snailmail.com",
       "postcodeHistory": [
-        {
-          "addressPostcode": "BN127ER",
-          "postcodeDate": "2022-05-22"
-        },
-        {
-          "addressPostcode": "BN129ER",
-          "postcodeDate": "2022-02-28"
-        },
-        {
-          "addressPostcode": "BN119ER",
-          "postcodeDate": "2001-01-31"
-        }
+          {
+            "addressPostcode": "BB1 1BB",
+            "postcodeDate": "2022-05-22"
+          },
+          {
+            "addressPostcode": "BB2 2BB",
+            "postcodeDate": "2022-02-28"
+          },
+          {
+            "addressPostcode": "BB3 3BB",
+            "postcodeDate": "2001-01-31"
+          }
       ]
     },
     {
       "addressType": "AGENT",
-      "addressLine1": "Worthing1",
-      "addressLine2": "Worthing2",
+      "addressLine1": "1 ABCDE Street",
+      "addressLine2": "FGHIJ Town",
       "countryCode": "GB",
       "rls": true,
       "postcodeHistory": [
-        {
-          "addressPostcode": "BN164QR",
-          "postcodeDate": "2022-03-02"
-        }
+          {
+            "addressPostcode": "BB1 1BB",
+            "postcodeDate": "2022-03-02"
+          }
       ]
     }
   ],

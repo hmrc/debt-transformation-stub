@@ -23,15 +23,15 @@
         "emailAddress": "joe@snailmail.com",
         "postcodeHistory": [
           {
-            "addressPostcode": "BN127ER",
+            "addressPostcode": "BB1 1BB",
             "postcodeDate": "2022-05-22"
           },
           {
-            "addressPostcode": "BN129ER",
+            "addressPostcode": "BB2 2BB",
             "postcodeDate": "2022-02-28"
           },
           {
-            "addressPostcode": "BN119ER",
+            "addressPostcode": "BB3 3BB",
             "postcodeDate": "2001-01-31"
           }
         ]
@@ -103,15 +103,15 @@
         "emailAddress": "joe@snailmail.com",
         "postcodeHistory": [
           {
-            "addressPostcode": "BN127ER",
+            "addressPostcode": "BB1 1BB",
             "postcodeDate": "2022-05-22"
           },
           {
-            "addressPostcode": "BN129ER",
+            "addressPostcode": "BB2 2BB",
             "postcodeDate": "2022-02-28"
           },
           {
-            "addressPostcode": "BN119ER",
+            "addressPostcode": "BB3 3BB",
             "postcodeDate": "2001-01-31"
           }
         ]

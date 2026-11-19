@@ -12,19 +12,19 @@
     ],
   "customerPostcodes": [
     {
-      "addressPostcode": "BN127ER",
+      "addressPostcode": "AA1 1AA",
       "postcodeDate": "2022-05-22"
     },
     {
-      "addressPostcode": "BN129ER",
+      "addressPostcode": "AA2 2AA",
       "postcodeDate": "2022-02-28"
     },
     {
-      "addressPostcode": "BN119ER",
+      "addressPostcode": "AA3 3AA",
       "postcodeDate": "2001-01-31"
     },
     {
-      "addressPostcode": "BN164QR",
+      "addressPostcode": "AA4 4AA",
       "postcodeDate": "2022-03-02"
     }
   ],
@@ -46,10 +46,10 @@
   "addresses": [
     {
       "addressType": "PPOB",
-      "addressLine1": "Worthing1",
-      "addressLine2": "Worthing2",
-      "addressLine3": "Worthing3",
-      "addressLine4": "Worthing4",
+      "addressLine1": "1 ABCDE Street",
+      "addressLine2": "FGHIJ Town",
+      "addressLine3": "string",
+      "addressLine4": "string",
       "countryCode": "GB",
       "rls": false,
       "contactDetails": {
@@ -60,29 +60,29 @@
         "emailSource": "ETMP",
         "altFormat": "123"
       },
-      "postCode": "BN164QR",
+      "postCode": "AA1 1AA",
       "country": "GB",
       "postcodeHistory": [
-        {
-          "addressPostcode": "BN127ER",
-          "postcodeDate": "2022-05-22"
-        },
-        {
-          "addressPostcode": "BN129ER",
-          "postcodeDate": "2022-02-28"
-        },
-        {
-          "addressPostcode": "BN119ER",
-          "postcodeDate": "2001-01-31"
-        }
+          {
+            "addressPostcode": "BB1 1BB",
+            "postcodeDate": "2022-05-22"
+          },
+          {
+            "addressPostcode": "BB2 2BB",
+            "postcodeDate": "2022-02-28"
+          },
+          {
+            "addressPostcode": "BB3 3BB",
+            "postcodeDate": "2001-01-31"
+          }
       ]
     },
     {
       "addressType": "AGENT",
-      "addressLine1": "Worthing1",
-      "addressLine2": "Worthing2",
-      "addressLine3": "Worthing3",
-      "addressLine4": "Worthing4",
+      "addressLine1": "1 ABCDE Street",
+      "addressLine2": "FGHIJ Town",
+      "addressLine3": "string",
+      "addressLine4": "string",
       "countryCode": "GB",
       "rls": false,
       "contactDetails": {
@@ -93,13 +93,13 @@
         "emailSource": "ETMP",
         "altFormat": "123"
       },
-      "postCode": "BN164QR",
+      "postCode": "AA1 1AA",
       "country": "GB",
       "postcodeHistory": [
-        {
-          "addressPostcode": "BN164QR",
-          "postcodeDate": "2022-03-02"
-        }
+          {
+            "addressPostcode": "BB1 1BB",
+            "postcodeDate": "2022-03-02"
+          }
       ]
     }
   ],

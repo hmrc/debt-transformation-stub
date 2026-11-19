@@ -13,8 +13,8 @@
   "addresses": [
     {
       "addressType": "Business",
-      "addressLine1": "Worthing1",
-      "addressLine2": "Worthing2",
+      "addressLine1": "1 ABCDE Street",
+      "addressLine2": "FGHIJ Town",
       "countryCode": "GB",
       "rls": false,
       "postcodeHistory": [

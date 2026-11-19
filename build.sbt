@@ -10,7 +10,7 @@ lazy val microservice = Project(appName, file("."))
     scalacOptions ++= Seq(
       "-source:future-migration",
       "-Yretain-trees",
-      "-Wconf:src=routes/.*:s",
+      "-Wconf:src=routes/.*:s"
     ),
     // fixes the funkiness that tries to 'upgrade' to an old version
     dependencyUpdatesFilter -= moduleFilter(
