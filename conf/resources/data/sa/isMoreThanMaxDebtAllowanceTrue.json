@@ -3,8 +3,8 @@
     "customer": {
       "individual": {
         "title": "Mr",
-        "firstName": "Ben",
-        "lastName": "Thomas",
+        "firstName": "Testnamefirst",
+        "lastName": "Testnamelast",
         "dateOfBirth": "1954-09-12",
         "dateOfDeath": "2023-09-12",
         "identifications": [
@@ -88,8 +88,8 @@
     "customer": {
       "individual": {
         "title": "Mr",
-        "firstName": "Ben",
-        "lastName": "Thomas",
+        "firstName": "Testnamefirst",
+        "lastName": "Testnamelast",
         "dateOfBirth": "2014-09-12",
         "dateOfDeath": "2014-09-12",
         "identifications": [

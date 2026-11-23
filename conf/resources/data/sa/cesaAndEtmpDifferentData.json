@@ -3,8 +3,8 @@
     "customer": {
       "individual": {
         "title": "Mr_cesa",
-        "firstName": "Bob_cesa",
-        "lastName": "Smith_cesa",
+        "firstName": "Testnamefirst",
+        "lastName": "Testnamelast",
         "dateOfBirth": "1910-01-01",
         "dateOfDeath": "2014-09-01",
         "identifications": [
@@ -81,8 +81,8 @@
     "customer": {
       "individual": {
         "title": "Mr_etmp",
-        "firstName": "Bob_etmp",
-        "lastName": "Smith_etmp",
+        "firstName": "Testnamefirst",
+        "lastName": "Testnamelast",
         "dateOfBirth": "1910-01-02",
         "dateOfDeath": "2014-09-02",
         "identifications": [
