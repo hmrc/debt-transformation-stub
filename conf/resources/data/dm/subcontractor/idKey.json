@@ -3,13 +3,13 @@
     "hodType": "D",
     "hodCheckChar": "A",
     "hodRegisterNo": "XA123456789B",
-    "nameOne": "Mr Jacob Smith",
-    "nameTwo": "Farley",
+    "nameOne": "Testnameone",
+    "nameTwo": "Testnametwo",
     "customerType": "I",
     "dateOfBirth": "2021-09-15",
     "incorporationNo": "SC12356123",
     "customerContactDetails": {
-      "contactName": "K SMITH",
+      "contactName": "Test Name",
       "status": "son",
       "telNo": "9999999999",
       "bestDay": "7",
@@ -23,8 +23,8 @@
       "paymentFrequency": "A",
       "tpNote": "16/03/21 - Payment overdue by 21 days",
       "taxAccountRepresentative": {
-        "addressName1": "Jonathan",
-        "addressName2": "Smith",
+        "addressName1": "Testname1",
+        "addressName2": "Testname2",
         "clientReference": "908234923EXTN1752"
       }
     },
@@ -37,7 +37,7 @@
       "addressPostcode": "AA1 1AA",
       "addressTelNo": "07700 900000",
       "email": "jsmith@smithfamily.org",
-      "contactName": "Jon",
+      "contactName": "Test",
       "telNo1": "07700 900001",
       "telNo2": "07700 900002",
       "telNo3": "07700 900003",
