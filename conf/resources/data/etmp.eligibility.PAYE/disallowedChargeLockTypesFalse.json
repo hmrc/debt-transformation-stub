@@ -35,8 +35,8 @@
   ],
   "individualDetails": {
     "title": "Mr",
-    "firstName": "Bob",
-    "lastName": "Smith",
+    "firstName": "Testnamefirst",
+    "lastName": "Testnamelast",
     "dateOfBirth": "1910-01-01",
     "districtNumber": "001",
     "customerType": "MTD(ITSA)",
@@ -163,9 +163,9 @@
     {
       "orgName": "Abc Ltd",
       "title": "Mr",
-      "firstName": "Bob",
-      "middleName": "K",
-      "lastName": "Smith",
+      "firstName": "Testnamefirst",
+      "middleName": "Testnamemiddle",
+      "lastName": "Testnamelast",
       "dateOfBirth": "1910-01-01",
       "dateOfDeath": "2000-01-01",
       "districtNumber": "001"

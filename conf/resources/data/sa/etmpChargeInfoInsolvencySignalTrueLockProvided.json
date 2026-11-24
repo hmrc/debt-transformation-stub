@@ -3,8 +3,8 @@
     "customer": {
       "individual": {
         "title": "Mr",
-        "firstName": "Ben",
-        "lastName": "Thomas",
+        "firstName": "Testnamefirst",
+        "lastName": "Testnamelast",
         "unallocatedCredit": 12345,
         "processingOfficeOrgUnitId": "string",
         "dateOfBirth": "2024-03-15",
@@ -84,8 +84,8 @@
     "customer": {
       "individual": {
         "title": "Mr",
-        "firstName": "Ben",
-        "lastName": "Thomas",
+        "firstName": "Testnamefirst",
+        "lastName": "Testnamelast",
         "dateOfBirth": "2024-03-15",
         "dateOfDeath": "2024-03-15",
         "districtNumber": "206809",

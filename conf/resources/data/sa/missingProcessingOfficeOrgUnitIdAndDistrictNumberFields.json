@@ -3,8 +3,8 @@
     "customer": {
       "individual": {
         "title": "Mr",
-        "firstName": "Ben",
-        "lastName": "Thomas",
+        "firstName": "Testnamefirst",
+        "lastName": "Testnamelast",
         "dateOfBirth": "2014-09-12",
         "processingOfficeOrgUnitId": "",
         "identifications": [
@@ -66,8 +66,8 @@
     "customer": {
       "individual": {
         "title": "Mr",
-        "firstName": "Ben",
-        "lastName": "Thomas",
+        "firstName": "Testnamefirst",
+        "lastName": "Testnamelast",
         "dateOfBirth": "2000-09-12",
         "districtNumber": "",
         "identifications": [
