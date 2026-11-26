@@ -18,9 +18,6 @@ package uk.gov.hmrc.debttransformationstub.config
 
 import javax.inject.{ Inject, Singleton }
 import play.api.Configuration
-import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
-
-import scala.annotation.unused
 
 //trait AppConfig {
 //
@@ -30,8 +27,7 @@ import scala.annotation.unused
 
 @Singleton
 class AppConfig @Inject() (
-  config: Configuration,
-  @unused servicesConfig: ServicesConfig
+  config: Configuration
 ) {
   val dbUrl: String = config.get[String]("mongodb.uri")
 

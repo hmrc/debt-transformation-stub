@@ -52,7 +52,7 @@ class TimeToPayController @Inject() (
   private val basePath = "conf/resources/data"
 
   def generateQuote: Action[JsValue] = Action.async(parse.json) { (request: Request[JsValue]) =>
-    implicit val implicitRequest: Request[JsValue] = request
+    given Request[JsValue] = request
 
     withCustomJsonBody[GenerateQuoteRequest] { req =>
       if (appConfig.isPollingEnv) {
@@ -77,7 +77,7 @@ class TimeToPayController @Inject() (
   }
 
   def generateAffordabilityQuote: Action[JsValue] = Action.async(parse.json) { (request: Request[JsValue]) =>
-    implicit val implicitRequest: Request[JsValue] = request
+    given Request[JsValue] = request
 
     if (appConfig.isPollingEnv) {
       ttpPollingService.insertRequestAndServeResponse(Json.toJson(""), Some(request.uri)).map {

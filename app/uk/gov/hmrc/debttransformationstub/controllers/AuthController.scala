@@ -34,7 +34,7 @@ class AuthController @Inject() (environment: Environment, cc: ControllerComponen
 
   def getAccessToken(): Action[Map[String, Seq[String]]] = Action(parse.tolerantFormUrlEncoded).async {
     (request: Request[Map[String, Seq[String]]]) =>
-      implicit val implicitRequest: Request[Map[String, Seq[String]]] = request
+      given Request[Map[String, Seq[String]]] = request
       val clientIdFileMapping = Map(
         "scheduler-stub-client-id"     -> "scheduled-bearer-token.json",
         "stub-client-id"               -> "non-scheduled-bearer-token.json",
@@ -72,7 +72,7 @@ class AuthController @Inject() (environment: Environment, cc: ControllerComponen
   private def returnClientIdNotMappedError(
     clientIdFileMapping: Map[String, String],
     maybeClientId: List[String]
-  )(implicit hc: HeaderCarrier): Future[Result] = {
+  )(using hc: HeaderCarrier): Future[Result] = {
     val errorMessage =
       s"client id was not mapped, got $maybeClientId, valid options ${clientIdFileMapping.keys}"
     logger.error(errorMessage)

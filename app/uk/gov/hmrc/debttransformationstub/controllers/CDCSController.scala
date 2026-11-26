@@ -36,7 +36,7 @@ class CDCSController @Inject() (environment: Environment, cc: ControllerComponen
   private val basePath = "conf/resources/data/cdcs"
 
   def cdcsData(): Action[JsValue] = Action.async(parse.json) { (rawRequest: Request[JsValue]) =>
-    implicit val implicitRequest: Request[JsValue] = rawRequest
+    given Request[JsValue] = rawRequest
 
     withCustomJsonBody[CdcsRequest] { request =>
       val fileName: String = request.identifications.head.idValue

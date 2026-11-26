@@ -38,7 +38,7 @@ class HodReferralController @Inject() (
   private lazy val logger = new RequestAwareLogger(this.getClass)
 
   def processEncryptedReferrals(): Action[JsValue] = Action.async(parse.json) { (rawRequest: Request[JsValue]) =>
-    implicit val implicitRequest: Request[JsValue] = rawRequest
+    given Request[JsValue] = rawRequest
 
     val correlationId = getCorrelationIdHeader(rawRequest.headers)
     logger.info(s"[DEBUG] HOD Referral called with correlationId=$correlationId")

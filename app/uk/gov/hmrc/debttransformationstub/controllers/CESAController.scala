@@ -35,7 +35,7 @@ class CESAController @Inject() (environment: Environment, cc: ControllerComponen
   private val basePath = "conf/resources/data/cesa"
 
   def getCESAdata(): Action[JsValue] = Action.async(parse.json) { (rawRequest: Request[JsValue]) =>
-    implicit val implicitRequest: Request[JsValue] = rawRequest
+    given Request[JsValue] = rawRequest
 
     withCustomJsonBody[CesaDataRequest] { request =>
       val fileName: String = request.debitIdentifiers.head.UTR
