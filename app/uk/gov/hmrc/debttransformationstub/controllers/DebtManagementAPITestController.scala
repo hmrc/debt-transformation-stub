@@ -93,7 +93,9 @@ class DebtManagementAPITestController @Inject() (
 
   def getTaxpayerData(idKey: String): Action[AnyContent] = Action.async { implicit request =>
     if (appConfig.isPollingEnv)
-      pollingService.insertTaxpayerRequestAndServeResponse().map {
+      val uri = s"/individuals/subcontractor/idms/taxpayer/$idKey"
+
+      pollingService.insertTaxpayerRequestAndServeResponse(uri).map {
         case Some(response) => Status(response.status.getOrElse(200))(response.content)
         case None           => ServiceUnavailable
       }

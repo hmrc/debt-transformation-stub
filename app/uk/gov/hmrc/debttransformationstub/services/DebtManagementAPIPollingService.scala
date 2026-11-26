@@ -58,13 +58,11 @@ class DebtManagementAPIPollingService @Inject() (
       headers = Map("CorrelationId" -> correlationId)
     )
 
-  def insertTaxpayerRequestAndServeResponse(): Future[Option[RequestDetail]] =
+  def insertTaxpayerRequestAndServeResponse(uri: String): Future[Option[RequestDetail]] =
     process(
       Json.obj(),
-      uri = None,
-      uriOverride = Some(
-        "/individuals/subcontractor/idms/taxpayer/789"
-      ), // TODO: Remove override when https://admin.qa.tax.service.gov.uk/ifs/individuals/subcontractor/idms/wmfid/789 is used
+      uri = Some(uri),
+      uriOverride = None,
       method = Some("GET")
     )
 
